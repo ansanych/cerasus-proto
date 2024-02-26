@@ -1,0 +1,29 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Ozon {
+    rpc SetAuth (SetOzonAuth) returns (BoolReply) {}
+    rpc GetAuth (Auth) returns (ShopOzonAuth) {}
+    rpc ErrorAuth (Auth) returns (BoolReply) {}
+    rpc GetUnsortedCount (Auth) returns (CountReply) {}
+    rpc GetUnsortedList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProductCount (Auth) returns (CountReply) {}
+    rpc GetProductList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
+    rpc GetDaySales (Auth) returns (daysSalesReply) {}
+}
+
+message ShopOzonAuth {
+    int32 clientID = 1;
+    string apiKey = 2;
+    bool error = 3;
+}
+
+message SetOzonAuth {
+    Auth auth = 1;
+    ShopOzonAuth shopAuth = 2;
+}

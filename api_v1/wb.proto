@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service WB {
+    rpc SetAuth (SetWBAuth) returns (BoolReply) {}
+    rpc GetAuth (Auth) returns (ShopWBAuth) {}
+    rpc ErrorAuth (Auth) returns (BoolReply) {}
+    rpc GetUnsortedCount (Auth) returns (CountReply) {}
+    rpc GetUnsortedList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProductCount (Auth) returns (CountReply) {}
+    rpc GetProductList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
+    rpc GetDaySales (Auth) returns (daysSalesReply) {}
+}
+
+message ShopWBAuth {
+    string token = 1;
+    bool error = 2;
+}
+
+message SetWBAuth {
+    Auth auth = 1;
+    ShopWBAuth shopAuth = 2;
+}

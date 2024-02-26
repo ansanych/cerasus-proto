@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+message Role {
+    int64 ID = 1;
+    string title = 2;
+    string code = 3;
+}
+
+message Auth {
+    bool tokenValidation = 1;
+    int64 userID = 2;
+    int64 companyID = 3;
+    repeated Role roles = 4;
+}
+
+message BoolReply {
+    bool status = 1;
+}
+
+message CountReply {
+    int64 count = 1;
+}
+
+message Pagination {
+    int64 page = 1;
+    int64 pages = 2;
+}
+
+message ShopProductRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message ShopProduct {
+    int64 ID = 1;
+    string title = 2;
+    string article = 3;
+    string image = 4;
+    bool active = 5;
+}
+
+message Filter {
+    string key = 1;
+    repeated string values = 2;
+}
+
+message Sorting {
+    string key = 1;
+    string order = 2;
+}
+
+message ShopProductListRequest {
+    Auth auth = 1;
+    int64 page = 2;
+    repeated Filter filters = 3;
+    repeated Sorting sort = 4;
+}
+
+message ShopProductListReply {
+    repeated ShopProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message DaySales {
+    string dayName = 1;
+    string from = 2;
+    string to = 3;
+    int64 count = 4;
+    int64 sum = 5;
+}
+
+message daysSalesReply {
+    repeated DaySales sales = 1;
+}
+
