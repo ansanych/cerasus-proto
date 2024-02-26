@@ -73,7 +73,7 @@ message DaySales {
     int64 sum = 5;
 }
 
-message daysSalesReply {
+message DaysSalesReply {
     repeated DaySales sales = 1;
 }
 
