@@ -85,3 +85,8 @@ message DeleteRequest {
     Auth auth = 1;
     int64 ID = 2;
 }
+
+message SearchRequest {
+    Auth auth = 1;
+    string search = 2;
+}

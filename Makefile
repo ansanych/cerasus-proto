@@ -22,6 +22,14 @@ genSettings:
 			--go-grpc_opt paths=source_relative \
 			./api_v1/settings.proto
 
+genProducts:
+	protoc -I ./api_v1 \
+			--go_out ./api_v1 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v1 \
+			--go-grpc_opt paths=source_relative \
+			./api_v1/products.proto
+
 genOzon:
 	protoc -I ./api_v1 \
 			--proto_path=./api_v1 \

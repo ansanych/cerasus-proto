@@ -1,0 +1,120 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Products {
+    rpc GetProducts (ProductListRequest) returns (ProductsReply) {}
+    rpc GetProduct (ProductRequest) returns (Product) {}
+    rpc CreateFromShop (ProductLink) returns (BoolReply) {}
+    rpc LinkToShop (ProductLink) returns (BoolReply) {}
+    rpc UnlinkToShop (ProductLink) returns (BoolReply) {}
+    rpc UpdateProduct (UpdateProductRequest) returns (BoolReply) {}
+    rpc SetProductBrand (SetProductBrandRequest) returns (BoolReply) {}
+    rpc RemoveProductBrand (SetProductBrandRequest) returns (BoolReply) {}
+    rpc SetProductPurchase (SetProductPurchaseRequest) returns (BoolReply) {}
+    rpc GetProductPurchase (ProductRequest) returns (ProductPurchase) {}
+    rpc GetProductPurchases (ProductRequest) returns (PurchasesReply) {}
+    rpc RemoveProductPurchase (DeleteRequest) returns (BoolReply) {}
+    rpc SearchProduct (SearchRequest) returns (ProductsReply) {}
+    rpc CheckLinkedShopProducts (CheckLinksReqest) returns (ProductsLinks) {}
+    rpc CheckLinkedShopProduct (CheckLinksReqest) returns (ProductLink) {}
+    rpc GetCompanyProductsID (ListIDRequest) returns (ListID) {} 
+}
+
+
+message ShopProductLinks {
+    string shopCode = 1;
+    repeated int64 shopProductID = 2;
+}
+
+message Product {
+    int64 ID = 1;
+    int64 companyID = 2;
+    string title = 3;
+    string comment = 4;
+    repeated int64 groupsID = 5;
+    int64 brandID = 6;
+    bool active = 7;
+    string updated = 8;
+    float purchase = 9;
+    repeated ShopProductLinks shopProductLinks = 10;
+    string preview = 11;
+}
+
+message ProductsReply {
+    repeated Product products = 1;
+    Pagination pagination = 2;
+}
+
+message ProductRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message ProductListRequest {
+    Auth auth = 1;
+    int64 page = 2;
+    repeated Filter filters = 3;
+    repeated Sorting sort = 4;
+}
+
+message ProductLink {
+    Auth auth = 1;
+    int64 productID = 2;
+    string shopCode = 3;
+    repeated int64 shopProductID = 4;
+    string name = 5;
+}
+
+message ProductsLinks {
+    repeated ProductLink links = 1;
+}
+
+message CheckLinksReqest {
+    Auth auth = 1;
+    repeated int64 shopProductsID = 2;
+    string shopCode = 3;
+}
+
+message UpdateProductRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string title = 3;
+    string comment = 4;
+    bool active = 5;
+}
+
+message SetProductBrandRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    int64 brandID = 3;
+}
+
+message SetProductPurchaseRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    float purchase = 3;
+    string dateFrom = 4;
+}
+
+message ProductPurchase {
+    int64 purchaseID = 1;
+    float purchase = 2;
+    string dateFrom = 3;
+}
+
+message PurchasesReply {
+    repeated ProductPurchase purchases = 1;
+}
+
+message ListIDRequest {
+    Auth auth = 1;
+    string shopCode = 2;
+}
+
+    message ListID {
+    repeated int64 shopProductID = 1;
+}
