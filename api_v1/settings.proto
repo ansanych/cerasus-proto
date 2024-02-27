@@ -1,0 +1,170 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Settings {
+    rpc GetTaxes (Auth) returns (TaxesReply) {}
+    rpc SetCompanyTax (SetCompanyTaxRequest) returns (BoolReply) {}
+    rpc GetCompanyTaxes (Auth) returns (CompanyTaxesReply) {}
+    rpc GetCompanyTax (GetCompanyTaxRequest) returns (CompanyTax) {}
+    rpc GetBrands (GetBrandsRequest) returns (BrandsReply) {}
+    rpc GetBrand (GetBrandRequest) returns (Brand) {}
+    rpc SearchBrand (SearchBrandRequest) returns (BrandsReply) {}
+    rpc SetBrand (SetBrandRequest) returns (InsertReply) {}
+    rpc GetCompanyBrands (GetCompanyBrandsRequest) returns (BrandsReply) {}
+    rpc GetCompanyBrand (GetBrandRequest) returns (Brand) {}
+    rpc GetMargin (Auth) returns (Margin) {}
+    rpc GetMarginBrand (MarginBrandRequest) returns (Margin) {}
+    rpc SetMargin(SetMarginRequest) returns (InsertReply) {}
+    rpc SetMarginBrand(SetMarginRequest) returns (InsertReply) {}
+    rpc UpdateMargin(UpdateMarginRequest) returns (BoolReply) {}
+    rpc GetMarginArchive (Auth) returns (Margins) {}
+    rpc GetMarginArchiveBrand (MarginBrandRequest) returns (Margins) {}
+    rpc DeleteMargin (DeleteRequest) returns (BoolReply) {}
+    rpc GetShops (Auth) returns (ShopsReply) {}
+    rpc GetCompanyShops (Auth) returns (CompanyShopsReply) {}
+    rpc SetCompanyShop (SetCompanyShopRequest) returns (BoolReply) {}
+    rpc ActivateCompanyShop (ActivateCompanyShopRequest) returns (BoolReply) {}
+}
+
+message Tax {
+    int32 ID = 1;
+    string title = 2;
+    string description = 3;
+    int32 percent = 4;
+  }
+  
+  message TaxesReply {
+    repeated Tax taxes = 1;
+  }
+  
+  message SetCompanyTaxRequest {
+    Auth auth = 1;
+    int32 taxID = 2;
+    int32 year = 3;
+  }
+  
+  message CompanyTax {
+    Tax tax = 1;
+    int32 year = 2;
+  }
+  
+  message CompanyTaxesReply {
+    repeated CompanyTax taxes = 1;
+  }
+  
+  message GetCompanyTaxRequest {
+    Auth auth = 1;
+    int32 year = 2;
+  }
+  
+  message Brand {
+    int64 ID = 1;
+    string name = 2;
+    string description = 3;
+    string logo = 4;
+    string url = 5;
+    bool global = 6;
+  }
+  
+  message GetBrandsRequest {
+    Auth auth = 1;
+    int64 page = 2;
+  }
+  
+  message GetBrandRequest {
+    Auth auth = 1;
+    int64 brandID = 2;
+    string brandName = 3;
+  }
+  
+  message BrandsReply {
+   repeated Brand brands = 1;
+   Pagination pagination = 2;
+  }
+  
+  message SearchBrandRequest {
+    Auth auth = 1;
+    string name = 2;
+  }
+  
+  message SetBrandRequest {
+    Auth auth = 1;
+    Brand brand = 2;
+  }
+  
+  message GetCompanyBrandsRequest {
+    Auth auth = 1;
+    int64 page = 2;
+  }
+  
+  message Margin {
+    int64 ID = 1;
+    float min = 2;
+    float mid = 3;
+    float max = 4;
+    string created = 5;
+  }
+  
+  message Margins {
+    repeated Margin margins = 1;
+  }
+  
+  message MarginBrandRequest {
+    Auth auth = 1;
+    int64 brandID = 2;
+  }
+  
+  message SetMarginRequest {
+    Auth auth = 1;
+    int64 brandID = 2;
+    float min = 3;
+    float mid = 4;
+    float max = 5;
+  }
+  
+  message UpdateMarginRequest {
+    Auth auth = 1;
+    int64 marginID = 2;
+    float min = 3;
+    float mid = 4;
+    float max = 5;
+  }
+  
+  message Shop {
+    int64 ID = 1;
+    string title = 2;
+    string code = 3;
+    string logo = 4;
+    string url = 5;
+    bool active = 6;
+  }
+  
+  message ShopsReply {
+    repeated Shop shops = 1;
+  }
+  
+  message CompanyShop {
+    int64 ID = 1;
+    Shop shop = 2;
+    bool active = 3;
+    bool auth = 4;
+  }
+  
+  message CompanyShopsReply {
+    repeated CompanyShop shops = 1;
+  }
+  
+  message SetCompanyShopRequest {
+    Auth auth = 1;
+    int64 shopID = 2;
+  }
+  
+  message ActivateCompanyShopRequest {
+    Auth auth = 1;
+    int64 shopID = 2;
+    bool active = 3;
+  }
