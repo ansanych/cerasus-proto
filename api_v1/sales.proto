@@ -1,0 +1,19 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Sales {
+    rpc CalculatedSales (CalcRequest) returns (CalcReply) {}
+}
+
+message CalcRequest {
+    string shopCode = 1;
+    repeated Sale sales = 2;
+}
+
+message CalcReply {
+    repeated Sale sales = 1;
+}
