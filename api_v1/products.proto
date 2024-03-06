@@ -21,9 +21,9 @@ service Products {
     rpc SearchProduct (SearchRequest) returns (ProductsReply) {}
     rpc CheckLinkedShopProducts (CheckLinksReqest) returns (ProductsLinks) {}
     rpc CheckLinkedShopProduct (CheckLinksReqest) returns (ProductLink) {}
-    rpc GetCompanyProductsID (ListIDRequest) returns (ListID) {} 
+    rpc GetCompanyProductsID (ListIDRequest) returns (ListID) {}
+    rpc GetShopProductPurcases (ProductRequest) returns (PurchasesReply) {}
 }
-
 
 message ShopProductLinks {
     string shopCode = 1;
