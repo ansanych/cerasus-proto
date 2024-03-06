@@ -10,8 +10,9 @@ service Sales {
 }
 
 message CalcRequest {
-    string shopCode = 1;
-    repeated Sale sales = 2;
+    Auth auth = 1;
+    string shopCode = 2;
+    repeated Sale sales = 3;
 }
 
 message CalcReply {
