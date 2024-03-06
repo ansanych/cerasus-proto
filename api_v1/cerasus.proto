@@ -107,8 +107,9 @@ message Sale {
     float tax = 5;
     float margin = 6;
     float marginality = 7;
-    repeated ShopProduct items = 8;
-    bool final = 9;
+    ShopProduct item = 8;
+    int32 count = 9;
+    bool final = 10;
 }
 
 message SalesReply {
