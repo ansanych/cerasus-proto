@@ -38,7 +38,7 @@ type ProductsClient interface {
 	CheckLinkedShopProducts(ctx context.Context, in *CheckLinksReqest, opts ...grpc.CallOption) (*ProductsLinks, error)
 	CheckLinkedShopProduct(ctx context.Context, in *CheckLinksReqest, opts ...grpc.CallOption) (*ProductLink, error)
 	GetCompanyProductsID(ctx context.Context, in *ListIDRequest, opts ...grpc.CallOption) (*ListID, error)
-	GetShopProductPurcases(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*PurchasesReply, error)
+	GetShopProductPurcases(ctx context.Context, in *ShopProductPurcasesRequest, opts ...grpc.CallOption) (*PurchasesReply, error)
 }
 
 type productsClient struct {
@@ -193,7 +193,7 @@ func (c *productsClient) GetCompanyProductsID(ctx context.Context, in *ListIDReq
 	return out, nil
 }
 
-func (c *productsClient) GetShopProductPurcases(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*PurchasesReply, error) {
+func (c *productsClient) GetShopProductPurcases(ctx context.Context, in *ShopProductPurcasesRequest, opts ...grpc.CallOption) (*PurchasesReply, error) {
 	out := new(PurchasesReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Products/GetShopProductPurcases", in, out, opts...)
 	if err != nil {
@@ -222,7 +222,7 @@ type ProductsServer interface {
 	CheckLinkedShopProducts(context.Context, *CheckLinksReqest) (*ProductsLinks, error)
 	CheckLinkedShopProduct(context.Context, *CheckLinksReqest) (*ProductLink, error)
 	GetCompanyProductsID(context.Context, *ListIDRequest) (*ListID, error)
-	GetShopProductPurcases(context.Context, *ProductRequest) (*PurchasesReply, error)
+	GetShopProductPurcases(context.Context, *ShopProductPurcasesRequest) (*PurchasesReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -278,7 +278,7 @@ func (UnimplementedProductsServer) CheckLinkedShopProduct(context.Context, *Chec
 func (UnimplementedProductsServer) GetCompanyProductsID(context.Context, *ListIDRequest) (*ListID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyProductsID not implemented")
 }
-func (UnimplementedProductsServer) GetShopProductPurcases(context.Context, *ProductRequest) (*PurchasesReply, error) {
+func (UnimplementedProductsServer) GetShopProductPurcases(context.Context, *ShopProductPurcasesRequest) (*PurchasesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductPurcases not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
@@ -583,7 +583,7 @@ func _Products_GetCompanyProductsID_Handler(srv interface{}, ctx context.Context
 }
 
 func _Products_GetShopProductPurcases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductRequest)
+	in := new(ShopProductPurcasesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -595,7 +595,7 @@ func _Products_GetShopProductPurcases_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/cerasus.Products/GetShopProductPurcases",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsServer).GetShopProductPurcases(ctx, req.(*ProductRequest))
+		return srv.(ProductsServer).GetShopProductPurcases(ctx, req.(*ShopProductPurcasesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
