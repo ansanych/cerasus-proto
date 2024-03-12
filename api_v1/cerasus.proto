@@ -115,3 +115,21 @@ message Sale {
 message SalesReply {
     repeated Sale sales = 1;
 }
+
+message SaleLinkData {
+    string ID = 1;
+    string operationType = 2;
+    float sum = 3;
+    string date = 4;
+}
+
+message SaleDetailsReply {
+    Sale sale = 1;
+    repeated SaleLinkData details = 2;
+}
+
+message SaleDetailsRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    bool final = 3;
+}

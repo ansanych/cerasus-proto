@@ -16,6 +16,7 @@ service Ozon {
     rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
     rpc GetDaySales (Auth) returns (DaysSalesReply) {}
     rpc GetSales (SalesRequest) returns (SalesReply) {}
+    rpc GetSaleDetail (SaleDetailsRequest) returns (SaleDetailsReply) {}
 }
 
 message ShopOzonAuth {

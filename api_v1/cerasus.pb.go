@@ -1201,6 +1201,195 @@ func (x *SalesReply) GetSales() []*Sale {
 	return nil
 }
 
+type SaleLinkData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID            string  `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	OperationType string  `protobuf:"bytes,2,opt,name=operationType,proto3" json:"operationType,omitempty"`
+	Sum           float32 `protobuf:"fixed32,3,opt,name=sum,proto3" json:"sum,omitempty"`
+	Date          string  `protobuf:"bytes,4,opt,name=date,proto3" json:"date,omitempty"`
+}
+
+func (x *SaleLinkData) Reset() {
+	*x = SaleLinkData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SaleLinkData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaleLinkData) ProtoMessage() {}
+
+func (x *SaleLinkData) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaleLinkData.ProtoReflect.Descriptor instead.
+func (*SaleLinkData) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *SaleLinkData) GetID() string {
+	if x != nil {
+		return x.ID
+	}
+	return ""
+}
+
+func (x *SaleLinkData) GetOperationType() string {
+	if x != nil {
+		return x.OperationType
+	}
+	return ""
+}
+
+func (x *SaleLinkData) GetSum() float32 {
+	if x != nil {
+		return x.Sum
+	}
+	return 0
+}
+
+func (x *SaleLinkData) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+type SaleDetailsReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Sale    *Sale           `protobuf:"bytes,1,opt,name=sale,proto3" json:"sale,omitempty"`
+	Details []*SaleLinkData `protobuf:"bytes,2,rep,name=details,proto3" json:"details,omitempty"`
+}
+
+func (x *SaleDetailsReply) Reset() {
+	*x = SaleDetailsReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SaleDetailsReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaleDetailsReply) ProtoMessage() {}
+
+func (x *SaleDetailsReply) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaleDetailsReply.ProtoReflect.Descriptor instead.
+func (*SaleDetailsReply) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *SaleDetailsReply) GetSale() *Sale {
+	if x != nil {
+		return x.Sale
+	}
+	return nil
+}
+
+func (x *SaleDetailsReply) GetDetails() []*SaleLinkData {
+	if x != nil {
+		return x.Details
+	}
+	return nil
+}
+
+type SaleDetailsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth  *Auth `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	ID    int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
+	Final bool  `protobuf:"varint,3,opt,name=final,proto3" json:"final,omitempty"`
+}
+
+func (x *SaleDetailsRequest) Reset() {
+	*x = SaleDetailsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SaleDetailsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaleDetailsRequest) ProtoMessage() {}
+
+func (x *SaleDetailsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaleDetailsRequest.ProtoReflect.Descriptor instead.
+func (*SaleDetailsRequest) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *SaleDetailsRequest) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *SaleDetailsRequest) GetID() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
+func (x *SaleDetailsRequest) GetFinal() bool {
+	if x != nil {
+		return x.Final
+	}
+	return false
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -1315,9 +1504,29 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x22, 0x31, 0x0a, 0x0a, 0x53, 0x61, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x23,
 	0x0a, 0x05, 0x73, 0x61, 0x6c, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e,
 	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x53, 0x61, 0x6c, 0x65, 0x52, 0x05, 0x73, 0x61,
-	0x6c, 0x65, 0x73, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x65, 0x73, 0x22, 0x6a, 0x0a, 0x0c, 0x53, 0x61, 0x6c, 0x65, 0x4c, 0x69, 0x6e, 0x6b, 0x44,
+	0x61, 0x74, 0x61, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x49, 0x44, 0x12, 0x24, 0x0a, 0x0d, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x75, 0x6d,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x73, 0x75, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x64,
+	0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x22,
+	0x66, 0x0a, 0x10, 0x53, 0x61, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65,
+	0x70, 0x6c, 0x79, 0x12, 0x21, 0x0a, 0x04, 0x73, 0x61, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x0d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x53, 0x61, 0x6c, 0x65,
+	0x52, 0x04, 0x73, 0x61, 0x6c, 0x65, 0x12, 0x2f, 0x0a, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x2e, 0x53, 0x61, 0x6c, 0x65, 0x4c, 0x69, 0x6e, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x52, 0x07,
+	0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x5d, 0x0a, 0x12, 0x53, 0x61, 0x6c, 0x65, 0x44,
+	0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a,
+	0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68,
+	0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44,
+	0x12, 0x14, 0x0a, 0x05, 0x66, 0x69, 0x6e, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x05, 0x66, 0x69, 0x6e, 0x61, 0x6c, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1332,7 +1541,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                   // 0: cerasus.Role
 	(*Auth)(nil),                   // 1: cerasus.Auth
@@ -1353,6 +1562,9 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*SalesRequest)(nil),           // 16: cerasus.SalesRequest
 	(*Sale)(nil),                   // 17: cerasus.Sale
 	(*SalesReply)(nil),             // 18: cerasus.SalesReply
+	(*SaleLinkData)(nil),           // 19: cerasus.SaleLinkData
+	(*SaleDetailsReply)(nil),       // 20: cerasus.SaleDetailsReply
+	(*SaleDetailsRequest)(nil),     // 21: cerasus.SaleDetailsRequest
 }
 var file_cerasus_proto_depIdxs = []int32{
 	0,  // 0: cerasus.Auth.roles:type_name -> cerasus.Role
@@ -1370,11 +1582,14 @@ var file_cerasus_proto_depIdxs = []int32{
 	8,  // 12: cerasus.SalesRequest.sort:type_name -> cerasus.Sorting
 	6,  // 13: cerasus.Sale.item:type_name -> cerasus.ShopProduct
 	17, // 14: cerasus.SalesReply.sales:type_name -> cerasus.Sale
-	15, // [15:15] is the sub-list for method output_type
-	15, // [15:15] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	17, // 15: cerasus.SaleDetailsReply.sale:type_name -> cerasus.Sale
+	19, // 16: cerasus.SaleDetailsReply.details:type_name -> cerasus.SaleLinkData
+	1,  // 17: cerasus.SaleDetailsRequest.auth:type_name -> cerasus.Auth
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -1611,6 +1826,42 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SaleLinkData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SaleDetailsReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SaleDetailsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1618,7 +1869,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
