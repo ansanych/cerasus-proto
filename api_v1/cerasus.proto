@@ -133,3 +133,12 @@ message SaleDetailsRequest {
     int64 ID = 2;
     bool final = 3;
 }
+
+message ProductSalesRequest {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+    repeated Filter filters = 4;
+    repeated Sorting sort = 5;
+    int64 ID = 6;
+}
