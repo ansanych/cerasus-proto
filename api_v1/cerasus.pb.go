@@ -1477,6 +1477,298 @@ func (x *ProductSalesRequest) GetID() int64 {
 	return 0
 }
 
+type MainGraphicRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth   *Auth  `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Step   string `protobuf:"bytes,2,opt,name=step,proto3" json:"step,omitempty"`
+	Offset int32  `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	From   string `protobuf:"bytes,4,opt,name=from,proto3" json:"from,omitempty"`
+	To     string `protobuf:"bytes,5,opt,name=to,proto3" json:"to,omitempty"`
+}
+
+func (x *MainGraphicRequest) Reset() {
+	*x = MainGraphicRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MainGraphicRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainGraphicRequest) ProtoMessage() {}
+
+func (x *MainGraphicRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainGraphicRequest.ProtoReflect.Descriptor instead.
+func (*MainGraphicRequest) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *MainGraphicRequest) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *MainGraphicRequest) GetStep() string {
+	if x != nil {
+		return x.Step
+	}
+	return ""
+}
+
+func (x *MainGraphicRequest) GetOffset() int32 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *MainGraphicRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *MainGraphicRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type MainGraphicShop struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Label string `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Code  string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Index int32  `protobuf:"varint,3,opt,name=index,proto3" json:"index,omitempty"`
+}
+
+func (x *MainGraphicShop) Reset() {
+	*x = MainGraphicShop{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MainGraphicShop) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainGraphicShop) ProtoMessage() {}
+
+func (x *MainGraphicShop) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainGraphicShop.ProtoReflect.Descriptor instead.
+func (*MainGraphicShop) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *MainGraphicShop) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *MainGraphicShop) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *MainGraphicShop) GetIndex() int32 {
+	if x != nil {
+		return x.Index
+	}
+	return 0
+}
+
+type MainGraphicType struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Label  string  `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Code   string  `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Points []int32 `protobuf:"varint,3,rep,packed,name=points,proto3" json:"points,omitempty"`
+	Middle []int32 `protobuf:"varint,4,rep,packed,name=middle,proto3" json:"middle,omitempty"`
+	Min    int32   `protobuf:"varint,5,opt,name=min,proto3" json:"min,omitempty"`
+	Max    int32   `protobuf:"varint,6,opt,name=max,proto3" json:"max,omitempty"`
+}
+
+func (x *MainGraphicType) Reset() {
+	*x = MainGraphicType{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MainGraphicType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainGraphicType) ProtoMessage() {}
+
+func (x *MainGraphicType) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainGraphicType.ProtoReflect.Descriptor instead.
+func (*MainGraphicType) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *MainGraphicType) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *MainGraphicType) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *MainGraphicType) GetPoints() []int32 {
+	if x != nil {
+		return x.Points
+	}
+	return nil
+}
+
+func (x *MainGraphicType) GetMiddle() []int32 {
+	if x != nil {
+		return x.Middle
+	}
+	return nil
+}
+
+func (x *MainGraphicType) GetMin() int32 {
+	if x != nil {
+		return x.Min
+	}
+	return 0
+}
+
+func (x *MainGraphicType) GetMax() int32 {
+	if x != nil {
+		return x.Max
+	}
+	return 0
+}
+
+type MainGraphicReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Labels []string           `protobuf:"bytes,1,rep,name=labels,proto3" json:"labels,omitempty"`
+	Shops  []*MainGraphicShop `protobuf:"bytes,2,rep,name=shops,proto3" json:"shops,omitempty"`
+	Data   []*MainGraphicType `protobuf:"bytes,3,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *MainGraphicReply) Reset() {
+	*x = MainGraphicReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MainGraphicReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MainGraphicReply) ProtoMessage() {}
+
+func (x *MainGraphicReply) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MainGraphicReply.ProtoReflect.Descriptor instead.
+func (*MainGraphicReply) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *MainGraphicReply) GetLabels() []string {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *MainGraphicReply) GetShops() []*MainGraphicShop {
+	if x != nil {
+		return x.Shops
+	}
+	return nil
+}
+
+func (x *MainGraphicReply) GetData() []*MainGraphicType {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -1622,10 +1914,41 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x12, 0x24, 0x0a, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10,
 	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x53, 0x6f, 0x72, 0x74, 0x69, 0x6e, 0x67,
 	0x52, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x22, 0x87, 0x01, 0x0a, 0x12, 0x4d, 0x61, 0x69, 0x6e, 0x47,
+	0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a,
+	0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68,
+	0x12, 0x12, 0x0a, 0x04, 0x73, 0x74, 0x65, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x73, 0x74, 0x65, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x12, 0x0a, 0x04,
+	0x66, 0x72, 0x6f, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d,
+	0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f,
+	0x22, 0x51, 0x0a, 0x0f, 0x4d, 0x61, 0x69, 0x6e, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x53,
+	0x68, 0x6f, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x14, 0x0a,
+	0x05, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x69, 0x6e,
+	0x64, 0x65, 0x78, 0x22, 0x8f, 0x01, 0x0a, 0x0f, 0x4d, 0x61, 0x69, 0x6e, 0x47, 0x72, 0x61, 0x70,
+	0x68, 0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x12, 0x0a,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x05, 0x52, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x69, 0x64,
+	0x64, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x03, 0x28, 0x05, 0x52, 0x06, 0x6d, 0x69, 0x64, 0x64, 0x6c,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x69, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03,
+	0x6d, 0x69, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x61, 0x78, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x03, 0x6d, 0x61, 0x78, 0x22, 0x88, 0x01, 0x0a, 0x10, 0x4d, 0x61, 0x69, 0x6e, 0x47, 0x72,
+	0x61, 0x70, 0x68, 0x69, 0x63, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65,
+	0x6c, 0x73, 0x12, 0x2e, 0x0a, 0x05, 0x73, 0x68, 0x6f, 0x70, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x4d, 0x61, 0x69, 0x6e,
+	0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x53, 0x68, 0x6f, 0x70, 0x52, 0x05, 0x73, 0x68, 0x6f,
+	0x70, 0x73, 0x12, 0x2c, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x4d, 0x61, 0x69, 0x6e, 0x47,
+	0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61,
+	0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1640,7 +1963,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                   // 0: cerasus.Role
 	(*Auth)(nil),                   // 1: cerasus.Auth
@@ -1665,6 +1988,10 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*SaleDetailsReply)(nil),       // 20: cerasus.SaleDetailsReply
 	(*SaleDetailsRequest)(nil),     // 21: cerasus.SaleDetailsRequest
 	(*ProductSalesRequest)(nil),    // 22: cerasus.ProductSalesRequest
+	(*MainGraphicRequest)(nil),     // 23: cerasus.MainGraphicRequest
+	(*MainGraphicShop)(nil),        // 24: cerasus.MainGraphicShop
+	(*MainGraphicType)(nil),        // 25: cerasus.MainGraphicType
+	(*MainGraphicReply)(nil),       // 26: cerasus.MainGraphicReply
 }
 var file_cerasus_proto_depIdxs = []int32{
 	0,  // 0: cerasus.Auth.roles:type_name -> cerasus.Role
@@ -1688,11 +2015,14 @@ var file_cerasus_proto_depIdxs = []int32{
 	1,  // 18: cerasus.ProductSalesRequest.auth:type_name -> cerasus.Auth
 	7,  // 19: cerasus.ProductSalesRequest.filters:type_name -> cerasus.Filter
 	8,  // 20: cerasus.ProductSalesRequest.sort:type_name -> cerasus.Sorting
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	1,  // 21: cerasus.MainGraphicRequest.auth:type_name -> cerasus.Auth
+	24, // 22: cerasus.MainGraphicReply.shops:type_name -> cerasus.MainGraphicShop
+	25, // 23: cerasus.MainGraphicReply.data:type_name -> cerasus.MainGraphicType
+	24, // [24:24] is the sub-list for method output_type
+	24, // [24:24] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -1977,6 +2307,54 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MainGraphicRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MainGraphicShop); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MainGraphicType); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MainGraphicReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1984,7 +2362,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

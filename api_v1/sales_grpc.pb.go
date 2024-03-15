@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SalesClient interface {
 	CalculatedSales(ctx context.Context, in *CalcRequest, opts ...grpc.CallOption) (*CalcReply, error)
+	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 }
 
 type salesClient struct {
@@ -42,11 +43,21 @@ func (c *salesClient) CalculatedSales(ctx context.Context, in *CalcRequest, opts
 	return out, nil
 }
 
+func (c *salesClient) GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error) {
+	out := new(MainGraphicReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Sales/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SalesServer is the server API for Sales service.
 // All implementations must embed UnimplementedSalesServer
 // for forward compatibility
 type SalesServer interface {
 	CalculatedSales(context.Context, *CalcRequest) (*CalcReply, error)
+	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	mustEmbedUnimplementedSalesServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedSalesServer struct {
 
 func (UnimplementedSalesServer) CalculatedSales(context.Context, *CalcRequest) (*CalcReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculatedSales not implemented")
+}
+func (UnimplementedSalesServer) GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedSalesServer) mustEmbedUnimplementedSalesServer() {}
 
@@ -88,6 +102,24 @@ func _Sales_CalculatedSales_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Sales_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainGraphicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SalesServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Sales/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SalesServer).GetMainGraphic(ctx, req.(*MainGraphicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Sales_ServiceDesc is the grpc.ServiceDesc for Sales service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var Sales_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CalculatedSales",
 			Handler:    _Sales_CalculatedSales_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _Sales_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

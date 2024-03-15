@@ -18,6 +18,7 @@ service WB {
     rpc GetSales (SalesRequest) returns (SalesReply) {}
     rpc GetSaleDetail (SaleDetailsRequest) returns (SaleDetailsReply) {}
     rpc GetProductSales (ProductSalesRequest) returns (SalesReply) {}
+    rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
 }
 
 message ShopWBAuth {

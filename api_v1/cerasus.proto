@@ -142,3 +142,32 @@ message ProductSalesRequest {
     repeated Sorting sort = 5;
     int64 ID = 6;
 }
+
+message MainGraphicRequest {
+    Auth auth = 1;
+    string step = 2;
+    int32 offset = 3;
+    string from = 4;
+    string to = 5;
+}
+
+message MainGraphicShop {
+    string label = 1;
+    string code = 2;
+    int32 index = 3;
+}
+
+message MainGraphicType {
+    string label = 1;
+    string code = 2;
+    repeated int32 points = 3;
+    repeated int32 middle = 4;
+    int32 min = 5;
+    int32 max = 6;
+}
+
+message MainGraphicReply {
+    repeated string labels = 1;
+    repeated MainGraphicShop shops = 2;
+    repeated MainGraphicType data = 3;
+}
