@@ -104,12 +104,13 @@ message Sale {
     string date = 2;
     float pay = 3;
     float realisation = 4;
-    float tax = 5;
-    float margin = 6;
-    float marginality = 7;
-    ShopProduct item = 8;
-    int32 count = 9;
-    bool final = 10;
+    float purchase = 5;
+    float tax = 6;
+    float margin = 7;
+    float marginality = 8;
+    ShopProduct item = 9;
+    int32 count = 10;
+    bool final = 11;
 }
 
 message SalesReply {
@@ -141,6 +142,24 @@ message ProductSalesRequest {
     repeated Filter filters = 4;
     repeated Sorting sort = 5;
     int64 ID = 6;
+}
+
+message ShopService {
+    int64 ID = 1;
+    string date = 2;
+    float sum = 3;
+    string title = 4;
+    string description = 5;
+}
+
+message ShopServiceRequest {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+}
+
+message ShopServiceReply {
+    repeated ShopService services = 1;
 }
 
 message MainGraphicRequest {

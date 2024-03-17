@@ -32,6 +32,7 @@ type WBClient interface {
 	GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetDaySales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DaysSalesReply, error)
 	GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
+	GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error)
 	GetSaleDetail(ctx context.Context, in *SaleDetailsRequest, opts ...grpc.CallOption) (*SaleDetailsReply, error)
 	GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
@@ -135,6 +136,15 @@ func (c *wBClient) GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *wBClient) GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error) {
+	out := new(ShopServiceReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/GetShopServices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wBClient) GetSaleDetail(ctx context.Context, in *SaleDetailsRequest, opts ...grpc.CallOption) (*SaleDetailsReply, error) {
 	out := new(SaleDetailsReply)
 	err := c.cc.Invoke(ctx, "/cerasus.WB/GetSaleDetail", in, out, opts...)
@@ -176,6 +186,7 @@ type WBServer interface {
 	GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error)
 	GetDaySales(context.Context, *Auth) (*DaysSalesReply, error)
 	GetSales(context.Context, *SalesRequest) (*SalesReply, error)
+	GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error)
 	GetSaleDetail(context.Context, *SaleDetailsRequest) (*SaleDetailsReply, error)
 	GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error)
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
@@ -215,6 +226,9 @@ func (UnimplementedWBServer) GetDaySales(context.Context, *Auth) (*DaysSalesRepl
 }
 func (UnimplementedWBServer) GetSales(context.Context, *SalesRequest) (*SalesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
+}
+func (UnimplementedWBServer) GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopServices not implemented")
 }
 func (UnimplementedWBServer) GetSaleDetail(context.Context, *SaleDetailsRequest) (*SaleDetailsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSaleDetail not implemented")
@@ -418,6 +432,24 @@ func _WB_GetSales_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetShopServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetShopServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/GetShopServices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetShopServices(ctx, req.(*ShopServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WB_GetSaleDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SaleDetailsRequest)
 	if err := dec(in); err != nil {
@@ -518,6 +550,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSales",
 			Handler:    _WB_GetSales_Handler,
+		},
+		{
+			MethodName: "GetShopServices",
+			Handler:    _WB_GetShopServices_Handler,
 		},
 		{
 			MethodName: "GetSaleDetail",

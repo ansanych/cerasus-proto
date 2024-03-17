@@ -16,6 +16,7 @@ service WB {
     rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
     rpc GetDaySales (Auth) returns (DaysSalesReply) {}
     rpc GetSales (SalesRequest) returns (SalesReply) {}
+    rpc GetShopServices(ShopServiceRequest) returns (ShopServiceReply) {}
     rpc GetSaleDetail (SaleDetailsRequest) returns (SaleDetailsReply) {}
     rpc GetProductSales (ProductSalesRequest) returns (SalesReply) {}
     rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
