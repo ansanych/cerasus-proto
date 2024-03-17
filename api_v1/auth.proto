@@ -10,6 +10,7 @@ service Authenty {
     rpc Login (LoginRequest) returns (LoginReply) {}
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
     rpc CheckAccess (AccessRequest) returns (Auth) {}
+    rpc SystemAccess (SystemAccessRequest) returns (Auth) {}
 }
 
 message RegisterRequest {
@@ -54,4 +55,8 @@ message RefreshRequest {
 
 message AccessRequest {
     string token = 1;
+}
+
+message SystemAccessRequest {
+    int64 companyID = 1;
 }

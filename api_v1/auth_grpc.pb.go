@@ -26,6 +26,7 @@ type AuthentyClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
+	SystemAccess(ctx context.Context, in *SystemAccessRequest, opts ...grpc.CallOption) (*Auth, error)
 }
 
 type authentyClient struct {
@@ -72,6 +73,15 @@ func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opt
 	return out, nil
 }
 
+func (c *authentyClient) SystemAccess(ctx context.Context, in *SystemAccessRequest, opts ...grpc.CallOption) (*Auth, error) {
+	out := new(Auth)
+	err := c.cc.Invoke(ctx, "/cerasus.Authenty/SystemAccess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type AuthentyServer interface {
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
 	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
+	SystemAccess(context.Context, *SystemAccessRequest) (*Auth, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedAuthentyServer) Refresh(context.Context, *RefreshRequest) (*L
 }
 func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAccess not implemented")
+}
+func (UnimplementedAuthentyServer) SystemAccess(context.Context, *SystemAccessRequest) (*Auth, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SystemAccess not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -184,6 +198,24 @@ func _Authenty_CheckAccess_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Authenty_SystemAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SystemAccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).SystemAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Authenty/SystemAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).SystemAccess(ctx, req.(*SystemAccessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Authenty_ServiceDesc is the grpc.ServiceDesc for Authenty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAccess",
 			Handler:    _Authenty_CheckAccess_Handler,
+		},
+		{
+			MethodName: "SystemAccess",
+			Handler:    _Authenty_SystemAccess_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
