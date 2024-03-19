@@ -179,10 +179,10 @@ message MainGraphicShop {
 message MainGraphicType {
     string label = 1;
     string code = 2;
-    repeated int32 points = 3;
-    repeated int32 middle = 4;
-    int32 min = 5;
-    int32 max = 6;
+    repeated float points = 3;
+    repeated float middle = 4;
+    float min = 5;
+    float max = 6;
 }
 
 message MainGraphicReply {

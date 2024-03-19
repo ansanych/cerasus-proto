@@ -44,6 +44,7 @@ type SettingsClient interface {
 	GetCompanyShops(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopsReply, error)
 	SetCompanyShop(ctx context.Context, in *SetCompanyShopRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	ActivateCompanyShop(ctx context.Context, in *ActivateCompanyShopRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 }
 
 type settingsClient struct {
@@ -252,6 +253,15 @@ func (c *settingsClient) ActivateCompanyShop(ctx context.Context, in *ActivateCo
 	return out, nil
 }
 
+func (c *settingsClient) GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error) {
+	out := new(MainGraphicReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -278,6 +288,7 @@ type SettingsServer interface {
 	GetCompanyShops(context.Context, *Auth) (*CompanyShopsReply, error)
 	SetCompanyShop(context.Context, *SetCompanyShopRequest) (*BoolReply, error)
 	ActivateCompanyShop(context.Context, *ActivateCompanyShopRequest) (*BoolReply, error)
+	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -350,6 +361,9 @@ func (UnimplementedSettingsServer) SetCompanyShop(context.Context, *SetCompanySh
 }
 func (UnimplementedSettingsServer) ActivateCompanyShop(context.Context, *ActivateCompanyShopRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActivateCompanyShop not implemented")
+}
+func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -760,6 +774,24 @@ func _Settings_ActivateCompanyShop_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainGraphicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMainGraphic(ctx, req.(*MainGraphicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +886,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ActivateCompanyShop",
 			Handler:    _Settings_ActivateCompanyShop_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _Settings_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

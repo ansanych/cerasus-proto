@@ -28,6 +28,7 @@ service Settings {
     rpc GetCompanyShops (Auth) returns (CompanyShopsReply) {}
     rpc SetCompanyShop (SetCompanyShopRequest) returns (BoolReply) {}
     rpc ActivateCompanyShop (ActivateCompanyShopRequest) returns (BoolReply) {}
+    rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
 }
 
 message Tax {
