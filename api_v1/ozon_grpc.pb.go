@@ -37,7 +37,7 @@ type OzonClient interface {
 	GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
-	CheckAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
+	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 }
 
 type ozonClient struct {
@@ -183,9 +183,9 @@ func (c *ozonClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grp
 	return out, nil
 }
 
-func (c *ozonClient) CheckAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error) {
+func (c *ozonClient) CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error) {
 	out := new(CompanyShopData)
-	err := c.cc.Invoke(ctx, "/cerasus.Ozon/CheckAuth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/CheckShopData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ type OzonServer interface {
 	GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error)
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
-	CheckAuth(context.Context, *Auth) (*CompanyShopData, error)
+	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	mustEmbedUnimplementedOzonServer()
 }
 
@@ -264,8 +264,8 @@ func (UnimplementedOzonServer) GetMainGraphic(context.Context, *MainGraphicReque
 func (UnimplementedOzonServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
-func (UnimplementedOzonServer) CheckAuth(context.Context, *Auth) (*CompanyShopData, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckAuth not implemented")
+func (UnimplementedOzonServer) CheckShopData(context.Context, *Auth) (*CompanyShopData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckShopData not implemented")
 }
 func (UnimplementedOzonServer) mustEmbedUnimplementedOzonServer() {}
 
@@ -550,20 +550,20 @@ func _Ozon_GetImage_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Ozon_CheckAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Ozon_CheckShopData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OzonServer).CheckAuth(ctx, in)
+		return srv.(OzonServer).CheckShopData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Ozon/CheckAuth",
+		FullMethod: "/cerasus.Ozon/CheckShopData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OzonServer).CheckAuth(ctx, req.(*Auth))
+		return srv.(OzonServer).CheckShopData(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -636,8 +636,8 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Ozon_GetImage_Handler,
 		},
 		{
-			MethodName: "CheckAuth",
-			Handler:    _Ozon_CheckAuth_Handler,
+			MethodName: "CheckShopData",
+			Handler:    _Ozon_CheckShopData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
