@@ -20,6 +20,7 @@ service WB {
     rpc GetSaleDetail (SaleDetailsRequest) returns (SaleDetailsReply) {}
     rpc GetProductSales (ProductSalesRequest) returns (SalesReply) {}
     rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
 
 message ShopWBAuth {

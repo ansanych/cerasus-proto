@@ -1966,6 +1966,132 @@ func (x *MainGraphicReply) GetData() []*MainGraphicType {
 	return nil
 }
 
+type ImageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FileID   int64  `protobuf:"varint,1,opt,name=fileID,proto3" json:"fileID,omitempty"`
+	Filename string `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
+	Code     string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	Folder   string `protobuf:"bytes,4,opt,name=folder,proto3" json:"folder,omitempty"`
+}
+
+func (x *ImageRequest) Reset() {
+	*x = ImageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageRequest) ProtoMessage() {}
+
+func (x *ImageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageRequest.ProtoReflect.Descriptor instead.
+func (*ImageRequest) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *ImageRequest) GetFileID() int64 {
+	if x != nil {
+		return x.FileID
+	}
+	return 0
+}
+
+func (x *ImageRequest) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *ImageRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *ImageRequest) GetFolder() string {
+	if x != nil {
+		return x.Folder
+	}
+	return ""
+}
+
+type ImageReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Filename string `protobuf:"bytes,1,opt,name=filename,proto3" json:"filename,omitempty"`
+	Chunk    []byte `protobuf:"bytes,2,opt,name=chunk,proto3" json:"chunk,omitempty"`
+}
+
+func (x *ImageReply) Reset() {
+	*x = ImageReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImageReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageReply) ProtoMessage() {}
+
+func (x *ImageReply) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageReply.ProtoReflect.Descriptor instead.
+func (*ImageReply) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *ImageReply) GetFilename() string {
+	if x != nil {
+		return x.Filename
+	}
+	return ""
+}
+
+func (x *ImageReply) GetChunk() []byte {
+	if x != nil {
+		return x.Chunk
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -2162,7 +2288,18 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x68, 0x69, 0x63, 0x53, 0x68, 0x6f, 0x70, 0x52, 0x05, 0x73, 0x68, 0x6f, 0x70, 0x73, 0x12, 0x2c,
 	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x4d, 0x61, 0x69, 0x6e, 0x47, 0x72, 0x61, 0x70, 0x68,
-	0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21,
+	0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x6e, 0x0a, 0x0c,
+	0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06,
+	0x66, 0x69, 0x6c, 0x65, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x66, 0x69,
+	0x6c, 0x65, 0x49, 0x44, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69, 0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x66, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x66, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x22, 0x3e, 0x0a, 0x0a,
+	0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x69,
+	0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x69,
+	0x6c, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b, 0x42, 0x23, 0x5a, 0x21,
 	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e,
 	0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
@@ -2180,7 +2317,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                   // 0: cerasus.Role
 	(*Auth)(nil),                   // 1: cerasus.Auth
@@ -2212,6 +2349,8 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*MainGraphicShop)(nil),        // 27: cerasus.MainGraphicShop
 	(*MainGraphicType)(nil),        // 28: cerasus.MainGraphicType
 	(*MainGraphicReply)(nil),       // 29: cerasus.MainGraphicReply
+	(*ImageRequest)(nil),           // 30: cerasus.ImageRequest
+	(*ImageReply)(nil),             // 31: cerasus.ImageReply
 }
 var file_cerasus_proto_depIdxs = []int32{
 	0,  // 0: cerasus.Auth.roles:type_name -> cerasus.Role
@@ -2613,6 +2752,30 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImageReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2620,7 +2783,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   30,
+			NumMessages:   32,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

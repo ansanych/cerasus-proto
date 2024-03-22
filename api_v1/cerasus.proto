@@ -190,3 +190,15 @@ message MainGraphicReply {
     repeated MainGraphicShop shops = 2;
     repeated MainGraphicType data = 3;
 }
+
+message ImageRequest {
+    int64 fileID = 1;
+    string filename = 2;
+    string code = 3;
+    string folder = 4;
+}
+
+message ImageReply {
+    string filename = 1;
+    bytes chunk = 2;
+}

@@ -36,6 +36,7 @@ type WBClient interface {
 	GetSaleDetail(ctx context.Context, in *SaleDetailsRequest, opts ...grpc.CallOption) (*SaleDetailsReply, error)
 	GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 }
 
 type wBClient struct {
@@ -172,6 +173,15 @@ func (c *wBClient) GetMainGraphic(ctx context.Context, in *MainGraphicRequest, o
 	return out, nil
 }
 
+func (c *wBClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -190,6 +200,7 @@ type WBServer interface {
 	GetSaleDetail(context.Context, *SaleDetailsRequest) (*SaleDetailsReply, error)
 	GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error)
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -238,6 +249,9 @@ func (UnimplementedWBServer) GetProductSales(context.Context, *ProductSalesReque
 }
 func (UnimplementedWBServer) GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
+}
+func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -504,6 +518,24 @@ func _WB_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/GetImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +598,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMainGraphic",
 			Handler:    _WB_GetMainGraphic_Handler,
+		},
+		{
+			MethodName: "GetImage",
+			Handler:    _WB_GetImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
