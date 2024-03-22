@@ -202,3 +202,9 @@ message ImageReply {
     string filename = 1;
     bytes chunk = 2;
 }
+
+message CompanyShopData {
+    bool sales = 1;
+    bool products = 2;
+    bool days = 3;
+  }

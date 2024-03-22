@@ -148,12 +148,13 @@ message Tax {
   message ShopsReply {
     repeated Shop shops = 1;
   }
-  
+
   message CompanyShop {
     int64 ID = 1;
     Shop shop = 2;
     bool active = 3;
     bool auth = 4;
+    CompanyShopData data = 5;
   }
   
   message CompanyShopsReply {

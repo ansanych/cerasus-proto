@@ -21,6 +21,7 @@ service Ozon {
     rpc GetProductSales (ProductSalesRequest) returns (SalesReply) {}
     rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc CheckAuth(Auth) returns (CompanyShopData) {}
 }
 
 message ShopOzonAuth {

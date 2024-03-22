@@ -37,6 +37,7 @@ type WBClient interface {
 	GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	CheckAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 }
 
 type wBClient struct {
@@ -182,6 +183,15 @@ func (c *wBClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *wBClient) CheckAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error) {
+	out := new(CompanyShopData)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/CheckAuth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -201,6 +211,7 @@ type WBServer interface {
 	GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error)
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	CheckAuth(context.Context, *Auth) (*CompanyShopData, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -252,6 +263,9 @@ func (UnimplementedWBServer) GetMainGraphic(context.Context, *MainGraphicRequest
 }
 func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedWBServer) CheckAuth(context.Context, *Auth) (*CompanyShopData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAuth not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -536,6 +550,24 @@ func _WB_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_CheckAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).CheckAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/CheckAuth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).CheckAuth(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +634,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _WB_GetImage_Handler,
+		},
+		{
+			MethodName: "CheckAuth",
+			Handler:    _WB_CheckAuth_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
