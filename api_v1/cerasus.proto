@@ -207,4 +207,6 @@ message CompanyShopData {
     bool sales = 1;
     bool products = 2;
     bool days = 3;
-  }
+    bool auth = 4;
+    bool active = 5;
+}
