@@ -111,6 +111,7 @@ message Sale {
     ShopProduct item = 9;
     int32 count = 10;
     bool final = 11;
+    bool return = 12;
 }
 
 message SalesReply {
