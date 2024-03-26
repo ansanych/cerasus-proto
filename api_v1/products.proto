@@ -23,6 +23,7 @@ service Products {
     rpc CheckLinkedShopProduct (CheckLinksReqest) returns (ProductLink) {}
     rpc GetCompanyProductsID (ListIDRequest) returns (ListID) {}
     rpc GetShopProductPurcases (ShopProductPurcasesRequest) returns (PurchasesReply) {}
+    rpc GetProductByShopID (ProductByShopRequest) returns (Product) {}
 }
 
 message ShopProductLinks {
@@ -123,4 +124,9 @@ message ListIDRequest {
 
 message ListID {
     repeated int64 shopProductID = 1;
+}
+
+message ProductByShopRequest {
+    string shopCode = 1;
+    int64 shopProductID = 2;
 }
