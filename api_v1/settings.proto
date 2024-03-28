@@ -70,6 +70,7 @@ message Tax {
     string logo = 4;
     string url = 5;
     bool global = 6;
+    bool linked = 7;
   }
   
   message GetBrandsRequest {
@@ -91,6 +92,7 @@ message Tax {
   message SearchBrandRequest {
     Auth auth = 1;
     string name = 2;
+    bool all = 3;
   }
   
   message SetBrandRequest {
