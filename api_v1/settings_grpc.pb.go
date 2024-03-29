@@ -46,6 +46,8 @@ type SettingsClient interface {
 	ActivateCompanyShop(ctx context.Context, in *ActivateCompanyShopRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
+	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 }
 
 type settingsClient struct {
@@ -272,6 +274,24 @@ func (c *settingsClient) GetImage(ctx context.Context, in *ImageRequest, opts ..
 	return out, nil
 }
 
+func (c *settingsClient) GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error) {
+	out := new(DonutGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/GetDonutGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error) {
+	out := new(WeekGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/GetWeekGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -300,6 +320,8 @@ type SettingsServer interface {
 	ActivateCompanyShop(context.Context, *ActivateCompanyShopRequest) (*BoolReply, error)
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	GetDonutGraphics(context.Context, *Auth) (*DonutGraphics, error)
+	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -378,6 +400,12 @@ func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *MainGraphicR
 }
 func (UnimplementedSettingsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedSettingsServer) GetDonutGraphics(context.Context, *Auth) (*DonutGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDonutGraphics not implemented")
+}
+func (UnimplementedSettingsServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -824,6 +852,42 @@ func _Settings_GetImage_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetDonutGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetDonutGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/GetDonutGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetDonutGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetWeekGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/GetWeekGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetWeekGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -926,6 +990,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _Settings_GetImage_Handler,
+		},
+		{
+			MethodName: "GetDonutGraphics",
+			Handler:    _Settings_GetDonutGraphics_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphics",
+			Handler:    _Settings_GetWeekGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

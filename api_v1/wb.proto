@@ -22,6 +22,8 @@ service WB {
     rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
+    rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
+    rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
 }
 
 message ShopWBAuth {

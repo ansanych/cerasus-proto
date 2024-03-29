@@ -38,6 +38,8 @@ type OzonClient interface {
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
+	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
+	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 }
 
 type ozonClient struct {
@@ -192,6 +194,24 @@ func (c *ozonClient) CheckShopData(ctx context.Context, in *Auth, opts ...grpc.C
 	return out, nil
 }
 
+func (c *ozonClient) GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error) {
+	out := new(DonutGraphic)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/GetDonutGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ozonClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error) {
+	out := new(WeekGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/GetWeekGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OzonServer is the server API for Ozon service.
 // All implementations must embed UnimplementedOzonServer
 // for forward compatibility
@@ -212,6 +232,8 @@ type OzonServer interface {
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
+	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
+	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	mustEmbedUnimplementedOzonServer()
 }
 
@@ -266,6 +288,12 @@ func (UnimplementedOzonServer) GetImage(context.Context, *ImageRequest) (*ImageR
 }
 func (UnimplementedOzonServer) CheckShopData(context.Context, *Auth) (*CompanyShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckShopData not implemented")
+}
+func (UnimplementedOzonServer) GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDonutGraphics not implemented")
+}
+func (UnimplementedOzonServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
 func (UnimplementedOzonServer) mustEmbedUnimplementedOzonServer() {}
 
@@ -568,6 +596,42 @@ func _Ozon_CheckShopData_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Ozon_GetDonutGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OzonServer).GetDonutGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Ozon/GetDonutGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OzonServer).GetDonutGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ozon_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OzonServer).GetWeekGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Ozon/GetWeekGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OzonServer).GetWeekGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Ozon_ServiceDesc is the grpc.ServiceDesc for Ozon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +702,14 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckShopData",
 			Handler:    _Ozon_CheckShopData_Handler,
+		},
+		{
+			MethodName: "GetDonutGraphics",
+			Handler:    _Ozon_GetDonutGraphics_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphics",
+			Handler:    _Ozon_GetWeekGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

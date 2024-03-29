@@ -30,6 +30,8 @@ service Settings {
     rpc ActivateCompanyShop (ActivateCompanyShopRequest) returns (BoolReply) {}
     rpc GetMainGraphic (MainGraphicRequest) returns (MainGraphicReply) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc GetDonutGraphics(Auth) returns (DonutGraphics) {}
+    rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
 }
 
 message Tax {

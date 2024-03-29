@@ -2187,6 +2187,289 @@ func (x *CompanyShopData) GetActive() bool {
 	return false
 }
 
+type DonutGraphicData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Label string  `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Value float32 `protobuf:"fixed32,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *DonutGraphicData) Reset() {
+	*x = DonutGraphicData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DonutGraphicData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DonutGraphicData) ProtoMessage() {}
+
+func (x *DonutGraphicData) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DonutGraphicData.ProtoReflect.Descriptor instead.
+func (*DonutGraphicData) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *DonutGraphicData) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *DonutGraphicData) GetValue() float32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+type DonutGraphic struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Label string              `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Data  []*DonutGraphicData `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *DonutGraphic) Reset() {
+	*x = DonutGraphic{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DonutGraphic) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DonutGraphic) ProtoMessage() {}
+
+func (x *DonutGraphic) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DonutGraphic.ProtoReflect.Descriptor instead.
+func (*DonutGraphic) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *DonutGraphic) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *DonutGraphic) GetData() []*DonutGraphicData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type DonutGraphics struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*DonutGraphic `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *DonutGraphics) Reset() {
+	*x = DonutGraphics{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DonutGraphics) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DonutGraphics) ProtoMessage() {}
+
+func (x *DonutGraphics) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DonutGraphics.ProtoReflect.Descriptor instead.
+func (*DonutGraphics) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *DonutGraphics) GetData() []*DonutGraphic {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type WeekGraphicData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Label string  `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
+	Min   float32 `protobuf:"fixed32,2,opt,name=min,proto3" json:"min,omitempty"`
+	Mid   float32 `protobuf:"fixed32,3,opt,name=mid,proto3" json:"mid,omitempty"`
+	Max   float32 `protobuf:"fixed32,4,opt,name=max,proto3" json:"max,omitempty"`
+	Value float32 `protobuf:"fixed32,5,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *WeekGraphicData) Reset() {
+	*x = WeekGraphicData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WeekGraphicData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WeekGraphicData) ProtoMessage() {}
+
+func (x *WeekGraphicData) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WeekGraphicData.ProtoReflect.Descriptor instead.
+func (*WeekGraphicData) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *WeekGraphicData) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *WeekGraphicData) GetMin() float32 {
+	if x != nil {
+		return x.Min
+	}
+	return 0
+}
+
+func (x *WeekGraphicData) GetMid() float32 {
+	if x != nil {
+		return x.Mid
+	}
+	return 0
+}
+
+func (x *WeekGraphicData) GetMax() float32 {
+	if x != nil {
+		return x.Max
+	}
+	return 0
+}
+
+func (x *WeekGraphicData) GetValue() float32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+type WeekGraphics struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*WeekGraphicData `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *WeekGraphics) Reset() {
+	*x = WeekGraphics{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WeekGraphics) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WeekGraphics) ProtoMessage() {}
+
+func (x *WeekGraphics) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WeekGraphics.ProtoReflect.Descriptor instead.
+func (*WeekGraphics) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *WeekGraphics) GetData() []*WeekGraphicData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -2406,10 +2689,34 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x64, 0x61, 0x79, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04, 0x64, 0x61, 0x79, 0x73,
 	0x12, 0x12, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x04,
 	0x61, 0x75, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x42, 0x23, 0x5a, 0x21,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e,
-	0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x22, 0x3e, 0x0a, 0x10,
+	0x44, 0x6f, 0x6e, 0x75, 0x74, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x44, 0x61, 0x74, 0x61,
+	0x12, 0x14, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x53, 0x0a, 0x0c,
+	0x44, 0x6f, 0x6e, 0x75, 0x74, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x12, 0x14, 0x0a, 0x05,
+	0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6c, 0x61, 0x62,
+	0x65, 0x6c, 0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x44, 0x6f, 0x6e, 0x75, 0x74,
+	0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x22, 0x3a, 0x0a, 0x0d, 0x44, 0x6f, 0x6e, 0x75, 0x74, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69,
+	0x63, 0x73, 0x12, 0x29, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x44, 0x6f, 0x6e, 0x75, 0x74,
+	0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x73, 0x0a,
+	0x0f, 0x57, 0x65, 0x65, 0x6b, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x44, 0x61, 0x74, 0x61,
+	0x12, 0x14, 0x0a, 0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x69, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x02, 0x52, 0x03, 0x6d, 0x69, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x69, 0x64, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6d, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x61,
+	0x78, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6d, 0x61, 0x78, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x22, 0x3c, 0x0a, 0x0c, 0x57, 0x65, 0x65, 0x6b, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69,
+	0x63, 0x73, 0x12, 0x2c, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x57, 0x65, 0x65, 0x6b, 0x47,
+	0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61,
+	0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2424,7 +2731,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                   // 0: cerasus.Role
 	(*Auth)(nil),                   // 1: cerasus.Auth
@@ -2459,6 +2766,11 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*ImageRequest)(nil),           // 30: cerasus.ImageRequest
 	(*ImageReply)(nil),             // 31: cerasus.ImageReply
 	(*CompanyShopData)(nil),        // 32: cerasus.CompanyShopData
+	(*DonutGraphicData)(nil),       // 33: cerasus.DonutGraphicData
+	(*DonutGraphic)(nil),           // 34: cerasus.DonutGraphic
+	(*DonutGraphics)(nil),          // 35: cerasus.DonutGraphics
+	(*WeekGraphicData)(nil),        // 36: cerasus.WeekGraphicData
+	(*WeekGraphics)(nil),           // 37: cerasus.WeekGraphics
 }
 var file_cerasus_proto_depIdxs = []int32{
 	0,  // 0: cerasus.Auth.roles:type_name -> cerasus.Role
@@ -2487,11 +2799,14 @@ var file_cerasus_proto_depIdxs = []int32{
 	1,  // 23: cerasus.MainGraphicRequest.auth:type_name -> cerasus.Auth
 	27, // 24: cerasus.MainGraphicReply.shops:type_name -> cerasus.MainGraphicShop
 	28, // 25: cerasus.MainGraphicReply.data:type_name -> cerasus.MainGraphicType
-	26, // [26:26] is the sub-list for method output_type
-	26, // [26:26] is the sub-list for method input_type
-	26, // [26:26] is the sub-list for extension type_name
-	26, // [26:26] is the sub-list for extension extendee
-	0,  // [0:26] is the sub-list for field type_name
+	33, // 26: cerasus.DonutGraphic.data:type_name -> cerasus.DonutGraphicData
+	34, // 27: cerasus.DonutGraphics.data:type_name -> cerasus.DonutGraphic
+	36, // 28: cerasus.WeekGraphics.data:type_name -> cerasus.WeekGraphicData
+	29, // [29:29] is the sub-list for method output_type
+	29, // [29:29] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -2896,6 +3211,66 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DonutGraphicData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DonutGraphic); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DonutGraphics); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WeekGraphicData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WeekGraphics); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2903,7 +3278,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   33,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

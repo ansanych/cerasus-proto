@@ -212,3 +212,29 @@ message CompanyShopData {
     bool auth = 4;
     bool active = 5;
 }
+
+message DonutGraphicData {
+    string label = 1;
+    float value = 2;
+}
+
+message DonutGraphic {
+    string label = 1;
+    repeated DonutGraphicData data = 2;
+}
+
+message DonutGraphics {
+    repeated DonutGraphic data = 1;
+}
+
+message WeekGraphicData {
+    string label = 1;
+    float min = 2;
+    float mid = 3;
+    float max = 4;
+    float value = 5;
+}
+
+message WeekGraphics {
+    repeated WeekGraphicData data = 1;
+}

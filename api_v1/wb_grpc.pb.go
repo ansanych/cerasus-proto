@@ -38,6 +38,8 @@ type WBClient interface {
 	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
+	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
+	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 }
 
 type wBClient struct {
@@ -192,6 +194,24 @@ func (c *wBClient) CheckShopData(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *wBClient) GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error) {
+	out := new(DonutGraphic)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/GetDonutGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error) {
+	out := new(WeekGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/GetWeekGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -212,6 +232,8 @@ type WBServer interface {
 	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
+	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
+	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -266,6 +288,12 @@ func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageRep
 }
 func (UnimplementedWBServer) CheckShopData(context.Context, *Auth) (*CompanyShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckShopData not implemented")
+}
+func (UnimplementedWBServer) GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDonutGraphics not implemented")
+}
+func (UnimplementedWBServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -568,6 +596,42 @@ func _WB_CheckShopData_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetDonutGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetDonutGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/GetDonutGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetDonutGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetWeekGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/GetWeekGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetWeekGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +702,14 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckShopData",
 			Handler:    _WB_CheckShopData_Handler,
+		},
+		{
+			MethodName: "GetDonutGraphics",
+			Handler:    _WB_GetDonutGraphics_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphics",
+			Handler:    _WB_GetWeekGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
