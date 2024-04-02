@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service News {
+    rpc GetAllNews(Auth) returns (NewsList) {}
+    rpc GetOneNews(OneNewsRequest) returns (OneNews) {}
+}
+
+message OneNewsRequest {
+    int64 ID = 1;
+}
+
+message OneNews {
+    int64 ID = 1;
+    string title = 2;
+    string article = 3;
+    string preview = 4;
+}
+
+message OneNewsShort {
+    int64 ID = 1;
+    string title = 2;
+    string preview = 3;
+}
+
+message NewsList {
+    repeated OneNewsShort news = 1;
+    Pagination pagination = 2;
+}
