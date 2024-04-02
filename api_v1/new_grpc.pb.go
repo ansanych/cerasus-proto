@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewsClient interface {
-	GetAllNews(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*NewsList, error)
+	GetAllNews(ctx context.Context, in *Page, opts ...grpc.CallOption) (*NewsList, error)
 	GetOneNews(ctx context.Context, in *OneNewsRequest, opts ...grpc.CallOption) (*OneNews, error)
 }
 
@@ -34,7 +34,7 @@ func NewNewsClient(cc grpc.ClientConnInterface) NewsClient {
 	return &newsClient{cc}
 }
 
-func (c *newsClient) GetAllNews(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*NewsList, error) {
+func (c *newsClient) GetAllNews(ctx context.Context, in *Page, opts ...grpc.CallOption) (*NewsList, error) {
 	out := new(NewsList)
 	err := c.cc.Invoke(ctx, "/cerasus.News/GetAllNews", in, out, opts...)
 	if err != nil {
@@ -56,7 +56,7 @@ func (c *newsClient) GetOneNews(ctx context.Context, in *OneNewsRequest, opts ..
 // All implementations must embed UnimplementedNewsServer
 // for forward compatibility
 type NewsServer interface {
-	GetAllNews(context.Context, *Auth) (*NewsList, error)
+	GetAllNews(context.Context, *Page) (*NewsList, error)
 	GetOneNews(context.Context, *OneNewsRequest) (*OneNews, error)
 	mustEmbedUnimplementedNewsServer()
 }
@@ -65,7 +65,7 @@ type NewsServer interface {
 type UnimplementedNewsServer struct {
 }
 
-func (UnimplementedNewsServer) GetAllNews(context.Context, *Auth) (*NewsList, error) {
+func (UnimplementedNewsServer) GetAllNews(context.Context, *Page) (*NewsList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllNews not implemented")
 }
 func (UnimplementedNewsServer) GetOneNews(context.Context, *OneNewsRequest) (*OneNews, error) {
@@ -85,7 +85,7 @@ func RegisterNewsServer(s grpc.ServiceRegistrar, srv NewsServer) {
 }
 
 func _News_GetAllNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(Page)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func _News_GetAllNews_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/cerasus.News/GetAllNews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewsServer).GetAllNews(ctx, req.(*Auth))
+		return srv.(NewsServer).GetAllNews(ctx, req.(*Page))
 	}
 	return interceptor(ctx, in, info, handler)
 }

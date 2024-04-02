@@ -6,8 +6,12 @@ package cerasus;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service News {
-    rpc GetAllNews(Auth) returns (NewsList) {}
+    rpc GetAllNews(Page) returns (NewsList) {}
     rpc GetOneNews(OneNewsRequest) returns (OneNews) {}
+}
+
+message Page {
+    int64 page = 1;
 }
 
 message OneNewsRequest {
