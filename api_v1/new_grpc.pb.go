@@ -22,8 +22,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewsClient interface {
-	GetAllNews(ctx context.Context, in *Page, opts ...grpc.CallOption) (*NewsList, error)
+	GetAllNews(ctx context.Context, in *AllNewsRequest, opts ...grpc.CallOption) (*NewsList, error)
 	GetOneNews(ctx context.Context, in *OneNewsRequest, opts ...grpc.CallOption) (*OneNews, error)
+	CreateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*InsertReply, error)
+	UpdateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*BoolReply, error)
+	DeleteNews(ctx context.Context, in *InsertReply, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type newsClient struct {
@@ -34,7 +37,7 @@ func NewNewsClient(cc grpc.ClientConnInterface) NewsClient {
 	return &newsClient{cc}
 }
 
-func (c *newsClient) GetAllNews(ctx context.Context, in *Page, opts ...grpc.CallOption) (*NewsList, error) {
+func (c *newsClient) GetAllNews(ctx context.Context, in *AllNewsRequest, opts ...grpc.CallOption) (*NewsList, error) {
 	out := new(NewsList)
 	err := c.cc.Invoke(ctx, "/cerasus.News/GetAllNews", in, out, opts...)
 	if err != nil {
@@ -52,12 +55,42 @@ func (c *newsClient) GetOneNews(ctx context.Context, in *OneNewsRequest, opts ..
 	return out, nil
 }
 
+func (c *newsClient) CreateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*InsertReply, error) {
+	out := new(InsertReply)
+	err := c.cc.Invoke(ctx, "/cerasus.News/CreateNews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsClient) UpdateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.News/UpdateNews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsClient) DeleteNews(ctx context.Context, in *InsertReply, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.News/DeleteNews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsServer is the server API for News service.
 // All implementations must embed UnimplementedNewsServer
 // for forward compatibility
 type NewsServer interface {
-	GetAllNews(context.Context, *Page) (*NewsList, error)
+	GetAllNews(context.Context, *AllNewsRequest) (*NewsList, error)
 	GetOneNews(context.Context, *OneNewsRequest) (*OneNews, error)
+	CreateNews(context.Context, *OneNews) (*InsertReply, error)
+	UpdateNews(context.Context, *OneNews) (*BoolReply, error)
+	DeleteNews(context.Context, *InsertReply) (*BoolReply, error)
 	mustEmbedUnimplementedNewsServer()
 }
 
@@ -65,11 +98,20 @@ type NewsServer interface {
 type UnimplementedNewsServer struct {
 }
 
-func (UnimplementedNewsServer) GetAllNews(context.Context, *Page) (*NewsList, error) {
+func (UnimplementedNewsServer) GetAllNews(context.Context, *AllNewsRequest) (*NewsList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllNews not implemented")
 }
 func (UnimplementedNewsServer) GetOneNews(context.Context, *OneNewsRequest) (*OneNews, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOneNews not implemented")
+}
+func (UnimplementedNewsServer) CreateNews(context.Context, *OneNews) (*InsertReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNews not implemented")
+}
+func (UnimplementedNewsServer) UpdateNews(context.Context, *OneNews) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNews not implemented")
+}
+func (UnimplementedNewsServer) DeleteNews(context.Context, *InsertReply) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteNews not implemented")
 }
 func (UnimplementedNewsServer) mustEmbedUnimplementedNewsServer() {}
 
@@ -85,7 +127,7 @@ func RegisterNewsServer(s grpc.ServiceRegistrar, srv NewsServer) {
 }
 
 func _News_GetAllNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Page)
+	in := new(AllNewsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -97,7 +139,7 @@ func _News_GetAllNews_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/cerasus.News/GetAllNews",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NewsServer).GetAllNews(ctx, req.(*Page))
+		return srv.(NewsServer).GetAllNews(ctx, req.(*AllNewsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -120,6 +162,60 @@ func _News_GetOneNews_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _News_CreateNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OneNews)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServer).CreateNews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.News/CreateNews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServer).CreateNews(ctx, req.(*OneNews))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _News_UpdateNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OneNews)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServer).UpdateNews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.News/UpdateNews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServer).UpdateNews(ctx, req.(*OneNews))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _News_DeleteNews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertReply)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServer).DeleteNews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.News/DeleteNews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServer).DeleteNews(ctx, req.(*InsertReply))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // News_ServiceDesc is the grpc.ServiceDesc for News service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +230,18 @@ var News_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOneNews",
 			Handler:    _News_GetOneNews_Handler,
+		},
+		{
+			MethodName: "CreateNews",
+			Handler:    _News_CreateNews_Handler,
+		},
+		{
+			MethodName: "UpdateNews",
+			Handler:    _News_UpdateNews_Handler,
+		},
+		{
+			MethodName: "DeleteNews",
+			Handler:    _News_DeleteNews_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

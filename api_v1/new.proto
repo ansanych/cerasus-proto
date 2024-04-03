@@ -6,12 +6,16 @@ package cerasus;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service News {
-    rpc GetAllNews(Page) returns (NewsList) {}
+    rpc GetAllNews(AllNewsRequest) returns (NewsList) {}
     rpc GetOneNews(OneNewsRequest) returns (OneNews) {}
+    rpc CreateNews(OneNews) returns (InsertReply) {}
+    rpc UpdateNews(OneNews) returns (BoolReply) {}
+    rpc DeleteNews(InsertReply) returns (BoolReply) {}
 }
 
-message Page {
+message AllNewsRequest {
     int64 page = 1;
+    bool newsline = 2;
 }
 
 message OneNewsRequest {
@@ -21,14 +25,21 @@ message OneNewsRequest {
 message OneNews {
     int64 ID = 1;
     string title = 2;
-    string article = 3;
-    string preview = 4;
+    string preview = 3;
+    string text_short = 4;
+    string text_full = 5;
+    int64 active = 6;
+    int64 newsline = 7;
+    string seo_title = 8;
+    string seo_discription = 9;
+    string seo_keywords = 10;
 }
 
 message OneNewsShort {
     int64 ID = 1;
     string title = 2;
     string preview = 3;
+    string text_short = 4;
 }
 
 message NewsList {
