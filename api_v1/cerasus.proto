@@ -41,6 +41,7 @@ message ShopProduct {
     string article = 3;
     string image = 4;
     bool active = 5;
+    string url = 6;
 }
 
 message Filter {
