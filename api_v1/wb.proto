@@ -14,6 +14,7 @@ service WB {
     rpc GetProductCount (Auth) returns (CountReply) {}
     rpc GetProductList (ShopProductListRequest) returns (ShopProductListReply) {}
     rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
+    rpc UpdateProduct (ShopProductUpdateRequest) returns (BoolReply) {}
     rpc GetDaySales (Auth) returns (DaysSalesReply) {}
     rpc GetSales (SalesRequest) returns (SalesReply) {}
     rpc GetShopServices(ShopServiceRequest) returns (ShopServiceReply) {}

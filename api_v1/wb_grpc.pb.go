@@ -30,6 +30,7 @@ type WBClient interface {
 	GetProductCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
 	GetProductList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error)
 	GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error)
+	UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetDaySales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DaysSalesReply, error)
 	GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error)
@@ -116,6 +117,15 @@ func (c *wBClient) GetProductList(ctx context.Context, in *ShopProductListReques
 func (c *wBClient) GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error) {
 	out := new(ShopProduct)
 	err := c.cc.Invoke(ctx, "/cerasus.WB/GetProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/UpdateProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -224,6 +234,7 @@ type WBServer interface {
 	GetProductCount(context.Context, *Auth) (*CountReply, error)
 	GetProductList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error)
 	GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error)
+	UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error)
 	GetDaySales(context.Context, *Auth) (*DaysSalesReply, error)
 	GetSales(context.Context, *SalesRequest) (*SalesReply, error)
 	GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error)
@@ -264,6 +275,9 @@ func (UnimplementedWBServer) GetProductList(context.Context, *ShopProductListReq
 }
 func (UnimplementedWBServer) GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+}
+func (UnimplementedWBServer) UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
 func (UnimplementedWBServer) GetDaySales(context.Context, *Auth) (*DaysSalesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDaySales not implemented")
@@ -448,6 +462,24 @@ func _WB_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WBServer).GetProduct(ctx, req.(*ShopProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).UpdateProduct(ctx, req.(*ShopProductUpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -670,6 +702,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProduct",
 			Handler:    _WB_GetProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _WB_UpdateProduct_Handler,
 		},
 		{
 			MethodName: "GetDaySales",

@@ -30,6 +30,7 @@ type OzonClient interface {
 	GetProductCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
 	GetProductList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error)
 	GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error)
+	UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetDaySales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DaysSalesReply, error)
 	GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
 	GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error)
@@ -116,6 +117,15 @@ func (c *ozonClient) GetProductList(ctx context.Context, in *ShopProductListRequ
 func (c *ozonClient) GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error) {
 	out := new(ShopProduct)
 	err := c.cc.Invoke(ctx, "/cerasus.Ozon/GetProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ozonClient) UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/UpdateProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -224,6 +234,7 @@ type OzonServer interface {
 	GetProductCount(context.Context, *Auth) (*CountReply, error)
 	GetProductList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error)
 	GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error)
+	UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error)
 	GetDaySales(context.Context, *Auth) (*DaysSalesReply, error)
 	GetSales(context.Context, *SalesRequest) (*SalesReply, error)
 	GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error)
@@ -264,6 +275,9 @@ func (UnimplementedOzonServer) GetProductList(context.Context, *ShopProductListR
 }
 func (UnimplementedOzonServer) GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+}
+func (UnimplementedOzonServer) UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
 func (UnimplementedOzonServer) GetDaySales(context.Context, *Auth) (*DaysSalesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDaySales not implemented")
@@ -448,6 +462,24 @@ func _Ozon_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OzonServer).GetProduct(ctx, req.(*ShopProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Ozon_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OzonServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Ozon/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OzonServer).UpdateProduct(ctx, req.(*ShopProductUpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -670,6 +702,10 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProduct",
 			Handler:    _Ozon_GetProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _Ozon_UpdateProduct_Handler,
 		},
 		{
 			MethodName: "GetDaySales",
