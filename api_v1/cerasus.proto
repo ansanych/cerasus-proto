@@ -42,6 +42,7 @@ message ShopProduct {
     string image = 4;
     bool active = 5;
     string url = 6;
+    int64 brandID = 7;
 }
 
 message Filter {
