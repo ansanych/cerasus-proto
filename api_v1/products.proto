@@ -25,7 +25,7 @@ service Products {
     rpc GetShopProductPurcases (ShopProductPurcasesRequest) returns (PurchasesReply) {}
     rpc GetProductByShopID (ProductByShopRequest) returns (Product) {}
     rpc GetBrandProductsID (BrandListIDRequest) returns (ListID) {}
-    rpc GetBrandsIDProduct (ListID) returns (BrandListID) {}
+    rpc GetBrandsIDProduct (BrandProductRequest) returns (BrandListID) {}
 }
 
 message ShopProductLinks {
@@ -137,6 +137,12 @@ message ListID {
 message ShopProductBrandID {
     int64 shopProductID = 1;
     int64 brandID = 2;
+}
+
+message BrandProductRequest {
+    Auth auth = 1;
+    string shopCode = 2;
+    repeated int64 shopProductID = 3;
 }
 
 message BrandListID {

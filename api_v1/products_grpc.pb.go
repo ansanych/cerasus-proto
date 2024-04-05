@@ -41,7 +41,7 @@ type ProductsClient interface {
 	GetShopProductPurcases(ctx context.Context, in *ShopProductPurcasesRequest, opts ...grpc.CallOption) (*PurchasesReply, error)
 	GetProductByShopID(ctx context.Context, in *ProductByShopRequest, opts ...grpc.CallOption) (*Product, error)
 	GetBrandProductsID(ctx context.Context, in *BrandListIDRequest, opts ...grpc.CallOption) (*ListID, error)
-	GetBrandsIDProduct(ctx context.Context, in *ListID, opts ...grpc.CallOption) (*BrandListID, error)
+	GetBrandsIDProduct(ctx context.Context, in *BrandProductRequest, opts ...grpc.CallOption) (*BrandListID, error)
 }
 
 type productsClient struct {
@@ -223,7 +223,7 @@ func (c *productsClient) GetBrandProductsID(ctx context.Context, in *BrandListID
 	return out, nil
 }
 
-func (c *productsClient) GetBrandsIDProduct(ctx context.Context, in *ListID, opts ...grpc.CallOption) (*BrandListID, error) {
+func (c *productsClient) GetBrandsIDProduct(ctx context.Context, in *BrandProductRequest, opts ...grpc.CallOption) (*BrandListID, error) {
 	out := new(BrandListID)
 	err := c.cc.Invoke(ctx, "/cerasus.Products/GetBrandsIDProduct", in, out, opts...)
 	if err != nil {
@@ -255,7 +255,7 @@ type ProductsServer interface {
 	GetShopProductPurcases(context.Context, *ShopProductPurcasesRequest) (*PurchasesReply, error)
 	GetProductByShopID(context.Context, *ProductByShopRequest) (*Product, error)
 	GetBrandProductsID(context.Context, *BrandListIDRequest) (*ListID, error)
-	GetBrandsIDProduct(context.Context, *ListID) (*BrandListID, error)
+	GetBrandsIDProduct(context.Context, *BrandProductRequest) (*BrandListID, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -320,7 +320,7 @@ func (UnimplementedProductsServer) GetProductByShopID(context.Context, *ProductB
 func (UnimplementedProductsServer) GetBrandProductsID(context.Context, *BrandListIDRequest) (*ListID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandProductsID not implemented")
 }
-func (UnimplementedProductsServer) GetBrandsIDProduct(context.Context, *ListID) (*BrandListID, error) {
+func (UnimplementedProductsServer) GetBrandsIDProduct(context.Context, *BrandProductRequest) (*BrandListID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandsIDProduct not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
@@ -679,7 +679,7 @@ func _Products_GetBrandProductsID_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _Products_GetBrandsIDProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListID)
+	in := new(BrandProductRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -691,7 +691,7 @@ func _Products_GetBrandsIDProduct_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/cerasus.Products/GetBrandsIDProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsServer).GetBrandsIDProduct(ctx, req.(*ListID))
+		return srv.(ProductsServer).GetBrandsIDProduct(ctx, req.(*BrandProductRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
