@@ -64,3 +64,30 @@ genNews:
 			--go-grpc_out ./api_v1 \
 			--go-grpc_opt paths=source_relative \
 			./api_v1/new.proto
+
+genServices:
+	protoc -I ./api_v1 \
+			--proto_path=./api_v1 \
+			--go_out ./api_v1 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v1 \
+			--go-grpc_opt paths=source_relative \
+			./api_v1/services.proto
+
+genPricer:
+	protoc -I ./api_v1 \
+			--proto_path=./api_v1 \
+			--go_out ./api_v1 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v1 \
+			--go-grpc_opt paths=source_relative \
+			./api_v1/pricer.proto
+
+genAvailabler:
+	protoc -I ./api_v1 \
+			--proto_path=./api_v1 \
+			--go_out ./api_v1 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v1 \
+			--go-grpc_opt paths=source_relative \
+			./api_v1/availabler.proto

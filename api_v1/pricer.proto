@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Pricer {
+    rpc SetSystemSettings(PricerSystemSettings) returns (BoolReply) {}
+    rpc GetSystemSettings(Auth) returns (PricerSystemSettings) {}
+    rpc SetCompanySettings(PricerCompanySettings) returns (BoolReply) {}
+    rpc GetCompanySettings(Auth) returns (PricerCompanySettingsReply) {}
+    rpc SetCompanyParams(SetPricerParams) returns (BoolReply) {}
+    rpc GetCompanyParams(Auth) returns (PricerParams) {}
+}
+
+message PricerSystemSettings {
+    int32 period = 1;
+}
+
+message PricerCompanySettings {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int32 period = 3;
+    int32 limit = 4;
+    string shopCode = 5;
+}
+
+message PricerCompanySettingsReply {
+    repeated PricerCompanySettings settings = 1;
+}
+
+message PricerParam {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int64 productID = 3;
+    string shopCode = 4;
+    float target = 5;
+    float minOffset = 6;
+    float maxOffset = 7;
+    bool active = 8;
+}
+
+message SetPricerParams {
+    Auth auth = 1;
+    repeated PricerParam params = 2;
+}
+
+message PricerParams {
+    repeated PricerParam params = 1;
+}

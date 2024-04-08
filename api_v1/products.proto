@@ -26,6 +26,27 @@ service Products {
     rpc GetProductByShopID (ProductByShopRequest) returns (Product) {}
     rpc GetBrandProductsID (BrandListIDRequest) returns (ListID) {}
     rpc GetBrandsIDProduct (BrandProductRequest) returns (BrandListID) {}
+    rpc SetProductCount(CountDataSet) returns (BoolReply) {}
+    rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
+}
+
+message CountData {
+    int64 ID = 2;
+    int64 count = 3;
+}
+
+message CountDataSet {
+    Auth auth = 1;
+    int64 ID = 2;
+    int64 count = 3;
+}
+
+message CountDataGetRequest {
+    repeated int64 ID = 1;
+}
+
+message CountDataGetReply {
+    repeated CountData countData = 1;
 }
 
 message ShopProductLinks {

@@ -1,0 +1,52 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Availabler {
+    rpc SetSystemSettings(AvailablerSystemSettings) returns (BoolReply) {}
+    rpc GetSystemSettings(Auth) returns (AvailablerSystemSettings) {}
+    rpc SetCompanySettings(AvailablerCompanySettings) returns (BoolReply) {}
+    rpc GetCompanySettings(Auth) returns (AvailablerCompanySettingsReply) {}
+    rpc SetCompanyParams(SetAvailablerParams) returns (BoolReply) {}
+    rpc GetCompanyParams(Auth) returns (AvailablerParams) {}
+}
+
+message AvailablerSystemSettings {
+    int32 period = 1;
+    int32 minCount = 2;
+    int32 maxCount = 3;
+}
+
+message AvailablerCompanySettings {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int32 period = 3;
+    int32 limit = 4;
+    string shopCode = 5;
+}
+
+message AvailablerCompanySettingsReply {
+    repeated AvailablerCompanySettings settings = 1;
+}
+
+message AvailablerParam {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int64 productID = 3;
+    string shopCode = 4;
+    int32 minCount = 5;
+    int32 maxCount = 6;
+    bool active = 7;
+}
+
+message SetAvailablerParams {
+    Auth auth = 1;
+    repeated AvailablerParam params = 2;
+}
+
+message AvailablerParams {
+    repeated AvailablerParam params = 1;
+}

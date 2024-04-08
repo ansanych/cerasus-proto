@@ -42,6 +42,8 @@ type ProductsClient interface {
 	GetProductByShopID(ctx context.Context, in *ProductByShopRequest, opts ...grpc.CallOption) (*Product, error)
 	GetBrandProductsID(ctx context.Context, in *BrandListIDRequest, opts ...grpc.CallOption) (*ListID, error)
 	GetBrandsIDProduct(ctx context.Context, in *BrandProductRequest, opts ...grpc.CallOption) (*BrandListID, error)
+	SetProductCount(ctx context.Context, in *CountDataSet, opts ...grpc.CallOption) (*BoolReply, error)
+	GetProductCount(ctx context.Context, in *CountDataGetRequest, opts ...grpc.CallOption) (*CountDataGetReply, error)
 }
 
 type productsClient struct {
@@ -232,6 +234,24 @@ func (c *productsClient) GetBrandsIDProduct(ctx context.Context, in *BrandProduc
 	return out, nil
 }
 
+func (c *productsClient) SetProductCount(ctx context.Context, in *CountDataSet, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Products/SetProductCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) GetProductCount(ctx context.Context, in *CountDataGetRequest, opts ...grpc.CallOption) (*CountDataGetReply, error) {
+	out := new(CountDataGetReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Products/GetProductCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -256,6 +276,8 @@ type ProductsServer interface {
 	GetProductByShopID(context.Context, *ProductByShopRequest) (*Product, error)
 	GetBrandProductsID(context.Context, *BrandListIDRequest) (*ListID, error)
 	GetBrandsIDProduct(context.Context, *BrandProductRequest) (*BrandListID, error)
+	SetProductCount(context.Context, *CountDataSet) (*BoolReply, error)
+	GetProductCount(context.Context, *CountDataGetRequest) (*CountDataGetReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -322,6 +344,12 @@ func (UnimplementedProductsServer) GetBrandProductsID(context.Context, *BrandLis
 }
 func (UnimplementedProductsServer) GetBrandsIDProduct(context.Context, *BrandProductRequest) (*BrandListID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandsIDProduct not implemented")
+}
+func (UnimplementedProductsServer) SetProductCount(context.Context, *CountDataSet) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetProductCount not implemented")
+}
+func (UnimplementedProductsServer) GetProductCount(context.Context, *CountDataGetRequest) (*CountDataGetReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductCount not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -696,6 +724,42 @@ func _Products_GetBrandsIDProduct_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_SetProductCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountDataSet)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).SetProductCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Products/SetProductCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).SetProductCount(ctx, req.(*CountDataSet))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_GetProductCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountDataGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Products/GetProductCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductCount(ctx, req.(*CountDataGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -782,6 +846,14 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBrandsIDProduct",
 			Handler:    _Products_GetBrandsIDProduct_Handler,
+		},
+		{
+			MethodName: "SetProductCount",
+			Handler:    _Products_SetProductCount_Handler,
+		},
+		{
+			MethodName: "GetProductCount",
+			Handler:    _Products_GetProductCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
