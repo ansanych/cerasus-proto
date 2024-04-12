@@ -27,7 +27,7 @@ type PricerClient interface {
 	SetCompanySettings(ctx context.Context, in *PricerCompanySettings, opts ...grpc.CallOption) (*BoolReply, error)
 	GetCompanySettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerCompanySettingsReply, error)
 	SetCompanyParams(ctx context.Context, in *SetPricerParams, opts ...grpc.CallOption) (*BoolReply, error)
-	GetCompanyParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerParams, error)
+	GetCompanyParams(ctx context.Context, in *CompanyParamsRequest, opts ...grpc.CallOption) (*PricerParams, error)
 }
 
 type pricerClient struct {
@@ -83,7 +83,7 @@ func (c *pricerClient) SetCompanyParams(ctx context.Context, in *SetPricerParams
 	return out, nil
 }
 
-func (c *pricerClient) GetCompanyParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerParams, error) {
+func (c *pricerClient) GetCompanyParams(ctx context.Context, in *CompanyParamsRequest, opts ...grpc.CallOption) (*PricerParams, error) {
 	out := new(PricerParams)
 	err := c.cc.Invoke(ctx, "/cerasus.Pricer/GetCompanyParams", in, out, opts...)
 	if err != nil {
@@ -101,7 +101,7 @@ type PricerServer interface {
 	SetCompanySettings(context.Context, *PricerCompanySettings) (*BoolReply, error)
 	GetCompanySettings(context.Context, *Auth) (*PricerCompanySettingsReply, error)
 	SetCompanyParams(context.Context, *SetPricerParams) (*BoolReply, error)
-	GetCompanyParams(context.Context, *Auth) (*PricerParams, error)
+	GetCompanyParams(context.Context, *CompanyParamsRequest) (*PricerParams, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -124,7 +124,7 @@ func (UnimplementedPricerServer) GetCompanySettings(context.Context, *Auth) (*Pr
 func (UnimplementedPricerServer) SetCompanyParams(context.Context, *SetPricerParams) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetCompanyParams not implemented")
 }
-func (UnimplementedPricerServer) GetCompanyParams(context.Context, *Auth) (*PricerParams, error) {
+func (UnimplementedPricerServer) GetCompanyParams(context.Context, *CompanyParamsRequest) (*PricerParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyParams not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
@@ -231,7 +231,7 @@ func _Pricer_SetCompanyParams_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _Pricer_GetCompanyParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(CompanyParamsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -243,7 +243,7 @@ func _Pricer_GetCompanyParams_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/cerasus.Pricer/GetCompanyParams",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PricerServer).GetCompanyParams(ctx, req.(*Auth))
+		return srv.(PricerServer).GetCompanyParams(ctx, req.(*CompanyParamsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

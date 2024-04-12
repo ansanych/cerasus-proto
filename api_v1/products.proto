@@ -49,25 +49,6 @@ message CountDataGetReply {
     repeated CountData countData = 1;
 }
 
-message ShopProductLinks {
-    string shopCode = 1;
-    repeated int64 shopProductID = 2;
-}
-
-message Product {
-    int64 ID = 1;
-    int64 companyID = 2;
-    string title = 3;
-    string comment = 4;
-    repeated int64 groupsID = 5;
-    int64 brandID = 6;
-    bool active = 7;
-    string updated = 8;
-    float purchase = 9;
-    repeated ShopProductLinks shopProductLinks = 10;
-    string preview = 11;
-}
-
 message ProductsReply {
     repeated Product products = 1;
     Pagination pagination = 2;

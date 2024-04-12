@@ -11,7 +11,7 @@ service Pricer {
     rpc SetCompanySettings(PricerCompanySettings) returns (BoolReply) {}
     rpc GetCompanySettings(Auth) returns (PricerCompanySettingsReply) {}
     rpc SetCompanyParams(SetPricerParams) returns (BoolReply) {}
-    rpc GetCompanyParams(Auth) returns (PricerParams) {}
+    rpc GetCompanyParams(CompanyParamsRequest) returns (PricerParams) {}
 }
 
 message PricerSystemSettings {
@@ -39,6 +39,12 @@ message PricerParam {
     float minOffset = 6;
     float maxOffset = 7;
     bool active = 8;
+    Product product = 9;
+}
+
+message CompanyParamsRequest {
+    Auth auth = 1;
+    string shopCode = 2;
 }
 
 message SetPricerParams {
