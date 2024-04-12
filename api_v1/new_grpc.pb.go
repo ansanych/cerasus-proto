@@ -27,6 +27,7 @@ type NewsClient interface {
 	CreateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*InsertReply, error)
 	UpdateNews(ctx context.Context, in *OneNews, opts ...grpc.CallOption) (*BoolReply, error)
 	DeleteNews(ctx context.Context, in *InsertReply, opts ...grpc.CallOption) (*BoolReply, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 }
 
 type newsClient struct {
@@ -82,6 +83,15 @@ func (c *newsClient) DeleteNews(ctx context.Context, in *InsertReply, opts ...gr
 	return out, nil
 }
 
+func (c *newsClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasus.News/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsServer is the server API for News service.
 // All implementations must embed UnimplementedNewsServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type NewsServer interface {
 	CreateNews(context.Context, *OneNews) (*InsertReply, error)
 	UpdateNews(context.Context, *OneNews) (*BoolReply, error)
 	DeleteNews(context.Context, *InsertReply) (*BoolReply, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	mustEmbedUnimplementedNewsServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedNewsServer) UpdateNews(context.Context, *OneNews) (*BoolReply
 }
 func (UnimplementedNewsServer) DeleteNews(context.Context, *InsertReply) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteNews not implemented")
+}
+func (UnimplementedNewsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
 func (UnimplementedNewsServer) mustEmbedUnimplementedNewsServer() {}
 
@@ -216,6 +230,24 @@ func _News_DeleteNews_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _News_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServer).GetImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.News/GetImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // News_ServiceDesc is the grpc.ServiceDesc for News service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var News_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteNews",
 			Handler:    _News_DeleteNews_Handler,
+		},
+		{
+			MethodName: "GetImage",
+			Handler:    _News_GetImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
