@@ -12,6 +12,7 @@ service Pricer {
     rpc GetCompanySettings(Auth) returns (PricerCompanySettingsReply) {}
     rpc SetCompanyParams(SetPricerParams) returns (BoolReply) {}
     rpc GetCompanyParams(CompanyParamsRequest) returns (PricerParams) {}
+    rpc GetCompanyParamProduct(CompanyParamProductRequest) returns (PricerParam) {}
 }
 
 message PricerSystemSettings {
@@ -23,7 +24,8 @@ message PricerCompanySettings {
     int64 companyID = 2;
     int32 period = 3;
     int32 limit = 4;
-    string shopCode = 5;
+    int32 used = 5;
+    string shopCode = 6;
 }
 
 message PricerCompanySettingsReply {
@@ -54,4 +56,10 @@ message SetPricerParams {
 
 message PricerParams {
     repeated PricerParam params = 1;
+}
+
+message CompanyParamProductRequest {
+    Auth auth = 1;
+    string shopCode = 2;
+    int64 productID = 3;
 }

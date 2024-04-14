@@ -28,6 +28,7 @@ type PricerClient interface {
 	GetCompanySettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerCompanySettingsReply, error)
 	SetCompanyParams(ctx context.Context, in *SetPricerParams, opts ...grpc.CallOption) (*BoolReply, error)
 	GetCompanyParams(ctx context.Context, in *CompanyParamsRequest, opts ...grpc.CallOption) (*PricerParams, error)
+	GetCompanyParamProduct(ctx context.Context, in *CompanyParamProductRequest, opts ...grpc.CallOption) (*PricerParam, error)
 }
 
 type pricerClient struct {
@@ -92,6 +93,15 @@ func (c *pricerClient) GetCompanyParams(ctx context.Context, in *CompanyParamsRe
 	return out, nil
 }
 
+func (c *pricerClient) GetCompanyParamProduct(ctx context.Context, in *CompanyParamProductRequest, opts ...grpc.CallOption) (*PricerParam, error) {
+	out := new(PricerParam)
+	err := c.cc.Invoke(ctx, "/cerasus.Pricer/GetCompanyParamProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -102,6 +112,7 @@ type PricerServer interface {
 	GetCompanySettings(context.Context, *Auth) (*PricerCompanySettingsReply, error)
 	SetCompanyParams(context.Context, *SetPricerParams) (*BoolReply, error)
 	GetCompanyParams(context.Context, *CompanyParamsRequest) (*PricerParams, error)
+	GetCompanyParamProduct(context.Context, *CompanyParamProductRequest) (*PricerParam, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -126,6 +137,9 @@ func (UnimplementedPricerServer) SetCompanyParams(context.Context, *SetPricerPar
 }
 func (UnimplementedPricerServer) GetCompanyParams(context.Context, *CompanyParamsRequest) (*PricerParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyParams not implemented")
+}
+func (UnimplementedPricerServer) GetCompanyParamProduct(context.Context, *CompanyParamProductRequest) (*PricerParam, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyParamProduct not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -248,6 +262,24 @@ func _Pricer_GetCompanyParams_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetCompanyParamProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompanyParamProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetCompanyParamProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Pricer/GetCompanyParamProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetCompanyParamProduct(ctx, req.(*CompanyParamProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +310,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyParams",
 			Handler:    _Pricer_GetCompanyParams_Handler,
+		},
+		{
+			MethodName: "GetCompanyParamProduct",
+			Handler:    _Pricer_GetCompanyParamProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
