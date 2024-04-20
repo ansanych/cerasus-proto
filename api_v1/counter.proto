@@ -13,7 +13,7 @@ message ShopRegulator {
     int64 ID = 1;
     int64 counterID = 2;
     int64 productID = 3;
-    int64 shopCode = 4;
+    string shopCode = 4;
     bool active = 5;
 }
 
@@ -21,9 +21,16 @@ message ShopCounter {
     int64 ID = 1;
     int64 counterID = 2;
     int64 productID = 3;
-    int64 shopCode = 4;
+    string shopCode = 4;
     int64 count = 5;
-    string created = 6;
+    string updated = 6;
+}
+
+message CounterShopParams {
+    string shopCode = 1;
+    int64 count = 2;
+    bool active = 3;
+    string updated = 4;
 }
 
 message ProductCounter {
@@ -31,8 +38,7 @@ message ProductCounter {
     int64 productID = 2;
     int64 companyID = 3;
     int64 productCount = 4;
-    repeated ShopCounter shopCounter = 5;
-    repeated ShopRegulator ShopRegulator = 6;
+    repeated CounterShopParams counterShopParams = 5;
 }
 
 message ProductsCounter {
