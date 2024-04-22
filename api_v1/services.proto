@@ -8,6 +8,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Services {
     rpc GetServices (Auth) returns (ServicesReply) {}
     rpc GetCompanyServices (Auth) returns (CompanyServicesReply) {}
+    rpc GetCompaniesServicesList (CompaniesServiesListRequest) returns (CompaniesServiesListReply) {}
 }
 
 message Service {
@@ -31,4 +32,18 @@ message CompanyService {
 
 message CompanyServicesReply {
     repeated CompanyService services = 1;
+}
+
+message CompaniesServiesListRequest {
+    repeated string code = 1;
+    bool active = 2;
+}
+
+message CompanyServices {
+    int64 companyID = 1;
+    repeated CompanyService services = 2;
+}
+
+message CompaniesServiesListReply {
+    repeated CompanyServices list = 1;
 }

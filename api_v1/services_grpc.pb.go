@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ServicesClient interface {
 	GetServices(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ServicesReply, error)
 	GetCompanyServices(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyServicesReply, error)
+	GetCompaniesServicesList(ctx context.Context, in *CompaniesServiesListRequest, opts ...grpc.CallOption) (*CompaniesServiesListReply, error)
 }
 
 type servicesClient struct {
@@ -52,12 +53,22 @@ func (c *servicesClient) GetCompanyServices(ctx context.Context, in *Auth, opts 
 	return out, nil
 }
 
+func (c *servicesClient) GetCompaniesServicesList(ctx context.Context, in *CompaniesServiesListRequest, opts ...grpc.CallOption) (*CompaniesServiesListReply, error) {
+	out := new(CompaniesServiesListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Services/GetCompaniesServicesList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServicesServer is the server API for Services service.
 // All implementations must embed UnimplementedServicesServer
 // for forward compatibility
 type ServicesServer interface {
 	GetServices(context.Context, *Auth) (*ServicesReply, error)
 	GetCompanyServices(context.Context, *Auth) (*CompanyServicesReply, error)
+	GetCompaniesServicesList(context.Context, *CompaniesServiesListRequest) (*CompaniesServiesListReply, error)
 	mustEmbedUnimplementedServicesServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedServicesServer) GetServices(context.Context, *Auth) (*Service
 }
 func (UnimplementedServicesServer) GetCompanyServices(context.Context, *Auth) (*CompanyServicesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyServices not implemented")
+}
+func (UnimplementedServicesServer) GetCompaniesServicesList(context.Context, *CompaniesServiesListRequest) (*CompaniesServiesListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesServicesList not implemented")
 }
 func (UnimplementedServicesServer) mustEmbedUnimplementedServicesServer() {}
 
@@ -120,6 +134,24 @@ func _Services_GetCompanyServices_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Services_GetCompaniesServicesList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompaniesServiesListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServicesServer).GetCompaniesServicesList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Services/GetCompaniesServicesList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServicesServer).GetCompaniesServicesList(ctx, req.(*CompaniesServiesListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Services_ServiceDesc is the grpc.ServiceDesc for Services service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Services_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyServices",
 			Handler:    _Services_GetCompanyServices_Handler,
+		},
+		{
+			MethodName: "GetCompaniesServicesList",
+			Handler:    _Services_GetCompaniesServicesList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
