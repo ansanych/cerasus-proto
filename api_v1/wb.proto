@@ -25,6 +25,7 @@ service WB {
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
+    rpc SysSkus(SysSkusRequest) returns (SysSkusReply) {}
 }
 
 message ShopWBAuth {
@@ -35,4 +36,19 @@ message ShopWBAuth {
 message SetWBAuth {
     Auth auth = 1;
     ShopWBAuth shopAuth = 2;
+}
+
+message SysSkusData {
+    int64 shopProductID = 1;
+    repeated string skus = 2;
+}
+
+message SysSkusRequest {
+    int64 companyID = 1;
+    repeated int64 shopProductID = 2;
+}
+
+message SysSkusReply {
+    ShopWBAuth shopWBAuth = 1;
+    repeated SysSkusData data = 2;
 }

@@ -41,6 +41,7 @@ type WBClient interface {
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
+	SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc.CallOption) (*SysSkusReply, error)
 }
 
 type wBClient struct {
@@ -222,6 +223,15 @@ func (c *wBClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.C
 	return out, nil
 }
 
+func (c *wBClient) SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc.CallOption) (*SysSkusReply, error) {
+	out := new(SysSkusReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/SysSkus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -245,6 +255,7 @@ type WBServer interface {
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
+	SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -308,6 +319,9 @@ func (UnimplementedWBServer) GetDonutGraphics(context.Context, *Auth) (*DonutGra
 }
 func (UnimplementedWBServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
+}
+func (UnimplementedWBServer) SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysSkus not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -664,6 +678,24 @@ func _WB_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_SysSkus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysSkusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).SysSkus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/SysSkus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).SysSkus(ctx, req.(*SysSkusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +778,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeekGraphics",
 			Handler:    _WB_GetWeekGraphics_Handler,
+		},
+		{
+			MethodName: "SysSkus",
+			Handler:    _WB_SysSkus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
