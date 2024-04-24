@@ -41,6 +41,7 @@ type OzonClient interface {
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
+	SysShopProductsID(ctx context.Context, in *SysShopProductsIDRequest, opts ...grpc.CallOption) (*SysShopProductsIDReply, error)
 }
 
 type ozonClient struct {
@@ -222,6 +223,15 @@ func (c *ozonClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc
 	return out, nil
 }
 
+func (c *ozonClient) SysShopProductsID(ctx context.Context, in *SysShopProductsIDRequest, opts ...grpc.CallOption) (*SysShopProductsIDReply, error) {
+	out := new(SysShopProductsIDReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/SysShopProductsID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OzonServer is the server API for Ozon service.
 // All implementations must embed UnimplementedOzonServer
 // for forward compatibility
@@ -245,6 +255,7 @@ type OzonServer interface {
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
+	SysShopProductsID(context.Context, *SysShopProductsIDRequest) (*SysShopProductsIDReply, error)
 	mustEmbedUnimplementedOzonServer()
 }
 
@@ -308,6 +319,9 @@ func (UnimplementedOzonServer) GetDonutGraphics(context.Context, *Auth) (*DonutG
 }
 func (UnimplementedOzonServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
+}
+func (UnimplementedOzonServer) SysShopProductsID(context.Context, *SysShopProductsIDRequest) (*SysShopProductsIDReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysShopProductsID not implemented")
 }
 func (UnimplementedOzonServer) mustEmbedUnimplementedOzonServer() {}
 
@@ -664,6 +678,24 @@ func _Ozon_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Ozon_SysShopProductsID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysShopProductsIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OzonServer).SysShopProductsID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Ozon/SysShopProductsID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OzonServer).SysShopProductsID(ctx, req.(*SysShopProductsIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Ozon_ServiceDesc is the grpc.ServiceDesc for Ozon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +778,10 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeekGraphics",
 			Handler:    _Ozon_GetWeekGraphics_Handler,
+		},
+		{
+			MethodName: "SysShopProductsID",
+			Handler:    _Ozon_SysShopProductsID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
