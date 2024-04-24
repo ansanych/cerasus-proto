@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CounterClient interface {
 	GetCompanyProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ProductsCounter, error)
+	SysCounter(ctx context.Context, in *SysCounterRequest, opts ...grpc.CallOption) (*SysCounterReply, error)
 }
 
 type counterClient struct {
@@ -42,11 +43,21 @@ func (c *counterClient) GetCompanyProductsCount(ctx context.Context, in *Auth, o
 	return out, nil
 }
 
+func (c *counterClient) SysCounter(ctx context.Context, in *SysCounterRequest, opts ...grpc.CallOption) (*SysCounterReply, error) {
+	out := new(SysCounterReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Counter/SysCounter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CounterServer is the server API for Counter service.
 // All implementations must embed UnimplementedCounterServer
 // for forward compatibility
 type CounterServer interface {
 	GetCompanyProductsCount(context.Context, *Auth) (*ProductsCounter, error)
+	SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error)
 	mustEmbedUnimplementedCounterServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedCounterServer struct {
 
 func (UnimplementedCounterServer) GetCompanyProductsCount(context.Context, *Auth) (*ProductsCounter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyProductsCount not implemented")
+}
+func (UnimplementedCounterServer) SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SysCounter not implemented")
 }
 func (UnimplementedCounterServer) mustEmbedUnimplementedCounterServer() {}
 
@@ -88,6 +102,24 @@ func _Counter_GetCompanyProductsCount_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Counter_SysCounter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SysCounterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CounterServer).SysCounter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Counter/SysCounter",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CounterServer).SysCounter(ctx, req.(*SysCounterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Counter_ServiceDesc is the grpc.ServiceDesc for Counter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var Counter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyProductsCount",
 			Handler:    _Counter_GetCompanyProductsCount_Handler,
+		},
+		{
+			MethodName: "SysCounter",
+			Handler:    _Counter_SysCounter_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
