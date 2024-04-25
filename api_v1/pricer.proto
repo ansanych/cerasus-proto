@@ -13,6 +13,23 @@ service Pricer {
     rpc SetCompanyParams(SetPricerParams) returns (BoolReply) {}
     rpc GetCompanyParams(CompanyParamsRequest) returns (PricerParams) {}
     rpc GetCompanyParamProduct(CompanyParamProductRequest) returns (PricerParam) {}
+    rpc GetPricerItem(GetPricerItemRequest) returns (GetPricerItemReply) {}
+    rpc SetPricerItem(SetPricerItemRequest) returns (BoolReply) {}
+}
+
+message GetPricerItemRequest {
+    string shopCode = 1;
+}
+
+message GetPricerItemReply {
+    int64 ID = 1;
+    string url = 2;
+}
+
+message SetPricerItemRequest {
+    int64 ID = 1;
+    int32 parsePrice = 2;
+    string parsePriceType = 3;
 }
 
 message PricerSystemSettings {
