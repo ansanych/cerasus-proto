@@ -54,7 +54,8 @@ message SysCounterRequest {
 
 message SysCounterData {
     int64 productID = 1;
-    int64 count = 2;
+    int64 shopProductID = 2;
+    int64 count = 3;
 }
 
 message SysCounterReply {
