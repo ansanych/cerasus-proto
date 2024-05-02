@@ -15,6 +15,11 @@ service Pricer {
     rpc GetCompanyParamProduct(CompanyParamProductRequest) returns (PricerParam) {}
     rpc GetPricerItem(GetPricerItemRequest) returns (GetPricerItemReply) {}
     rpc SetPricerItem(SetPricerItemRequest) returns (BoolReply) {}
+    rpc GetProductsInPricer(Auth) returns (ProductsInPricer) {}
+}
+
+message ProductsInPricer {
+    repeated int64 ID = 1;
 }
 
 message GetPricerItemRequest {
