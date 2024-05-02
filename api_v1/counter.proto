@@ -6,25 +6,13 @@ package cerasus;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service Counter {
-    rpc GetCompanyProductsCount (Auth) returns (ProductsCounter) {}
+    rpc GetProductsCount (Auth) returns (ProductsCounter) {}
+    rpc GetProductCount (ProductCountRequest) returns (ProductCounter) {}
     rpc SysCounter (SysCounterRequest) returns (SysCounterReply) {}
 }
-
-message ShopRegulator {
-    int64 ID = 1;
-    int64 counterID = 2;
-    int64 productID = 3;
-    string shopCode = 4;
-    bool active = 5;
-}
-
-message ShopCounter {
-    int64 ID = 1;
-    int64 counterID = 2;
-    int64 productID = 3;
-    string shopCode = 4;
-    int64 count = 5;
-    string updated = 6;
+message ProductCountRequest {
+    Auth auth = 1;
+    int64 productID = 2;
 }
 
 message CounterShopParams {
