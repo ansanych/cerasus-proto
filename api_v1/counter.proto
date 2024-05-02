@@ -8,8 +8,17 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Counter {
     rpc GetProductsCount (Auth) returns (ProductsCounter) {}
     rpc GetProductCount (ProductCountRequest) returns (ProductCounter) {}
+    rpc SetProductCount (ProductCountSetter) returns (BoolReply) {}
     rpc SysCounter (SysCounterRequest) returns (SysCounterReply) {}
 }
+
+message ProductCountSetter {
+    Auth auth = 1;
+    int64 productID = 2;
+    int64 count = 3;
+    repeated CounterShopParams counterShopParams = 5;
+}
+
 message ProductCountRequest {
     Auth auth = 1;
     int64 productID = 2;

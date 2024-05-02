@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type CounterClient interface {
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ProductsCounter, error)
 	GetProductCount(ctx context.Context, in *ProductCountRequest, opts ...grpc.CallOption) (*ProductCounter, error)
+	SetProductCount(ctx context.Context, in *ProductCountSetter, opts ...grpc.CallOption) (*BoolReply, error)
 	SysCounter(ctx context.Context, in *SysCounterRequest, opts ...grpc.CallOption) (*SysCounterReply, error)
 }
 
@@ -53,6 +54,15 @@ func (c *counterClient) GetProductCount(ctx context.Context, in *ProductCountReq
 	return out, nil
 }
 
+func (c *counterClient) SetProductCount(ctx context.Context, in *ProductCountSetter, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Counter/SetProductCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *counterClient) SysCounter(ctx context.Context, in *SysCounterRequest, opts ...grpc.CallOption) (*SysCounterReply, error) {
 	out := new(SysCounterReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Counter/SysCounter", in, out, opts...)
@@ -68,6 +78,7 @@ func (c *counterClient) SysCounter(ctx context.Context, in *SysCounterRequest, o
 type CounterServer interface {
 	GetProductsCount(context.Context, *Auth) (*ProductsCounter, error)
 	GetProductCount(context.Context, *ProductCountRequest) (*ProductCounter, error)
+	SetProductCount(context.Context, *ProductCountSetter) (*BoolReply, error)
 	SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error)
 	mustEmbedUnimplementedCounterServer()
 }
@@ -81,6 +92,9 @@ func (UnimplementedCounterServer) GetProductsCount(context.Context, *Auth) (*Pro
 }
 func (UnimplementedCounterServer) GetProductCount(context.Context, *ProductCountRequest) (*ProductCounter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductCount not implemented")
+}
+func (UnimplementedCounterServer) SetProductCount(context.Context, *ProductCountSetter) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetProductCount not implemented")
 }
 func (UnimplementedCounterServer) SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SysCounter not implemented")
@@ -134,6 +148,24 @@ func _Counter_GetProductCount_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Counter_SetProductCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductCountSetter)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CounterServer).SetProductCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Counter/SetProductCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CounterServer).SetProductCount(ctx, req.(*ProductCountSetter))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Counter_SysCounter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SysCounterRequest)
 	if err := dec(in); err != nil {
@@ -166,6 +198,10 @@ var Counter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductCount",
 			Handler:    _Counter_GetProductCount_Handler,
+		},
+		{
+			MethodName: "SetProductCount",
+			Handler:    _Counter_SetProductCount_Handler,
 		},
 		{
 			MethodName: "SysCounter",
