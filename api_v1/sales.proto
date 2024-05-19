@@ -7,6 +7,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Sales {
     rpc CalculatedSales (CalcRequest) returns (CalcReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message CalcRequest {

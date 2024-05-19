@@ -26,6 +26,7 @@ service WB {
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc SysSkus(SysSkusRequest) returns (SysSkusReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message ShopWBAuth {

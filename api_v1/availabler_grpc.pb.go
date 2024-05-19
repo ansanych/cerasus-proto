@@ -28,6 +28,7 @@ type AvailablerClient interface {
 	GetCompanySettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AvailablerCompanySettingsReply, error)
 	SetCompanyParams(ctx context.Context, in *SetAvailablerParams, opts ...grpc.CallOption) (*BoolReply, error)
 	GetCompanyParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AvailablerParams, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
 type availablerClient struct {
@@ -92,6 +93,15 @@ func (c *availablerClient) GetCompanyParams(ctx context.Context, in *Auth, opts 
 	return out, nil
 }
 
+func (c *availablerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Availabler/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AvailablerServer is the server API for Availabler service.
 // All implementations must embed UnimplementedAvailablerServer
 // for forward compatibility
@@ -102,6 +112,7 @@ type AvailablerServer interface {
 	GetCompanySettings(context.Context, *Auth) (*AvailablerCompanySettingsReply, error)
 	SetCompanyParams(context.Context, *SetAvailablerParams) (*BoolReply, error)
 	GetCompanyParams(context.Context, *Auth) (*AvailablerParams, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedAvailablerServer()
 }
 
@@ -126,6 +137,9 @@ func (UnimplementedAvailablerServer) SetCompanyParams(context.Context, *SetAvail
 }
 func (UnimplementedAvailablerServer) GetCompanyParams(context.Context, *Auth) (*AvailablerParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyParams not implemented")
+}
+func (UnimplementedAvailablerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedAvailablerServer) mustEmbedUnimplementedAvailablerServer() {}
 
@@ -248,6 +262,24 @@ func _Availabler_GetCompanyParams_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Availabler_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AvailablerServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Availabler/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AvailablerServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Availabler_ServiceDesc is the grpc.ServiceDesc for Availabler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +310,10 @@ var Availabler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyParams",
 			Handler:    _Availabler_GetCompanyParams_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _Availabler_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

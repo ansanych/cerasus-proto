@@ -9,6 +9,7 @@ service Services {
     rpc GetServices (Auth) returns (ServicesReply) {}
     rpc GetCompanyServices (Auth) returns (CompanyServicesReply) {}
     rpc GetCompaniesServicesList (CompaniesServiesListRequest) returns (CompaniesServiesListReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message Service {

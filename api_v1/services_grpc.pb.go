@@ -25,6 +25,7 @@ type ServicesClient interface {
 	GetServices(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ServicesReply, error)
 	GetCompanyServices(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyServicesReply, error)
 	GetCompaniesServicesList(ctx context.Context, in *CompaniesServiesListRequest, opts ...grpc.CallOption) (*CompaniesServiesListReply, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
 type servicesClient struct {
@@ -62,6 +63,15 @@ func (c *servicesClient) GetCompaniesServicesList(ctx context.Context, in *Compa
 	return out, nil
 }
 
+func (c *servicesClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Services/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServicesServer is the server API for Services service.
 // All implementations must embed UnimplementedServicesServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type ServicesServer interface {
 	GetServices(context.Context, *Auth) (*ServicesReply, error)
 	GetCompanyServices(context.Context, *Auth) (*CompanyServicesReply, error)
 	GetCompaniesServicesList(context.Context, *CompaniesServiesListRequest) (*CompaniesServiesListReply, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedServicesServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedServicesServer) GetCompanyServices(context.Context, *Auth) (*
 }
 func (UnimplementedServicesServer) GetCompaniesServicesList(context.Context, *CompaniesServiesListRequest) (*CompaniesServiesListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesServicesList not implemented")
+}
+func (UnimplementedServicesServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedServicesServer) mustEmbedUnimplementedServicesServer() {}
 
@@ -152,6 +166,24 @@ func _Services_GetCompaniesServicesList_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Services_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServicesServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Services/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServicesServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Services_ServiceDesc is the grpc.ServiceDesc for Services service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var Services_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompaniesServicesList",
 			Handler:    _Services_GetCompaniesServicesList_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _Services_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

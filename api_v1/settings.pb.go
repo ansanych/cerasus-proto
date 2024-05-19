@@ -1666,7 +1666,7 @@ var file_settings_proto_rawDesc = []byte{
 	0x16, 0x0a, 0x06, 0x73, 0x68, 0x6f, 0x70, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52,
 	0x06, 0x73, 0x68, 0x6f, 0x70, 0x49, 0x44, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76,
 	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x32,
-	0x93, 0x0d, 0x0a, 0x08, 0x53, 0x65, 0x74, 0x74, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x30, 0x0a, 0x08,
+	0xc7, 0x0d, 0x0a, 0x08, 0x53, 0x65, 0x74, 0x74, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x30, 0x0a, 0x08,
 	0x47, 0x65, 0x74, 0x54, 0x61, 0x78, 0x65, 0x73, 0x12, 0x0d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
 	0x75, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x1a, 0x13, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
 	0x73, 0x2e, 0x54, 0x61, 0x78, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x44,
@@ -1771,10 +1771,13 @@ var file_settings_proto_rawDesc = []byte{
 	0x74, 0x57, 0x65, 0x65, 0x6b, 0x47, 0x72, 0x61, 0x70, 0x68, 0x69, 0x63, 0x73, 0x12, 0x0d, 0x2e,
 	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x1a, 0x15, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x57, 0x65, 0x65, 0x6b, 0x47, 0x72, 0x61, 0x70, 0x68,
-	0x69, 0x63, 0x73, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72,
-	0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x69, 0x63, 0x73, 0x22, 0x00, 0x12, 0x32, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x14, 0x2e,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69,
+	0x6e, 0x67, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68,
+	0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1821,12 +1824,14 @@ var file_settings_proto_goTypes = []interface{}{
 	(*DeleteRequest)(nil),              // 27: cerasus.DeleteRequest
 	(*MainGraphicRequest)(nil),         // 28: cerasus.MainGraphicRequest
 	(*ImageRequest)(nil),               // 29: cerasus.ImageRequest
-	(*BoolReply)(nil),                  // 30: cerasus.BoolReply
-	(*InsertReply)(nil),                // 31: cerasus.InsertReply
-	(*MainGraphicReply)(nil),           // 32: cerasus.MainGraphicReply
-	(*ImageReply)(nil),                 // 33: cerasus.ImageReply
-	(*DonutGraphics)(nil),              // 34: cerasus.DonutGraphics
-	(*WeekGraphics)(nil),               // 35: cerasus.WeekGraphics
+	(*PingRequest)(nil),                // 30: cerasus.PingRequest
+	(*BoolReply)(nil),                  // 31: cerasus.BoolReply
+	(*InsertReply)(nil),                // 32: cerasus.InsertReply
+	(*MainGraphicReply)(nil),           // 33: cerasus.MainGraphicReply
+	(*ImageReply)(nil),                 // 34: cerasus.ImageReply
+	(*DonutGraphics)(nil),              // 35: cerasus.DonutGraphics
+	(*WeekGraphics)(nil),               // 36: cerasus.WeekGraphics
+	(*PingReply)(nil),                  // 37: cerasus.PingReply
 }
 var file_settings_proto_depIdxs = []int32{
 	0,  // 0: cerasus.TaxesReply.taxes:type_name -> cerasus.Tax
@@ -1878,34 +1883,36 @@ var file_settings_proto_depIdxs = []int32{
 	29, // 46: cerasus.Settings.GetImage:input_type -> cerasus.ImageRequest
 	24, // 47: cerasus.Settings.GetDonutGraphics:input_type -> cerasus.Auth
 	24, // 48: cerasus.Settings.GetWeekGraphics:input_type -> cerasus.Auth
-	1,  // 49: cerasus.Settings.GetTaxes:output_type -> cerasus.TaxesReply
-	30, // 50: cerasus.Settings.SetCompanyTax:output_type -> cerasus.BoolReply
-	4,  // 51: cerasus.Settings.GetCompanyTaxes:output_type -> cerasus.CompanyTaxesReply
-	3,  // 52: cerasus.Settings.GetCompanyTax:output_type -> cerasus.CompanyTax
-	9,  // 53: cerasus.Settings.GetBrands:output_type -> cerasus.BrandsReply
-	6,  // 54: cerasus.Settings.GetBrand:output_type -> cerasus.Brand
-	9,  // 55: cerasus.Settings.SearchBrand:output_type -> cerasus.BrandsReply
-	31, // 56: cerasus.Settings.SetBrand:output_type -> cerasus.InsertReply
-	9,  // 57: cerasus.Settings.GetCompanyBrands:output_type -> cerasus.BrandsReply
-	6,  // 58: cerasus.Settings.GetCompanyBrand:output_type -> cerasus.Brand
-	13, // 59: cerasus.Settings.GetMargin:output_type -> cerasus.Margin
-	13, // 60: cerasus.Settings.GetMarginBrand:output_type -> cerasus.Margin
-	31, // 61: cerasus.Settings.SetMargin:output_type -> cerasus.InsertReply
-	31, // 62: cerasus.Settings.SetMarginBrand:output_type -> cerasus.InsertReply
-	30, // 63: cerasus.Settings.UpdateMargin:output_type -> cerasus.BoolReply
-	14, // 64: cerasus.Settings.GetMarginArchive:output_type -> cerasus.Margins
-	14, // 65: cerasus.Settings.GetMarginArchiveBrand:output_type -> cerasus.Margins
-	30, // 66: cerasus.Settings.DeleteMargin:output_type -> cerasus.BoolReply
-	19, // 67: cerasus.Settings.GetShops:output_type -> cerasus.ShopsReply
-	21, // 68: cerasus.Settings.GetCompanyShops:output_type -> cerasus.CompanyShopsReply
-	30, // 69: cerasus.Settings.SetCompanyShop:output_type -> cerasus.BoolReply
-	30, // 70: cerasus.Settings.ActivateCompanyShop:output_type -> cerasus.BoolReply
-	32, // 71: cerasus.Settings.GetMainGraphic:output_type -> cerasus.MainGraphicReply
-	33, // 72: cerasus.Settings.GetImage:output_type -> cerasus.ImageReply
-	34, // 73: cerasus.Settings.GetDonutGraphics:output_type -> cerasus.DonutGraphics
-	35, // 74: cerasus.Settings.GetWeekGraphics:output_type -> cerasus.WeekGraphics
-	49, // [49:75] is the sub-list for method output_type
-	23, // [23:49] is the sub-list for method input_type
+	30, // 49: cerasus.Settings.Ping:input_type -> cerasus.PingRequest
+	1,  // 50: cerasus.Settings.GetTaxes:output_type -> cerasus.TaxesReply
+	31, // 51: cerasus.Settings.SetCompanyTax:output_type -> cerasus.BoolReply
+	4,  // 52: cerasus.Settings.GetCompanyTaxes:output_type -> cerasus.CompanyTaxesReply
+	3,  // 53: cerasus.Settings.GetCompanyTax:output_type -> cerasus.CompanyTax
+	9,  // 54: cerasus.Settings.GetBrands:output_type -> cerasus.BrandsReply
+	6,  // 55: cerasus.Settings.GetBrand:output_type -> cerasus.Brand
+	9,  // 56: cerasus.Settings.SearchBrand:output_type -> cerasus.BrandsReply
+	32, // 57: cerasus.Settings.SetBrand:output_type -> cerasus.InsertReply
+	9,  // 58: cerasus.Settings.GetCompanyBrands:output_type -> cerasus.BrandsReply
+	6,  // 59: cerasus.Settings.GetCompanyBrand:output_type -> cerasus.Brand
+	13, // 60: cerasus.Settings.GetMargin:output_type -> cerasus.Margin
+	13, // 61: cerasus.Settings.GetMarginBrand:output_type -> cerasus.Margin
+	32, // 62: cerasus.Settings.SetMargin:output_type -> cerasus.InsertReply
+	32, // 63: cerasus.Settings.SetMarginBrand:output_type -> cerasus.InsertReply
+	31, // 64: cerasus.Settings.UpdateMargin:output_type -> cerasus.BoolReply
+	14, // 65: cerasus.Settings.GetMarginArchive:output_type -> cerasus.Margins
+	14, // 66: cerasus.Settings.GetMarginArchiveBrand:output_type -> cerasus.Margins
+	31, // 67: cerasus.Settings.DeleteMargin:output_type -> cerasus.BoolReply
+	19, // 68: cerasus.Settings.GetShops:output_type -> cerasus.ShopsReply
+	21, // 69: cerasus.Settings.GetCompanyShops:output_type -> cerasus.CompanyShopsReply
+	31, // 70: cerasus.Settings.SetCompanyShop:output_type -> cerasus.BoolReply
+	31, // 71: cerasus.Settings.ActivateCompanyShop:output_type -> cerasus.BoolReply
+	33, // 72: cerasus.Settings.GetMainGraphic:output_type -> cerasus.MainGraphicReply
+	34, // 73: cerasus.Settings.GetImage:output_type -> cerasus.ImageReply
+	35, // 74: cerasus.Settings.GetDonutGraphics:output_type -> cerasus.DonutGraphics
+	36, // 75: cerasus.Settings.GetWeekGraphics:output_type -> cerasus.WeekGraphics
+	37, // 76: cerasus.Settings.Ping:output_type -> cerasus.PingReply
+	50, // [50:77] is the sub-list for method output_type
+	23, // [23:50] is the sub-list for method input_type
 	23, // [23:23] is the sub-list for extension type_name
 	23, // [23:23] is the sub-list for extension extendee
 	0,  // [0:23] is the sub-list for field type_name

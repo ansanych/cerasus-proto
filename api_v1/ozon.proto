@@ -26,6 +26,7 @@ service Ozon {
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc SysShopProductsID (SysShopProductsIDRequest) returns (SysShopProductsIDReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message ShopOzonAuth {

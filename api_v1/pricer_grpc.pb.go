@@ -32,6 +32,7 @@ type PricerClient interface {
 	GetPricerItem(ctx context.Context, in *GetPricerItemRequest, opts ...grpc.CallOption) (*GetPricerItemReply, error)
 	SetPricerItem(ctx context.Context, in *SetPricerItemRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetProductsInPricer(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ProductsInPricer, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
 type pricerClient struct {
@@ -132,6 +133,15 @@ func (c *pricerClient) GetProductsInPricer(ctx context.Context, in *Auth, opts .
 	return out, nil
 }
 
+func (c *pricerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Pricer/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -146,6 +156,7 @@ type PricerServer interface {
 	GetPricerItem(context.Context, *GetPricerItemRequest) (*GetPricerItemReply, error)
 	SetPricerItem(context.Context, *SetPricerItemRequest) (*BoolReply, error)
 	GetProductsInPricer(context.Context, *Auth) (*ProductsInPricer, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -182,6 +193,9 @@ func (UnimplementedPricerServer) SetPricerItem(context.Context, *SetPricerItemRe
 }
 func (UnimplementedPricerServer) GetProductsInPricer(context.Context, *Auth) (*ProductsInPricer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsInPricer not implemented")
+}
+func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -376,6 +390,24 @@ func _Pricer_GetProductsInPricer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Pricer/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +454,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsInPricer",
 			Handler:    _Pricer_GetProductsInPricer_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _Pricer_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

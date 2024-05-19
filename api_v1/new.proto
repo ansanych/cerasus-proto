@@ -12,6 +12,7 @@ service News {
     rpc UpdateNews(OneNews) returns (BoolReply) {}
     rpc DeleteNews(InsertReply) returns (BoolReply) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message AllNewsRequest {

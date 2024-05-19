@@ -16,6 +16,7 @@ service Pricer {
     rpc GetPricerItem(GetPricerItemRequest) returns (GetPricerItemReply) {}
     rpc SetPricerItem(SetPricerItemRequest) returns (BoolReply) {}
     rpc GetProductsInPricer(Auth) returns (ProductsInPricer) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message ProductsInPricer {

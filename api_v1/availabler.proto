@@ -12,6 +12,7 @@ service Availabler {
     rpc GetCompanySettings(Auth) returns (AvailablerCompanySettingsReply) {}
     rpc SetCompanyParams(SetAvailablerParams) returns (BoolReply) {}
     rpc GetCompanyParams(Auth) returns (AvailablerParams) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message AvailablerSystemSettings {

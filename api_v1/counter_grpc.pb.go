@@ -26,6 +26,7 @@ type CounterClient interface {
 	GetProductCount(ctx context.Context, in *ProductCountRequest, opts ...grpc.CallOption) (*ProductCounter, error)
 	SetProductCount(ctx context.Context, in *ProductCountSetter, opts ...grpc.CallOption) (*BoolReply, error)
 	SysCounter(ctx context.Context, in *SysCounterRequest, opts ...grpc.CallOption) (*SysCounterReply, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
 type counterClient struct {
@@ -72,6 +73,15 @@ func (c *counterClient) SysCounter(ctx context.Context, in *SysCounterRequest, o
 	return out, nil
 }
 
+func (c *counterClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Counter/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CounterServer is the server API for Counter service.
 // All implementations must embed UnimplementedCounterServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type CounterServer interface {
 	GetProductCount(context.Context, *ProductCountRequest) (*ProductCounter, error)
 	SetProductCount(context.Context, *ProductCountSetter) (*BoolReply, error)
 	SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedCounterServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedCounterServer) SetProductCount(context.Context, *ProductCount
 }
 func (UnimplementedCounterServer) SysCounter(context.Context, *SysCounterRequest) (*SysCounterReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SysCounter not implemented")
+}
+func (UnimplementedCounterServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedCounterServer) mustEmbedUnimplementedCounterServer() {}
 
@@ -184,6 +198,24 @@ func _Counter_SysCounter_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Counter_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CounterServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Counter/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CounterServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Counter_ServiceDesc is the grpc.ServiceDesc for Counter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var Counter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SysCounter",
 			Handler:    _Counter_SysCounter_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _Counter_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

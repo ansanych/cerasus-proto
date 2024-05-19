@@ -266,3 +266,11 @@ message ShopProductUpdateRequest {
     string url = 3;
     bool active = 4;
 }
+
+message PingRequest {
+    string message = 1;
+}
+
+message PingReply {
+    string message = 1;
+}

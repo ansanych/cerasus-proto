@@ -28,6 +28,7 @@ service Products {
     rpc GetBrandsIDProduct (BrandProductRequest) returns (BrandListID) {}
     rpc SetProductCount(CountDataSet) returns (BoolReply) {}
     rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message CountData {

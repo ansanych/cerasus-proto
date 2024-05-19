@@ -42,6 +42,7 @@ type WBClient interface {
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc.CallOption) (*SysSkusReply, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
 type wBClient struct {
@@ -232,6 +233,15 @@ func (c *wBClient) SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *wBClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -256,6 +266,7 @@ type WBServer interface {
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -322,6 +333,9 @@ func (UnimplementedWBServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraph
 }
 func (UnimplementedWBServer) SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SysSkus not implemented")
+}
+func (UnimplementedWBServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -696,6 +710,24 @@ func _WB_SysSkus_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.WB/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -782,6 +814,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SysSkus",
 			Handler:    _WB_SysSkus_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _WB_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

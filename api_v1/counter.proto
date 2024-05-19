@@ -10,6 +10,7 @@ service Counter {
     rpc GetProductCount (ProductCountRequest) returns (ProductCounter) {}
     rpc SetProductCount (ProductCountSetter) returns (BoolReply) {}
     rpc SysCounter (SysCounterRequest) returns (SysCounterReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message ProductCountSetter {
