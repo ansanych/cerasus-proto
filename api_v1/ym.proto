@@ -9,6 +9,7 @@ service YM {
     rpc SetAuth (SetYMAuth) returns (BoolReply) {}
     rpc GetAuth (Auth) returns (ShopYMAuth) {}
     rpc ErrorAuth (Auth) returns (BoolReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
 }
 
 message ShopYMAuth {
