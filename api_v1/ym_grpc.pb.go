@@ -25,6 +25,8 @@ type YMClient interface {
 	SetAuth(ctx context.Context, in *SetYMAuth, opts ...grpc.CallOption) (*BoolReply, error)
 	GetAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopYMAuth, error)
 	ErrorAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BoolReply, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 }
 
 type yMClient struct {
@@ -62,6 +64,24 @@ func (c *yMClient) ErrorAuth(ctx context.Context, in *Auth, opts ...grpc.CallOpt
 	return out, nil
 }
 
+func (c *yMClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error) {
+	out := new(CompanyShopData)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/CheckShopData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -69,6 +89,8 @@ type YMServer interface {
 	SetAuth(context.Context, *SetYMAuth) (*BoolReply, error)
 	GetAuth(context.Context, *Auth) (*ShopYMAuth, error)
 	ErrorAuth(context.Context, *Auth) (*BoolReply, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
+	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -84,6 +106,12 @@ func (UnimplementedYMServer) GetAuth(context.Context, *Auth) (*ShopYMAuth, error
 }
 func (UnimplementedYMServer) ErrorAuth(context.Context, *Auth) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ErrorAuth not implemented")
+}
+func (UnimplementedYMServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedYMServer) CheckShopData(context.Context, *Auth) (*CompanyShopData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckShopData not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -152,6 +180,42 @@ func _YM_ErrorAuth_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_CheckShopData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).CheckShopData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/CheckShopData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).CheckShopData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +234,14 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ErrorAuth",
 			Handler:    _YM_ErrorAuth_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _YM_Ping_Handler,
+		},
+		{
+			MethodName: "CheckShopData",
+			Handler:    _YM_CheckShopData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

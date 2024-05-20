@@ -10,6 +10,7 @@ service YM {
     rpc GetAuth (Auth) returns (ShopYMAuth) {}
     rpc ErrorAuth (Auth) returns (BoolReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc CheckShopData(Auth) returns (CompanyShopData) {}
 }
 
 message ShopYMAuth {
