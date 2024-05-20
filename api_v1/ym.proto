@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service YM {
+    rpc SetAuth (SetYMAuth) returns (BoolReply) {}
+    rpc GetAuth (Auth) returns (ShopYMAuth) {}
+    rpc ErrorAuth (Auth) returns (BoolReply) {}
+}
+
+message ShopYMAuth {
+    string token = 1;
+    int32 businessID = 2;
+    bool error = 3;
+}
+
+message SetYMAuth {
+    Auth auth = 1;
+    ShopYMAuth shopAuth = 2;
+}
