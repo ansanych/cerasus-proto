@@ -27,6 +27,12 @@ type YMClient interface {
 	ErrorAuth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BoolReply, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
+	GetUnsortedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetUnsortedList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error)
+	GetProductCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetProductList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error)
+	GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error)
+	UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type yMClient struct {
@@ -82,6 +88,60 @@ func (c *yMClient) CheckShopData(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *yMClient) GetUnsortedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
+	out := new(CountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetUnsortedCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetUnsortedList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error) {
+	out := new(ShopProductListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetProductCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
+	out := new(CountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetProductCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetProductList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error) {
+	out := new(ShopProductListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetProductList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error) {
+	out := new(ShopProduct)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/UpdateProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -91,6 +151,12 @@ type YMServer interface {
 	ErrorAuth(context.Context, *Auth) (*BoolReply, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
+	GetUnsortedCount(context.Context, *Auth) (*CountReply, error)
+	GetUnsortedList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error)
+	GetProductCount(context.Context, *Auth) (*CountReply, error)
+	GetProductList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error)
+	GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error)
+	UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -112,6 +178,24 @@ func (UnimplementedYMServer) Ping(context.Context, *PingRequest) (*PingReply, er
 }
 func (UnimplementedYMServer) CheckShopData(context.Context, *Auth) (*CompanyShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckShopData not implemented")
+}
+func (UnimplementedYMServer) GetUnsortedCount(context.Context, *Auth) (*CountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedCount not implemented")
+}
+func (UnimplementedYMServer) GetUnsortedList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedList not implemented")
+}
+func (UnimplementedYMServer) GetProductCount(context.Context, *Auth) (*CountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductCount not implemented")
+}
+func (UnimplementedYMServer) GetProductList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
+}
+func (UnimplementedYMServer) GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+}
+func (UnimplementedYMServer) UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -216,6 +300,114 @@ func _YM_CheckShopData_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetUnsortedCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetUnsortedCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetUnsortedCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetUnsortedCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetUnsortedList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetUnsortedList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetUnsortedList(ctx, req.(*ShopProductListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetProductCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProductCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetProductCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProductCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetProductList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProductList(ctx, req.(*ShopProductListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProduct(ctx, req.(*ShopProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopProductUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).UpdateProduct(ctx, req.(*ShopProductUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +434,30 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckShopData",
 			Handler:    _YM_CheckShopData_Handler,
+		},
+		{
+			MethodName: "GetUnsortedCount",
+			Handler:    _YM_GetUnsortedCount_Handler,
+		},
+		{
+			MethodName: "GetUnsortedList",
+			Handler:    _YM_GetUnsortedList_Handler,
+		},
+		{
+			MethodName: "GetProductCount",
+			Handler:    _YM_GetProductCount_Handler,
+		},
+		{
+			MethodName: "GetProductList",
+			Handler:    _YM_GetProductList_Handler,
+		},
+		{
+			MethodName: "GetProduct",
+			Handler:    _YM_GetProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _YM_UpdateProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -11,6 +11,12 @@ service YM {
     rpc ErrorAuth (Auth) returns (BoolReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
+    rpc GetUnsortedCount (Auth) returns (CountReply) {}
+    rpc GetUnsortedList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProductCount (Auth) returns (CountReply) {}
+    rpc GetProductList (ShopProductListRequest) returns (ShopProductListReply) {}
+    rpc GetProduct (ShopProductRequest) returns (ShopProduct) {}
+    rpc UpdateProduct (ShopProductUpdateRequest) returns (BoolReply) {}
 }
 
 message ShopYMAuth {
