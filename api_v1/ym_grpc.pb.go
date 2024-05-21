@@ -33,6 +33,15 @@ type YMClient interface {
 	GetProductList(ctx context.Context, in *ShopProductListRequest, opts ...grpc.CallOption) (*ShopProductListReply, error)
 	GetProduct(ctx context.Context, in *ShopProductRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	UpdateProduct(ctx context.Context, in *ShopProductUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	GetDaySales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DaysSalesReply, error)
+	GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
+	GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error)
+	GetSaleDetail(ctx context.Context, in *SaleDetailsRequest, opts ...grpc.CallOption) (*SaleDetailsReply, error)
+	GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error)
+	GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
+	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 }
 
 type yMClient struct {
@@ -142,6 +151,87 @@ func (c *yMClient) UpdateProduct(ctx context.Context, in *ShopProductUpdateReque
 	return out, nil
 }
 
+func (c *yMClient) GetDaySales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DaysSalesReply, error) {
+	out := new(DaysSalesReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetDaySales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetSales(ctx context.Context, in *SalesRequest, opts ...grpc.CallOption) (*SalesReply, error) {
+	out := new(SalesReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetShopServices(ctx context.Context, in *ShopServiceRequest, opts ...grpc.CallOption) (*ShopServiceReply, error) {
+	out := new(ShopServiceReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetShopServices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetSaleDetail(ctx context.Context, in *SaleDetailsRequest, opts ...grpc.CallOption) (*SaleDetailsReply, error) {
+	out := new(SaleDetailsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetSaleDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetProductSales(ctx context.Context, in *ProductSalesRequest, opts ...grpc.CallOption) (*SalesReply, error) {
+	out := new(SalesReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetProductSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetMainGraphic(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error) {
+	out := new(MainGraphicReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error) {
+	out := new(DonutGraphic)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetDonutGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error) {
+	out := new(WeekGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetWeekGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -157,6 +247,15 @@ type YMServer interface {
 	GetProductList(context.Context, *ShopProductListRequest) (*ShopProductListReply, error)
 	GetProduct(context.Context, *ShopProductRequest) (*ShopProduct, error)
 	UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error)
+	GetDaySales(context.Context, *Auth) (*DaysSalesReply, error)
+	GetSales(context.Context, *SalesRequest) (*SalesReply, error)
+	GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error)
+	GetSaleDetail(context.Context, *SaleDetailsRequest) (*SaleDetailsReply, error)
+	GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error)
+	GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
+	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -196,6 +295,33 @@ func (UnimplementedYMServer) GetProduct(context.Context, *ShopProductRequest) (*
 }
 func (UnimplementedYMServer) UpdateProduct(context.Context, *ShopProductUpdateRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
+}
+func (UnimplementedYMServer) GetDaySales(context.Context, *Auth) (*DaysSalesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDaySales not implemented")
+}
+func (UnimplementedYMServer) GetSales(context.Context, *SalesRequest) (*SalesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
+}
+func (UnimplementedYMServer) GetShopServices(context.Context, *ShopServiceRequest) (*ShopServiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopServices not implemented")
+}
+func (UnimplementedYMServer) GetSaleDetail(context.Context, *SaleDetailsRequest) (*SaleDetailsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSaleDetail not implemented")
+}
+func (UnimplementedYMServer) GetProductSales(context.Context, *ProductSalesRequest) (*SalesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductSales not implemented")
+}
+func (UnimplementedYMServer) GetMainGraphic(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
+}
+func (UnimplementedYMServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedYMServer) GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDonutGraphics not implemented")
+}
+func (UnimplementedYMServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -408,6 +534,168 @@ func _YM_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetDaySales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetDaySales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetDaySales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetDaySales(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SalesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetSales(ctx, req.(*SalesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetShopServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetShopServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetShopServices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetShopServices(ctx, req.(*ShopServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetSaleDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaleDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetSaleDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetSaleDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetSaleDetail(ctx, req.(*SaleDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetProductSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductSalesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProductSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetProductSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProductSales(ctx, req.(*ProductSalesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainGraphicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetMainGraphic(ctx, req.(*MainGraphicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetDonutGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetDonutGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetDonutGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetDonutGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetWeekGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetWeekGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetWeekGraphics(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -458,6 +746,42 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateProduct",
 			Handler:    _YM_UpdateProduct_Handler,
+		},
+		{
+			MethodName: "GetDaySales",
+			Handler:    _YM_GetDaySales_Handler,
+		},
+		{
+			MethodName: "GetSales",
+			Handler:    _YM_GetSales_Handler,
+		},
+		{
+			MethodName: "GetShopServices",
+			Handler:    _YM_GetShopServices_Handler,
+		},
+		{
+			MethodName: "GetSaleDetail",
+			Handler:    _YM_GetSaleDetail_Handler,
+		},
+		{
+			MethodName: "GetProductSales",
+			Handler:    _YM_GetProductSales_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _YM_GetMainGraphic_Handler,
+		},
+		{
+			MethodName: "GetImage",
+			Handler:    _YM_GetImage_Handler,
+		},
+		{
+			MethodName: "GetDonutGraphics",
+			Handler:    _YM_GetDonutGraphics_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphics",
+			Handler:    _YM_GetWeekGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
