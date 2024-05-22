@@ -26,6 +26,7 @@ service YM {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
+    rpc ForCounterData(ForCounterRequest) returns (ForCounterReply) {}
 }
 
 message ShopYMAuth {
@@ -37,4 +38,29 @@ message ShopYMAuth {
 message SetYMAuth {
     Auth auth = 1;
     ShopYMAuth shopAuth = 2;
+}
+
+message YMCampaign {
+    int64 ID = 1;
+    string domain = 2;
+    int64 campaignID = 3;
+    int64 clientID = 4;
+    string placementType = 5;
+    string updated = 6;
+}
+
+message ForCounterRequest {
+    int64 companyID = 1;
+    repeated int64 shopProductID = 2;
+}
+
+message ForCounterProductData {
+    int64 shopProductID = 1;
+    int64 offerID = 2;
+}
+
+message ForCounterReply {
+    ShopYMAuth ShopYMAuth = 1;
+    repeated ForCounterProductData data = 2;
+    repeated YMCampaign campaigns = 3;
 }
