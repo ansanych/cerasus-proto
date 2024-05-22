@@ -25,7 +25,7 @@ service WB {
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
-    rpc SysSkus(SysSkusRequest) returns (SysSkusReply) {}
+    rpc ForCounterData(ForCounterRequest) returns (ForCounterReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
 }
 
@@ -39,17 +39,29 @@ message SetWBAuth {
     ShopWBAuth shopAuth = 2;
 }
 
-message SysSkusData {
-    int64 shopProductID = 1;
-    repeated string skus = 2;
-}
-
-message SysSkusRequest {
+message ForCounterRequest {
     int64 companyID = 1;
     repeated int64 shopProductID = 2;
 }
 
-message SysSkusReply {
+message ForCounterProductData {
+    int64 shopProductID = 1;
+    repeated string skus = 2;
+    int64 NmID = 3;
+}
+
+message CompanyWarehouses {
+    int64 ID = 1;
+    string name = 2;
+    int64 officeID = 3;
+    int64 warehouseID = 4;
+    int32 cargoType = 5;
+    int32 deliveryType = 6;
+    bool active = 7;
+    string updated = 8;
+}
+
+message ForCounterReply {
     ShopWBAuth shopWBAuth = 1;
-    repeated SysSkusData data = 2;
+    repeated ForCounterProductData data = 2;
 }

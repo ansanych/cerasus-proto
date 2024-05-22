@@ -41,7 +41,7 @@ type WBClient interface {
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
-	SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc.CallOption) (*SysSkusReply, error)
+	ForCounterData(ctx context.Context, in *ForCounterRequest, opts ...grpc.CallOption) (*ForCounterReply, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
@@ -224,9 +224,9 @@ func (c *wBClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.C
 	return out, nil
 }
 
-func (c *wBClient) SysSkus(ctx context.Context, in *SysSkusRequest, opts ...grpc.CallOption) (*SysSkusReply, error) {
-	out := new(SysSkusReply)
-	err := c.cc.Invoke(ctx, "/cerasus.WB/SysSkus", in, out, opts...)
+func (c *wBClient) ForCounterData(ctx context.Context, in *ForCounterRequest, opts ...grpc.CallOption) (*ForCounterReply, error) {
+	out := new(ForCounterReply)
+	err := c.cc.Invoke(ctx, "/cerasus.WB/ForCounterData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ type WBServer interface {
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
-	SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error)
+	ForCounterData(context.Context, *ForCounterRequest) (*ForCounterReply, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedWBServer()
 }
@@ -331,8 +331,8 @@ func (UnimplementedWBServer) GetDonutGraphics(context.Context, *Auth) (*DonutGra
 func (UnimplementedWBServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
-func (UnimplementedWBServer) SysSkus(context.Context, *SysSkusRequest) (*SysSkusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SysSkus not implemented")
+func (UnimplementedWBServer) ForCounterData(context.Context, *ForCounterRequest) (*ForCounterReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForCounterData not implemented")
 }
 func (UnimplementedWBServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
@@ -692,20 +692,20 @@ func _WB_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WB_SysSkus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SysSkusRequest)
+func _WB_ForCounterData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForCounterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WBServer).SysSkus(ctx, in)
+		return srv.(WBServer).ForCounterData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.WB/SysSkus",
+		FullMethod: "/cerasus.WB/ForCounterData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WBServer).SysSkus(ctx, req.(*SysSkusRequest))
+		return srv.(WBServer).ForCounterData(ctx, req.(*ForCounterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -812,8 +812,8 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WB_GetWeekGraphics_Handler,
 		},
 		{
-			MethodName: "SysSkus",
-			Handler:    _WB_SysSkus_Handler,
+			MethodName: "ForCounterData",
+			Handler:    _WB_ForCounterData_Handler,
 		},
 		{
 			MethodName: "Ping",
