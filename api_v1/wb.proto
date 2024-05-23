@@ -25,7 +25,7 @@ service WB {
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
-    rpc ForCounterData(ForCounterRequest) returns (ForCounterReply) {}
+    rpc ForCounterDataWB(ForCounterRequestWB) returns (ForCounterReplyWB) {}
     rpc Ping (PingRequest) returns (PingReply) {}
 }
 
@@ -39,12 +39,12 @@ message SetWBAuth {
     ShopWBAuth shopAuth = 2;
 }
 
-message ForCounterRequest {
+message ForCounterRequestWB {
     int64 companyID = 1;
     repeated int64 shopProductID = 2;
 }
 
-message ForCounterProductData {
+message ForCounterProductDataWB {
     int64 shopProductID = 1;
     repeated string skus = 2;
     int64 NmID = 3;
@@ -61,7 +61,7 @@ message CompanyWarehouses {
     string updated = 8;
 }
 
-message ForCounterReply {
+message ForCounterReplyWB {
     ShopWBAuth shopWBAuth = 1;
-    repeated ForCounterProductData data = 2;
+    repeated ForCounterProductDataWB data = 2;
 }
