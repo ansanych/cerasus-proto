@@ -41,7 +41,7 @@ type OzonClient interface {
 	CheckShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShopData, error)
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
-	SysShopProductsID(ctx context.Context, in *SysShopProductsIDRequest, opts ...grpc.CallOption) (*SysShopProductsIDReply, error)
+	ForCounterDataOZ(ctx context.Context, in *ForCounterRequestOZ, opts ...grpc.CallOption) (*ForCounterReplyOZ, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
@@ -224,9 +224,9 @@ func (c *ozonClient) GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc
 	return out, nil
 }
 
-func (c *ozonClient) SysShopProductsID(ctx context.Context, in *SysShopProductsIDRequest, opts ...grpc.CallOption) (*SysShopProductsIDReply, error) {
-	out := new(SysShopProductsIDReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Ozon/SysShopProductsID", in, out, opts...)
+func (c *ozonClient) ForCounterDataOZ(ctx context.Context, in *ForCounterRequestOZ, opts ...grpc.CallOption) (*ForCounterReplyOZ, error) {
+	out := new(ForCounterReplyOZ)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/ForCounterDataOZ", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +265,7 @@ type OzonServer interface {
 	CheckShopData(context.Context, *Auth) (*CompanyShopData, error)
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
-	SysShopProductsID(context.Context, *SysShopProductsIDRequest) (*SysShopProductsIDReply, error)
+	ForCounterDataOZ(context.Context, *ForCounterRequestOZ) (*ForCounterReplyOZ, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedOzonServer()
 }
@@ -331,8 +331,8 @@ func (UnimplementedOzonServer) GetDonutGraphics(context.Context, *Auth) (*DonutG
 func (UnimplementedOzonServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphics not implemented")
 }
-func (UnimplementedOzonServer) SysShopProductsID(context.Context, *SysShopProductsIDRequest) (*SysShopProductsIDReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SysShopProductsID not implemented")
+func (UnimplementedOzonServer) ForCounterDataOZ(context.Context, *ForCounterRequestOZ) (*ForCounterReplyOZ, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForCounterDataOZ not implemented")
 }
 func (UnimplementedOzonServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
@@ -692,20 +692,20 @@ func _Ozon_GetWeekGraphics_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Ozon_SysShopProductsID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SysShopProductsIDRequest)
+func _Ozon_ForCounterDataOZ_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForCounterRequestOZ)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OzonServer).SysShopProductsID(ctx, in)
+		return srv.(OzonServer).ForCounterDataOZ(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Ozon/SysShopProductsID",
+		FullMethod: "/cerasus.Ozon/ForCounterDataOZ",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OzonServer).SysShopProductsID(ctx, req.(*SysShopProductsIDRequest))
+		return srv.(OzonServer).ForCounterDataOZ(ctx, req.(*ForCounterRequestOZ))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -812,8 +812,8 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Ozon_GetWeekGraphics_Handler,
 		},
 		{
-			MethodName: "SysShopProductsID",
-			Handler:    _Ozon_SysShopProductsID_Handler,
+			MethodName: "ForCounterDataOZ",
+			Handler:    _Ozon_ForCounterDataOZ_Handler,
 		},
 		{
 			MethodName: "Ping",

@@ -25,7 +25,7 @@ service Ozon {
     rpc CheckShopData(Auth) returns (CompanyShopData) {}
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
-    rpc SysShopProductsID (SysShopProductsIDRequest) returns (SysShopProductsIDReply) {}
+    rpc ForCounterDataOZ (ForCounterRequestOZ) returns (ForCounterReplyOZ) {}
     rpc Ping (PingRequest) returns (PingReply) {}
 }
 
@@ -40,17 +40,17 @@ message SetOzonAuth {
     ShopOzonAuth shopAuth = 2;
 }
 
-message SysShopProductsIDRequest {
+message ForCounterRequestOZ {
     int64 companyID = 1;
     repeated int64 shopProductID = 2;
 }
 
-message SysShopProductIDData {
+message ForCounterProductDataOZ {
     int64 shopProductID = 1;
     int64 ozonProductID = 2;
 }
 
-message SysShopProductsIDReply {
+message ForCounterReplyOZ {
     ShopOzonAuth shopOzonAuth = 1;
-    repeated SysShopProductIDData data = 2;
+    repeated ForCounterProductDataOZ data = 2;
 }
