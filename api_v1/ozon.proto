@@ -50,7 +50,16 @@ message ForCounterProductDataOZ {
     int64 ozonProductID = 2;
 }
 
+message CompanyWarehouseOZ {
+    int64 ID = 1;
+    string name = 2;
+    int64 warehouseID = 3;
+    bool active = 4;
+    string updated = 5;
+}
+
 message ForCounterReplyOZ {
     ShopOzonAuth shopOzonAuth = 1;
     repeated ForCounterProductDataOZ data = 2;
+    repeated CompanyWarehouseOZ warehouses = 3;
 }
