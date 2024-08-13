@@ -29,6 +29,7 @@ service Products {
     rpc SetProductCount(CountDataSet) returns (BoolReply) {}
     rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetProductsByID (ProductsIDRequest) returns (ProductsReply) {}
 }
 
 message CountData {
@@ -155,4 +156,9 @@ message BrandListID {
 message ProductByShopRequest {
     string shopCode = 1;
     int64 shopProductID = 2;
+}
+
+message ProductsIDRequest {
+    Auth auth = 1;
+    repeated int64 ID = 2;
 }
