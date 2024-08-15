@@ -1,0 +1,52 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Profile {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc UpdateCompany (UpdateCompanyRequest) returns (BoolReply) {}
+    rpc GetRoles (RolesRequest) returns (RolesReply) {}
+    rpc CreateUser (CreateUserRequest) returns (BoolReply) {}
+    rpc UpdateUser (CreateUserRequest) returns (BoolReply) {}
+    rpc GetUser (UserRequest) returns (User) {}
+    rpc GetCompanyUsers (UsersRequest) returns (UsersReply) {}
+}
+
+message UpdateCompanyRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string name = 3;
+}
+
+message RolesRequest {
+    Auth auth = 1;
+}
+
+message RolesReply {
+    repeated Role roles = 1;
+}
+
+message CreateUserRequest {
+    Auth auth = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string password = 5;
+    repeated int64 roles = 6;
+}
+
+message UserRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message UsersRequest {
+    Auth auth = 1;
+}
+
+message UsersReply {
+    repeated User user = 1;
+}
