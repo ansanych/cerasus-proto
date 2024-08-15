@@ -36,6 +36,7 @@ message CreateUserRequest {
     string phone = 4;
     string password = 5;
     repeated int64 roles = 6;
+    int64 ID = 7;
 }
 
 message UserRequest {
