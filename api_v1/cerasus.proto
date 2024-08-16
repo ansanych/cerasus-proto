@@ -19,6 +19,7 @@ message User {
     bool verifyPhone = 6;
     Company company = 7;
     repeated Role roles = 8;
+    bool active = 9;
 }
 
 message Auth {
