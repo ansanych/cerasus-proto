@@ -37,6 +37,7 @@ message CreateUserRequest {
     string password = 5;
     repeated int64 roles = 6;
     int64 ID = 7;
+    bool avtive = 8;
 }
 
 message UserRequest {
