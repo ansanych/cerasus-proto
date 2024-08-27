@@ -26,6 +26,7 @@ message LoginRequest {
     string email = 1;
     string phone = 2;
     string password = 3;
+    bool brand = 4;
 }
 
 message LoginReply {
@@ -36,10 +37,12 @@ message LoginReply {
 
 message RefreshRequest {
     string token = 1;
+    bool brand = 2;
 }
 
 message AccessRequest {
     string token = 1;
+    bool brand = 2;
 }
 
 message SystemAccessRequest {
