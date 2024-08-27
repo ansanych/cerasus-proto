@@ -32,6 +32,7 @@ message Auth {
 message Company {
     int64 ID = 1;
     string name = 2;
+    bool brand = 3;
 }
 
 message BoolReply {
