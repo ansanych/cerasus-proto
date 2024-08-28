@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Brand {
+    rpc Ping (PingRequest) returns (PingReply) {}
+}
+
+message BProduct {
+    int64 ID = 1;
+    int64 companyID = 2;
+    string title = 3;
+    string comment = 4;
+    string article = 5;
+    bool active = 6;
+    string updated = 7;
+    string preview = 8;
+    BProductPrice price = 9;
+}
+
+message BProductFile {
+    int64 ID = 1;
+    string file = 2;
+    string type = 3;
+    bool active = 4;
+    string updated = 5;
+}
+
+message BProductPrice {
+    int64 ID = 1;
+    int64 price = 2;
+    bool active = 3;
+    string dateFrom = 4;
+    string updated = 5;
+}
