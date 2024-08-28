@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// BrandClient is the client API for Brand service.
+// BrandsClient is the client API for Brands service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BrandClient interface {
+type BrandsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
-type brandClient struct {
+type brandsClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBrandClient(cc grpc.ClientConnInterface) BrandClient {
-	return &brandClient{cc}
+func NewBrandsClient(cc grpc.ClientConnInterface) BrandsClient {
+	return &brandsClient{cc}
 }
 
-func (c *brandClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+func (c *brandsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Brand/Ping", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/Ping", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BrandServer is the server API for Brand service.
-// All implementations must embed UnimplementedBrandServer
+// BrandsServer is the server API for Brands service.
+// All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
-type BrandServer interface {
+type BrandsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
-	mustEmbedUnimplementedBrandServer()
+	mustEmbedUnimplementedBrandsServer()
 }
 
-// UnimplementedBrandServer must be embedded to have forward compatible implementations.
-type UnimplementedBrandServer struct {
+// UnimplementedBrandsServer must be embedded to have forward compatible implementations.
+type UnimplementedBrandsServer struct {
 }
 
-func (UnimplementedBrandServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+func (UnimplementedBrandsServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedBrandServer) mustEmbedUnimplementedBrandServer() {}
+func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
-// UnsafeBrandServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BrandServer will
+// UnsafeBrandsServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BrandsServer will
 // result in compilation errors.
-type UnsafeBrandServer interface {
-	mustEmbedUnimplementedBrandServer()
+type UnsafeBrandsServer interface {
+	mustEmbedUnimplementedBrandsServer()
 }
 
-func RegisterBrandServer(s grpc.ServiceRegistrar, srv BrandServer) {
-	s.RegisterService(&Brand_ServiceDesc, srv)
+func RegisterBrandsServer(s grpc.ServiceRegistrar, srv BrandsServer) {
+	s.RegisterService(&Brands_ServiceDesc, srv)
 }
 
-func _Brand_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Brands_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BrandServer).Ping(ctx, in)
+		return srv.(BrandsServer).Ping(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Brand/Ping",
+		FullMethod: "/cerasus.Brands/Ping",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BrandServer).Ping(ctx, req.(*PingRequest))
+		return srv.(BrandsServer).Ping(ctx, req.(*PingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Brand_ServiceDesc is the grpc.ServiceDesc for Brand service.
+// Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Brand_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cerasus.Brand",
-	HandlerType: (*BrandServer)(nil),
+var Brands_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "cerasus.Brands",
+	HandlerType: (*BrandsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Ping",
-			Handler:    _Brand_Ping_Handler,
+			Handler:    _Brands_Ping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

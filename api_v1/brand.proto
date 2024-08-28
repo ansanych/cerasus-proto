@@ -5,7 +5,7 @@ package cerasus;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-service Brand {
+service Brands {
     rpc Ping (PingRequest) returns (PingReply) {}
 }
 
