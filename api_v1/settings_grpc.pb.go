@@ -49,6 +49,7 @@ type SettingsClient interface {
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetBrandAccessCompanies(ctx context.Context, in *BrandAccessRequest, opts ...grpc.CallOption) (*BrandAccessReply, error)
 }
 
 type settingsClient struct {
@@ -302,6 +303,15 @@ func (c *settingsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *settingsClient) GetBrandAccessCompanies(ctx context.Context, in *BrandAccessRequest, opts ...grpc.CallOption) (*BrandAccessReply, error) {
+	out := new(BrandAccessReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/GetBrandAccessCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -333,6 +343,7 @@ type SettingsServer interface {
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphics, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -420,6 +431,9 @@ func (UnimplementedSettingsServer) GetWeekGraphics(context.Context, *Auth) (*Wee
 }
 func (UnimplementedSettingsServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedSettingsServer) GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrandAccessCompanies not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -920,6 +934,24 @@ func _Settings_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetBrandAccessCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrandAccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetBrandAccessCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/GetBrandAccessCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetBrandAccessCompanies(ctx, req.(*BrandAccessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1034,6 +1066,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Settings_Ping_Handler,
+		},
+		{
+			MethodName: "GetBrandAccessCompanies",
+			Handler:    _Settings_GetBrandAccessCompanies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
