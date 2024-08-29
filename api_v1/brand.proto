@@ -29,10 +29,3 @@ message BProductFile {
     string updated = 5;
 }
 
-message BProductPrice {
-    int64 ID = 1;
-    int64 price = 2;
-    bool active = 3;
-    string dateFrom = 4;
-    string updated = 5;
-}
