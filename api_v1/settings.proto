@@ -66,16 +66,6 @@ message Tax {
     int32 year = 2;
   }
   
-  message Brand {
-    int64 ID = 1;
-    string name = 2;
-    string description = 3;
-    string logo = 4;
-    string url = 5;
-    bool global = 6;
-    bool linked = 7;
-  }
-  
   message GetBrandsRequest {
     Auth auth = 1;
     int64 page = 2;

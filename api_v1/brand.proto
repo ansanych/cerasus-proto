@@ -29,3 +29,17 @@ message BProductFile {
     string updated = 5;
 }
 
+message BSeller {
+    int64 ID = 1;
+    string name = 2;
+    string comment = 3;
+    string person = 4;
+    string phone = 5;
+    string email = 6;
+    repeated Company companiesLink = 7;
+}
+
+message BBrandLink {
+    int64 ID = 1;
+    Brand brand = 2;
+}
