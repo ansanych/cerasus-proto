@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BrandsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetCerasusBrandData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
 	GetBProducts(ctx context.Context, in *BProductsRequest, opts ...grpc.CallOption) (*BProductsReply, error)
 	GetBProduct(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BProduct, error)
 	CreateBProducts(ctx context.Context, in *BProductCreateRequest, opts ...grpc.CallOption) (*BProductCreateReply, error)
@@ -50,6 +51,15 @@ func NewBrandsClient(cc grpc.ClientConnInterface) BrandsClient {
 func (c *brandsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetCerasusBrandData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error) {
+	out := new(Brand)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetCerasusBrandData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,6 +197,7 @@ func (c *brandsClient) GetBrandLink(ctx context.Context, in *BrandLinkRequest, o
 // for forward compatibility
 type BrandsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetCerasusBrandData(context.Context, *Auth) (*Brand, error)
 	GetBProducts(context.Context, *BProductsRequest) (*BProductsReply, error)
 	GetBProduct(context.Context, *BIDRequest) (*BProduct, error)
 	CreateBProducts(context.Context, *BProductCreateRequest) (*BProductCreateReply, error)
@@ -210,6 +221,9 @@ type UnimplementedBrandsServer struct {
 
 func (UnimplementedBrandsServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedBrandsServer) GetCerasusBrandData(context.Context, *Auth) (*Brand, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCerasusBrandData not implemented")
 }
 func (UnimplementedBrandsServer) GetBProducts(context.Context, *BProductsRequest) (*BProductsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBProducts not implemented")
@@ -280,6 +294,24 @@ func _Brands_Ping_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BrandsServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetCerasusBrandData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetCerasusBrandData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetCerasusBrandData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetCerasusBrandData(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -546,6 +578,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Brands_Ping_Handler,
+		},
+		{
+			MethodName: "GetCerasusBrandData",
+			Handler:    _Brands_GetCerasusBrandData_Handler,
 		},
 		{
 			MethodName: "GetBProducts",

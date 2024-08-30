@@ -7,7 +7,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Brands {
     rpc Ping (PingRequest) returns (PingReply) {}
-
+    rpc GetCerasusBrandData (Auth) returns (Brand) {}
     rpc GetBProducts(BProductsRequest) returns (BProductsReply) {}
     rpc GetBProduct(BIDRequest) returns (BProduct) {}
     rpc CreateBProducts(BProductCreateRequest) returns (BProductCreateReply) {}
