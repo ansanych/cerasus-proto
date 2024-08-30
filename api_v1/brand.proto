@@ -116,5 +116,6 @@ message BUploadRequest {
 
 message BFileRequest {
     string filename = 1;
-    bytes chunk = 2;
+    int64 product = 2;
+    bool preview = 3;
 }
