@@ -7,7 +7,30 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Brands {
     rpc Ping (PingRequest) returns (PingReply) {}
+
+    rpc GetBProducts(BProductsRequest) returns (BProductsReply) {}
+    rpc GetBProduct(BIDRequest) returns (BProduct) {}
+    rpc CreateBProducts(BProductCreateRequest) returns (BProductCreateReply) {}
+    rpc UpdateBProducts(BProductCreateRequest) returns (BoolReply) {}
+    rpc GetBPrices(Auth) returns (BProductPrices) {}
+    rpc GetBPrice(Auth) returns (BProductPrice) {}
+    rpc SetBPrice(BProductCreatePrice) returns (BProductPrice) {}
+    rpc GetBSellers(Auth) returns (BSellers) {}
+    rpc GetBSeller(BIDRequest) returns (BSeller) {}
+    rpc CreateBSeller(BSellerCreateRequest) returns (BSeller) {}
+    rpc UpdateBSeller(BSellerCreateRequest) returns (BoolReply) {}
+    rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
+    rpc GetBFile(BFileRequest) returns (ImageReply) {}
     rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
+}
+
+message BProductPrices {
+    repeated BProductPrice prices = 1;
+}
+
+message BProductCreatePrice {
+    Auth auth = 1;
+    int64 price = 2;
 }
 
 message BProduct {
@@ -20,6 +43,30 @@ message BProduct {
     string updated = 7;
     string preview = 8;
     BProductPrice price = 9;
+}
+
+message BProductsRequest {
+    Auth auth = 1;
+    int64 page = 2;
+}
+
+message BIDRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message BProductsReply {
+    repeated BProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message BProductCreateReply {
+    BProduct product = 1;
+}
+
+message BProductCreateRequest {
+    Auth auth = 1;
+    BProduct product = 2;
 }
 
 message BProductFile {
@@ -40,6 +87,15 @@ message BSeller {
     repeated Company companiesLink = 7;
 }
 
+message BSellerCreateRequest {
+    Auth auth = 1;
+    BSeller seller = 2;
+}
+
+message BSellers {
+    repeated BSeller sellers = 1;
+}
+
 message BBrandLink {
     int64 ID = 1;
     Brand brand = 2;
@@ -47,4 +103,18 @@ message BBrandLink {
 
 message BrandLinkRequest {
     int64 ID = 1;
+}
+
+message BUploadRequest {
+    Auth auth = 1;
+    int64 productID = 2;
+    bytes chunk = 3;
+    bool preview = 4;
+    string filename = 5;
+    string type = 6;
+}
+
+message BFileRequest {
+    string filename = 1;
+    bytes chunk = 2;
 }
