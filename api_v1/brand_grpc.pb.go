@@ -29,7 +29,7 @@ type BrandsClient interface {
 	CreateBProducts(ctx context.Context, in *BProductCreateRequest, opts ...grpc.CallOption) (*BProductCreateReply, error)
 	UpdateBProducts(ctx context.Context, in *BProductCreateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetBPrices(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BProductPrices, error)
-	GetBPrice(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BProductPrice, error)
+	GetBPrice(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BProductPrice, error)
 	SetBPrice(ctx context.Context, in *BProductCreatePrice, opts ...grpc.CallOption) (*BProductPrice, error)
 	GetBSellers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BSellers, error)
 	GetBSeller(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BSeller, error)
@@ -111,7 +111,7 @@ func (c *brandsClient) GetBPrices(ctx context.Context, in *Auth, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *brandsClient) GetBPrice(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BProductPrice, error) {
+func (c *brandsClient) GetBPrice(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BProductPrice, error) {
 	out := new(BProductPrice)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBPrice", in, out, opts...)
 	if err != nil {
@@ -203,7 +203,7 @@ type BrandsServer interface {
 	CreateBProducts(context.Context, *BProductCreateRequest) (*BProductCreateReply, error)
 	UpdateBProducts(context.Context, *BProductCreateRequest) (*BoolReply, error)
 	GetBPrices(context.Context, *Auth) (*BProductPrices, error)
-	GetBPrice(context.Context, *Auth) (*BProductPrice, error)
+	GetBPrice(context.Context, *BIDRequest) (*BProductPrice, error)
 	SetBPrice(context.Context, *BProductCreatePrice) (*BProductPrice, error)
 	GetBSellers(context.Context, *Auth) (*BSellers, error)
 	GetBSeller(context.Context, *BIDRequest) (*BSeller, error)
@@ -240,7 +240,7 @@ func (UnimplementedBrandsServer) UpdateBProducts(context.Context, *BProductCreat
 func (UnimplementedBrandsServer) GetBPrices(context.Context, *Auth) (*BProductPrices, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBPrices not implemented")
 }
-func (UnimplementedBrandsServer) GetBPrice(context.Context, *Auth) (*BProductPrice, error) {
+func (UnimplementedBrandsServer) GetBPrice(context.Context, *BIDRequest) (*BProductPrice, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBPrice not implemented")
 }
 func (UnimplementedBrandsServer) SetBPrice(context.Context, *BProductCreatePrice) (*BProductPrice, error) {
@@ -407,7 +407,7 @@ func _Brands_GetBPrices_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Brands_GetBPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(BIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -419,7 +419,7 @@ func _Brands_GetBPrice_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/cerasus.Brands/GetBPrice",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BrandsServer).GetBPrice(ctx, req.(*Auth))
+		return srv.(BrandsServer).GetBPrice(ctx, req.(*BIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

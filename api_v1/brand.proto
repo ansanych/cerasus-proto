@@ -13,7 +13,7 @@ service Brands {
     rpc CreateBProducts(BProductCreateRequest) returns (BProductCreateReply) {}
     rpc UpdateBProducts(BProductCreateRequest) returns (BoolReply) {}
     rpc GetBPrices(Auth) returns (BProductPrices) {}
-    rpc GetBPrice(Auth) returns (BProductPrice) {}
+    rpc GetBPrice(BIDRequest) returns (BProductPrice) {}
     rpc SetBPrice(BProductCreatePrice) returns (BProductPrice) {}
     rpc GetBSellers(Auth) returns (BSellers) {}
     rpc GetBSeller(BIDRequest) returns (BSeller) {}
