@@ -135,7 +135,7 @@ message BSCProductsRequest {
 
 message BSCProduct {
     Product product = 1;
-    repeated int64 links = 2;
+    int64 link = 2;
 }
 
 message BSCProductsReply {
