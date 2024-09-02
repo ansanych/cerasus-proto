@@ -22,6 +22,7 @@ service Brands {
     rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
     rpc GetBFile(BFileRequest) returns (ImageReply) {}
     rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
+    rpc GetSellerLinked (BIDRequest) returns (BSellerLinks) {}
 }
 
 message BProductPrices {
@@ -119,4 +120,8 @@ message BFileRequest {
     string filename = 1;
     int64 product = 2;
     bool preview = 3;
+}
+
+message BSellerLinks {
+    repeated Company companies = 1;
 }
