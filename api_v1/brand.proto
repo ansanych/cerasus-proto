@@ -133,6 +133,11 @@ message BSCProductsRequest {
     int64 companyID = 3;
 }
 
+message BSCProduct {
+    Product product = 1;
+    repeated int64 links = 2;
+}
+
 message BSCProductsReply {
-    repeated Product products = 1;
+    repeated BSCProduct products = 1;
 }
