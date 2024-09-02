@@ -22,7 +22,7 @@ service Brands {
     rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
     rpc GetBFile(BFileRequest) returns (ImageReply) {}
     rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
-    rpc GetSellerLinked (BIDRequest) returns (BSellerLinks) {}
+    rpc GetSellerLinked (BIDRequest) returns (CompanyesListReply) {}
 }
 
 message BProductPrices {

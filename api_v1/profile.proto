@@ -13,6 +13,7 @@ service Profile {
     rpc UpdateUser (CreateUserRequest) returns (BoolReply) {}
     rpc GetUser (UserRequest) returns (User) {}
     rpc GetCompanyUsers (UsersRequest) returns (UsersReply) {}
+    rpc GetCompaniesList (CompanyesListRequest) returns (CompanyesListReply) {}
 }
 
 message UpdateCompanyRequest {

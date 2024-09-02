@@ -3181,6 +3181,100 @@ func (x *BProductPrice) GetUpdated() string {
 	return ""
 }
 
+type CompanyesListRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID []int64 `protobuf:"varint,2,rep,packed,name=ID,proto3" json:"ID,omitempty"`
+}
+
+func (x *CompanyesListRequest) Reset() {
+	*x = CompanyesListRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompanyesListRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompanyesListRequest) ProtoMessage() {}
+
+func (x *CompanyesListRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompanyesListRequest.ProtoReflect.Descriptor instead.
+func (*CompanyesListRequest) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *CompanyesListRequest) GetID() []int64 {
+	if x != nil {
+		return x.ID
+	}
+	return nil
+}
+
+type CompanyesListReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Companies []*Company `protobuf:"bytes,1,rep,name=companies,proto3" json:"companies,omitempty"`
+}
+
+func (x *CompanyesListReply) Reset() {
+	*x = CompanyesListReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompanyesListReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompanyesListReply) ProtoMessage() {}
+
+func (x *CompanyesListReply) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompanyesListReply.ProtoReflect.Descriptor instead.
+func (*CompanyesListReply) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *CompanyesListReply) GetCompanies() []*Company {
+	if x != nil {
+		return x.Companies
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -3506,9 +3600,16 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x64, 0x61, 0x74, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
 	0x64, 0x61, 0x74, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x18, 0x0a, 0x07, 0x75, 0x70, 0x64, 0x61,
 	0x74, 0x65, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x75, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x64, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
-	0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x64, 0x22, 0x26, 0x0a, 0x14, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x65, 0x73, 0x4c,
+	0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44,
+	0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x22, 0x44, 0x0a, 0x12, 0x43, 0x6f,
+	0x6d, 0x70, 0x61, 0x6e, 0x79, 0x65, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x70, 0x6c, 0x79,
+	0x12, 0x2e, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x43, 0x6f,
+	0x6d, 0x70, 0x61, 0x6e, 0x79, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73,
+	0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61,
+	0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3523,7 +3624,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 49)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                     // 0: cerasus.Role
 	(*User)(nil),                     // 1: cerasus.User
@@ -3572,6 +3673,8 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*PingRequest)(nil),              // 44: cerasus.PingRequest
 	(*PingReply)(nil),                // 45: cerasus.PingReply
 	(*BProductPrice)(nil),            // 46: cerasus.BProductPrice
+	(*CompanyesListRequest)(nil),     // 47: cerasus.CompanyesListRequest
+	(*CompanyesListReply)(nil),       // 48: cerasus.CompanyesListReply
 }
 var file_cerasus_proto_depIdxs = []int32{
 	3,  // 0: cerasus.User.company:type_name -> cerasus.Company
@@ -3607,11 +3710,12 @@ var file_cerasus_proto_depIdxs = []int32{
 	39, // 30: cerasus.DonutGraphics.data:type_name -> cerasus.DonutGraphic
 	41, // 31: cerasus.WeekGraphics.data:type_name -> cerasus.WeekGraphicData
 	2,  // 32: cerasus.ShopProductUpdateRequest.auth:type_name -> cerasus.Auth
-	33, // [33:33] is the sub-list for method output_type
-	33, // [33:33] is the sub-list for method input_type
-	33, // [33:33] is the sub-list for extension type_name
-	33, // [33:33] is the sub-list for extension extendee
-	0,  // [0:33] is the sub-list for field type_name
+	3,  // 33: cerasus.CompanyesListReply.companies:type_name -> cerasus.Company
+	34, // [34:34] is the sub-list for method output_type
+	34, // [34:34] is the sub-list for method input_type
+	34, // [34:34] is the sub-list for extension type_name
+	34, // [34:34] is the sub-list for extension extendee
+	0,  // [0:34] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -4184,6 +4288,30 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompanyesListRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompanyesListReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4191,7 +4319,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   47,
+			NumMessages:   49,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

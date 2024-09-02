@@ -29,6 +29,7 @@ type ProfileClient interface {
 	UpdateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
 	GetCompanyUsers(ctx context.Context, in *UsersRequest, opts ...grpc.CallOption) (*UsersReply, error)
+	GetCompaniesList(ctx context.Context, in *CompanyesListRequest, opts ...grpc.CallOption) (*CompanyesListReply, error)
 }
 
 type profileClient struct {
@@ -102,6 +103,15 @@ func (c *profileClient) GetCompanyUsers(ctx context.Context, in *UsersRequest, o
 	return out, nil
 }
 
+func (c *profileClient) GetCompaniesList(ctx context.Context, in *CompanyesListRequest, opts ...grpc.CallOption) (*CompanyesListReply, error) {
+	out := new(CompanyesListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Profile/GetCompaniesList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProfileServer is the server API for Profile service.
 // All implementations must embed UnimplementedProfileServer
 // for forward compatibility
@@ -113,6 +123,7 @@ type ProfileServer interface {
 	UpdateUser(context.Context, *CreateUserRequest) (*BoolReply, error)
 	GetUser(context.Context, *UserRequest) (*User, error)
 	GetCompanyUsers(context.Context, *UsersRequest) (*UsersReply, error)
+	GetCompaniesList(context.Context, *CompanyesListRequest) (*CompanyesListReply, error)
 	mustEmbedUnimplementedProfileServer()
 }
 
@@ -140,6 +151,9 @@ func (UnimplementedProfileServer) GetUser(context.Context, *UserRequest) (*User,
 }
 func (UnimplementedProfileServer) GetCompanyUsers(context.Context, *UsersRequest) (*UsersReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyUsers not implemented")
+}
+func (UnimplementedProfileServer) GetCompaniesList(context.Context, *CompanyesListRequest) (*CompanyesListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesList not implemented")
 }
 func (UnimplementedProfileServer) mustEmbedUnimplementedProfileServer() {}
 
@@ -280,6 +294,24 @@ func _Profile_GetCompanyUsers_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Profile_GetCompaniesList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompanyesListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProfileServer).GetCompaniesList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Profile/GetCompaniesList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProfileServer).GetCompaniesList(ctx, req.(*CompanyesListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Profile_ServiceDesc is the grpc.ServiceDesc for Profile service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +346,10 @@ var Profile_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyUsers",
 			Handler:    _Profile_GetCompanyUsers_Handler,
+		},
+		{
+			MethodName: "GetCompaniesList",
+			Handler:    _Profile_GetCompaniesList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

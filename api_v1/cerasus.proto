@@ -310,3 +310,11 @@ message BProductPrice {
     string dateFrom = 4;
     string updated = 5;
 }
+
+message CompanyesListRequest {
+    repeated int64 ID = 2;
+}
+
+message CompanyesListReply {
+    repeated Company companies = 1;
+}

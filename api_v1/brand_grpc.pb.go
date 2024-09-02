@@ -38,7 +38,7 @@ type BrandsClient interface {
 	UploadBFile(ctx context.Context, in *BUploadRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetBFile(ctx context.Context, in *BFileRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetBrandLink(ctx context.Context, in *BrandLinkRequest, opts ...grpc.CallOption) (*BBrandLink, error)
-	GetSellerLinked(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BSellerLinks, error)
+	GetSellerLinked(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*CompanyesListReply, error)
 }
 
 type brandsClient struct {
@@ -193,8 +193,8 @@ func (c *brandsClient) GetBrandLink(ctx context.Context, in *BrandLinkRequest, o
 	return out, nil
 }
 
-func (c *brandsClient) GetSellerLinked(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*BSellerLinks, error) {
-	out := new(BSellerLinks)
+func (c *brandsClient) GetSellerLinked(ctx context.Context, in *BIDRequest, opts ...grpc.CallOption) (*CompanyesListReply, error) {
+	out := new(CompanyesListReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetSellerLinked", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -222,7 +222,7 @@ type BrandsServer interface {
 	UploadBFile(context.Context, *BUploadRequest) (*ImageReply, error)
 	GetBFile(context.Context, *BFileRequest) (*ImageReply, error)
 	GetBrandLink(context.Context, *BrandLinkRequest) (*BBrandLink, error)
-	GetSellerLinked(context.Context, *BIDRequest) (*BSellerLinks, error)
+	GetSellerLinked(context.Context, *BIDRequest) (*CompanyesListReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -278,7 +278,7 @@ func (UnimplementedBrandsServer) GetBFile(context.Context, *BFileRequest) (*Imag
 func (UnimplementedBrandsServer) GetBrandLink(context.Context, *BrandLinkRequest) (*BBrandLink, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandLink not implemented")
 }
-func (UnimplementedBrandsServer) GetSellerLinked(context.Context, *BIDRequest) (*BSellerLinks, error) {
+func (UnimplementedBrandsServer) GetSellerLinked(context.Context, *BIDRequest) (*CompanyesListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellerLinked not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
