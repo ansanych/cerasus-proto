@@ -1083,6 +1083,108 @@ func (x *BSellerLinks) GetCompanies() []*Company {
 	return nil
 }
 
+type BSCProductsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID int64 `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	BrandID   int64 `protobuf:"varint,2,opt,name=brandID,proto3" json:"brandID,omitempty"`
+}
+
+func (x *BSCProductsRequest) Reset() {
+	*x = BSCProductsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_brand_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BSCProductsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BSCProductsRequest) ProtoMessage() {}
+
+func (x *BSCProductsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_brand_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BSCProductsRequest.ProtoReflect.Descriptor instead.
+func (*BSCProductsRequest) Descriptor() ([]byte, []int) {
+	return file_brand_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *BSCProductsRequest) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *BSCProductsRequest) GetBrandID() int64 {
+	if x != nil {
+		return x.BrandID
+	}
+	return 0
+}
+
+type BSCProductsReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Products []*Product `protobuf:"bytes,1,rep,name=products,proto3" json:"products,omitempty"`
+}
+
+func (x *BSCProductsReply) Reset() {
+	*x = BSCProductsReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_brand_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BSCProductsReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BSCProductsReply) ProtoMessage() {}
+
+func (x *BSCProductsReply) ProtoReflect() protoreflect.Message {
+	mi := &file_brand_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BSCProductsReply.ProtoReflect.Descriptor instead.
+func (*BSCProductsReply) Descriptor() ([]byte, []int) {
+	return file_brand_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *BSCProductsReply) GetProducts() []*Product {
+	if x != nil {
+		return x.Products
+	}
+	return nil
+}
+
 var File_brand_proto protoreflect.FileDescriptor
 
 var file_brand_proto_rawDesc = []byte{
@@ -1199,7 +1301,16 @@ var file_brand_proto_rawDesc = []byte{
 	0x42, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x12, 0x2e, 0x0a, 0x09,
 	0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
 	0x10, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
-	0x79, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x32, 0xbe, 0x08, 0x0a,
+	0x79, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x22, 0x4c, 0x0a, 0x12,
+	0x42, 0x53, 0x43, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44,
+	0x12, 0x18, 0x0a, 0x07, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x07, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x49, 0x44, 0x22, 0x40, 0x0a, 0x10, 0x42, 0x53,
+	0x43, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2c,
+	0x0a, 0x08, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x10, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75,
+	0x63, 0x74, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x32, 0x94, 0x09, 0x0a,
 	0x06, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x73, 0x12, 0x32, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12,
 	0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e,
@@ -1267,10 +1378,15 @@ var file_brand_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x72, 0x4c, 0x69, 0x6e, 0x6b, 0x65, 0x64, 0x12, 0x13, 0x2e, 0x63, 0x65, 0x72, 0x61,
 	0x73, 0x75, 0x73, 0x2e, 0x42, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b,
 	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79,
-	0x65, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a,
-	0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61,
-	0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x54, 0x0a,
+	0x18, 0x47, 0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
+	0x79, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61,
+	0x73, 0x75, 0x73, 0x2e, 0x42, 0x53, 0x43, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x2e, 0x42, 0x53, 0x43, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x70, 0x6c,
+	0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73,
+	0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1285,7 +1401,7 @@ func file_brand_proto_rawDescGZIP() []byte {
 	return file_brand_proto_rawDescData
 }
 
-var file_brand_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_brand_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_brand_proto_goTypes = []interface{}{
 	(*BProductPrices)(nil),        // 0: cerasus.BProductPrices
 	(*BProductCreatePrice)(nil),   // 1: cerasus.BProductCreatePrice
@@ -1304,74 +1420,80 @@ var file_brand_proto_goTypes = []interface{}{
 	(*BUploadRequest)(nil),        // 14: cerasus.BUploadRequest
 	(*BFileRequest)(nil),          // 15: cerasus.BFileRequest
 	(*BSellerLinks)(nil),          // 16: cerasus.BSellerLinks
-	(*BProductPrice)(nil),         // 17: cerasus.BProductPrice
-	(*Auth)(nil),                  // 18: cerasus.Auth
-	(*Pagination)(nil),            // 19: cerasus.Pagination
-	(*Company)(nil),               // 20: cerasus.Company
-	(*Brand)(nil),                 // 21: cerasus.Brand
-	(*PingRequest)(nil),           // 22: cerasus.PingRequest
-	(*PingReply)(nil),             // 23: cerasus.PingReply
-	(*BoolReply)(nil),             // 24: cerasus.BoolReply
-	(*ImageReply)(nil),            // 25: cerasus.ImageReply
-	(*CompanyesListReply)(nil),    // 26: cerasus.CompanyesListReply
+	(*BSCProductsRequest)(nil),    // 17: cerasus.BSCProductsRequest
+	(*BSCProductsReply)(nil),      // 18: cerasus.BSCProductsReply
+	(*BProductPrice)(nil),         // 19: cerasus.BProductPrice
+	(*Auth)(nil),                  // 20: cerasus.Auth
+	(*Pagination)(nil),            // 21: cerasus.Pagination
+	(*Company)(nil),               // 22: cerasus.Company
+	(*Brand)(nil),                 // 23: cerasus.Brand
+	(*Product)(nil),               // 24: cerasus.Product
+	(*PingRequest)(nil),           // 25: cerasus.PingRequest
+	(*PingReply)(nil),             // 26: cerasus.PingReply
+	(*BoolReply)(nil),             // 27: cerasus.BoolReply
+	(*ImageReply)(nil),            // 28: cerasus.ImageReply
+	(*CompanyesListReply)(nil),    // 29: cerasus.CompanyesListReply
 }
 var file_brand_proto_depIdxs = []int32{
-	17, // 0: cerasus.BProductPrices.prices:type_name -> cerasus.BProductPrice
-	18, // 1: cerasus.BProductCreatePrice.auth:type_name -> cerasus.Auth
-	17, // 2: cerasus.BProduct.price:type_name -> cerasus.BProductPrice
-	18, // 3: cerasus.BProductsRequest.auth:type_name -> cerasus.Auth
-	18, // 4: cerasus.BIDRequest.auth:type_name -> cerasus.Auth
+	19, // 0: cerasus.BProductPrices.prices:type_name -> cerasus.BProductPrice
+	20, // 1: cerasus.BProductCreatePrice.auth:type_name -> cerasus.Auth
+	19, // 2: cerasus.BProduct.price:type_name -> cerasus.BProductPrice
+	20, // 3: cerasus.BProductsRequest.auth:type_name -> cerasus.Auth
+	20, // 4: cerasus.BIDRequest.auth:type_name -> cerasus.Auth
 	2,  // 5: cerasus.BProductsReply.products:type_name -> cerasus.BProduct
-	19, // 6: cerasus.BProductsReply.pagination:type_name -> cerasus.Pagination
+	21, // 6: cerasus.BProductsReply.pagination:type_name -> cerasus.Pagination
 	2,  // 7: cerasus.BProductCreateReply.product:type_name -> cerasus.BProduct
-	18, // 8: cerasus.BProductCreateRequest.auth:type_name -> cerasus.Auth
+	20, // 8: cerasus.BProductCreateRequest.auth:type_name -> cerasus.Auth
 	2,  // 9: cerasus.BProductCreateRequest.product:type_name -> cerasus.BProduct
-	20, // 10: cerasus.BSeller.companiesLink:type_name -> cerasus.Company
-	18, // 11: cerasus.BSellerCreateRequest.auth:type_name -> cerasus.Auth
+	22, // 10: cerasus.BSeller.companiesLink:type_name -> cerasus.Company
+	20, // 11: cerasus.BSellerCreateRequest.auth:type_name -> cerasus.Auth
 	9,  // 12: cerasus.BSellerCreateRequest.seller:type_name -> cerasus.BSeller
 	9,  // 13: cerasus.BSellers.sellers:type_name -> cerasus.BSeller
-	21, // 14: cerasus.BBrandLink.brand:type_name -> cerasus.Brand
-	18, // 15: cerasus.BUploadRequest.auth:type_name -> cerasus.Auth
-	20, // 16: cerasus.BSellerLinks.companies:type_name -> cerasus.Company
-	22, // 17: cerasus.Brands.Ping:input_type -> cerasus.PingRequest
-	18, // 18: cerasus.Brands.GetCerasusBrandData:input_type -> cerasus.Auth
-	3,  // 19: cerasus.Brands.GetBProducts:input_type -> cerasus.BProductsRequest
-	4,  // 20: cerasus.Brands.GetBProduct:input_type -> cerasus.BIDRequest
-	7,  // 21: cerasus.Brands.CreateBProducts:input_type -> cerasus.BProductCreateRequest
-	7,  // 22: cerasus.Brands.UpdateBProducts:input_type -> cerasus.BProductCreateRequest
-	18, // 23: cerasus.Brands.GetBPrices:input_type -> cerasus.Auth
-	4,  // 24: cerasus.Brands.GetBPrice:input_type -> cerasus.BIDRequest
-	1,  // 25: cerasus.Brands.SetBPrice:input_type -> cerasus.BProductCreatePrice
-	18, // 26: cerasus.Brands.GetBSellers:input_type -> cerasus.Auth
-	4,  // 27: cerasus.Brands.GetBSeller:input_type -> cerasus.BIDRequest
-	10, // 28: cerasus.Brands.CreateBSeller:input_type -> cerasus.BSellerCreateRequest
-	10, // 29: cerasus.Brands.UpdateBSeller:input_type -> cerasus.BSellerCreateRequest
-	14, // 30: cerasus.Brands.UploadBFile:input_type -> cerasus.BUploadRequest
-	15, // 31: cerasus.Brands.GetBFile:input_type -> cerasus.BFileRequest
-	13, // 32: cerasus.Brands.GetBrandLink:input_type -> cerasus.BrandLinkRequest
-	4,  // 33: cerasus.Brands.GetSellerLinked:input_type -> cerasus.BIDRequest
-	23, // 34: cerasus.Brands.Ping:output_type -> cerasus.PingReply
-	21, // 35: cerasus.Brands.GetCerasusBrandData:output_type -> cerasus.Brand
-	5,  // 36: cerasus.Brands.GetBProducts:output_type -> cerasus.BProductsReply
-	2,  // 37: cerasus.Brands.GetBProduct:output_type -> cerasus.BProduct
-	6,  // 38: cerasus.Brands.CreateBProducts:output_type -> cerasus.BProductCreateReply
-	24, // 39: cerasus.Brands.UpdateBProducts:output_type -> cerasus.BoolReply
-	0,  // 40: cerasus.Brands.GetBPrices:output_type -> cerasus.BProductPrices
-	17, // 41: cerasus.Brands.GetBPrice:output_type -> cerasus.BProductPrice
-	17, // 42: cerasus.Brands.SetBPrice:output_type -> cerasus.BProductPrice
-	11, // 43: cerasus.Brands.GetBSellers:output_type -> cerasus.BSellers
-	9,  // 44: cerasus.Brands.GetBSeller:output_type -> cerasus.BSeller
-	9,  // 45: cerasus.Brands.CreateBSeller:output_type -> cerasus.BSeller
-	24, // 46: cerasus.Brands.UpdateBSeller:output_type -> cerasus.BoolReply
-	25, // 47: cerasus.Brands.UploadBFile:output_type -> cerasus.ImageReply
-	25, // 48: cerasus.Brands.GetBFile:output_type -> cerasus.ImageReply
-	12, // 49: cerasus.Brands.GetBrandLink:output_type -> cerasus.BBrandLink
-	26, // 50: cerasus.Brands.GetSellerLinked:output_type -> cerasus.CompanyesListReply
-	34, // [34:51] is the sub-list for method output_type
-	17, // [17:34] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	23, // 14: cerasus.BBrandLink.brand:type_name -> cerasus.Brand
+	20, // 15: cerasus.BUploadRequest.auth:type_name -> cerasus.Auth
+	22, // 16: cerasus.BSellerLinks.companies:type_name -> cerasus.Company
+	24, // 17: cerasus.BSCProductsReply.products:type_name -> cerasus.Product
+	25, // 18: cerasus.Brands.Ping:input_type -> cerasus.PingRequest
+	20, // 19: cerasus.Brands.GetCerasusBrandData:input_type -> cerasus.Auth
+	3,  // 20: cerasus.Brands.GetBProducts:input_type -> cerasus.BProductsRequest
+	4,  // 21: cerasus.Brands.GetBProduct:input_type -> cerasus.BIDRequest
+	7,  // 22: cerasus.Brands.CreateBProducts:input_type -> cerasus.BProductCreateRequest
+	7,  // 23: cerasus.Brands.UpdateBProducts:input_type -> cerasus.BProductCreateRequest
+	20, // 24: cerasus.Brands.GetBPrices:input_type -> cerasus.Auth
+	4,  // 25: cerasus.Brands.GetBPrice:input_type -> cerasus.BIDRequest
+	1,  // 26: cerasus.Brands.SetBPrice:input_type -> cerasus.BProductCreatePrice
+	20, // 27: cerasus.Brands.GetBSellers:input_type -> cerasus.Auth
+	4,  // 28: cerasus.Brands.GetBSeller:input_type -> cerasus.BIDRequest
+	10, // 29: cerasus.Brands.CreateBSeller:input_type -> cerasus.BSellerCreateRequest
+	10, // 30: cerasus.Brands.UpdateBSeller:input_type -> cerasus.BSellerCreateRequest
+	14, // 31: cerasus.Brands.UploadBFile:input_type -> cerasus.BUploadRequest
+	15, // 32: cerasus.Brands.GetBFile:input_type -> cerasus.BFileRequest
+	13, // 33: cerasus.Brands.GetBrandLink:input_type -> cerasus.BrandLinkRequest
+	4,  // 34: cerasus.Brands.GetSellerLinked:input_type -> cerasus.BIDRequest
+	17, // 35: cerasus.Brands.GetSellerCompanyProducts:input_type -> cerasus.BSCProductsRequest
+	26, // 36: cerasus.Brands.Ping:output_type -> cerasus.PingReply
+	23, // 37: cerasus.Brands.GetCerasusBrandData:output_type -> cerasus.Brand
+	5,  // 38: cerasus.Brands.GetBProducts:output_type -> cerasus.BProductsReply
+	2,  // 39: cerasus.Brands.GetBProduct:output_type -> cerasus.BProduct
+	6,  // 40: cerasus.Brands.CreateBProducts:output_type -> cerasus.BProductCreateReply
+	27, // 41: cerasus.Brands.UpdateBProducts:output_type -> cerasus.BoolReply
+	0,  // 42: cerasus.Brands.GetBPrices:output_type -> cerasus.BProductPrices
+	19, // 43: cerasus.Brands.GetBPrice:output_type -> cerasus.BProductPrice
+	19, // 44: cerasus.Brands.SetBPrice:output_type -> cerasus.BProductPrice
+	11, // 45: cerasus.Brands.GetBSellers:output_type -> cerasus.BSellers
+	9,  // 46: cerasus.Brands.GetBSeller:output_type -> cerasus.BSeller
+	9,  // 47: cerasus.Brands.CreateBSeller:output_type -> cerasus.BSeller
+	27, // 48: cerasus.Brands.UpdateBSeller:output_type -> cerasus.BoolReply
+	28, // 49: cerasus.Brands.UploadBFile:output_type -> cerasus.ImageReply
+	28, // 50: cerasus.Brands.GetBFile:output_type -> cerasus.ImageReply
+	12, // 51: cerasus.Brands.GetBrandLink:output_type -> cerasus.BBrandLink
+	29, // 52: cerasus.Brands.GetSellerLinked:output_type -> cerasus.CompanyesListReply
+	18, // 53: cerasus.Brands.GetSellerCompanyProducts:output_type -> cerasus.BSCProductsReply
+	36, // [36:54] is the sub-list for method output_type
+	18, // [18:36] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_brand_proto_init() }
@@ -1585,6 +1707,30 @@ func file_brand_proto_init() {
 				return nil
 			}
 		}
+		file_brand_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BSCProductsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_brand_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BSCProductsReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1592,7 +1738,7 @@ func file_brand_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_brand_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
