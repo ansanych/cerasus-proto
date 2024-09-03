@@ -24,6 +24,7 @@ service Brands {
     rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
     rpc GetSellerLinked (BIDRequest) returns (CompanyesListReply) {}
     rpc GetSellerCompanyProducts(BSCProductsRequest) returns (BSCProductsReply) {}
+    rpc SetSellerCompanyProductLink(BSCProductLinkRequest) returns (BoolReply) {}
 }
 
 message BProductPrices {
@@ -145,4 +146,13 @@ message BSCProduct {
 
 message BSCProductsReply {
     repeated BSCProduct products = 1;
+}
+
+message BSCProductLinkRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int64 CerasusCompanyID = 3;
+    int64 BProductLinkID = 4;
+    int64 ProductID = 5;
+    int64 BProductID = 6;
 }
