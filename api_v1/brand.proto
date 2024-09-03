@@ -133,9 +133,14 @@ message BSCProductsRequest {
     int64 companyID = 3;
 }
 
+message BSCProductLink {
+    int64 ID = 1;
+    int64 BProductID = 2;
+}
+
 message BSCProduct {
     Product product = 1;
-    int64 link = 2;
+    BSCProductLink link = 2;
 }
 
 message BSCProductsReply {
