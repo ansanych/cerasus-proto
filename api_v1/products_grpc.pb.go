@@ -46,7 +46,7 @@ type ProductsClient interface {
 	GetProductCount(ctx context.Context, in *CountDataGetRequest, opts ...grpc.CallOption) (*CountDataGetReply, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductsByID(ctx context.Context, in *ProductsIDRequest, opts ...grpc.CallOption) (*ProductsReply, error)
-	GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*ProductsReply, error)
+	GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error)
 }
 
 type productsClient struct {
@@ -273,8 +273,8 @@ func (c *productsClient) GetProductsByID(ctx context.Context, in *ProductsIDRequ
 	return out, nil
 }
 
-func (c *productsClient) GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*ProductsReply, error) {
-	out := new(ProductsReply)
+func (c *productsClient) GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error) {
+	out := new(BrandCompanyProductsReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Products/GetBrandCompanyProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -310,7 +310,7 @@ type ProductsServer interface {
 	GetProductCount(context.Context, *CountDataGetRequest) (*CountDataGetReply, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductsByID(context.Context, *ProductsIDRequest) (*ProductsReply, error)
-	GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*ProductsReply, error)
+	GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -390,7 +390,7 @@ func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingRep
 func (UnimplementedProductsServer) GetProductsByID(context.Context, *ProductsIDRequest) (*ProductsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByID not implemented")
 }
-func (UnimplementedProductsServer) GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*ProductsReply, error) {
+func (UnimplementedProductsServer) GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandCompanyProduct not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}

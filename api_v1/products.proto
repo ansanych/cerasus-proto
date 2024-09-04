@@ -30,7 +30,7 @@ service Products {
     rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductsByID (ProductsIDRequest) returns (ProductsReply) {}
-    rpc GetBrandCompanyProduct (BrandCompanyRequest) returns (ProductsReply) {}
+    rpc GetBrandCompanyProduct (BrandCompanyRequest) returns (BrandCompanyProductsReply) {}
 }
 
 message CountData {
@@ -167,4 +167,18 @@ message ProductsIDRequest {
 message BrandCompanyRequest {
     int64 companyID = 1;
     int64 brandID = 2;
+}
+
+message BrandCompanyProductShop {
+    string shop = 1;
+    repeated string urls = 2;
+}
+
+message BrandCompanyProduct {
+    Product product = 1;
+    repeated BrandCompanyProductShop urls = 2;
+}
+
+message BrandCompanyProductsReply {
+    repeated BrandCompanyProduct products = 1;
 }
