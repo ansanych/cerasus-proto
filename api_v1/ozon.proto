@@ -27,6 +27,7 @@ service Ozon {
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc ForCounterDataOZ (ForCounterRequestOZ) returns (ForCounterReplyOZ) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetProductUrls (IDRequest) returns (ProductShopUrls) {}
 }
 
 message ShopOzonAuth {

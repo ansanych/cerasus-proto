@@ -43,6 +43,7 @@ type YMClient interface {
 	GetDonutGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphic, error)
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	ForCounterDataYM(ctx context.Context, in *ForCounterRequestYM, opts ...grpc.CallOption) (*ForCounterReplyYM, error)
+	GetProductUrls(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*ProductShopUrls, error)
 }
 
 type yMClient struct {
@@ -242,6 +243,15 @@ func (c *yMClient) ForCounterDataYM(ctx context.Context, in *ForCounterRequestYM
 	return out, nil
 }
 
+func (c *yMClient) GetProductUrls(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*ProductShopUrls, error) {
+	out := new(ProductShopUrls)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/GetProductUrls", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -267,6 +277,7 @@ type YMServer interface {
 	GetDonutGraphics(context.Context, *Auth) (*DonutGraphic, error)
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	ForCounterDataYM(context.Context, *ForCounterRequestYM) (*ForCounterReplyYM, error)
+	GetProductUrls(context.Context, *IDRequest) (*ProductShopUrls, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -336,6 +347,9 @@ func (UnimplementedYMServer) GetWeekGraphics(context.Context, *Auth) (*WeekGraph
 }
 func (UnimplementedYMServer) ForCounterDataYM(context.Context, *ForCounterRequestYM) (*ForCounterReplyYM, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForCounterDataYM not implemented")
+}
+func (UnimplementedYMServer) GetProductUrls(context.Context, *IDRequest) (*ProductShopUrls, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductUrls not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -728,6 +742,24 @@ func _YM_ForCounterDataYM_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetProductUrls_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProductUrls(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/GetProductUrls",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProductUrls(ctx, req.(*IDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -818,6 +850,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ForCounterDataYM",
 			Handler:    _YM_ForCounterDataYM_Handler,
+		},
+		{
+			MethodName: "GetProductUrls",
+			Handler:    _YM_GetProductUrls_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

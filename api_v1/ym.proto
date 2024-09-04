@@ -27,6 +27,7 @@ service YM {
     rpc GetDonutGraphics(Auth) returns (DonutGraphic) {}
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc ForCounterDataYM(ForCounterRequestYM) returns (ForCounterReplyYM) {}
+    rpc GetProductUrls (IDRequest) returns (ProductShopUrls) {}
 }
 
 message ShopYMAuth {

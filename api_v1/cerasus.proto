@@ -318,3 +318,12 @@ message CompanyesListRequest {
 message CompanyesListReply {
     repeated Company companies = 1;
 }
+
+message IDRequest {
+    int64 ID = 1;
+}
+
+message ProductShopUrls {
+    string shop = 1;
+    repeated string urls = 2;
+}

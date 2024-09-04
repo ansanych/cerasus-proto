@@ -27,6 +27,7 @@ service WB {
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc ForCounterDataWB(ForCounterRequestWB) returns (ForCounterReplyWB) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetProductUrls (IDRequest) returns (ProductShopUrls) {}
 }
 
 message ShopWBAuth {

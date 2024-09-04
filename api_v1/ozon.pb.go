@@ -440,7 +440,7 @@ var file_ozon_proto_rawDesc = []byte{
 	0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32,
 	0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
 	0x79, 0x57, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x4f, 0x5a, 0x52, 0x0a, 0x77, 0x61,
-	0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x32, 0xdb, 0x0a, 0x0a, 0x04, 0x4f, 0x7a, 0x6f,
+	0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x32, 0x9d, 0x0b, 0x0a, 0x04, 0x4f, 0x7a, 0x6f,
 	0x6e, 0x12, 0x35, 0x0a, 0x07, 0x53, 0x65, 0x74, 0x41, 0x75, 0x74, 0x68, 0x12, 0x14, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x53, 0x65, 0x74, 0x4f, 0x7a, 0x6f, 0x6e, 0x41, 0x75,
 	0x74, 0x68, 0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x42, 0x6f, 0x6f,
@@ -526,10 +526,14 @@ var file_ozon_proto_rawDesc = []byte{
 	0x22, 0x00, 0x12, 0x32, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x14, 0x2e, 0x63, 0x65, 0x72,
 	0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x40, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x55, 0x72, 0x6c, 0x73, 0x12, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
+	0x75, 0x73, 0x2e, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x68,
+	0x6f, 0x70, 0x55, 0x72, 0x6c, 0x73, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -563,20 +567,22 @@ var file_ozon_proto_goTypes = []interface{}{
 	(*MainGraphicRequest)(nil),       // 14: cerasus.MainGraphicRequest
 	(*ImageRequest)(nil),             // 15: cerasus.ImageRequest
 	(*PingRequest)(nil),              // 16: cerasus.PingRequest
-	(*BoolReply)(nil),                // 17: cerasus.BoolReply
-	(*CountReply)(nil),               // 18: cerasus.CountReply
-	(*ShopProductListReply)(nil),     // 19: cerasus.ShopProductListReply
-	(*ShopProduct)(nil),              // 20: cerasus.ShopProduct
-	(*DaysSalesReply)(nil),           // 21: cerasus.DaysSalesReply
-	(*SalesReply)(nil),               // 22: cerasus.SalesReply
-	(*ShopServiceReply)(nil),         // 23: cerasus.ShopServiceReply
-	(*SaleDetailsReply)(nil),         // 24: cerasus.SaleDetailsReply
-	(*MainGraphicReply)(nil),         // 25: cerasus.MainGraphicReply
-	(*ImageReply)(nil),               // 26: cerasus.ImageReply
-	(*CompanyShopData)(nil),          // 27: cerasus.CompanyShopData
-	(*DonutGraphic)(nil),             // 28: cerasus.DonutGraphic
-	(*WeekGraphics)(nil),             // 29: cerasus.WeekGraphics
-	(*PingReply)(nil),                // 30: cerasus.PingReply
+	(*IDRequest)(nil),                // 17: cerasus.IDRequest
+	(*BoolReply)(nil),                // 18: cerasus.BoolReply
+	(*CountReply)(nil),               // 19: cerasus.CountReply
+	(*ShopProductListReply)(nil),     // 20: cerasus.ShopProductListReply
+	(*ShopProduct)(nil),              // 21: cerasus.ShopProduct
+	(*DaysSalesReply)(nil),           // 22: cerasus.DaysSalesReply
+	(*SalesReply)(nil),               // 23: cerasus.SalesReply
+	(*ShopServiceReply)(nil),         // 24: cerasus.ShopServiceReply
+	(*SaleDetailsReply)(nil),         // 25: cerasus.SaleDetailsReply
+	(*MainGraphicReply)(nil),         // 26: cerasus.MainGraphicReply
+	(*ImageReply)(nil),               // 27: cerasus.ImageReply
+	(*CompanyShopData)(nil),          // 28: cerasus.CompanyShopData
+	(*DonutGraphic)(nil),             // 29: cerasus.DonutGraphic
+	(*WeekGraphics)(nil),             // 30: cerasus.WeekGraphics
+	(*PingReply)(nil),                // 31: cerasus.PingReply
+	(*ProductShopUrls)(nil),          // 32: cerasus.ProductShopUrls
 }
 var file_ozon_proto_depIdxs = []int32{
 	6,  // 0: cerasus.SetOzonAuth.auth:type_name -> cerasus.Auth
@@ -605,29 +611,31 @@ var file_ozon_proto_depIdxs = []int32{
 	6,  // 23: cerasus.Ozon.GetWeekGraphics:input_type -> cerasus.Auth
 	2,  // 24: cerasus.Ozon.ForCounterDataOZ:input_type -> cerasus.ForCounterRequestOZ
 	16, // 25: cerasus.Ozon.Ping:input_type -> cerasus.PingRequest
-	17, // 26: cerasus.Ozon.SetAuth:output_type -> cerasus.BoolReply
-	0,  // 27: cerasus.Ozon.GetAuth:output_type -> cerasus.ShopOzonAuth
-	17, // 28: cerasus.Ozon.ErrorAuth:output_type -> cerasus.BoolReply
-	18, // 29: cerasus.Ozon.GetUnsortedCount:output_type -> cerasus.CountReply
-	19, // 30: cerasus.Ozon.GetUnsortedList:output_type -> cerasus.ShopProductListReply
-	18, // 31: cerasus.Ozon.GetProductCount:output_type -> cerasus.CountReply
-	19, // 32: cerasus.Ozon.GetProductList:output_type -> cerasus.ShopProductListReply
-	20, // 33: cerasus.Ozon.GetProduct:output_type -> cerasus.ShopProduct
-	17, // 34: cerasus.Ozon.UpdateProduct:output_type -> cerasus.BoolReply
-	21, // 35: cerasus.Ozon.GetDaySales:output_type -> cerasus.DaysSalesReply
-	22, // 36: cerasus.Ozon.GetSales:output_type -> cerasus.SalesReply
-	23, // 37: cerasus.Ozon.GetShopServices:output_type -> cerasus.ShopServiceReply
-	24, // 38: cerasus.Ozon.GetSaleDetail:output_type -> cerasus.SaleDetailsReply
-	22, // 39: cerasus.Ozon.GetProductSales:output_type -> cerasus.SalesReply
-	25, // 40: cerasus.Ozon.GetMainGraphic:output_type -> cerasus.MainGraphicReply
-	26, // 41: cerasus.Ozon.GetImage:output_type -> cerasus.ImageReply
-	27, // 42: cerasus.Ozon.CheckShopData:output_type -> cerasus.CompanyShopData
-	28, // 43: cerasus.Ozon.GetDonutGraphics:output_type -> cerasus.DonutGraphic
-	29, // 44: cerasus.Ozon.GetWeekGraphics:output_type -> cerasus.WeekGraphics
-	5,  // 45: cerasus.Ozon.ForCounterDataOZ:output_type -> cerasus.ForCounterReplyOZ
-	30, // 46: cerasus.Ozon.Ping:output_type -> cerasus.PingReply
-	26, // [26:47] is the sub-list for method output_type
-	5,  // [5:26] is the sub-list for method input_type
+	17, // 26: cerasus.Ozon.GetProductUrls:input_type -> cerasus.IDRequest
+	18, // 27: cerasus.Ozon.SetAuth:output_type -> cerasus.BoolReply
+	0,  // 28: cerasus.Ozon.GetAuth:output_type -> cerasus.ShopOzonAuth
+	18, // 29: cerasus.Ozon.ErrorAuth:output_type -> cerasus.BoolReply
+	19, // 30: cerasus.Ozon.GetUnsortedCount:output_type -> cerasus.CountReply
+	20, // 31: cerasus.Ozon.GetUnsortedList:output_type -> cerasus.ShopProductListReply
+	19, // 32: cerasus.Ozon.GetProductCount:output_type -> cerasus.CountReply
+	20, // 33: cerasus.Ozon.GetProductList:output_type -> cerasus.ShopProductListReply
+	21, // 34: cerasus.Ozon.GetProduct:output_type -> cerasus.ShopProduct
+	18, // 35: cerasus.Ozon.UpdateProduct:output_type -> cerasus.BoolReply
+	22, // 36: cerasus.Ozon.GetDaySales:output_type -> cerasus.DaysSalesReply
+	23, // 37: cerasus.Ozon.GetSales:output_type -> cerasus.SalesReply
+	24, // 38: cerasus.Ozon.GetShopServices:output_type -> cerasus.ShopServiceReply
+	25, // 39: cerasus.Ozon.GetSaleDetail:output_type -> cerasus.SaleDetailsReply
+	23, // 40: cerasus.Ozon.GetProductSales:output_type -> cerasus.SalesReply
+	26, // 41: cerasus.Ozon.GetMainGraphic:output_type -> cerasus.MainGraphicReply
+	27, // 42: cerasus.Ozon.GetImage:output_type -> cerasus.ImageReply
+	28, // 43: cerasus.Ozon.CheckShopData:output_type -> cerasus.CompanyShopData
+	29, // 44: cerasus.Ozon.GetDonutGraphics:output_type -> cerasus.DonutGraphic
+	30, // 45: cerasus.Ozon.GetWeekGraphics:output_type -> cerasus.WeekGraphics
+	5,  // 46: cerasus.Ozon.ForCounterDataOZ:output_type -> cerasus.ForCounterReplyOZ
+	31, // 47: cerasus.Ozon.Ping:output_type -> cerasus.PingReply
+	32, // 48: cerasus.Ozon.GetProductUrls:output_type -> cerasus.ProductShopUrls
+	27, // [27:49] is the sub-list for method output_type
+	5,  // [5:27] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
