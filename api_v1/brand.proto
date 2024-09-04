@@ -139,9 +139,15 @@ message BSCProductLink {
     int64 BProductID = 2;
 }
 
+message BSCProductShop {
+    string shop = 1;
+    repeated string urls = 2;
+}
+
 message BSCProduct {
     Product product = 1;
     BSCProductLink link = 2;
+    repeated BSCProductShop urls = 3;
 }
 
 message BSCProductsReply {
