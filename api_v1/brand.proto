@@ -25,6 +25,7 @@ service Brands {
     rpc GetSellerLinked (BIDRequest) returns (CompanyesListReply) {}
     rpc GetSellerCompanyProducts(BSCProductsRequest) returns (BSCProductsReply) {}
     rpc SetSellerCompanyProductLink(BSCProductLinkRequest) returns (BoolReply) {}
+    rpc GetSellerUnlinkedCount (Auth) returns (SellerUnlinkedCountReply) {}
 }
 
 message BProductPrices {
@@ -156,4 +157,14 @@ message BSCProductLinkRequest {
     int64 BProductLinkID = 4;
     int64 ProductID = 5;
     int64 BProductID = 6;
+}
+
+message GetSellerUnlinkedCount {
+    BSeller seller = 1;
+    Company company = 2;
+    int64 count = 3;
+}
+
+message SellerUnlinkedCountReply {
+    repeated GetSellerUnlinkedCount unlinkedData = 1;
 }
