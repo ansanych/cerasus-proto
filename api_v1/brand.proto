@@ -22,10 +22,11 @@ service Brands {
     rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
     rpc GetBFile(BFileRequest) returns (ImageReply) {}
     rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
-    rpc GetSellerLinked (BIDRequest) returns (CompanyesListReply) {}
+    rpc GetSellerLinked (BIDRequest) returns (BSellerCompanies) {}
     rpc GetSellerCompanyProducts(BSCProductsRequest) returns (BSCProductsReply) {}
     rpc SetSellerCompanyProductLink(BSCProductLinkRequest) returns (BoolReply) {}
     rpc GetSellerUnlinkedCount (Auth) returns (SellerUnlinkedCountReply) {}
+    rpc ConnectBSellerCompanyShop (ConnectShopRequest) returns (BoolReply) {}
 }
 
 message BProductPrices {
@@ -82,6 +83,15 @@ message BProductFile {
     string updated = 5;
 }
 
+message BSellerCompany {
+    Company company = 1;
+    repeated string shops = 2;
+}
+
+message BSellerCompanies {
+    repeated BSellerCompany companies = 2;
+}
+
 message BSeller {
     int64 ID = 1;
     string name = 2;
@@ -89,7 +99,8 @@ message BSeller {
     string person = 4;
     string phone = 5;
     string email = 6;
-    repeated Company companiesLink = 7;
+    repeated BSellerCompany companiesLink = 7;
+    repeated string shops = 8;
 }
 
 message BSellerCreateRequest {
@@ -167,4 +178,12 @@ message GetSellerUnlinkedCount {
 
 message SellerUnlinkedCountReply {
     repeated GetSellerUnlinkedCount unlinkedData = 1;
+}
+
+message ConnectShopRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int64 cerasusCompanyID = 3;
+    string shop = 4;
+    bool connect = 5;
 }
