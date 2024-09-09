@@ -27,6 +27,7 @@ service Brands {
     rpc SetSellerCompanyProductLink(BSCProductLinkRequest) returns (BoolReply) {}
     rpc GetSellerUnlinkedCount (Auth) returns (SellerUnlinkedCountReply) {}
     rpc ConnectBSellerCompanyShop (ConnectShopRequest) returns (BoolReply) {}
+    rpc SetSellerNullCompanyProductLink(BSCProductLinkRequest) returns (InsertReply) {}
 }
 
 message BProductPrices {

@@ -43,6 +43,7 @@ type BrandsClient interface {
 	SetSellerCompanyProductLink(ctx context.Context, in *BSCProductLinkRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetSellerUnlinkedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SellerUnlinkedCountReply, error)
 	ConnectBSellerCompanyShop(ctx context.Context, in *ConnectShopRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	SetSellerNullCompanyProductLink(ctx context.Context, in *BSCProductLinkRequest, opts ...grpc.CallOption) (*InsertReply, error)
 }
 
 type brandsClient struct {
@@ -242,6 +243,15 @@ func (c *brandsClient) ConnectBSellerCompanyShop(ctx context.Context, in *Connec
 	return out, nil
 }
 
+func (c *brandsClient) SetSellerNullCompanyProductLink(ctx context.Context, in *BSCProductLinkRequest, opts ...grpc.CallOption) (*InsertReply, error) {
+	out := new(InsertReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SetSellerNullCompanyProductLink", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -267,6 +277,7 @@ type BrandsServer interface {
 	SetSellerCompanyProductLink(context.Context, *BSCProductLinkRequest) (*BoolReply, error)
 	GetSellerUnlinkedCount(context.Context, *Auth) (*SellerUnlinkedCountReply, error)
 	ConnectBSellerCompanyShop(context.Context, *ConnectShopRequest) (*BoolReply, error)
+	SetSellerNullCompanyProductLink(context.Context, *BSCProductLinkRequest) (*InsertReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -336,6 +347,9 @@ func (UnimplementedBrandsServer) GetSellerUnlinkedCount(context.Context, *Auth) 
 }
 func (UnimplementedBrandsServer) ConnectBSellerCompanyShop(context.Context, *ConnectShopRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectBSellerCompanyShop not implemented")
+}
+func (UnimplementedBrandsServer) SetSellerNullCompanyProductLink(context.Context, *BSCProductLinkRequest) (*InsertReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSellerNullCompanyProductLink not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -728,6 +742,24 @@ func _Brands_ConnectBSellerCompanyShop_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_SetSellerNullCompanyProductLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSCProductLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SetSellerNullCompanyProductLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SetSellerNullCompanyProductLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SetSellerNullCompanyProductLink(ctx, req.(*BSCProductLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -818,6 +850,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConnectBSellerCompanyShop",
 			Handler:    _Brands_ConnectBSellerCompanyShop_Handler,
+		},
+		{
+			MethodName: "SetSellerNullCompanyProductLink",
+			Handler:    _Brands_SetSellerNullCompanyProductLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
