@@ -44,6 +44,10 @@ type BrandsClient interface {
 	GetSellerUnlinkedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SellerUnlinkedCountReply, error)
 	ConnectBSellerCompanyShop(ctx context.Context, in *ConnectShopRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	SetSellerNullCompanyProductLink(ctx context.Context, in *BSCProductLinkRequest, opts ...grpc.CallOption) (*InsertReply, error)
+	RemoveSellerNullCompanyProductLink(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	AddSellerNullCompanyProductUrl(ctx context.Context, in *NullCompanyUrl, opts ...grpc.CallOption) (*BoolReply, error)
+	UpdateSellerNullCompanyProductUrl(ctx context.Context, in *NullCompanyUrl, opts ...grpc.CallOption) (*BoolReply, error)
+	RemoveSellerNullCompanyProductUrl(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type brandsClient struct {
@@ -252,6 +256,42 @@ func (c *brandsClient) SetSellerNullCompanyProductLink(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *brandsClient) RemoveSellerNullCompanyProductLink(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/RemoveSellerNullCompanyProductLink", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) AddSellerNullCompanyProductUrl(ctx context.Context, in *NullCompanyUrl, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/AddSellerNullCompanyProductUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) UpdateSellerNullCompanyProductUrl(ctx context.Context, in *NullCompanyUrl, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/UpdateSellerNullCompanyProductUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) RemoveSellerNullCompanyProductUrl(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/RemoveSellerNullCompanyProductUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -278,6 +318,10 @@ type BrandsServer interface {
 	GetSellerUnlinkedCount(context.Context, *Auth) (*SellerUnlinkedCountReply, error)
 	ConnectBSellerCompanyShop(context.Context, *ConnectShopRequest) (*BoolReply, error)
 	SetSellerNullCompanyProductLink(context.Context, *BSCProductLinkRequest) (*InsertReply, error)
+	RemoveSellerNullCompanyProductLink(context.Context, *DeleteRequest) (*BoolReply, error)
+	AddSellerNullCompanyProductUrl(context.Context, *NullCompanyUrl) (*BoolReply, error)
+	UpdateSellerNullCompanyProductUrl(context.Context, *NullCompanyUrl) (*BoolReply, error)
+	RemoveSellerNullCompanyProductUrl(context.Context, *DeleteRequest) (*BoolReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -350,6 +394,18 @@ func (UnimplementedBrandsServer) ConnectBSellerCompanyShop(context.Context, *Con
 }
 func (UnimplementedBrandsServer) SetSellerNullCompanyProductLink(context.Context, *BSCProductLinkRequest) (*InsertReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetSellerNullCompanyProductLink not implemented")
+}
+func (UnimplementedBrandsServer) RemoveSellerNullCompanyProductLink(context.Context, *DeleteRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveSellerNullCompanyProductLink not implemented")
+}
+func (UnimplementedBrandsServer) AddSellerNullCompanyProductUrl(context.Context, *NullCompanyUrl) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddSellerNullCompanyProductUrl not implemented")
+}
+func (UnimplementedBrandsServer) UpdateSellerNullCompanyProductUrl(context.Context, *NullCompanyUrl) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSellerNullCompanyProductUrl not implemented")
+}
+func (UnimplementedBrandsServer) RemoveSellerNullCompanyProductUrl(context.Context, *DeleteRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveSellerNullCompanyProductUrl not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -760,6 +816,78 @@ func _Brands_SetSellerNullCompanyProductLink_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_RemoveSellerNullCompanyProductLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).RemoveSellerNullCompanyProductLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/RemoveSellerNullCompanyProductLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).RemoveSellerNullCompanyProductLink(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_AddSellerNullCompanyProductUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NullCompanyUrl)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).AddSellerNullCompanyProductUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/AddSellerNullCompanyProductUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).AddSellerNullCompanyProductUrl(ctx, req.(*NullCompanyUrl))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_UpdateSellerNullCompanyProductUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NullCompanyUrl)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).UpdateSellerNullCompanyProductUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/UpdateSellerNullCompanyProductUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).UpdateSellerNullCompanyProductUrl(ctx, req.(*NullCompanyUrl))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_RemoveSellerNullCompanyProductUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).RemoveSellerNullCompanyProductUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/RemoveSellerNullCompanyProductUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).RemoveSellerNullCompanyProductUrl(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +982,22 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetSellerNullCompanyProductLink",
 			Handler:    _Brands_SetSellerNullCompanyProductLink_Handler,
+		},
+		{
+			MethodName: "RemoveSellerNullCompanyProductLink",
+			Handler:    _Brands_RemoveSellerNullCompanyProductLink_Handler,
+		},
+		{
+			MethodName: "AddSellerNullCompanyProductUrl",
+			Handler:    _Brands_AddSellerNullCompanyProductUrl_Handler,
+		},
+		{
+			MethodName: "UpdateSellerNullCompanyProductUrl",
+			Handler:    _Brands_UpdateSellerNullCompanyProductUrl_Handler,
+		},
+		{
+			MethodName: "RemoveSellerNullCompanyProductUrl",
+			Handler:    _Brands_RemoveSellerNullCompanyProductUrl_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
