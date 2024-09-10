@@ -199,4 +199,5 @@ message NullCompanyUrl {
     int64 productID = 3;
     string shop = 4;
     string url = 5;
+    string productLinkID = 6;
 }
