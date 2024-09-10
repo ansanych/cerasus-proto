@@ -28,6 +28,10 @@ service Brands {
     rpc GetSellerUnlinkedCount (Auth) returns (SellerUnlinkedCountReply) {}
     rpc ConnectBSellerCompanyShop (ConnectShopRequest) returns (BoolReply) {}
     rpc SetSellerNullCompanyProductLink(BSCProductLinkRequest) returns (InsertReply) {}
+    rpc RemoveSellerNullCompanyProductLink(DeleteRequest) returns (BoolReply) {}
+    rpc AddSellerNullCompanyProductUrl(NullCompanyUrl) returns (BoolReply) {}
+    rpc UpdateSellerNullCompanyProductUrl(NullCompanyUrl) returns (BoolReply) {}
+    rpc RemoveSellerNullCompanyProductUrl(DeleteRequest) returns (BoolReply) {}
 }
 
 message BProductPrices {
@@ -187,4 +191,12 @@ message ConnectShopRequest {
     int64 cerasusCompanyID = 3;
     string shop = 4;
     bool connect = 5;
+}
+
+message NullCompanyUrl {
+    Auth auth = 1;
+    int64 ID = 2;
+    int64 productID = 3;
+    string shop = 4;
+    string url = 5;
 }
