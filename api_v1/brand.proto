@@ -24,6 +24,10 @@ service Brands {
     rpc GetBSeller(RequestByID) returns (BSeller) {}
     rpc UpdateBSeller(BSellerUpsert) returns (BoolReply) {}
     rpc DeleteBSeller(RequestByID) returns (BoolReply) {}
+    rpc GetBSellerCompanies(BSellerCompanyRequest) returns (BSellerCompaniesData) {}
+    rpc GetBSellerCompany(BSellerCompanyRequest) returns (BSellerCompanyData) {}
+    rpc GetBSellerCompanyProducts(BSellerCompanyRequest) returns (BSellerCompanyProducts) {}
+    rpc GetBSellerCompanyProduct(BSellerCompanyProductRequest) returns (BSellerCompanyProduct) {}
 }
 
 message BProduct {
@@ -91,4 +95,47 @@ message BSellerUpsert {
 
 message BSellers {
     repeated BSeller b_sellers = 1;
+}
+
+message BSellerCompanyRequest {
+    Auth auth = 1;
+    int64 b_sellerID = 2;
+    int64 companyID = 3;
+}
+
+message BSellerCompanyData {
+    int64 ID = 1;
+    Company company = 2;
+}
+
+message BSellerCompaniesData {
+    repeated BSellerCompaniesData data = 1;
+}
+
+message BSellerCompanyProductRequest {
+    Auth auth = 1;
+    int64 b_sellerID = 2;
+    int64 companyID = 3;
+    int64 ID = 4;
+}
+
+message CompanyProductShopUrl {
+    int64 ID = 1;
+    string url = 2;
+}
+
+message CompanyProductShopUrls {
+    string shop = 1;
+    repeated CompanyProductShopUrl urls = 2;
+}
+
+message BSellerCompanyProduct {
+    int64 ID = 1;
+    Product product = 2;
+    BProduct b_product = 3;
+    CompanyProductShopUrls urls = 4;
+}
+
+message BSellerCompanyProducts {
+    repeated BSellerCompanyProduct seller_company_products = 1;
 }

@@ -40,6 +40,10 @@ type BrandsClient interface {
 	GetBSeller(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BSeller, error)
 	UpdateBSeller(ctx context.Context, in *BSellerUpsert, opts ...grpc.CallOption) (*BoolReply, error)
 	DeleteBSeller(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
+	GetBSellerCompanies(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompaniesData, error)
+	GetBSellerCompany(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyData, error)
+	GetBSellerCompanyProducts(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyProducts, error)
+	GetBSellerCompanyProduct(ctx context.Context, in *BSellerCompanyProductRequest, opts ...grpc.CallOption) (*BSellerCompanyProduct, error)
 }
 
 type brandsClient struct {
@@ -212,6 +216,42 @@ func (c *brandsClient) DeleteBSeller(ctx context.Context, in *RequestByID, opts 
 	return out, nil
 }
 
+func (c *brandsClient) GetBSellerCompanies(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompaniesData, error) {
+	out := new(BSellerCompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBSellerCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetBSellerCompany(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyData, error) {
+	out := new(BSellerCompanyData)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBSellerCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetBSellerCompanyProducts(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyProducts, error) {
+	out := new(BSellerCompanyProducts)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBSellerCompanyProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetBSellerCompanyProduct(ctx context.Context, in *BSellerCompanyProductRequest, opts ...grpc.CallOption) (*BSellerCompanyProduct, error) {
+	out := new(BSellerCompanyProduct)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBSellerCompanyProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -234,6 +274,10 @@ type BrandsServer interface {
 	GetBSeller(context.Context, *RequestByID) (*BSeller, error)
 	UpdateBSeller(context.Context, *BSellerUpsert) (*BoolReply, error)
 	DeleteBSeller(context.Context, *RequestByID) (*BoolReply, error)
+	GetBSellerCompanies(context.Context, *BSellerCompanyRequest) (*BSellerCompaniesData, error)
+	GetBSellerCompany(context.Context, *BSellerCompanyRequest) (*BSellerCompanyData, error)
+	GetBSellerCompanyProducts(context.Context, *BSellerCompanyRequest) (*BSellerCompanyProducts, error)
+	GetBSellerCompanyProduct(context.Context, *BSellerCompanyProductRequest) (*BSellerCompanyProduct, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -294,6 +338,18 @@ func (UnimplementedBrandsServer) UpdateBSeller(context.Context, *BSellerUpsert) 
 }
 func (UnimplementedBrandsServer) DeleteBSeller(context.Context, *RequestByID) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBSeller not implemented")
+}
+func (UnimplementedBrandsServer) GetBSellerCompanies(context.Context, *BSellerCompanyRequest) (*BSellerCompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBSellerCompanies not implemented")
+}
+func (UnimplementedBrandsServer) GetBSellerCompany(context.Context, *BSellerCompanyRequest) (*BSellerCompanyData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBSellerCompany not implemented")
+}
+func (UnimplementedBrandsServer) GetBSellerCompanyProducts(context.Context, *BSellerCompanyRequest) (*BSellerCompanyProducts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBSellerCompanyProducts not implemented")
+}
+func (UnimplementedBrandsServer) GetBSellerCompanyProduct(context.Context, *BSellerCompanyProductRequest) (*BSellerCompanyProduct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBSellerCompanyProduct not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -632,6 +688,78 @@ func _Brands_DeleteBSeller_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetBSellerCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSellerCompanyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetBSellerCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetBSellerCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetBSellerCompanies(ctx, req.(*BSellerCompanyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetBSellerCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSellerCompanyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetBSellerCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetBSellerCompany",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetBSellerCompany(ctx, req.(*BSellerCompanyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetBSellerCompanyProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSellerCompanyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetBSellerCompanyProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetBSellerCompanyProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetBSellerCompanyProducts(ctx, req.(*BSellerCompanyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetBSellerCompanyProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSellerCompanyProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetBSellerCompanyProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetBSellerCompanyProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetBSellerCompanyProduct(ctx, req.(*BSellerCompanyProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -710,6 +838,22 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteBSeller",
 			Handler:    _Brands_DeleteBSeller_Handler,
+		},
+		{
+			MethodName: "GetBSellerCompanies",
+			Handler:    _Brands_GetBSellerCompanies_Handler,
+		},
+		{
+			MethodName: "GetBSellerCompany",
+			Handler:    _Brands_GetBSellerCompany_Handler,
+		},
+		{
+			MethodName: "GetBSellerCompanyProducts",
+			Handler:    _Brands_GetBSellerCompanyProducts_Handler,
+		},
+		{
+			MethodName: "GetBSellerCompanyProduct",
+			Handler:    _Brands_GetBSellerCompanyProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
