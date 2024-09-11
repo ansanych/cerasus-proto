@@ -109,7 +109,7 @@ message BSellerCompanyData {
 }
 
 message BSellerCompaniesData {
-    repeated BSellerCompaniesData data = 1;
+    repeated BSellerCompanyData data = 1;
 }
 
 message BSellerCompanyProductRequest {
