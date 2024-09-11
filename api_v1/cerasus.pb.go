@@ -3377,6 +3377,61 @@ func (x *ProductShopUrls) GetUrls() []string {
 	return nil
 }
 
+type RequestByID struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth *Auth `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	ID   int64 `protobuf:"varint,2,opt,name=ID,proto3" json:"ID,omitempty"`
+}
+
+func (x *RequestByID) Reset() {
+	*x = RequestByID{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RequestByID) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RequestByID) ProtoMessage() {}
+
+func (x *RequestByID) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RequestByID.ProtoReflect.Descriptor instead.
+func (*RequestByID) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *RequestByID) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *RequestByID) GetID() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -3714,10 +3769,14 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x0f, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x68, 0x6f, 0x70, 0x55, 0x72, 0x6c, 0x73,
 	0x12, 0x12, 0x0a, 0x04, 0x73, 0x68, 0x6f, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
 	0x73, 0x68, 0x6f, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x72, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x03,
-	0x28, 0x09, 0x52, 0x04, 0x75, 0x72, 0x6c, 0x73, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f,
-	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x28, 0x09, 0x52, 0x04, 0x75, 0x72, 0x6c, 0x73, 0x22, 0x40, 0x0a, 0x0b, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x42, 0x79, 0x49, 0x44, 0x12, 0x21, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e,
+	0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63,
+	0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3732,7 +3791,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 52)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                     // 0: cerasus.Role
 	(*User)(nil),                     // 1: cerasus.User
@@ -3785,6 +3844,7 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*CompanyesListReply)(nil),       // 48: cerasus.CompanyesListReply
 	(*IDRequest)(nil),                // 49: cerasus.IDRequest
 	(*ProductShopUrls)(nil),          // 50: cerasus.ProductShopUrls
+	(*RequestByID)(nil),              // 51: cerasus.RequestByID
 }
 var file_cerasus_proto_depIdxs = []int32{
 	3,  // 0: cerasus.User.company:type_name -> cerasus.Company
@@ -3821,11 +3881,12 @@ var file_cerasus_proto_depIdxs = []int32{
 	41, // 31: cerasus.WeekGraphics.data:type_name -> cerasus.WeekGraphicData
 	2,  // 32: cerasus.ShopProductUpdateRequest.auth:type_name -> cerasus.Auth
 	3,  // 33: cerasus.CompanyesListReply.companies:type_name -> cerasus.Company
-	34, // [34:34] is the sub-list for method output_type
-	34, // [34:34] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	2,  // 34: cerasus.RequestByID.auth:type_name -> cerasus.Auth
+	35, // [35:35] is the sub-list for method output_type
+	35, // [35:35] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -4446,6 +4507,18 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RequestByID); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4453,7 +4526,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   51,
+			NumMessages:   52,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

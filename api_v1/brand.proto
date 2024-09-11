@@ -7,94 +7,72 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Brands {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc GetCerasusBrandData (Auth) returns (Brand) {}
-    rpc GetBProducts(BProductsRequest) returns (BProductsReply) {}
-    rpc GetBProduct(BIDRequest) returns (BProduct) {}
-    rpc CreateBProducts(BProductCreateRequest) returns (BProductCreateReply) {}
-    rpc UpdateBProducts(BProductCreateRequest) returns (BoolReply) {}
-    rpc GetBPrices(Auth) returns (BProductPrices) {}
-    rpc GetBPrice(BIDRequest) returns (BProductPrice) {}
-    rpc SetBPrice(BProductCreatePrice) returns (BProductPrice) {}
-    rpc GetBSellers(Auth) returns (BSellers) {}
-    rpc GetBSeller(BIDRequest) returns (BSeller) {}
-    rpc CreateBSeller(BSellerCreateRequest) returns (BSeller) {}
-    rpc UpdateBSeller(BSellerCreateRequest) returns (BoolReply) {}
-    rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
+    rpc GetBrandData (Auth) returns (Brand) {}
+    rpc GetBProducts (Auth) returns (BProducts) {}
+    rpc GetBProduct (RequestByID) returns (BProduct) {}
+    rpc CreateBProduct (BProductUpsert) returns (BProduct) {}
+    rpc UpdateBProduct (BProductUpsert) returns (BoolReply) {}
+    rpc DeleteBProduct (RequestByID) returns (BoolReply) {}
     rpc GetBFile(BFileRequest) returns (ImageReply) {}
-    rpc GetBrandLink (BrandLinkRequest) returns (BBrandLink) {}
-    rpc GetSellerLinked (BIDRequest) returns (BSellerCompanies) {}
-    rpc GetSellerCompanyProducts(BSCProductsRequest) returns (BSCProductsReply) {}
-    rpc SetSellerCompanyProductLink(BSCProductLinkRequest) returns (BoolReply) {}
-    rpc GetSellerUnlinkedCount (Auth) returns (SellerUnlinkedCountReply) {}
-    rpc ConnectBSellerCompanyShop (ConnectShopRequest) returns (BoolReply) {}
-    rpc SetSellerNullCompanyProductLink(BSCProductLinkRequest) returns (InsertReply) {}
-    rpc RemoveSellerNullCompanyProductLink(DeleteRequest) returns (BoolReply) {}
-    rpc AddSellerNullCompanyProductUrl(NullCompanyUrl) returns (BoolReply) {}
-    rpc UpdateSellerNullCompanyProductUrl(NullCompanyUrl) returns (BoolReply) {}
-    rpc RemoveSellerNullCompanyProductUrl(DeleteRequest) returns (BoolReply) {}
-}
-
-message BProductPrices {
-    repeated BProductPrice prices = 1;
-}
-
-message BProductCreatePrice {
-    Auth auth = 1;
-    int64 price = 2;
-    int64 productID = 3;
+    rpc UploadBFile(BUploadRequest) returns (ImageReply) {}
+    rpc GetBPrices(RequestByID) returns (BPrices) {}
+    rpc GetBPrice(RequestByID) returns (BPrice) {}
+    rpc CreateBPrice(BPriceUpsert) returns (BPrice) {}
+    rpc DeleteBPrice(RequestByID) returns (BoolReply) {}
+    rpc CreateBSeller(BSellerUpsert) returns (BSeller) {}
+    rpc GetBSellers(Auth) returns (BSellers) {}
+    rpc GetBSeller(RequestByID) returns (BSeller) {}
+    rpc UpdateBSeller(BSellerUpsert) returns (BoolReply) {}
+    rpc DeleteBSeller(RequestByID) returns (BoolReply) {}
 }
 
 message BProduct {
     int64 ID = 1;
-    int64 companyID = 2;
-    string title = 3;
+    string title = 2;
+    string article = 3;
     string comment = 4;
-    string article = 5;
+    string preview = 5;
     bool active = 6;
     string updated = 7;
-    string preview = 8;
-    BProductPrice price = 9;
 }
 
-message BProductsRequest {
+message BProducts {
+    repeated BProduct b_products = 1;
+}
+
+message BProductUpsert {
     Auth auth = 1;
-    int64 page = 2;
+    BProduct b_product = 2;
 }
 
-message BIDRequest {
+message BFileRequest {
+    string filename = 1;
+    int64 b_productID = 2;
+}
+
+message BUploadRequest {
     Auth auth = 1;
-    int64 ID = 2;
+    int64 b_productID = 2;
+    bytes chunk = 3;
+    bool preview = 4;
+    string filename = 5;
+    string type = 6;
 }
 
-message BProductsReply {
-    repeated BProduct products = 1;
-    Pagination pagination = 2;
-}
-
-message BProductCreateReply {
-    BProduct product = 1;
-}
-
-message BProductCreateRequest {
-    Auth auth = 1;
-    BProduct product = 2;
-}
-
-message BProductFile {
+message BPrice {
     int64 ID = 1;
-    string file = 2;
-    string type = 3;
-    bool active = 4;
-    string updated = 5;
+    int64 b_productID = 2;
+    int64 value = 3;
+    string created = 4;
 }
 
-message BSellerCompany {
-    Company company = 1;
-    repeated string shops = 2;
+message BPrices {
+    repeated BPrice b_prices = 1;
 }
 
-message BSellerCompanies {
-    repeated BSellerCompany companies = 2;
+message BPriceUpsert {
+    Auth auth = 1;
+    BPrice b_price = 2;
 }
 
 message BSeller {
@@ -104,100 +82,13 @@ message BSeller {
     string person = 4;
     string phone = 5;
     string email = 6;
-    repeated BSellerCompany companiesLink = 7;
-    repeated string shops = 8;
 }
 
-message BSellerCreateRequest {
+message BSellerUpsert {
     Auth auth = 1;
-    BSeller seller = 2;
+    BSeller b_seller = 2;
 }
 
 message BSellers {
-    repeated BSeller sellers = 1;
-}
-
-message BBrandLink {
-    int64 ID = 1;
-    Brand brand = 2;
-}
-
-message BrandLinkRequest {
-    int64 ID = 1;
-}
-
-message BUploadRequest {
-    Auth auth = 1;
-    int64 productID = 2;
-    bytes chunk = 3;
-    bool preview = 4;
-    string filename = 5;
-    string type = 6;
-}
-
-message BFileRequest {
-    string filename = 1;
-    int64 product = 2;
-    bool preview = 3;
-}
-
-message BSellerLinks {
-    repeated Company companies = 1;
-}
-
-message BSCProductsRequest {
-    Auth auth = 1;
-    int64 sellerID = 2;
-    int64 companyID = 3;
-}
-
-message BSCProductLink {
-    int64 ID = 1;
-    int64 BProductID = 2;
-}
-
-message BSCProduct {
-    Product product = 1;
-    BSCProductLink link = 2;
-    repeated ProductShopUrls urls = 3;
-}
-
-message BSCProductsReply {
-    repeated BSCProduct products = 1;
-}
-
-message BSCProductLinkRequest {
-    Auth auth = 1;
-    int64 sellerID = 2;
-    int64 CerasusCompanyID = 3;
-    int64 BProductLinkID = 4;
-    int64 ProductID = 5;
-    int64 BProductID = 6;
-}
-
-message GetSellerUnlinkedCount {
-    BSeller seller = 1;
-    Company company = 2;
-    int64 count = 3;
-}
-
-message SellerUnlinkedCountReply {
-    repeated GetSellerUnlinkedCount unlinkedData = 1;
-}
-
-message ConnectShopRequest {
-    Auth auth = 1;
-    int64 sellerID = 2;
-    int64 cerasusCompanyID = 3;
-    string shop = 4;
-    bool connect = 5;
-}
-
-message NullCompanyUrl {
-    Auth auth = 1;
-    int64 ID = 2;
-    int64 productID = 3;
-    string shop = 4;
-    string url = 5;
-    string productLinkID = 6;
+    repeated BSeller b_sellers = 1;
 }
