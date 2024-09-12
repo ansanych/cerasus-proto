@@ -133,7 +133,7 @@ message BSellerCompanyProduct {
     int64 ID = 1;
     Product product = 2;
     BProduct b_product = 3;
-    CompanyProductShopUrls urls = 4;
+    repeated CompanyProductShopUrls urls = 4;
 }
 
 message BSellerCompanyProducts {
