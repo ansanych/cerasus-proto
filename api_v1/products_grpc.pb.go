@@ -46,7 +46,8 @@ type ProductsClient interface {
 	GetProductCount(ctx context.Context, in *CountDataGetRequest, opts ...grpc.CallOption) (*CountDataGetReply, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductsByID(ctx context.Context, in *ProductsIDRequest, opts ...grpc.CallOption) (*ProductsReply, error)
-	GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error)
+	GetBrandCompanyProducts(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error)
+	GetBrandCompanyProduct(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*BrandCompanyProduct, error)
 }
 
 type productsClient struct {
@@ -273,8 +274,17 @@ func (c *productsClient) GetProductsByID(ctx context.Context, in *ProductsIDRequ
 	return out, nil
 }
 
-func (c *productsClient) GetBrandCompanyProduct(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error) {
+func (c *productsClient) GetBrandCompanyProducts(ctx context.Context, in *BrandCompanyRequest, opts ...grpc.CallOption) (*BrandCompanyProductsReply, error) {
 	out := new(BrandCompanyProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Products/GetBrandCompanyProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) GetBrandCompanyProduct(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*BrandCompanyProduct, error) {
+	out := new(BrandCompanyProduct)
 	err := c.cc.Invoke(ctx, "/cerasus.Products/GetBrandCompanyProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -310,7 +320,8 @@ type ProductsServer interface {
 	GetProductCount(context.Context, *CountDataGetRequest) (*CountDataGetReply, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductsByID(context.Context, *ProductsIDRequest) (*ProductsReply, error)
-	GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error)
+	GetBrandCompanyProducts(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error)
+	GetBrandCompanyProduct(context.Context, *IDRequest) (*BrandCompanyProduct, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -390,7 +401,10 @@ func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingRep
 func (UnimplementedProductsServer) GetProductsByID(context.Context, *ProductsIDRequest) (*ProductsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByID not implemented")
 }
-func (UnimplementedProductsServer) GetBrandCompanyProduct(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error) {
+func (UnimplementedProductsServer) GetBrandCompanyProducts(context.Context, *BrandCompanyRequest) (*BrandCompanyProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrandCompanyProducts not implemented")
+}
+func (UnimplementedProductsServer) GetBrandCompanyProduct(context.Context, *IDRequest) (*BrandCompanyProduct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandCompanyProduct not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
@@ -838,8 +852,26 @@ func _Products_GetProductsByID_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Products_GetBrandCompanyProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Products_GetBrandCompanyProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BrandCompanyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetBrandCompanyProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Products/GetBrandCompanyProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetBrandCompanyProducts(ctx, req.(*BrandCompanyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_GetBrandCompanyProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -851,7 +883,7 @@ func _Products_GetBrandCompanyProduct_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/cerasus.Products/GetBrandCompanyProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsServer).GetBrandCompanyProduct(ctx, req.(*BrandCompanyRequest))
+		return srv.(ProductsServer).GetBrandCompanyProduct(ctx, req.(*IDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -958,6 +990,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsByID",
 			Handler:    _Products_GetProductsByID_Handler,
+		},
+		{
+			MethodName: "GetBrandCompanyProducts",
+			Handler:    _Products_GetBrandCompanyProducts_Handler,
 		},
 		{
 			MethodName: "GetBrandCompanyProduct",

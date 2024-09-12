@@ -30,7 +30,8 @@ service Products {
     rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductsByID (ProductsIDRequest) returns (ProductsReply) {}
-    rpc GetBrandCompanyProduct (BrandCompanyRequest) returns (BrandCompanyProductsReply) {}
+    rpc GetBrandCompanyProducts (BrandCompanyRequest) returns (BrandCompanyProductsReply) {}
+    rpc GetBrandCompanyProduct (IDRequest) returns (BrandCompanyProduct) {}
 }
 
 message CountData {
