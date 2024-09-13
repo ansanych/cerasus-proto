@@ -28,6 +28,7 @@ service Brands {
     rpc GetBSellerCompany(BSellerCompanyRequest) returns (BSellerCompanyData) {}
     rpc GetBSellerCompanyProducts(BSellerCompanyRequest) returns (BSellerCompanyProducts) {}
     rpc GetBSellerCompanyProduct(BSellerCompanyProductRequest) returns (BSellerCompanyProduct) {}
+    rpc UpdateBSellerCompanyProduct(BSCPUpdateRequest) returns (BoolReply) {}
 }
 
 message BProduct {
@@ -138,4 +139,14 @@ message BSellerCompanyProduct {
 
 message BSellerCompanyProducts {
     repeated BSellerCompanyProduct seller_company_products = 1;
+}
+
+message BSCPUpdateRequest {
+    Auth auth = 1;
+    string do = 2;
+    int64 ID = 3;
+    int64 sellerID = 4;
+    int64 companyID = 5;
+    Product product = 6;
+    BProduct b_product = 7;
 }

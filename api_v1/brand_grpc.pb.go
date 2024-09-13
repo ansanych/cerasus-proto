@@ -44,6 +44,7 @@ type BrandsClient interface {
 	GetBSellerCompany(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyData, error)
 	GetBSellerCompanyProducts(ctx context.Context, in *BSellerCompanyRequest, opts ...grpc.CallOption) (*BSellerCompanyProducts, error)
 	GetBSellerCompanyProduct(ctx context.Context, in *BSellerCompanyProductRequest, opts ...grpc.CallOption) (*BSellerCompanyProduct, error)
+	UpdateBSellerCompanyProduct(ctx context.Context, in *BSCPUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type brandsClient struct {
@@ -252,6 +253,15 @@ func (c *brandsClient) GetBSellerCompanyProduct(ctx context.Context, in *BSeller
 	return out, nil
 }
 
+func (c *brandsClient) UpdateBSellerCompanyProduct(ctx context.Context, in *BSCPUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/UpdateBSellerCompanyProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -278,6 +288,7 @@ type BrandsServer interface {
 	GetBSellerCompany(context.Context, *BSellerCompanyRequest) (*BSellerCompanyData, error)
 	GetBSellerCompanyProducts(context.Context, *BSellerCompanyRequest) (*BSellerCompanyProducts, error)
 	GetBSellerCompanyProduct(context.Context, *BSellerCompanyProductRequest) (*BSellerCompanyProduct, error)
+	UpdateBSellerCompanyProduct(context.Context, *BSCPUpdateRequest) (*BoolReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -350,6 +361,9 @@ func (UnimplementedBrandsServer) GetBSellerCompanyProducts(context.Context, *BSe
 }
 func (UnimplementedBrandsServer) GetBSellerCompanyProduct(context.Context, *BSellerCompanyProductRequest) (*BSellerCompanyProduct, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBSellerCompanyProduct not implemented")
+}
+func (UnimplementedBrandsServer) UpdateBSellerCompanyProduct(context.Context, *BSCPUpdateRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBSellerCompanyProduct not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -760,6 +774,24 @@ func _Brands_GetBSellerCompanyProduct_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_UpdateBSellerCompanyProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BSCPUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).UpdateBSellerCompanyProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/UpdateBSellerCompanyProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).UpdateBSellerCompanyProduct(ctx, req.(*BSCPUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +886,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBSellerCompanyProduct",
 			Handler:    _Brands_GetBSellerCompanyProduct_Handler,
+		},
+		{
+			MethodName: "UpdateBSellerCompanyProduct",
+			Handler:    _Brands_UpdateBSellerCompanyProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
