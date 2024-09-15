@@ -46,8 +46,10 @@ type BrandsClient interface {
 	GetBSellerCompanyProduct(ctx context.Context, in *BSellerCompanyProductRequest, opts ...grpc.CallOption) (*BSellerCompanyProduct, error)
 	UpdateBSellerCompanyProduct(ctx context.Context, in *BSCPUpdateRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	CreateBSellerNullProduct(ctx context.Context, in *CreateBSellerNullProductRequest, opts ...grpc.CallOption) (*IDRequest, error)
+	DeleteBSellerNullProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
 	SetBSellerNullProductURL(ctx context.Context, in *NullUrlRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	DeleteBSellerNullProductURL(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
+	GetBAlert(ctx context.Context, in *BAlertsRequest, opts ...grpc.CallOption) (*BAlerts, error)
 }
 
 type brandsClient struct {
@@ -274,6 +276,15 @@ func (c *brandsClient) CreateBSellerNullProduct(ctx context.Context, in *CreateB
 	return out, nil
 }
 
+func (c *brandsClient) DeleteBSellerNullProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/DeleteBSellerNullProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *brandsClient) SetBSellerNullProductURL(ctx context.Context, in *NullUrlRequest, opts ...grpc.CallOption) (*BoolReply, error) {
 	out := new(BoolReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/SetBSellerNullProductURL", in, out, opts...)
@@ -286,6 +297,15 @@ func (c *brandsClient) SetBSellerNullProductURL(ctx context.Context, in *NullUrl
 func (c *brandsClient) DeleteBSellerNullProductURL(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error) {
 	out := new(BoolReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/DeleteBSellerNullProductURL", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetBAlert(ctx context.Context, in *BAlertsRequest, opts ...grpc.CallOption) (*BAlerts, error) {
+	out := new(BAlerts)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetBAlert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -320,8 +340,10 @@ type BrandsServer interface {
 	GetBSellerCompanyProduct(context.Context, *BSellerCompanyProductRequest) (*BSellerCompanyProduct, error)
 	UpdateBSellerCompanyProduct(context.Context, *BSCPUpdateRequest) (*BoolReply, error)
 	CreateBSellerNullProduct(context.Context, *CreateBSellerNullProductRequest) (*IDRequest, error)
+	DeleteBSellerNullProduct(context.Context, *RequestByID) (*BoolReply, error)
 	SetBSellerNullProductURL(context.Context, *NullUrlRequest) (*BoolReply, error)
 	DeleteBSellerNullProductURL(context.Context, *RequestByID) (*BoolReply, error)
+	GetBAlert(context.Context, *BAlertsRequest) (*BAlerts, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -401,11 +423,17 @@ func (UnimplementedBrandsServer) UpdateBSellerCompanyProduct(context.Context, *B
 func (UnimplementedBrandsServer) CreateBSellerNullProduct(context.Context, *CreateBSellerNullProductRequest) (*IDRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBSellerNullProduct not implemented")
 }
+func (UnimplementedBrandsServer) DeleteBSellerNullProduct(context.Context, *RequestByID) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBSellerNullProduct not implemented")
+}
 func (UnimplementedBrandsServer) SetBSellerNullProductURL(context.Context, *NullUrlRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetBSellerNullProductURL not implemented")
 }
 func (UnimplementedBrandsServer) DeleteBSellerNullProductURL(context.Context, *RequestByID) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBSellerNullProductURL not implemented")
+}
+func (UnimplementedBrandsServer) GetBAlert(context.Context, *BAlertsRequest) (*BAlerts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBAlert not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -852,6 +880,24 @@ func _Brands_CreateBSellerNullProduct_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_DeleteBSellerNullProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).DeleteBSellerNullProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/DeleteBSellerNullProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).DeleteBSellerNullProduct(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Brands_SetBSellerNullProductURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NullUrlRequest)
 	if err := dec(in); err != nil {
@@ -884,6 +930,24 @@ func _Brands_DeleteBSellerNullProductURL_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BrandsServer).DeleteBSellerNullProductURL(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetBAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BAlertsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetBAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetBAlert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetBAlert(ctx, req.(*BAlertsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -992,12 +1056,20 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Brands_CreateBSellerNullProduct_Handler,
 		},
 		{
+			MethodName: "DeleteBSellerNullProduct",
+			Handler:    _Brands_DeleteBSellerNullProduct_Handler,
+		},
+		{
 			MethodName: "SetBSellerNullProductURL",
 			Handler:    _Brands_SetBSellerNullProductURL_Handler,
 		},
 		{
 			MethodName: "DeleteBSellerNullProductURL",
 			Handler:    _Brands_DeleteBSellerNullProductURL_Handler,
+		},
+		{
+			MethodName: "GetBAlert",
+			Handler:    _Brands_GetBAlert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
