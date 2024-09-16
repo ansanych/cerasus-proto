@@ -126,7 +126,7 @@ message BSellerCompanyProductRequest {
 
 message CompanyProductShopUrlAlert {
     int64 ID = 1;
-    BSellers seller = 2;
+    BSeller seller = 2;
     BSellerCompanyData sellerCompany = 3;
     BSellerCompanyProduct sellerCompanyProduct = 4;
     string alert = 5;
