@@ -49,6 +49,7 @@ type BrandsClient interface {
 	DeleteBSellerNullProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
 	SetBSellerNullProductURL(ctx context.Context, in *NullUrlRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	DeleteBSellerNullProductURL(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
+	GetAlerts(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Alerts, error)
 }
 
 type brandsClient struct {
@@ -302,6 +303,15 @@ func (c *brandsClient) DeleteBSellerNullProductURL(ctx context.Context, in *Requ
 	return out, nil
 }
 
+func (c *brandsClient) GetAlerts(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Alerts, error) {
+	out := new(Alerts)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetAlerts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -333,6 +343,7 @@ type BrandsServer interface {
 	DeleteBSellerNullProduct(context.Context, *RequestByID) (*BoolReply, error)
 	SetBSellerNullProductURL(context.Context, *NullUrlRequest) (*BoolReply, error)
 	DeleteBSellerNullProductURL(context.Context, *RequestByID) (*BoolReply, error)
+	GetAlerts(context.Context, *Auth) (*Alerts, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -420,6 +431,9 @@ func (UnimplementedBrandsServer) SetBSellerNullProductURL(context.Context, *Null
 }
 func (UnimplementedBrandsServer) DeleteBSellerNullProductURL(context.Context, *RequestByID) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBSellerNullProductURL not implemented")
+}
+func (UnimplementedBrandsServer) GetAlerts(context.Context, *Auth) (*Alerts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlerts not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -920,6 +934,24 @@ func _Brands_DeleteBSellerNullProductURL_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetAlerts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetAlerts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetAlerts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetAlerts(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1034,6 +1066,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteBSellerNullProductURL",
 			Handler:    _Brands_DeleteBSellerNullProductURL_Handler,
+		},
+		{
+			MethodName: "GetAlerts",
+			Handler:    _Brands_GetAlerts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

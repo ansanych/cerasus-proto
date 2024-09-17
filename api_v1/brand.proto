@@ -33,6 +33,7 @@ service Brands {
     rpc DeleteBSellerNullProduct(RequestByID) returns (BoolReply) {}
     rpc SetBSellerNullProductURL(NullUrlRequest) returns (BoolReply) {}
     rpc DeleteBSellerNullProductURL(RequestByID) returns (BoolReply) {}
+    rpc GetAlerts(Auth) returns (Alerts) {}
 }
 
 message BProduct {
@@ -176,4 +177,17 @@ message NullUrlRequest {
     int64 nullProductID = 2;
     string shopCode = 3;
     string url = 4;
+}
+
+message Alert {
+    string type = 1;
+    int64 ID = 2;
+    int64 sellerID = 3;
+    int64 sellerCompanyID = 4;
+    int64 sellerCompanyProductID = 5;
+    string message = 6;
+}
+
+message Alerts {
+    repeated Alert alerts = 1;
 }
