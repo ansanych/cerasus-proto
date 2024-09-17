@@ -346,5 +346,6 @@ message SetPricerItemRequest {
     int64 ID = 1;
     int32 parsePrice = 2;
     string parsePriceType = 3;
-    bytes chunk = 4;
+    string filename = 4;
+    bytes chunk = 5;
 }
