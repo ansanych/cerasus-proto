@@ -50,6 +50,8 @@ type BrandsClient interface {
 	SetBSellerNullProductURL(ctx context.Context, in *NullUrlRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	DeleteBSellerNullProductURL(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoolReply, error)
 	GetAlerts(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Alerts, error)
+	GetDumpingItem(ctx context.Context, in *GetPricerItemRequest, opts ...grpc.CallOption) (*GetPricerItemReply, error)
+	SetDumpingItem(ctx context.Context, in *SetPricerItemRequest, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type brandsClient struct {
@@ -312,6 +314,24 @@ func (c *brandsClient) GetAlerts(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *brandsClient) GetDumpingItem(ctx context.Context, in *GetPricerItemRequest, opts ...grpc.CallOption) (*GetPricerItemReply, error) {
+	out := new(GetPricerItemReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SetDumpingItem(ctx context.Context, in *SetPricerItemRequest, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SetDumpingItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -344,6 +364,8 @@ type BrandsServer interface {
 	SetBSellerNullProductURL(context.Context, *NullUrlRequest) (*BoolReply, error)
 	DeleteBSellerNullProductURL(context.Context, *RequestByID) (*BoolReply, error)
 	GetAlerts(context.Context, *Auth) (*Alerts, error)
+	GetDumpingItem(context.Context, *GetPricerItemRequest) (*GetPricerItemReply, error)
+	SetDumpingItem(context.Context, *SetPricerItemRequest) (*BoolReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -434,6 +456,12 @@ func (UnimplementedBrandsServer) DeleteBSellerNullProductURL(context.Context, *R
 }
 func (UnimplementedBrandsServer) GetAlerts(context.Context, *Auth) (*Alerts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAlerts not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingItem(context.Context, *GetPricerItemRequest) (*GetPricerItemReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingItem not implemented")
+}
+func (UnimplementedBrandsServer) SetDumpingItem(context.Context, *SetPricerItemRequest) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDumpingItem not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -952,6 +980,42 @@ func _Brands_GetAlerts_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetDumpingItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPricerItemRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingItem(ctx, req.(*GetPricerItemRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SetDumpingItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPricerItemRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SetDumpingItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SetDumpingItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SetDumpingItem(ctx, req.(*SetPricerItemRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1070,6 +1134,14 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAlerts",
 			Handler:    _Brands_GetAlerts_Handler,
+		},
+		{
+			MethodName: "GetDumpingItem",
+			Handler:    _Brands_GetDumpingItem_Handler,
+		},
+		{
+			MethodName: "SetDumpingItem",
+			Handler:    _Brands_SetDumpingItem_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

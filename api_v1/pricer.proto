@@ -23,21 +23,6 @@ message ProductsInPricer {
     repeated int64 ID = 1;
 }
 
-message GetPricerItemRequest {
-    string shopCode = 1;
-}
-
-message GetPricerItemReply {
-    int64 ID = 1;
-    string url = 2;
-}
-
-message SetPricerItemRequest {
-    int64 ID = 1;
-    int32 parsePrice = 2;
-    string parsePriceType = 3;
-}
-
 message PricerSystemSettings {
     int32 period = 1;
 }

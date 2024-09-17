@@ -34,6 +34,8 @@ service Brands {
     rpc SetBSellerNullProductURL(NullUrlRequest) returns (BoolReply) {}
     rpc DeleteBSellerNullProductURL(RequestByID) returns (BoolReply) {}
     rpc GetAlerts(Auth) returns (Alerts) {}
+    rpc GetDumpingItem(GetPricerItemRequest) returns (GetPricerItemReply) {}
+    rpc SetDumpingItem(SetPricerItemRequest) returns (BoolReply) {}
 }
 
 message BProduct {

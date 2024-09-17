@@ -1844,7 +1844,7 @@ var file_brand_proto_rawDesc = []byte{
 	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x30, 0x0a, 0x06, 0x41, 0x6c, 0x65, 0x72, 0x74,
 	0x73, 0x12, 0x26, 0x0a, 0x06, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
 	0x0b, 0x32, 0x0e, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x6c, 0x65, 0x72,
-	0x74, 0x52, 0x06, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x32, 0xc7, 0x0e, 0x0a, 0x06, 0x42, 0x72,
+	0x74, 0x52, 0x06, 0x61, 0x6c, 0x65, 0x72, 0x74, 0x73, 0x32, 0xde, 0x0f, 0x0a, 0x06, 0x42, 0x72,
 	0x61, 0x6e, 0x64, 0x73, 0x12, 0x32, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x14, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x50, 0x69, 0x6e,
@@ -1961,9 +1961,19 @@ var file_brand_proto_rawDesc = []byte{
 	0x6c, 0x79, 0x22, 0x00, 0x12, 0x2d, 0x0a, 0x09, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x65, 0x72, 0x74,
 	0x73, 0x12, 0x0d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x75, 0x74, 0x68,
 	0x1a, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x41, 0x6c, 0x65, 0x72, 0x74,
-	0x73, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x22, 0x00, 0x12, 0x4e, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x44, 0x75, 0x6d, 0x70, 0x69, 0x6e,
+	0x67, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e,
+	0x47, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x72, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x47,
+	0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x72, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x70, 0x6c,
+	0x79, 0x22, 0x00, 0x12, 0x45, 0x0a, 0x0e, 0x53, 0x65, 0x74, 0x44, 0x75, 0x6d, 0x70, 0x69, 0x6e,
+	0x67, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e,
+	0x53, 0x65, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65, 0x72, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x42,
+	0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63,
+	0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2010,11 +2020,14 @@ var file_brand_proto_goTypes = []interface{}{
 	(*Product)(nil),                         // 27: cerasus.Product
 	(*PingRequest)(nil),                     // 28: cerasus.PingRequest
 	(*RequestByID)(nil),                     // 29: cerasus.RequestByID
-	(*PingReply)(nil),                       // 30: cerasus.PingReply
-	(*Brand)(nil),                           // 31: cerasus.Brand
-	(*BoolReply)(nil),                       // 32: cerasus.BoolReply
-	(*ImageReply)(nil),                      // 33: cerasus.ImageReply
-	(*IDRequest)(nil),                       // 34: cerasus.IDRequest
+	(*GetPricerItemRequest)(nil),            // 30: cerasus.GetPricerItemRequest
+	(*SetPricerItemRequest)(nil),            // 31: cerasus.SetPricerItemRequest
+	(*PingReply)(nil),                       // 32: cerasus.PingReply
+	(*Brand)(nil),                           // 33: cerasus.Brand
+	(*BoolReply)(nil),                       // 34: cerasus.BoolReply
+	(*ImageReply)(nil),                      // 35: cerasus.ImageReply
+	(*IDRequest)(nil),                       // 36: cerasus.IDRequest
+	(*GetPricerItemReply)(nil),              // 37: cerasus.GetPricerItemReply
 }
 var file_brand_proto_depIdxs = []int32{
 	0,  // 0: cerasus.BProducts.b_products:type_name -> cerasus.BProduct
@@ -2074,36 +2087,40 @@ var file_brand_proto_depIdxs = []int32{
 	22, // 54: cerasus.Brands.SetBSellerNullProductURL:input_type -> cerasus.NullUrlRequest
 	29, // 55: cerasus.Brands.DeleteBSellerNullProductURL:input_type -> cerasus.RequestByID
 	25, // 56: cerasus.Brands.GetAlerts:input_type -> cerasus.Auth
-	30, // 57: cerasus.Brands.Ping:output_type -> cerasus.PingReply
-	31, // 58: cerasus.Brands.GetBrandData:output_type -> cerasus.Brand
-	1,  // 59: cerasus.Brands.GetBProducts:output_type -> cerasus.BProducts
-	0,  // 60: cerasus.Brands.GetBProduct:output_type -> cerasus.BProduct
-	0,  // 61: cerasus.Brands.CreateBProduct:output_type -> cerasus.BProduct
-	32, // 62: cerasus.Brands.UpdateBProduct:output_type -> cerasus.BoolReply
-	32, // 63: cerasus.Brands.DeleteBProduct:output_type -> cerasus.BoolReply
-	33, // 64: cerasus.Brands.GetBFile:output_type -> cerasus.ImageReply
-	33, // 65: cerasus.Brands.UploadBFile:output_type -> cerasus.ImageReply
-	6,  // 66: cerasus.Brands.GetBPrices:output_type -> cerasus.BPrices
-	5,  // 67: cerasus.Brands.GetBPrice:output_type -> cerasus.BPrice
-	5,  // 68: cerasus.Brands.CreateBPrice:output_type -> cerasus.BPrice
-	32, // 69: cerasus.Brands.DeleteBPrice:output_type -> cerasus.BoolReply
-	8,  // 70: cerasus.Brands.CreateBSeller:output_type -> cerasus.BSeller
-	10, // 71: cerasus.Brands.GetBSellers:output_type -> cerasus.BSellers
-	8,  // 72: cerasus.Brands.GetBSeller:output_type -> cerasus.BSeller
-	32, // 73: cerasus.Brands.UpdateBSeller:output_type -> cerasus.BoolReply
-	32, // 74: cerasus.Brands.DeleteBSeller:output_type -> cerasus.BoolReply
-	13, // 75: cerasus.Brands.GetBSellerCompanies:output_type -> cerasus.BSellerCompaniesData
-	12, // 76: cerasus.Brands.GetBSellerCompany:output_type -> cerasus.BSellerCompanyData
-	19, // 77: cerasus.Brands.GetBSellerCompanyProducts:output_type -> cerasus.BSellerCompanyProducts
-	18, // 78: cerasus.Brands.GetBSellerCompanyProduct:output_type -> cerasus.BSellerCompanyProduct
-	32, // 79: cerasus.Brands.UpdateBSellerCompanyProduct:output_type -> cerasus.BoolReply
-	34, // 80: cerasus.Brands.CreateBSellerNullProduct:output_type -> cerasus.IDRequest
-	32, // 81: cerasus.Brands.DeleteBSellerNullProduct:output_type -> cerasus.BoolReply
-	32, // 82: cerasus.Brands.SetBSellerNullProductURL:output_type -> cerasus.BoolReply
-	32, // 83: cerasus.Brands.DeleteBSellerNullProductURL:output_type -> cerasus.BoolReply
-	24, // 84: cerasus.Brands.GetAlerts:output_type -> cerasus.Alerts
-	57, // [57:85] is the sub-list for method output_type
-	29, // [29:57] is the sub-list for method input_type
+	30, // 57: cerasus.Brands.GetDumpingItem:input_type -> cerasus.GetPricerItemRequest
+	31, // 58: cerasus.Brands.SetDumpingItem:input_type -> cerasus.SetPricerItemRequest
+	32, // 59: cerasus.Brands.Ping:output_type -> cerasus.PingReply
+	33, // 60: cerasus.Brands.GetBrandData:output_type -> cerasus.Brand
+	1,  // 61: cerasus.Brands.GetBProducts:output_type -> cerasus.BProducts
+	0,  // 62: cerasus.Brands.GetBProduct:output_type -> cerasus.BProduct
+	0,  // 63: cerasus.Brands.CreateBProduct:output_type -> cerasus.BProduct
+	34, // 64: cerasus.Brands.UpdateBProduct:output_type -> cerasus.BoolReply
+	34, // 65: cerasus.Brands.DeleteBProduct:output_type -> cerasus.BoolReply
+	35, // 66: cerasus.Brands.GetBFile:output_type -> cerasus.ImageReply
+	35, // 67: cerasus.Brands.UploadBFile:output_type -> cerasus.ImageReply
+	6,  // 68: cerasus.Brands.GetBPrices:output_type -> cerasus.BPrices
+	5,  // 69: cerasus.Brands.GetBPrice:output_type -> cerasus.BPrice
+	5,  // 70: cerasus.Brands.CreateBPrice:output_type -> cerasus.BPrice
+	34, // 71: cerasus.Brands.DeleteBPrice:output_type -> cerasus.BoolReply
+	8,  // 72: cerasus.Brands.CreateBSeller:output_type -> cerasus.BSeller
+	10, // 73: cerasus.Brands.GetBSellers:output_type -> cerasus.BSellers
+	8,  // 74: cerasus.Brands.GetBSeller:output_type -> cerasus.BSeller
+	34, // 75: cerasus.Brands.UpdateBSeller:output_type -> cerasus.BoolReply
+	34, // 76: cerasus.Brands.DeleteBSeller:output_type -> cerasus.BoolReply
+	13, // 77: cerasus.Brands.GetBSellerCompanies:output_type -> cerasus.BSellerCompaniesData
+	12, // 78: cerasus.Brands.GetBSellerCompany:output_type -> cerasus.BSellerCompanyData
+	19, // 79: cerasus.Brands.GetBSellerCompanyProducts:output_type -> cerasus.BSellerCompanyProducts
+	18, // 80: cerasus.Brands.GetBSellerCompanyProduct:output_type -> cerasus.BSellerCompanyProduct
+	34, // 81: cerasus.Brands.UpdateBSellerCompanyProduct:output_type -> cerasus.BoolReply
+	36, // 82: cerasus.Brands.CreateBSellerNullProduct:output_type -> cerasus.IDRequest
+	34, // 83: cerasus.Brands.DeleteBSellerNullProduct:output_type -> cerasus.BoolReply
+	34, // 84: cerasus.Brands.SetBSellerNullProductURL:output_type -> cerasus.BoolReply
+	34, // 85: cerasus.Brands.DeleteBSellerNullProductURL:output_type -> cerasus.BoolReply
+	24, // 86: cerasus.Brands.GetAlerts:output_type -> cerasus.Alerts
+	37, // 87: cerasus.Brands.GetDumpingItem:output_type -> cerasus.GetPricerItemReply
+	34, // 88: cerasus.Brands.SetDumpingItem:output_type -> cerasus.BoolReply
+	59, // [59:89] is the sub-list for method output_type
+	29, // [29:59] is the sub-list for method input_type
 	29, // [29:29] is the sub-list for extension type_name
 	29, // [29:29] is the sub-list for extension extendee
 	0,  // [0:29] is the sub-list for field type_name
