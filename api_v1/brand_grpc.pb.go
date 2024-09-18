@@ -52,6 +52,12 @@ type BrandsClient interface {
 	GetAlerts(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Alerts, error)
 	GetDumpingItem(ctx context.Context, in *GetPricerItemRequest, opts ...grpc.CallOption) (*GetPricerItemReply, error)
 	SetDumpingItem(ctx context.Context, in *SetPricerItemRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetSellersCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error)
+	GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetDumpingData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*DumpingData, error)
+	UpdateDumpingData(ctx context.Context, in *DumpingUpdate, opts ...grpc.CallOption) (*BoolReply, error)
 }
 
 type brandsClient struct {
@@ -332,6 +338,60 @@ func (c *brandsClient) SetDumpingItem(ctx context.Context, in *SetPricerItemRequ
 	return out, nil
 }
 
+func (c *brandsClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
+	out := new(CountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetProductsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetSellersCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
+	out := new(CountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetSellersCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error) {
+	out := new(DumpingList)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
+	out := new(CountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetDumpingData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*DumpingData, error) {
+	out := new(DumpingData)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) UpdateDumpingData(ctx context.Context, in *DumpingUpdate, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/UpdateDumpingData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -366,6 +426,12 @@ type BrandsServer interface {
 	GetAlerts(context.Context, *Auth) (*Alerts, error)
 	GetDumpingItem(context.Context, *GetPricerItemRequest) (*GetPricerItemReply, error)
 	SetDumpingItem(context.Context, *SetPricerItemRequest) (*BoolReply, error)
+	GetProductsCount(context.Context, *Auth) (*CountReply, error)
+	GetSellersCount(context.Context, *Auth) (*CountReply, error)
+	GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error)
+	GetDumpingCount(context.Context, *Auth) (*CountReply, error)
+	GetDumpingData(context.Context, *RequestByID) (*DumpingData, error)
+	UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -462,6 +528,24 @@ func (UnimplementedBrandsServer) GetDumpingItem(context.Context, *GetPricerItemR
 }
 func (UnimplementedBrandsServer) SetDumpingItem(context.Context, *SetPricerItemRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDumpingItem not implemented")
+}
+func (UnimplementedBrandsServer) GetProductsCount(context.Context, *Auth) (*CountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedBrandsServer) GetSellersCount(context.Context, *Auth) (*CountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSellersCount not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingList not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingCount(context.Context, *Auth) (*CountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingCount not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingData(context.Context, *RequestByID) (*DumpingData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingData not implemented")
+}
+func (UnimplementedBrandsServer) UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDumpingData not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1016,6 +1100,114 @@ func _Brands_SetDumpingItem_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetProductsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetProductsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetProductsCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetSellersCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetSellersCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetSellersCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetSellersCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetDumpingList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DumpingListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingList(ctx, req.(*DumpingListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetDumpingCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetDumpingData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingData(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_UpdateDumpingData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DumpingUpdate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).UpdateDumpingData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/UpdateDumpingData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).UpdateDumpingData(ctx, req.(*DumpingUpdate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1142,6 +1334,30 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetDumpingItem",
 			Handler:    _Brands_SetDumpingItem_Handler,
+		},
+		{
+			MethodName: "GetProductsCount",
+			Handler:    _Brands_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetSellersCount",
+			Handler:    _Brands_GetSellersCount_Handler,
+		},
+		{
+			MethodName: "GetDumpingList",
+			Handler:    _Brands_GetDumpingList_Handler,
+		},
+		{
+			MethodName: "GetDumpingCount",
+			Handler:    _Brands_GetDumpingCount_Handler,
+		},
+		{
+			MethodName: "GetDumpingData",
+			Handler:    _Brands_GetDumpingData_Handler,
+		},
+		{
+			MethodName: "UpdateDumpingData",
+			Handler:    _Brands_UpdateDumpingData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

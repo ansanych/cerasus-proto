@@ -36,6 +36,43 @@ service Brands {
     rpc GetAlerts(Auth) returns (Alerts) {}
     rpc GetDumpingItem(GetPricerItemRequest) returns (GetPricerItemReply) {}
     rpc SetDumpingItem(SetPricerItemRequest) returns (BoolReply) {}
+    rpc GetProductsCount(Auth) returns (CountReply) {}
+    rpc GetSellersCount(Auth) returns (CountReply) {}
+    rpc GetDumpingList(DumpingListRequest) returns (DumpingList) {}
+    rpc GetDumpingCount(Auth) returns (CountReply) {}
+    rpc GetDumpingData(RequestByID) returns (DumpingData) {}
+    rpc UpdateDumpingData(DumpingUpdate) returns (BoolReply) {}
+}
+
+message DumpingListRequest {
+    Auth auth = 1;
+    bool view = 2;
+    int64 BSellerID = 3;
+    int64 BProductID = 4;
+    int64 page = 5;
+}
+
+message DumpingData {
+    int64 ID = 1;
+    BSeller b_seller = 2;
+    BProduct b_product = 3;
+    bool view = 4;
+    string shopCode = 5;
+    string url = 6;
+    int64 productPrice = 7;
+    int64 parsePrice = 8;
+    string update = 9;
+}
+
+message DumpingList {
+    repeated DumpingData list = 1;
+    DumpingListRequest request = 2;
+    Pagination pagination = 3;
+}
+
+message DumpingUpdate {
+    Auth auth = 1;
+    DumpingData data = 2;
 }
 
 message BProduct {
