@@ -340,6 +340,7 @@ message GetPricerItemRequest {
 message GetPricerItemReply {
     int64 ID = 1;
     string url = 2;
+    int64 price = 3;
 }
 
 message SetPricerItemRequest {
