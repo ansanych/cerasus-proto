@@ -33,6 +33,7 @@ type PricerClient interface {
 	SetPricerItem(ctx context.Context, in *SetPricerItemRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetProductsInPricer(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ProductsInPricer, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetForDumping(ctx context.Context, in *ForDumpingDataRequest, opts ...grpc.CallOption) (*ForDumpingDataReply, error)
 }
 
 type pricerClient struct {
@@ -142,6 +143,15 @@ func (c *pricerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.C
 	return out, nil
 }
 
+func (c *pricerClient) GetForDumping(ctx context.Context, in *ForDumpingDataRequest, opts ...grpc.CallOption) (*ForDumpingDataReply, error) {
+	out := new(ForDumpingDataReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Pricer/GetForDumping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -157,6 +167,7 @@ type PricerServer interface {
 	SetPricerItem(context.Context, *SetPricerItemRequest) (*BoolReply, error)
 	GetProductsInPricer(context.Context, *Auth) (*ProductsInPricer, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetForDumping(context.Context, *ForDumpingDataRequest) (*ForDumpingDataReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -196,6 +207,9 @@ func (UnimplementedPricerServer) GetProductsInPricer(context.Context, *Auth) (*P
 }
 func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedPricerServer) GetForDumping(context.Context, *ForDumpingDataRequest) (*ForDumpingDataReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetForDumping not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -408,6 +422,24 @@ func _Pricer_Ping_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetForDumping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForDumpingDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetForDumping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Pricer/GetForDumping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetForDumping(ctx, req.(*ForDumpingDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -458,6 +490,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Pricer_Ping_Handler,
+		},
+		{
+			MethodName: "GetForDumping",
+			Handler:    _Pricer_GetForDumping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -17,6 +17,7 @@ service Pricer {
     rpc SetPricerItem(SetPricerItemRequest) returns (BoolReply) {}
     rpc GetProductsInPricer(Auth) returns (ProductsInPricer) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetForDumping(ForDumpingDataRequest) returns (ForDumpingDataReply) {}
 }
 
 message ProductsInPricer {
@@ -70,4 +71,24 @@ message CompanyParamProductRequest {
     Auth auth = 1;
     string shopCode = 2;
     int64 productID = 3;
+}
+
+message ForDumpingDataRequest {
+    int64 companyID = 1;
+    repeated int64 products = 2;
+}
+
+message ForDumpingData {
+    int64 productID = 1;
+    string shopCode = 2;
+    string url = 3;
+    int64 parsePrice = 4;
+    int64 targetMin = 5;
+    int64 targetMax = 6;
+    int64 setPrice = 7;
+    string updated = 8;
+}
+
+message ForDumpingDataReply {
+    repeated ForDumpingData data = 1;
 }
