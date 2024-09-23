@@ -108,6 +108,7 @@ message BProductUpsert {
 message BFileRequest {
     string filename = 1;
     int64 b_productID = 2;
+    string type = 3;
 }
 
 message BUploadRequest {
