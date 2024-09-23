@@ -55,6 +55,7 @@ message DumpingListRequest {
     int64 BSellerID = 3;
     int64 BProductID = 4;
     int64 page = 5;
+    string dumpingType = 6;
 }
 
 message DumpingData {
@@ -67,6 +68,11 @@ message DumpingData {
     int64 productPrice = 7;
     int64 parsePrice = 8;
     string update = 9;
+    Company company = 10;
+    string dumpingType = 11;
+    int64 targetMin = 12;
+    int64 targetMax = 13;
+    string screenShot = 14;
 }
 
 message DumpingList {
