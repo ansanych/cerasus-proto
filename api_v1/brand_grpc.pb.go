@@ -55,7 +55,7 @@ type BrandsClient interface {
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
 	GetSellersCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
 	GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error)
-	GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error)
+	GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingCountReply, error)
 	GetDumpingData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*DumpingData, error)
 	UpdateDumpingData(ctx context.Context, in *DumpingUpdate, opts ...grpc.CallOption) (*BoolReply, error)
 }
@@ -365,8 +365,8 @@ func (c *brandsClient) GetDumpingList(ctx context.Context, in *DumpingListReques
 	return out, nil
 }
 
-func (c *brandsClient) GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CountReply, error) {
-	out := new(CountReply)
+func (c *brandsClient) GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingCountReply, error) {
+	out := new(DumpingCountReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingCount", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -429,7 +429,7 @@ type BrandsServer interface {
 	GetProductsCount(context.Context, *Auth) (*CountReply, error)
 	GetSellersCount(context.Context, *Auth) (*CountReply, error)
 	GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error)
-	GetDumpingCount(context.Context, *Auth) (*CountReply, error)
+	GetDumpingCount(context.Context, *Auth) (*DumpingCountReply, error)
 	GetDumpingData(context.Context, *RequestByID) (*DumpingData, error)
 	UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error)
 	mustEmbedUnimplementedBrandsServer()
@@ -538,7 +538,7 @@ func (UnimplementedBrandsServer) GetSellersCount(context.Context, *Auth) (*Count
 func (UnimplementedBrandsServer) GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingList not implemented")
 }
-func (UnimplementedBrandsServer) GetDumpingCount(context.Context, *Auth) (*CountReply, error) {
+func (UnimplementedBrandsServer) GetDumpingCount(context.Context, *Auth) (*DumpingCountReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingCount not implemented")
 }
 func (UnimplementedBrandsServer) GetDumpingData(context.Context, *RequestByID) (*DumpingData, error) {
