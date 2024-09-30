@@ -350,3 +350,21 @@ message SetPricerItemRequest {
     string filename = 4;
     bytes chunk = 5;
 }
+
+message ForBrandSale {
+    int64 ID = 1;
+    int64 price = 2;
+    string dateTime = 3;
+    bool returns = 4;
+}
+
+message ForBrandSalesReply {
+    repeated ForBrandSale sales = 1;
+}
+
+message ForBrandSalesRequest {
+    int64 companyID = 1;
+    int64 shopProductID = 2;
+    string from = 3;
+    string to = 4;
+}

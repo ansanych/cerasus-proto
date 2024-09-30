@@ -467,7 +467,7 @@ var file_wb_proto_rawDesc = []byte{
 	0x0a, 0x77, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28,
 	0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70,
 	0x61, 0x6e, 0x79, 0x57, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x52, 0x0a, 0x77, 0x61,
-	0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x32, 0x97, 0x0b, 0x0a, 0x02, 0x57, 0x42, 0x12,
+	0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x73, 0x32, 0xe6, 0x0b, 0x0a, 0x02, 0x57, 0x42, 0x12,
 	0x33, 0x0a, 0x07, 0x53, 0x65, 0x74, 0x41, 0x75, 0x74, 0x68, 0x12, 0x12, 0x2e, 0x63, 0x65, 0x72,
 	0x61, 0x73, 0x75, 0x73, 0x2e, 0x53, 0x65, 0x74, 0x57, 0x42, 0x41, 0x75, 0x74, 0x68, 0x1a, 0x12,
 	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x42, 0x6f, 0x6f, 0x6c, 0x52, 0x65, 0x70,
@@ -557,9 +557,14 @@ var file_wb_proto_rawDesc = []byte{
 	0x6c, 0x73, 0x12, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x49, 0x44, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
 	0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x68, 0x6f, 0x70, 0x55, 0x72, 0x6c, 0x73,
-	0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
-	0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x00, 0x12, 0x4d, 0x0a, 0x0d, 0x46, 0x6f, 0x72, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x53, 0x61,
+	0x6c, 0x65, 0x73, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x46, 0x6f,
+	0x72, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x53, 0x61, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x46, 0x6f, 0x72,
+	0x42, 0x72, 0x61, 0x6e, 0x64, 0x53, 0x61, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22,
+	0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -594,21 +599,23 @@ var file_wb_proto_goTypes = []interface{}{
 	(*ImageRequest)(nil),             // 15: cerasus.ImageRequest
 	(*PingRequest)(nil),              // 16: cerasus.PingRequest
 	(*IDRequest)(nil),                // 17: cerasus.IDRequest
-	(*BoolReply)(nil),                // 18: cerasus.BoolReply
-	(*CountReply)(nil),               // 19: cerasus.CountReply
-	(*ShopProductListReply)(nil),     // 20: cerasus.ShopProductListReply
-	(*ShopProduct)(nil),              // 21: cerasus.ShopProduct
-	(*DaysSalesReply)(nil),           // 22: cerasus.DaysSalesReply
-	(*SalesReply)(nil),               // 23: cerasus.SalesReply
-	(*ShopServiceReply)(nil),         // 24: cerasus.ShopServiceReply
-	(*SaleDetailsReply)(nil),         // 25: cerasus.SaleDetailsReply
-	(*MainGraphicReply)(nil),         // 26: cerasus.MainGraphicReply
-	(*ImageReply)(nil),               // 27: cerasus.ImageReply
-	(*CompanyShopData)(nil),          // 28: cerasus.CompanyShopData
-	(*DonutGraphic)(nil),             // 29: cerasus.DonutGraphic
-	(*WeekGraphics)(nil),             // 30: cerasus.WeekGraphics
-	(*PingReply)(nil),                // 31: cerasus.PingReply
-	(*ProductShopUrls)(nil),          // 32: cerasus.ProductShopUrls
+	(*ForBrandSalesRequest)(nil),     // 18: cerasus.ForBrandSalesRequest
+	(*BoolReply)(nil),                // 19: cerasus.BoolReply
+	(*CountReply)(nil),               // 20: cerasus.CountReply
+	(*ShopProductListReply)(nil),     // 21: cerasus.ShopProductListReply
+	(*ShopProduct)(nil),              // 22: cerasus.ShopProduct
+	(*DaysSalesReply)(nil),           // 23: cerasus.DaysSalesReply
+	(*SalesReply)(nil),               // 24: cerasus.SalesReply
+	(*ShopServiceReply)(nil),         // 25: cerasus.ShopServiceReply
+	(*SaleDetailsReply)(nil),         // 26: cerasus.SaleDetailsReply
+	(*MainGraphicReply)(nil),         // 27: cerasus.MainGraphicReply
+	(*ImageReply)(nil),               // 28: cerasus.ImageReply
+	(*CompanyShopData)(nil),          // 29: cerasus.CompanyShopData
+	(*DonutGraphic)(nil),             // 30: cerasus.DonutGraphic
+	(*WeekGraphics)(nil),             // 31: cerasus.WeekGraphics
+	(*PingReply)(nil),                // 32: cerasus.PingReply
+	(*ProductShopUrls)(nil),          // 33: cerasus.ProductShopUrls
+	(*ForBrandSalesReply)(nil),       // 34: cerasus.ForBrandSalesReply
 }
 var file_wb_proto_depIdxs = []int32{
 	6,  // 0: cerasus.SetWBAuth.auth:type_name -> cerasus.Auth
@@ -638,30 +645,32 @@ var file_wb_proto_depIdxs = []int32{
 	2,  // 24: cerasus.WB.ForCounterDataWB:input_type -> cerasus.ForCounterRequestWB
 	16, // 25: cerasus.WB.Ping:input_type -> cerasus.PingRequest
 	17, // 26: cerasus.WB.GetProductUrls:input_type -> cerasus.IDRequest
-	18, // 27: cerasus.WB.SetAuth:output_type -> cerasus.BoolReply
-	0,  // 28: cerasus.WB.GetAuth:output_type -> cerasus.ShopWBAuth
-	18, // 29: cerasus.WB.ErrorAuth:output_type -> cerasus.BoolReply
-	19, // 30: cerasus.WB.GetUnsortedCount:output_type -> cerasus.CountReply
-	20, // 31: cerasus.WB.GetUnsortedList:output_type -> cerasus.ShopProductListReply
-	19, // 32: cerasus.WB.GetProductCount:output_type -> cerasus.CountReply
-	20, // 33: cerasus.WB.GetProductList:output_type -> cerasus.ShopProductListReply
-	21, // 34: cerasus.WB.GetProduct:output_type -> cerasus.ShopProduct
-	18, // 35: cerasus.WB.UpdateProduct:output_type -> cerasus.BoolReply
-	22, // 36: cerasus.WB.GetDaySales:output_type -> cerasus.DaysSalesReply
-	23, // 37: cerasus.WB.GetSales:output_type -> cerasus.SalesReply
-	24, // 38: cerasus.WB.GetShopServices:output_type -> cerasus.ShopServiceReply
-	25, // 39: cerasus.WB.GetSaleDetail:output_type -> cerasus.SaleDetailsReply
-	23, // 40: cerasus.WB.GetProductSales:output_type -> cerasus.SalesReply
-	26, // 41: cerasus.WB.GetMainGraphic:output_type -> cerasus.MainGraphicReply
-	27, // 42: cerasus.WB.GetImage:output_type -> cerasus.ImageReply
-	28, // 43: cerasus.WB.CheckShopData:output_type -> cerasus.CompanyShopData
-	29, // 44: cerasus.WB.GetDonutGraphics:output_type -> cerasus.DonutGraphic
-	30, // 45: cerasus.WB.GetWeekGraphics:output_type -> cerasus.WeekGraphics
-	5,  // 46: cerasus.WB.ForCounterDataWB:output_type -> cerasus.ForCounterReplyWB
-	31, // 47: cerasus.WB.Ping:output_type -> cerasus.PingReply
-	32, // 48: cerasus.WB.GetProductUrls:output_type -> cerasus.ProductShopUrls
-	27, // [27:49] is the sub-list for method output_type
-	5,  // [5:27] is the sub-list for method input_type
+	18, // 27: cerasus.WB.ForBrandSales:input_type -> cerasus.ForBrandSalesRequest
+	19, // 28: cerasus.WB.SetAuth:output_type -> cerasus.BoolReply
+	0,  // 29: cerasus.WB.GetAuth:output_type -> cerasus.ShopWBAuth
+	19, // 30: cerasus.WB.ErrorAuth:output_type -> cerasus.BoolReply
+	20, // 31: cerasus.WB.GetUnsortedCount:output_type -> cerasus.CountReply
+	21, // 32: cerasus.WB.GetUnsortedList:output_type -> cerasus.ShopProductListReply
+	20, // 33: cerasus.WB.GetProductCount:output_type -> cerasus.CountReply
+	21, // 34: cerasus.WB.GetProductList:output_type -> cerasus.ShopProductListReply
+	22, // 35: cerasus.WB.GetProduct:output_type -> cerasus.ShopProduct
+	19, // 36: cerasus.WB.UpdateProduct:output_type -> cerasus.BoolReply
+	23, // 37: cerasus.WB.GetDaySales:output_type -> cerasus.DaysSalesReply
+	24, // 38: cerasus.WB.GetSales:output_type -> cerasus.SalesReply
+	25, // 39: cerasus.WB.GetShopServices:output_type -> cerasus.ShopServiceReply
+	26, // 40: cerasus.WB.GetSaleDetail:output_type -> cerasus.SaleDetailsReply
+	24, // 41: cerasus.WB.GetProductSales:output_type -> cerasus.SalesReply
+	27, // 42: cerasus.WB.GetMainGraphic:output_type -> cerasus.MainGraphicReply
+	28, // 43: cerasus.WB.GetImage:output_type -> cerasus.ImageReply
+	29, // 44: cerasus.WB.CheckShopData:output_type -> cerasus.CompanyShopData
+	30, // 45: cerasus.WB.GetDonutGraphics:output_type -> cerasus.DonutGraphic
+	31, // 46: cerasus.WB.GetWeekGraphics:output_type -> cerasus.WeekGraphics
+	5,  // 47: cerasus.WB.ForCounterDataWB:output_type -> cerasus.ForCounterReplyWB
+	32, // 48: cerasus.WB.Ping:output_type -> cerasus.PingReply
+	33, // 49: cerasus.WB.GetProductUrls:output_type -> cerasus.ProductShopUrls
+	34, // 50: cerasus.WB.ForBrandSales:output_type -> cerasus.ForBrandSalesReply
+	28, // [28:51] is the sub-list for method output_type
+	5,  // [5:28] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name

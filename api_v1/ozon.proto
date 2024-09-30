@@ -28,6 +28,7 @@ service Ozon {
     rpc ForCounterDataOZ (ForCounterRequestOZ) returns (ForCounterReplyOZ) {}
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductUrls (IDRequest) returns (ProductShopUrls) {}
+    rpc ForBrandSales(ForBrandSalesRequest) returns (ForBrandSalesReply) {}
 }
 
 message ShopOzonAuth {
