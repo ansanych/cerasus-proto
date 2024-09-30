@@ -356,6 +356,7 @@ message ForBrandSale {
     int64 price = 2;
     string dateTime = 3;
     bool returns = 4;
+    int64 count = 5;
 }
 
 message ForBrandSalesReply {
