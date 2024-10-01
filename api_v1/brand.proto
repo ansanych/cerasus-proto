@@ -73,6 +73,7 @@ message DumpingData {
     int64 targetMin = 12;
     int64 targetMax = 13;
     string screenShot = 14;
+    bool checkedMatch = 15;
 }
 
 message DumpingList {
