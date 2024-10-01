@@ -42,6 +42,16 @@ service Brands {
     rpc GetDumpingCount(Auth) returns (DumpingCountReply) {}
     rpc GetDumpingData(RequestByID) returns (DumpingData) {}
     rpc UpdateDumpingData(DumpingUpdate) returns (BoolReply) {}
+    rpc GetSalesCount(SalesCountRequest) returns (SalesCountReply) {}
+}
+message SalesCountRequest {
+    Auth auth = 1;
+    string from = 2;
+}
+
+message SalesCountReply {
+    int64 count = 1;
+    string from = 2;
 }
 
 message DumpingCountReply {

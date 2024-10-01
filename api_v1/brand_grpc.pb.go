@@ -58,6 +58,7 @@ type BrandsClient interface {
 	GetDumpingCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingCountReply, error)
 	GetDumpingData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*DumpingData, error)
 	UpdateDumpingData(ctx context.Context, in *DumpingUpdate, opts ...grpc.CallOption) (*BoolReply, error)
+	GetSalesCount(ctx context.Context, in *SalesCountRequest, opts ...grpc.CallOption) (*SalesCountReply, error)
 }
 
 type brandsClient struct {
@@ -392,6 +393,15 @@ func (c *brandsClient) UpdateDumpingData(ctx context.Context, in *DumpingUpdate,
 	return out, nil
 }
 
+func (c *brandsClient) GetSalesCount(ctx context.Context, in *SalesCountRequest, opts ...grpc.CallOption) (*SalesCountReply, error) {
+	out := new(SalesCountReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetSalesCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -432,6 +442,7 @@ type BrandsServer interface {
 	GetDumpingCount(context.Context, *Auth) (*DumpingCountReply, error)
 	GetDumpingData(context.Context, *RequestByID) (*DumpingData, error)
 	UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error)
+	GetSalesCount(context.Context, *SalesCountRequest) (*SalesCountReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -546,6 +557,9 @@ func (UnimplementedBrandsServer) GetDumpingData(context.Context, *RequestByID) (
 }
 func (UnimplementedBrandsServer) UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDumpingData not implemented")
+}
+func (UnimplementedBrandsServer) GetSalesCount(context.Context, *SalesCountRequest) (*SalesCountReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSalesCount not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1208,6 +1222,24 @@ func _Brands_UpdateDumpingData_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetSalesCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SalesCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetSalesCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetSalesCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetSalesCount(ctx, req.(*SalesCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1358,6 +1390,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDumpingData",
 			Handler:    _Brands_UpdateDumpingData_Handler,
+		},
+		{
+			MethodName: "GetSalesCount",
+			Handler:    _Brands_GetSalesCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
