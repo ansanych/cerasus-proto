@@ -61,6 +61,7 @@ message MonitorSalesReply {
 
 message MonitorMonthRequest {
     Auth auth = 1;
+    string date = 2;
 }
 
 message MonitorMonthData {
@@ -72,6 +73,7 @@ message MonitorMonthData {
 
 message MonitorMonthReply {
     repeated MonitorMonthData data = 1;
+    string date = 2;
 }
 
 message MonitorStringRequest {
