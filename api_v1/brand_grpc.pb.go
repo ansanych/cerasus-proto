@@ -60,6 +60,7 @@ type BrandsClient interface {
 	UpdateDumpingData(ctx context.Context, in *DumpingUpdate, opts ...grpc.CallOption) (*BoolReply, error)
 	GetSalesCount(ctx context.Context, in *SalesCountRequest, opts ...grpc.CallOption) (*SalesCountReply, error)
 	GetMonitorSales(ctx context.Context, in *MonitorSalesRequest, opts ...grpc.CallOption) (*MonitorSalesReply, error)
+	GetMonitorRadar(ctx context.Context, in *MonitorRadarRequest, opts ...grpc.CallOption) (*MonitorRadarReply, error)
 	GetMonitorMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error)
 	GetMonitorString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error)
 	GetMonitorLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error)
@@ -415,6 +416,15 @@ func (c *brandsClient) GetMonitorSales(ctx context.Context, in *MonitorSalesRequ
 	return out, nil
 }
 
+func (c *brandsClient) GetMonitorRadar(ctx context.Context, in *MonitorRadarRequest, opts ...grpc.CallOption) (*MonitorRadarReply, error) {
+	out := new(MonitorRadarReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorRadar", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *brandsClient) GetMonitorMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error) {
 	out := new(MonitorMonthReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorMonth", in, out, opts...)
@@ -484,6 +494,7 @@ type BrandsServer interface {
 	UpdateDumpingData(context.Context, *DumpingUpdate) (*BoolReply, error)
 	GetSalesCount(context.Context, *SalesCountRequest) (*SalesCountReply, error)
 	GetMonitorSales(context.Context, *MonitorSalesRequest) (*MonitorSalesReply, error)
+	GetMonitorRadar(context.Context, *MonitorRadarRequest) (*MonitorRadarReply, error)
 	GetMonitorMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error)
 	GetMonitorString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error)
 	GetMonitorLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error)
@@ -607,6 +618,9 @@ func (UnimplementedBrandsServer) GetSalesCount(context.Context, *SalesCountReque
 }
 func (UnimplementedBrandsServer) GetMonitorSales(context.Context, *MonitorSalesRequest) (*MonitorSalesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorSales not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorRadar(context.Context, *MonitorRadarRequest) (*MonitorRadarReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorRadar not implemented")
 }
 func (UnimplementedBrandsServer) GetMonitorMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorMonth not implemented")
@@ -1314,6 +1328,24 @@ func _Brands_GetMonitorSales_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetMonitorRadar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorRadarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorRadar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorRadar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorRadar(ctx, req.(*MonitorRadarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Brands_GetMonitorMonth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MonitorMonthRequest)
 	if err := dec(in); err != nil {
@@ -1526,6 +1558,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMonitorSales",
 			Handler:    _Brands_GetMonitorSales_Handler,
+		},
+		{
+			MethodName: "GetMonitorRadar",
+			Handler:    _Brands_GetMonitorRadar_Handler,
 		},
 		{
 			MethodName: "GetMonitorMonth",

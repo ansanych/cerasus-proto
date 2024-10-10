@@ -44,9 +44,23 @@ service Brands {
     rpc UpdateDumpingData(DumpingUpdate) returns (BoolReply) {}
     rpc GetSalesCount(SalesCountRequest) returns (SalesCountReply) {}
     rpc GetMonitorSales(MonitorSalesRequest) returns (MonitorSalesReply) {}
+    rpc GetMonitorRadar(MonitorRadarRequest) returns (MonitorRadarReply) {}
     rpc GetMonitorMonth(MonitorMonthRequest) returns(MonitorMonthReply) {}
     rpc GetMonitorString(MonitorStringRequest) returns (MonitorStringReply) {}
     rpc GetMonitorLeader(MonitorLeaderRequest) returns (MonitorLeaderReply) {}
+}
+
+message MonitorRadarRequest {
+    Auth auth = 1;
+}
+
+message RadarData {
+    string label = 1;
+    int64 value = 2;
+}
+message MonitorRadarReply {
+    repeated RadarData count = 1;
+    repeated RadarData sum = 2;
 }
 
 message MonitorSalesRequest {
