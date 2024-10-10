@@ -101,7 +101,7 @@ message MonitorLeader {
     BProduct product = 3;
     int64 count = 4;
     int64 sum = 5;
-    string statistic = 6;
+    int64 index = 6;
 }
 
 message MonitorLeaderReply {
