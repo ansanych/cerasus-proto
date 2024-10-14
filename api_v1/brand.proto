@@ -58,7 +58,7 @@ message MonitorDumpingRequest{
 message MonitorDumping {
     int64 sort = 1;
     string name = 2;
-    int64 index = 3;
+    float index = 3;
 }
 
 message MonitorDumpingReply{
