@@ -64,6 +64,7 @@ type BrandsClient interface {
 	GetMonitorMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error)
 	GetMonitorString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error)
 	GetMonitorLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error)
+	GetMonitorDumping(ctx context.Context, in *MonitorDumpingRequest, opts ...grpc.CallOption) (*MonitorDumpingReply, error)
 }
 
 type brandsClient struct {
@@ -452,6 +453,15 @@ func (c *brandsClient) GetMonitorLeader(ctx context.Context, in *MonitorLeaderRe
 	return out, nil
 }
 
+func (c *brandsClient) GetMonitorDumping(ctx context.Context, in *MonitorDumpingRequest, opts ...grpc.CallOption) (*MonitorDumpingReply, error) {
+	out := new(MonitorDumpingReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorDumping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -498,6 +508,7 @@ type BrandsServer interface {
 	GetMonitorMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error)
 	GetMonitorString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error)
 	GetMonitorLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error)
+	GetMonitorDumping(context.Context, *MonitorDumpingRequest) (*MonitorDumpingReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -630,6 +641,9 @@ func (UnimplementedBrandsServer) GetMonitorString(context.Context, *MonitorStrin
 }
 func (UnimplementedBrandsServer) GetMonitorLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorLeader not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorDumping(context.Context, *MonitorDumpingRequest) (*MonitorDumpingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorDumping not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1400,6 +1414,24 @@ func _Brands_GetMonitorLeader_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetMonitorDumping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorDumpingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorDumping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorDumping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorDumping(ctx, req.(*MonitorDumpingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1574,6 +1606,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMonitorLeader",
 			Handler:    _Brands_GetMonitorLeader_Handler,
+		},
+		{
+			MethodName: "GetMonitorDumping",
+			Handler:    _Brands_GetMonitorDumping_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

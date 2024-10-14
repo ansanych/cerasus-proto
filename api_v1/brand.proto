@@ -48,6 +48,21 @@ service Brands {
     rpc GetMonitorMonth(MonitorMonthRequest) returns(MonitorMonthReply) {}
     rpc GetMonitorString(MonitorStringRequest) returns (MonitorStringReply) {}
     rpc GetMonitorLeader(MonitorLeaderRequest) returns (MonitorLeaderReply) {}
+    rpc GetMonitorDumping(MonitorDumpingRequest) returns (MonitorDumpingReply) {}
+}
+
+message MonitorDumpingRequest{
+    Auth auth = 1;
+}
+
+message MonitorDumping {
+    int64 sort = 1;
+    string name = 2;
+    int64 index = 3;
+}
+
+message MonitorDumpingReply{
+    repeated MonitorDumping data = 1;
 }
 
 message MonitorRadarRequest {
