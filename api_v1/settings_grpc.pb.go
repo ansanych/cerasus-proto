@@ -50,7 +50,7 @@ type SettingsClient interface {
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetBrandAccessCompanies(ctx context.Context, in *BrandAccessRequest, opts ...grpc.CallOption) (*BrandAccessReply, error)
-	SetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*BoolReply, error)
+	SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*BoolReply, error)
 	GetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*GeoPlaceData, error)
 }
 
@@ -314,7 +314,7 @@ func (c *settingsClient) GetBrandAccessCompanies(ctx context.Context, in *BrandA
 	return out, nil
 }
 
-func (c *settingsClient) SetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*BoolReply, error) {
+func (c *settingsClient) SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*BoolReply, error) {
 	out := new(BoolReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Settings/SetGeoPlace", in, out, opts...)
 	if err != nil {
@@ -364,7 +364,7 @@ type SettingsServer interface {
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error)
-	SetGeoPlace(context.Context, *GeoPlaceData) (*BoolReply, error)
+	SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*BoolReply, error)
 	GetGeoPlace(context.Context, *GeoPlaceData) (*GeoPlaceData, error)
 	mustEmbedUnimplementedSettingsServer()
 }
@@ -457,7 +457,7 @@ func (UnimplementedSettingsServer) Ping(context.Context, *PingRequest) (*PingRep
 func (UnimplementedSettingsServer) GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandAccessCompanies not implemented")
 }
-func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *GeoPlaceData) (*BoolReply, error) {
+func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*BoolReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetGeoPlace not implemented")
 }
 func (UnimplementedSettingsServer) GetGeoPlace(context.Context, *GeoPlaceData) (*GeoPlaceData, error) {
@@ -981,7 +981,7 @@ func _Settings_GetBrandAccessCompanies_Handler(srv interface{}, ctx context.Cont
 }
 
 func _Settings_SetGeoPlace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GeoPlaceData)
+	in := new(SetGeoPlaceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -993,7 +993,7 @@ func _Settings_SetGeoPlace_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/cerasus.Settings/SetGeoPlace",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).SetGeoPlace(ctx, req.(*GeoPlaceData))
+		return srv.(SettingsServer).SetGeoPlace(ctx, req.(*SetGeoPlaceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
