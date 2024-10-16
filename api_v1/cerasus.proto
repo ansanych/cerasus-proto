@@ -369,3 +369,15 @@ message ForBrandSalesRequest {
     string from = 3;
     string to = 4;
 }
+
+message GeoPlace {
+    int64 ID = 1;
+    string name = 2;
+    float lat = 3;
+    float len = 4;
+}
+message GeoPlaceData {
+    GeoPlace country = 1;
+    GeoPlace region = 2;
+    GeoPlace city = 3;   
+}

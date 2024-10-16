@@ -3818,6 +3818,140 @@ func (x *ForBrandSalesRequest) GetTo() string {
 	return ""
 }
 
+type GeoPlace struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID   int64   `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	Name string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Lat  float32 `protobuf:"fixed32,3,opt,name=lat,proto3" json:"lat,omitempty"`
+	Len  float32 `protobuf:"fixed32,4,opt,name=len,proto3" json:"len,omitempty"`
+}
+
+func (x *GeoPlace) Reset() {
+	*x = GeoPlace{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeoPlace) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeoPlace) ProtoMessage() {}
+
+func (x *GeoPlace) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeoPlace.ProtoReflect.Descriptor instead.
+func (*GeoPlace) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *GeoPlace) GetID() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
+func (x *GeoPlace) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GeoPlace) GetLat() float32 {
+	if x != nil {
+		return x.Lat
+	}
+	return 0
+}
+
+func (x *GeoPlace) GetLen() float32 {
+	if x != nil {
+		return x.Len
+	}
+	return 0
+}
+
+type GeoPlaceData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Country *GeoPlace `protobuf:"bytes,1,opt,name=country,proto3" json:"country,omitempty"`
+	Region  *GeoPlace `protobuf:"bytes,2,opt,name=region,proto3" json:"region,omitempty"`
+	City    *GeoPlace `protobuf:"bytes,3,opt,name=city,proto3" json:"city,omitempty"`
+}
+
+func (x *GeoPlaceData) Reset() {
+	*x = GeoPlaceData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GeoPlaceData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeoPlaceData) ProtoMessage() {}
+
+func (x *GeoPlaceData) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeoPlaceData.ProtoReflect.Descriptor instead.
+func (*GeoPlaceData) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *GeoPlaceData) GetCountry() *GeoPlace {
+	if x != nil {
+		return x.Country
+	}
+	return nil
+}
+
+func (x *GeoPlaceData) GetRegion() *GeoPlace {
+	if x != nil {
+		return x.Region
+	}
+	return nil
+}
+
+func (x *GeoPlaceData) GetCity() *GeoPlace {
+	if x != nil {
+		return x.City
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -4198,10 +4332,24 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x28, 0x03, 0x52, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49,
 	0x44, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x02, 0x74, 0x6f, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72,
-	0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x09, 0x52, 0x02, 0x74, 0x6f, 0x22, 0x52, 0x0a, 0x08, 0x47, 0x65, 0x6f, 0x50, 0x6c, 0x61, 0x63,
+	0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49,
+	0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x61, 0x74, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x02, 0x52, 0x03, 0x6c, 0x61, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x65, 0x6e, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6c, 0x65, 0x6e, 0x22, 0x8d, 0x01, 0x0a, 0x0c, 0x47, 0x65,
+	0x6f, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2b, 0x0a, 0x07, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x72, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x52, 0x07,
+	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x29, 0x0a, 0x06, 0x72, 0x65, 0x67, 0x69, 0x6f,
+	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x52, 0x06, 0x72, 0x65, 0x67, 0x69,
+	0x6f, 0x6e, 0x12, 0x25, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x11, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c,
+	0x61, 0x63, 0x65, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68,
+	0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4216,7 +4364,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 58)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 60)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                     // 0: cerasus.Role
 	(*User)(nil),                     // 1: cerasus.User
@@ -4276,6 +4424,8 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*ForBrandSale)(nil),             // 55: cerasus.ForBrandSale
 	(*ForBrandSalesReply)(nil),       // 56: cerasus.ForBrandSalesReply
 	(*ForBrandSalesRequest)(nil),     // 57: cerasus.ForBrandSalesRequest
+	(*GeoPlace)(nil),                 // 58: cerasus.GeoPlace
+	(*GeoPlaceData)(nil),             // 59: cerasus.GeoPlaceData
 }
 var file_cerasus_proto_depIdxs = []int32{
 	3,  // 0: cerasus.User.company:type_name -> cerasus.Company
@@ -4314,11 +4464,14 @@ var file_cerasus_proto_depIdxs = []int32{
 	3,  // 33: cerasus.CompanyesListReply.companies:type_name -> cerasus.Company
 	2,  // 34: cerasus.RequestByID.auth:type_name -> cerasus.Auth
 	55, // 35: cerasus.ForBrandSalesReply.sales:type_name -> cerasus.ForBrandSale
-	36, // [36:36] is the sub-list for method output_type
-	36, // [36:36] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	58, // 36: cerasus.GeoPlaceData.country:type_name -> cerasus.GeoPlace
+	58, // 37: cerasus.GeoPlaceData.region:type_name -> cerasus.GeoPlace
+	58, // 38: cerasus.GeoPlaceData.city:type_name -> cerasus.GeoPlace
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -5023,6 +5176,30 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeoPlace); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeoPlaceData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -5030,7 +5207,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   58,
+			NumMessages:   60,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

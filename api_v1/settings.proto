@@ -34,6 +34,8 @@ service Settings {
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetBrandAccessCompanies (BrandAccessRequest) returns (BrandAccessReply) {}
+    rpc SetGeoPlace(GeoPlaceData) returns (BoolReply) {}
+    rpc GetGeoPlace(GeoPlaceData) returns (GeoPlaceData) {}
 }
 
 message Tax {

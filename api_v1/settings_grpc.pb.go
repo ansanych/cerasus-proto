@@ -50,6 +50,8 @@ type SettingsClient interface {
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetBrandAccessCompanies(ctx context.Context, in *BrandAccessRequest, opts ...grpc.CallOption) (*BrandAccessReply, error)
+	SetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*BoolReply, error)
+	GetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*GeoPlaceData, error)
 }
 
 type settingsClient struct {
@@ -312,6 +314,24 @@ func (c *settingsClient) GetBrandAccessCompanies(ctx context.Context, in *BrandA
 	return out, nil
 }
 
+func (c *settingsClient) SetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*BoolReply, error) {
+	out := new(BoolReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/SetGeoPlace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetGeoPlace(ctx context.Context, in *GeoPlaceData, opts ...grpc.CallOption) (*GeoPlaceData, error) {
+	out := new(GeoPlaceData)
+	err := c.cc.Invoke(ctx, "/cerasus.Settings/GetGeoPlace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -344,6 +364,8 @@ type SettingsServer interface {
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error)
+	SetGeoPlace(context.Context, *GeoPlaceData) (*BoolReply, error)
+	GetGeoPlace(context.Context, *GeoPlaceData) (*GeoPlaceData, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -434,6 +456,12 @@ func (UnimplementedSettingsServer) Ping(context.Context, *PingRequest) (*PingRep
 }
 func (UnimplementedSettingsServer) GetBrandAccessCompanies(context.Context, *BrandAccessRequest) (*BrandAccessReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrandAccessCompanies not implemented")
+}
+func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *GeoPlaceData) (*BoolReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetGeoPlace not implemented")
+}
+func (UnimplementedSettingsServer) GetGeoPlace(context.Context, *GeoPlaceData) (*GeoPlaceData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGeoPlace not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -952,6 +980,42 @@ func _Settings_GetBrandAccessCompanies_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_SetGeoPlace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GeoPlaceData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SetGeoPlace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/SetGeoPlace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SetGeoPlace(ctx, req.(*GeoPlaceData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetGeoPlace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GeoPlaceData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetGeoPlace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Settings/GetGeoPlace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetGeoPlace(ctx, req.(*GeoPlaceData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1070,6 +1134,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBrandAccessCompanies",
 			Handler:    _Settings_GetBrandAccessCompanies_Handler,
+		},
+		{
+			MethodName: "SetGeoPlace",
+			Handler:    _Settings_SetGeoPlace_Handler,
+		},
+		{
+			MethodName: "GetGeoPlace",
+			Handler:    _Settings_GetGeoPlace_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
