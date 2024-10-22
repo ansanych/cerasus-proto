@@ -28,6 +28,8 @@ service YM {
     rpc GetWeekGraphics(Auth) returns (WeekGraphics) {}
     rpc ForCounterDataYM(ForCounterRequestYM) returns (ForCounterReplyYM) {}
     rpc GetProductUrls (IDRequest) returns (ProductShopUrls) {}
+    rpc ForBrandSales(ForBrandSalesRequest) returns (ForBrandSalesReply) {}
+    rpc ForBrandOrders(ForBrandOrdersRequest) returns (ForBrandOrdersReply) {}
 }
 
 message ShopYMAuth {

@@ -381,3 +381,28 @@ message GeoPlaceData {
     GeoPlace region = 2;
     GeoPlace city = 3;   
 }
+
+message ForBrandOrdersRequest {
+    int64 companyID = 1;
+    repeated int64 shopProductID = 2;
+    string from = 3;
+    string to = 4;
+}
+
+message ForBrandOrder {
+    int64 shopProductID = 1;
+    int64 price = 2;
+    int64 count = 3;
+    string shop = 4;
+    string dateTime = 5;
+    string placemenyType = 6;
+    int64 companyID = 7;
+    GeoPlaceData geo = 8;
+    bool chancelled  = 9;
+    string chancellDate  = 10;
+    int64 shopSaleID = 11;
+}
+
+message ForBrandOrdersReply {
+    repeated ForBrandOrder orders = 1;
+}

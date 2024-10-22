@@ -44,6 +44,8 @@ type YMClient interface {
 	GetWeekGraphics(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WeekGraphics, error)
 	ForCounterDataYM(ctx context.Context, in *ForCounterRequestYM, opts ...grpc.CallOption) (*ForCounterReplyYM, error)
 	GetProductUrls(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*ProductShopUrls, error)
+	ForBrandSales(ctx context.Context, in *ForBrandSalesRequest, opts ...grpc.CallOption) (*ForBrandSalesReply, error)
+	ForBrandOrders(ctx context.Context, in *ForBrandOrdersRequest, opts ...grpc.CallOption) (*ForBrandOrdersReply, error)
 }
 
 type yMClient struct {
@@ -252,6 +254,24 @@ func (c *yMClient) GetProductUrls(ctx context.Context, in *IDRequest, opts ...gr
 	return out, nil
 }
 
+func (c *yMClient) ForBrandSales(ctx context.Context, in *ForBrandSalesRequest, opts ...grpc.CallOption) (*ForBrandSalesReply, error) {
+	out := new(ForBrandSalesReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/ForBrandSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) ForBrandOrders(ctx context.Context, in *ForBrandOrdersRequest, opts ...grpc.CallOption) (*ForBrandOrdersReply, error) {
+	out := new(ForBrandOrdersReply)
+	err := c.cc.Invoke(ctx, "/cerasus.YM/ForBrandOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -278,6 +298,8 @@ type YMServer interface {
 	GetWeekGraphics(context.Context, *Auth) (*WeekGraphics, error)
 	ForCounterDataYM(context.Context, *ForCounterRequestYM) (*ForCounterReplyYM, error)
 	GetProductUrls(context.Context, *IDRequest) (*ProductShopUrls, error)
+	ForBrandSales(context.Context, *ForBrandSalesRequest) (*ForBrandSalesReply, error)
+	ForBrandOrders(context.Context, *ForBrandOrdersRequest) (*ForBrandOrdersReply, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -350,6 +372,12 @@ func (UnimplementedYMServer) ForCounterDataYM(context.Context, *ForCounterReques
 }
 func (UnimplementedYMServer) GetProductUrls(context.Context, *IDRequest) (*ProductShopUrls, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductUrls not implemented")
+}
+func (UnimplementedYMServer) ForBrandSales(context.Context, *ForBrandSalesRequest) (*ForBrandSalesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForBrandSales not implemented")
+}
+func (UnimplementedYMServer) ForBrandOrders(context.Context, *ForBrandOrdersRequest) (*ForBrandOrdersReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForBrandOrders not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -760,6 +788,42 @@ func _YM_GetProductUrls_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_ForBrandSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForBrandSalesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).ForBrandSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/ForBrandSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).ForBrandSales(ctx, req.(*ForBrandSalesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_ForBrandOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForBrandOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).ForBrandOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.YM/ForBrandOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).ForBrandOrders(ctx, req.(*ForBrandOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +918,14 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductUrls",
 			Handler:    _YM_GetProductUrls_Handler,
+		},
+		{
+			MethodName: "ForBrandSales",
+			Handler:    _YM_ForBrandSales_Handler,
+		},
+		{
+			MethodName: "ForBrandOrders",
+			Handler:    _YM_ForBrandOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

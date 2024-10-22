@@ -45,6 +45,7 @@ type OzonClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductUrls(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*ProductShopUrls, error)
 	ForBrandSales(ctx context.Context, in *ForBrandSalesRequest, opts ...grpc.CallOption) (*ForBrandSalesReply, error)
+	ForBrandOrders(ctx context.Context, in *ForBrandOrdersRequest, opts ...grpc.CallOption) (*ForBrandOrdersReply, error)
 }
 
 type ozonClient struct {
@@ -262,6 +263,15 @@ func (c *ozonClient) ForBrandSales(ctx context.Context, in *ForBrandSalesRequest
 	return out, nil
 }
 
+func (c *ozonClient) ForBrandOrders(ctx context.Context, in *ForBrandOrdersRequest, opts ...grpc.CallOption) (*ForBrandOrdersReply, error) {
+	out := new(ForBrandOrdersReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Ozon/ForBrandOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OzonServer is the server API for Ozon service.
 // All implementations must embed UnimplementedOzonServer
 // for forward compatibility
@@ -289,6 +299,7 @@ type OzonServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductUrls(context.Context, *IDRequest) (*ProductShopUrls, error)
 	ForBrandSales(context.Context, *ForBrandSalesRequest) (*ForBrandSalesReply, error)
+	ForBrandOrders(context.Context, *ForBrandOrdersRequest) (*ForBrandOrdersReply, error)
 	mustEmbedUnimplementedOzonServer()
 }
 
@@ -364,6 +375,9 @@ func (UnimplementedOzonServer) GetProductUrls(context.Context, *IDRequest) (*Pro
 }
 func (UnimplementedOzonServer) ForBrandSales(context.Context, *ForBrandSalesRequest) (*ForBrandSalesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForBrandSales not implemented")
+}
+func (UnimplementedOzonServer) ForBrandOrders(context.Context, *ForBrandOrdersRequest) (*ForBrandOrdersReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForBrandOrders not implemented")
 }
 func (UnimplementedOzonServer) mustEmbedUnimplementedOzonServer() {}
 
@@ -792,6 +806,24 @@ func _Ozon_ForBrandSales_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Ozon_ForBrandOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForBrandOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OzonServer).ForBrandOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Ozon/ForBrandOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OzonServer).ForBrandOrders(ctx, req.(*ForBrandOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Ozon_ServiceDesc is the grpc.ServiceDesc for Ozon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -890,6 +922,10 @@ var Ozon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ForBrandSales",
 			Handler:    _Ozon_ForBrandSales_Handler,
+		},
+		{
+			MethodName: "ForBrandOrders",
+			Handler:    _Ozon_ForBrandOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -3952,6 +3952,251 @@ func (x *GeoPlaceData) GetCity() *GeoPlace {
 	return nil
 }
 
+type ForBrandOrdersRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID     int64   `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	ShopProductID []int64 `protobuf:"varint,2,rep,packed,name=shopProductID,proto3" json:"shopProductID,omitempty"`
+	From          string  `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
+	To            string  `protobuf:"bytes,4,opt,name=to,proto3" json:"to,omitempty"`
+}
+
+func (x *ForBrandOrdersRequest) Reset() {
+	*x = ForBrandOrdersRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[60]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ForBrandOrdersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ForBrandOrdersRequest) ProtoMessage() {}
+
+func (x *ForBrandOrdersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[60]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ForBrandOrdersRequest.ProtoReflect.Descriptor instead.
+func (*ForBrandOrdersRequest) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *ForBrandOrdersRequest) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *ForBrandOrdersRequest) GetShopProductID() []int64 {
+	if x != nil {
+		return x.ShopProductID
+	}
+	return nil
+}
+
+func (x *ForBrandOrdersRequest) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *ForBrandOrdersRequest) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+type ForBrandOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ShopProductID int64         `protobuf:"varint,1,opt,name=shopProductID,proto3" json:"shopProductID,omitempty"`
+	Price         int64         `protobuf:"varint,2,opt,name=price,proto3" json:"price,omitempty"`
+	Count         int64         `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
+	Shop          string        `protobuf:"bytes,4,opt,name=shop,proto3" json:"shop,omitempty"`
+	DateTime      string        `protobuf:"bytes,5,opt,name=dateTime,proto3" json:"dateTime,omitempty"`
+	PlacemenyType string        `protobuf:"bytes,6,opt,name=placemenyType,proto3" json:"placemenyType,omitempty"`
+	CompanyID     int64         `protobuf:"varint,7,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	Geo           *GeoPlaceData `protobuf:"bytes,8,opt,name=geo,proto3" json:"geo,omitempty"`
+	Chancelled    bool          `protobuf:"varint,9,opt,name=chancelled,proto3" json:"chancelled,omitempty"`
+	ChancellDate  string        `protobuf:"bytes,10,opt,name=chancellDate,proto3" json:"chancellDate,omitempty"`
+	ShopSaleID    int64         `protobuf:"varint,11,opt,name=shopSaleID,proto3" json:"shopSaleID,omitempty"`
+}
+
+func (x *ForBrandOrder) Reset() {
+	*x = ForBrandOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[61]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ForBrandOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ForBrandOrder) ProtoMessage() {}
+
+func (x *ForBrandOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[61]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ForBrandOrder.ProtoReflect.Descriptor instead.
+func (*ForBrandOrder) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *ForBrandOrder) GetShopProductID() int64 {
+	if x != nil {
+		return x.ShopProductID
+	}
+	return 0
+}
+
+func (x *ForBrandOrder) GetPrice() int64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *ForBrandOrder) GetCount() int64 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *ForBrandOrder) GetShop() string {
+	if x != nil {
+		return x.Shop
+	}
+	return ""
+}
+
+func (x *ForBrandOrder) GetDateTime() string {
+	if x != nil {
+		return x.DateTime
+	}
+	return ""
+}
+
+func (x *ForBrandOrder) GetPlacemenyType() string {
+	if x != nil {
+		return x.PlacemenyType
+	}
+	return ""
+}
+
+func (x *ForBrandOrder) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *ForBrandOrder) GetGeo() *GeoPlaceData {
+	if x != nil {
+		return x.Geo
+	}
+	return nil
+}
+
+func (x *ForBrandOrder) GetChancelled() bool {
+	if x != nil {
+		return x.Chancelled
+	}
+	return false
+}
+
+func (x *ForBrandOrder) GetChancellDate() string {
+	if x != nil {
+		return x.ChancellDate
+	}
+	return ""
+}
+
+func (x *ForBrandOrder) GetShopSaleID() int64 {
+	if x != nil {
+		return x.ShopSaleID
+	}
+	return 0
+}
+
+type ForBrandOrdersReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Orders []*ForBrandOrder `protobuf:"bytes,1,rep,name=orders,proto3" json:"orders,omitempty"`
+}
+
+func (x *ForBrandOrdersReply) Reset() {
+	*x = ForBrandOrdersReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_proto_msgTypes[62]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ForBrandOrdersReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ForBrandOrdersReply) ProtoMessage() {}
+
+func (x *ForBrandOrdersReply) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_proto_msgTypes[62]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ForBrandOrdersReply.ProtoReflect.Descriptor instead.
+func (*ForBrandOrdersReply) Descriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *ForBrandOrdersReply) GetOrders() []*ForBrandOrder {
+	if x != nil {
+		return x.Orders
+	}
+	return nil
+}
+
 var File_cerasus_proto protoreflect.FileDescriptor
 
 var file_cerasus_proto_rawDesc = []byte{
@@ -4346,10 +4591,45 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x52, 0x06, 0x72, 0x65, 0x67, 0x69,
 	0x6f, 0x6e, 0x12, 0x25, 0x0a, 0x04, 0x63, 0x69, 0x74, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x11, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c,
-	0x61, 0x63, 0x65, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68,
-	0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x63, 0x65, 0x52, 0x04, 0x63, 0x69, 0x74, 0x79, 0x22, 0x7f, 0x0a, 0x15, 0x46, 0x6f, 0x72,
+	0x42, 0x72, 0x61, 0x6e, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44,
+	0x12, 0x24, 0x0a, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49,
+	0x44, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x22, 0xe2, 0x02, 0x0a, 0x0d, 0x46,
+	0x6f, 0x72, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x24, 0x0a, 0x0d,
+	0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x12,
+	0x0a, 0x04, 0x73, 0x68, 0x6f, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x73, 0x68,
+	0x6f, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x24,
+	0x0a, 0x0d, 0x70, 0x6c, 0x61, 0x63, 0x65, 0x6d, 0x65, 0x6e, 0x79, 0x54, 0x79, 0x70, 0x65, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x70, 0x6c, 0x61, 0x63, 0x65, 0x6d, 0x65, 0x6e, 0x79,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49,
+	0x44, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79,
+	0x49, 0x44, 0x12, 0x27, 0x0a, 0x03, 0x67, 0x65, 0x6f, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2e, 0x47, 0x65, 0x6f, 0x50, 0x6c, 0x61,
+	0x63, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x03, 0x67, 0x65, 0x6f, 0x12, 0x1e, 0x0a, 0x0a, 0x63,
+	0x68, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6c, 0x65, 0x64, 0x18, 0x09, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x0a, 0x63, 0x68, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6c, 0x65, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x63,
+	0x68, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x63, 0x68, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x6c, 0x44, 0x61, 0x74, 0x65, 0x12,
+	0x1e, 0x0a, 0x0a, 0x73, 0x68, 0x6f, 0x70, 0x53, 0x61, 0x6c, 0x65, 0x49, 0x44, 0x18, 0x0b, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0a, 0x73, 0x68, 0x6f, 0x70, 0x53, 0x61, 0x6c, 0x65, 0x49, 0x44, 0x22,
+	0x45, 0x0a, 0x13, 0x46, 0x6f, 0x72, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2e, 0x0a, 0x06, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x2e, 0x46, 0x6f, 0x72, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x06,
+	0x6f, 0x72, 0x64, 0x65, 0x72, 0x73, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4364,7 +4644,7 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
-var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 60)
+var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 63)
 var file_cerasus_proto_goTypes = []interface{}{
 	(*Role)(nil),                     // 0: cerasus.Role
 	(*User)(nil),                     // 1: cerasus.User
@@ -4426,6 +4706,9 @@ var file_cerasus_proto_goTypes = []interface{}{
 	(*ForBrandSalesRequest)(nil),     // 57: cerasus.ForBrandSalesRequest
 	(*GeoPlace)(nil),                 // 58: cerasus.GeoPlace
 	(*GeoPlaceData)(nil),             // 59: cerasus.GeoPlaceData
+	(*ForBrandOrdersRequest)(nil),    // 60: cerasus.ForBrandOrdersRequest
+	(*ForBrandOrder)(nil),            // 61: cerasus.ForBrandOrder
+	(*ForBrandOrdersReply)(nil),      // 62: cerasus.ForBrandOrdersReply
 }
 var file_cerasus_proto_depIdxs = []int32{
 	3,  // 0: cerasus.User.company:type_name -> cerasus.Company
@@ -4467,11 +4750,13 @@ var file_cerasus_proto_depIdxs = []int32{
 	58, // 36: cerasus.GeoPlaceData.country:type_name -> cerasus.GeoPlace
 	58, // 37: cerasus.GeoPlaceData.region:type_name -> cerasus.GeoPlace
 	58, // 38: cerasus.GeoPlaceData.city:type_name -> cerasus.GeoPlace
-	39, // [39:39] is the sub-list for method output_type
-	39, // [39:39] is the sub-list for method input_type
-	39, // [39:39] is the sub-list for extension type_name
-	39, // [39:39] is the sub-list for extension extendee
-	0,  // [0:39] is the sub-list for field type_name
+	59, // 39: cerasus.ForBrandOrder.geo:type_name -> cerasus.GeoPlaceData
+	61, // 40: cerasus.ForBrandOrdersReply.orders:type_name -> cerasus.ForBrandOrder
+	41, // [41:41] is the sub-list for method output_type
+	41, // [41:41] is the sub-list for method input_type
+	41, // [41:41] is the sub-list for extension type_name
+	41, // [41:41] is the sub-list for extension extendee
+	0,  // [0:41] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_proto_init() }
@@ -5200,6 +5485,42 @@ func file_cerasus_proto_init() {
 				return nil
 			}
 		}
+		file_cerasus_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ForBrandOrdersRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ForBrandOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ForBrandOrdersReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -5207,7 +5528,7 @@ func file_cerasus_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   60,
+			NumMessages:   63,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
