@@ -398,8 +398,8 @@ message ForBrandOrder {
     string placemenyType = 6;
     int64 companyID = 7;
     GeoPlaceData geo = 8;
-    bool chancelled  = 9;
-    string chancellDate  = 10;
+    bool cancelled  = 9;
+    string cancelDate  = 10;
     int64 shopSaleID = 11;
 }
 
