@@ -49,6 +49,11 @@ service Brands {
     rpc GetMonitorString(MonitorStringRequest) returns (MonitorStringReply) {}
     rpc GetMonitorLeader(MonitorLeaderRequest) returns (MonitorLeaderReply) {}
     rpc GetMonitorDumping(MonitorDumpingRequest) returns (MonitorDumpingReply) {}
+    rpc GetMonitorOrders(MonitorSalesRequest) returns (MonitorSalesReply) {}
+    rpc GetMonitorOrdersRadar(MonitorRadarRequest) returns (MonitorRadarReply) {}
+    rpc GetMonitorOrdersMonth(MonitorMonthRequest) returns(MonitorMonthReply) {}
+    rpc GetMonitorOrdersString(MonitorStringRequest) returns (MonitorStringReply) {}
+    rpc GetMonitorOrdersLeader(MonitorLeaderRequest) returns (MonitorLeaderReply) {}
 }
 
 message MonitorDumpingRequest{
@@ -73,6 +78,7 @@ message RadarData {
     string label = 1;
     int64 value = 2;
 }
+
 message MonitorRadarReply {
     repeated RadarData count = 1;
     repeated RadarData sum = 2;

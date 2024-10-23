@@ -65,6 +65,11 @@ type BrandsClient interface {
 	GetMonitorString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error)
 	GetMonitorLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error)
 	GetMonitorDumping(ctx context.Context, in *MonitorDumpingRequest, opts ...grpc.CallOption) (*MonitorDumpingReply, error)
+	GetMonitorOrders(ctx context.Context, in *MonitorSalesRequest, opts ...grpc.CallOption) (*MonitorSalesReply, error)
+	GetMonitorOrdersRadar(ctx context.Context, in *MonitorRadarRequest, opts ...grpc.CallOption) (*MonitorRadarReply, error)
+	GetMonitorOrdersMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error)
+	GetMonitorOrdersString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error)
+	GetMonitorOrdersLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error)
 }
 
 type brandsClient struct {
@@ -462,6 +467,51 @@ func (c *brandsClient) GetMonitorDumping(ctx context.Context, in *MonitorDumping
 	return out, nil
 }
 
+func (c *brandsClient) GetMonitorOrders(ctx context.Context, in *MonitorSalesRequest, opts ...grpc.CallOption) (*MonitorSalesReply, error) {
+	out := new(MonitorSalesReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetMonitorOrdersRadar(ctx context.Context, in *MonitorRadarRequest, opts ...grpc.CallOption) (*MonitorRadarReply, error) {
+	out := new(MonitorRadarReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorOrdersRadar", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetMonitorOrdersMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error) {
+	out := new(MonitorMonthReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorOrdersMonth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetMonitorOrdersString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error) {
+	out := new(MonitorStringReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorOrdersString", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetMonitorOrdersLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error) {
+	out := new(MonitorLeaderReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetMonitorOrdersLeader", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -509,6 +559,11 @@ type BrandsServer interface {
 	GetMonitorString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error)
 	GetMonitorLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error)
 	GetMonitorDumping(context.Context, *MonitorDumpingRequest) (*MonitorDumpingReply, error)
+	GetMonitorOrders(context.Context, *MonitorSalesRequest) (*MonitorSalesReply, error)
+	GetMonitorOrdersRadar(context.Context, *MonitorRadarRequest) (*MonitorRadarReply, error)
+	GetMonitorOrdersMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error)
+	GetMonitorOrdersString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error)
+	GetMonitorOrdersLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -644,6 +699,21 @@ func (UnimplementedBrandsServer) GetMonitorLeader(context.Context, *MonitorLeade
 }
 func (UnimplementedBrandsServer) GetMonitorDumping(context.Context, *MonitorDumpingRequest) (*MonitorDumpingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorDumping not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorOrders(context.Context, *MonitorSalesRequest) (*MonitorSalesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrders not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorOrdersRadar(context.Context, *MonitorRadarRequest) (*MonitorRadarReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrdersRadar not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorOrdersMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrdersMonth not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorOrdersString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrdersString not implemented")
+}
+func (UnimplementedBrandsServer) GetMonitorOrdersLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrdersLeader not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1432,6 +1502,96 @@ func _Brands_GetMonitorDumping_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetMonitorOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorSalesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorOrders(ctx, req.(*MonitorSalesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetMonitorOrdersRadar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorRadarRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorOrdersRadar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorOrdersRadar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorOrdersRadar(ctx, req.(*MonitorRadarRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetMonitorOrdersMonth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorMonthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorOrdersMonth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorOrdersMonth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorOrdersMonth(ctx, req.(*MonitorMonthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetMonitorOrdersString_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorStringRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorOrdersString(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorOrdersString",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorOrdersString(ctx, req.(*MonitorStringRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetMonitorOrdersLeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MonitorLeaderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetMonitorOrdersLeader(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetMonitorOrdersLeader",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetMonitorOrdersLeader(ctx, req.(*MonitorLeaderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1610,6 +1770,26 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMonitorDumping",
 			Handler:    _Brands_GetMonitorDumping_Handler,
+		},
+		{
+			MethodName: "GetMonitorOrders",
+			Handler:    _Brands_GetMonitorOrders_Handler,
+		},
+		{
+			MethodName: "GetMonitorOrdersRadar",
+			Handler:    _Brands_GetMonitorOrdersRadar_Handler,
+		},
+		{
+			MethodName: "GetMonitorOrdersMonth",
+			Handler:    _Brands_GetMonitorOrdersMonth_Handler,
+		},
+		{
+			MethodName: "GetMonitorOrdersString",
+			Handler:    _Brands_GetMonitorOrdersString_Handler,
+		},
+		{
+			MethodName: "GetMonitorOrdersLeader",
+			Handler:    _Brands_GetMonitorOrdersLeader_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
