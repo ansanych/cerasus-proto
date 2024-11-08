@@ -54,6 +54,10 @@ service Brands {
     rpc GetMonitorOrdersMonth(MonitorMonthRequest) returns(MonitorMonthReply) {}
     rpc GetMonitorOrdersString(MonitorStringRequest) returns (MonitorStringReply) {}
     rpc GetMonitorOrdersLeader(MonitorLeaderRequest) returns (MonitorLeaderReply) {}
+    rpc GetGraphMainCount(MainGraphicRequest) returns (MainGraphicReply) {}
+    rpc GetGraphMainSum(MainGraphicRequest) returns (MainGraphicReply) {}
+    rpc GetGraphDonutCount(Auth) returns (DonutGraphics) {}
+    rpc GetGraphDonutSum(Auth) returns (DonutGraphics) {}
 }
 
 message MonitorDumpingRequest{
