@@ -70,6 +70,10 @@ type BrandsClient interface {
 	GetMonitorOrdersMonth(ctx context.Context, in *MonitorMonthRequest, opts ...grpc.CallOption) (*MonitorMonthReply, error)
 	GetMonitorOrdersString(ctx context.Context, in *MonitorStringRequest, opts ...grpc.CallOption) (*MonitorStringReply, error)
 	GetMonitorOrdersLeader(ctx context.Context, in *MonitorLeaderRequest, opts ...grpc.CallOption) (*MonitorLeaderReply, error)
+	GetGraphMainCount(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
+	GetGraphMainSum(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
+	GetGraphDonutCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
+	GetGraphDonutSum(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
 }
 
 type brandsClient struct {
@@ -512,6 +516,42 @@ func (c *brandsClient) GetMonitorOrdersLeader(ctx context.Context, in *MonitorLe
 	return out, nil
 }
 
+func (c *brandsClient) GetGraphMainCount(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error) {
+	out := new(MainGraphicReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetGraphMainCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetGraphMainSum(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error) {
+	out := new(MainGraphicReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetGraphMainSum", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetGraphDonutCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error) {
+	out := new(DonutGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetGraphDonutCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetGraphDonutSum(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error) {
+	out := new(DonutGraphics)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetGraphDonutSum", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -564,6 +604,10 @@ type BrandsServer interface {
 	GetMonitorOrdersMonth(context.Context, *MonitorMonthRequest) (*MonitorMonthReply, error)
 	GetMonitorOrdersString(context.Context, *MonitorStringRequest) (*MonitorStringReply, error)
 	GetMonitorOrdersLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error)
+	GetGraphMainCount(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
+	GetGraphMainSum(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
+	GetGraphDonutCount(context.Context, *Auth) (*DonutGraphics, error)
+	GetGraphDonutSum(context.Context, *Auth) (*DonutGraphics, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -714,6 +758,18 @@ func (UnimplementedBrandsServer) GetMonitorOrdersString(context.Context, *Monito
 }
 func (UnimplementedBrandsServer) GetMonitorOrdersLeader(context.Context, *MonitorLeaderRequest) (*MonitorLeaderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMonitorOrdersLeader not implemented")
+}
+func (UnimplementedBrandsServer) GetGraphMainCount(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphMainCount not implemented")
+}
+func (UnimplementedBrandsServer) GetGraphMainSum(context.Context, *MainGraphicRequest) (*MainGraphicReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphMainSum not implemented")
+}
+func (UnimplementedBrandsServer) GetGraphDonutCount(context.Context, *Auth) (*DonutGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphDonutCount not implemented")
+}
+func (UnimplementedBrandsServer) GetGraphDonutSum(context.Context, *Auth) (*DonutGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGraphDonutSum not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1592,6 +1648,78 @@ func _Brands_GetMonitorOrdersLeader_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetGraphMainCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainGraphicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetGraphMainCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetGraphMainCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetGraphMainCount(ctx, req.(*MainGraphicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetGraphMainSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MainGraphicRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetGraphMainSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetGraphMainSum",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetGraphMainSum(ctx, req.(*MainGraphicRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetGraphDonutCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetGraphDonutCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetGraphDonutCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetGraphDonutCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetGraphDonutSum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetGraphDonutSum(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetGraphDonutSum",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetGraphDonutSum(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1790,6 +1918,22 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMonitorOrdersLeader",
 			Handler:    _Brands_GetMonitorOrdersLeader_Handler,
+		},
+		{
+			MethodName: "GetGraphMainCount",
+			Handler:    _Brands_GetGraphMainCount_Handler,
+		},
+		{
+			MethodName: "GetGraphMainSum",
+			Handler:    _Brands_GetGraphMainSum_Handler,
+		},
+		{
+			MethodName: "GetGraphDonutCount",
+			Handler:    _Brands_GetGraphDonutCount_Handler,
+		},
+		{
+			MethodName: "GetGraphDonutSum",
+			Handler:    _Brands_GetGraphDonutSum_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
