@@ -58,6 +58,87 @@ service Brands {
     rpc GetGraphMainSum(MainGraphicRequest) returns (MainGraphicReply) {}
     rpc GetGraphDonutCount(Auth) returns (DonutGraphics) {}
     rpc GetGraphDonutSum(Auth) returns (DonutGraphics) {}
+    rpc SASellersList(SAListRequest) returns(SAListReply) {}
+    rpc SALineGraph(SARequest) returns(SALineGraphReply) {}
+    rpc SARoundByProducts(SARequest) returns(SARoundByProductsReply) {}
+    rpc SATableByProducts(SARequest) returns(SATableByProductsReply) {}
+    rpc SARoundBySales(SARequest) returns(SARoundByProductsReply) {}
+    rpc SATableBySales(SARequest) returns(SATableByProductsReply) {}
+}
+
+message SALineGraphData {
+    string label = 1;
+    string code = 2;
+    repeated float points = 3;
+    repeated float middle = 4;
+    float min = 5;
+    float max = 6;
+}
+
+message SALineGraphReply {
+    repeated string labels = 1;
+    SALineGraphData data = 2;
+}
+
+message SARoundByProductsDataset {
+    string label = 1;
+    repeated float data = 2;
+    repeated string backgroundColor = 3;
+    repeated string borderColor = 4;
+    int32 borderWidth = 5;
+}
+
+message SARoundByProductsReply {
+    repeated string labels = 1;
+    repeated SARoundByProductsDataset datasets = 2;
+}
+
+message SATableByProductsRow {
+    int32 sort = 1;
+    string title = 2;
+    int32 count = 3;
+    float sum = 4;
+    float percent = 5;
+}
+
+message SATableByProductsResult {
+    int32 count = 1;
+    float sum = 2;
+    float percent = 3;
+}
+
+message SATableByProductsReply {
+    SATableByProductsResult result = 1;
+    repeated SATableByProductsRow rows = 2;
+}
+
+message SARequest {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+    string period = 4;
+    repeated int64 sellers = 5;
+}
+
+message SAListRequest {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+}
+
+message SAListItemVolumes {
+    float value = 1;
+    float percent = 2;
+}
+
+message SAListItem {
+    BSeller b_seller = 1;
+    int32 sort = 2;
+    SAListItemVolumes salesVolume = 3;
+}
+
+message SAListReply {
+    repeated SAListItem data = 1;
 }
 
 message MonitorDumpingRequest{

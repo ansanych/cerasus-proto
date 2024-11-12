@@ -74,6 +74,12 @@ type BrandsClient interface {
 	GetGraphMainSum(ctx context.Context, in *MainGraphicRequest, opts ...grpc.CallOption) (*MainGraphicReply, error)
 	GetGraphDonutCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
 	GetGraphDonutSum(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DonutGraphics, error)
+	SASellersList(ctx context.Context, in *SAListRequest, opts ...grpc.CallOption) (*SAListReply, error)
+	SALineGraph(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SALineGraphReply, error)
+	SARoundByProducts(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
+	SATableByProducts(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
+	SARoundBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
+	SATableBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
 }
 
 type brandsClient struct {
@@ -552,6 +558,60 @@ func (c *brandsClient) GetGraphDonutSum(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *brandsClient) SASellersList(ctx context.Context, in *SAListRequest, opts ...grpc.CallOption) (*SAListReply, error) {
+	out := new(SAListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SASellersList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SALineGraph(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SALineGraphReply, error) {
+	out := new(SALineGraphReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SALineGraph", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SARoundByProducts(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error) {
+	out := new(SARoundByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SARoundByProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SATableByProducts(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error) {
+	out := new(SATableByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SATableByProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SARoundBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error) {
+	out := new(SARoundByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SARoundBySales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) SATableBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error) {
+	out := new(SATableByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/SATableBySales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -608,6 +668,12 @@ type BrandsServer interface {
 	GetGraphMainSum(context.Context, *MainGraphicRequest) (*MainGraphicReply, error)
 	GetGraphDonutCount(context.Context, *Auth) (*DonutGraphics, error)
 	GetGraphDonutSum(context.Context, *Auth) (*DonutGraphics, error)
+	SASellersList(context.Context, *SAListRequest) (*SAListReply, error)
+	SALineGraph(context.Context, *SARequest) (*SALineGraphReply, error)
+	SARoundByProducts(context.Context, *SARequest) (*SARoundByProductsReply, error)
+	SATableByProducts(context.Context, *SARequest) (*SATableByProductsReply, error)
+	SARoundBySales(context.Context, *SARequest) (*SARoundByProductsReply, error)
+	SATableBySales(context.Context, *SARequest) (*SATableByProductsReply, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -770,6 +836,24 @@ func (UnimplementedBrandsServer) GetGraphDonutCount(context.Context, *Auth) (*Do
 }
 func (UnimplementedBrandsServer) GetGraphDonutSum(context.Context, *Auth) (*DonutGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGraphDonutSum not implemented")
+}
+func (UnimplementedBrandsServer) SASellersList(context.Context, *SAListRequest) (*SAListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SASellersList not implemented")
+}
+func (UnimplementedBrandsServer) SALineGraph(context.Context, *SARequest) (*SALineGraphReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SALineGraph not implemented")
+}
+func (UnimplementedBrandsServer) SARoundByProducts(context.Context, *SARequest) (*SARoundByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SARoundByProducts not implemented")
+}
+func (UnimplementedBrandsServer) SATableByProducts(context.Context, *SARequest) (*SATableByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SATableByProducts not implemented")
+}
+func (UnimplementedBrandsServer) SARoundBySales(context.Context, *SARequest) (*SARoundByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SARoundBySales not implemented")
+}
+func (UnimplementedBrandsServer) SATableBySales(context.Context, *SARequest) (*SATableByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SATableBySales not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1720,6 +1804,114 @@ func _Brands_GetGraphDonutSum_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_SASellersList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SAListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SASellersList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SASellersList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SASellersList(ctx, req.(*SAListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SALineGraph_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SALineGraph(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SALineGraph",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SALineGraph(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SARoundByProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SARoundByProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SARoundByProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SARoundByProducts(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SATableByProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SATableByProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SATableByProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SATableByProducts(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SARoundBySales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SARoundBySales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SARoundBySales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SARoundBySales(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_SATableBySales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).SATableBySales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/SATableBySales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).SATableBySales(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1934,6 +2126,30 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGraphDonutSum",
 			Handler:    _Brands_GetGraphDonutSum_Handler,
+		},
+		{
+			MethodName: "SASellersList",
+			Handler:    _Brands_SASellersList_Handler,
+		},
+		{
+			MethodName: "SALineGraph",
+			Handler:    _Brands_SALineGraph_Handler,
+		},
+		{
+			MethodName: "SARoundByProducts",
+			Handler:    _Brands_SARoundByProducts_Handler,
+		},
+		{
+			MethodName: "SATableByProducts",
+			Handler:    _Brands_SATableByProducts_Handler,
+		},
+		{
+			MethodName: "SARoundBySales",
+			Handler:    _Brands_SARoundBySales_Handler,
+		},
+		{
+			MethodName: "SATableBySales",
+			Handler:    _Brands_SATableBySales_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
