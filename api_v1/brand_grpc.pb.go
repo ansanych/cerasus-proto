@@ -80,6 +80,7 @@ type BrandsClient interface {
 	SATableByProducts(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
 	SARoundBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
 	SATableBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
+	GetSellerProductWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error)
 }
 
 type brandsClient struct {
@@ -612,6 +613,15 @@ func (c *brandsClient) SATableBySales(ctx context.Context, in *SARequest, opts .
 	return out, nil
 }
 
+func (c *brandsClient) GetSellerProductWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error) {
+	out := new(WidgetData)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetSellerProductWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -674,6 +684,7 @@ type BrandsServer interface {
 	SATableByProducts(context.Context, *SARequest) (*SATableByProductsReply, error)
 	SARoundBySales(context.Context, *SARequest) (*SARoundByProductsReply, error)
 	SATableBySales(context.Context, *SARequest) (*SATableByProductsReply, error)
+	GetSellerProductWidget(context.Context, *RequestByID) (*WidgetData, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -854,6 +865,9 @@ func (UnimplementedBrandsServer) SARoundBySales(context.Context, *SARequest) (*S
 }
 func (UnimplementedBrandsServer) SATableBySales(context.Context, *SARequest) (*SATableByProductsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SATableBySales not implemented")
+}
+func (UnimplementedBrandsServer) GetSellerProductWidget(context.Context, *RequestByID) (*WidgetData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProductWidget not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1912,6 +1926,24 @@ func _Brands_SATableBySales_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetSellerProductWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetSellerProductWidget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetSellerProductWidget",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetSellerProductWidget(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2150,6 +2182,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SATableBySales",
 			Handler:    _Brands_SATableBySales_Handler,
+		},
+		{
+			MethodName: "GetSellerProductWidget",
+			Handler:    _Brands_GetSellerProductWidget_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

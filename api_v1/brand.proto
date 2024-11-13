@@ -64,6 +64,7 @@ service Brands {
     rpc SATableByProducts(SARequest) returns(SATableByProductsReply) {}
     rpc SARoundBySales(SARequest) returns(SARoundByProductsReply) {}
     rpc SATableBySales(SARequest) returns(SATableByProductsReply) {}
+    rpc GetSellerProductWidget(RequestByID) returns(WidgetData) {}
 }
 
 message SALineGraphData {

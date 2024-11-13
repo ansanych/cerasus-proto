@@ -407,3 +407,8 @@ message ForBrandOrder {
 message ForBrandOrdersReply {
     repeated ForBrandOrder orders = 1;
 }
+
+message WidgetData {
+    float value = 1;
+    float percent = 2;
+}
