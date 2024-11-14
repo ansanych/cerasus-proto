@@ -65,6 +65,13 @@ service Brands {
     rpc SARoundBySales(SARequest) returns(SARoundByProductsReply) {}
     rpc SATableBySales(SARequest) returns(SATableByProductsReply) {}
     rpc GetSellerProductWidget(RequestByID) returns(WidgetData) {}
+    rpc PAProductList(SAListRequest) returns(PAListReply) {}
+    rpc PALineGraph(PARequest) returns(SALineGraphReply) {}
+    rpc PARoundByProducts(PARequest) returns(SARoundByProductsReply) {}
+    rpc PATableByProducts(PARequest) returns(SATableByProductsReply) {}
+    rpc PARoundBySeller(PARequest) returns(SARoundByProductsReply) {}
+    rpc PATableBySeller(PARequest) returns(SATableByProductsReply) {}
+    rpc GetProductSellerWidget(RequestByID) returns(WidgetData) {}
 }
 
 message SALineGraphData {
@@ -121,6 +128,14 @@ message SARequest {
     repeated int64 sellers = 5;
 }
 
+message PARequest {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+    string period = 4;
+    repeated int64 products = 5;
+}
+
 message SAListRequest {
     Auth auth = 1;
     string from = 2;
@@ -140,6 +155,16 @@ message SAListItem {
 
 message SAListReply {
     repeated SAListItem data = 1;
+}
+
+message PAListItem {
+    BProduct b_product = 1;
+    int32 sort = 2;
+    SAListItemVolumes salesVolume = 3;
+}
+
+message PAListReply {
+    repeated PAListItem data = 1;
 }
 
 message MonitorDumpingRequest{

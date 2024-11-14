@@ -81,6 +81,13 @@ type BrandsClient interface {
 	SARoundBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
 	SATableBySales(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
 	GetSellerProductWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error)
+	PAProductList(ctx context.Context, in *SAListRequest, opts ...grpc.CallOption) (*PAListReply, error)
+	PALineGraph(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SALineGraphReply, error)
+	PARoundByProducts(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
+	PATableByProducts(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
+	PARoundBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
+	PATableBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
+	GetProductSellerWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error)
 }
 
 type brandsClient struct {
@@ -622,6 +629,69 @@ func (c *brandsClient) GetSellerProductWidget(ctx context.Context, in *RequestBy
 	return out, nil
 }
 
+func (c *brandsClient) PAProductList(ctx context.Context, in *SAListRequest, opts ...grpc.CallOption) (*PAListReply, error) {
+	out := new(PAListReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PAProductList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) PALineGraph(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SALineGraphReply, error) {
+	out := new(SALineGraphReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PALineGraph", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) PARoundByProducts(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error) {
+	out := new(SARoundByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PARoundByProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) PATableByProducts(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error) {
+	out := new(SATableByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PATableByProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) PARoundBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error) {
+	out := new(SARoundByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PARoundBySeller", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) PATableBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error) {
+	out := new(SATableByProductsReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/PATableBySeller", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetProductSellerWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error) {
+	out := new(WidgetData)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetProductSellerWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -685,6 +755,13 @@ type BrandsServer interface {
 	SARoundBySales(context.Context, *SARequest) (*SARoundByProductsReply, error)
 	SATableBySales(context.Context, *SARequest) (*SATableByProductsReply, error)
 	GetSellerProductWidget(context.Context, *RequestByID) (*WidgetData, error)
+	PAProductList(context.Context, *SAListRequest) (*PAListReply, error)
+	PALineGraph(context.Context, *PARequest) (*SALineGraphReply, error)
+	PARoundByProducts(context.Context, *PARequest) (*SARoundByProductsReply, error)
+	PATableByProducts(context.Context, *PARequest) (*SATableByProductsReply, error)
+	PARoundBySeller(context.Context, *PARequest) (*SARoundByProductsReply, error)
+	PATableBySeller(context.Context, *PARequest) (*SATableByProductsReply, error)
+	GetProductSellerWidget(context.Context, *RequestByID) (*WidgetData, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -868,6 +945,27 @@ func (UnimplementedBrandsServer) SATableBySales(context.Context, *SARequest) (*S
 }
 func (UnimplementedBrandsServer) GetSellerProductWidget(context.Context, *RequestByID) (*WidgetData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProductWidget not implemented")
+}
+func (UnimplementedBrandsServer) PAProductList(context.Context, *SAListRequest) (*PAListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PAProductList not implemented")
+}
+func (UnimplementedBrandsServer) PALineGraph(context.Context, *PARequest) (*SALineGraphReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PALineGraph not implemented")
+}
+func (UnimplementedBrandsServer) PARoundByProducts(context.Context, *PARequest) (*SARoundByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PARoundByProducts not implemented")
+}
+func (UnimplementedBrandsServer) PATableByProducts(context.Context, *PARequest) (*SATableByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PATableByProducts not implemented")
+}
+func (UnimplementedBrandsServer) PARoundBySeller(context.Context, *PARequest) (*SARoundByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PARoundBySeller not implemented")
+}
+func (UnimplementedBrandsServer) PATableBySeller(context.Context, *PARequest) (*SATableByProductsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PATableBySeller not implemented")
+}
+func (UnimplementedBrandsServer) GetProductSellerWidget(context.Context, *RequestByID) (*WidgetData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductSellerWidget not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -1944,6 +2042,132 @@ func _Brands_GetSellerProductWidget_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_PAProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SAListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PAProductList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PAProductList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PAProductList(ctx, req.(*SAListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_PALineGraph_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PALineGraph(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PALineGraph",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PALineGraph(ctx, req.(*PARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_PARoundByProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PARoundByProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PARoundByProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PARoundByProducts(ctx, req.(*PARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_PATableByProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PATableByProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PATableByProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PATableByProducts(ctx, req.(*PARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_PARoundBySeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PARoundBySeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PARoundBySeller",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PARoundBySeller(ctx, req.(*PARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_PATableBySeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).PATableBySeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/PATableBySeller",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).PATableBySeller(ctx, req.(*PARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetProductSellerWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetProductSellerWidget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetProductSellerWidget",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetProductSellerWidget(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2186,6 +2410,34 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSellerProductWidget",
 			Handler:    _Brands_GetSellerProductWidget_Handler,
+		},
+		{
+			MethodName: "PAProductList",
+			Handler:    _Brands_PAProductList_Handler,
+		},
+		{
+			MethodName: "PALineGraph",
+			Handler:    _Brands_PALineGraph_Handler,
+		},
+		{
+			MethodName: "PARoundByProducts",
+			Handler:    _Brands_PARoundByProducts_Handler,
+		},
+		{
+			MethodName: "PATableByProducts",
+			Handler:    _Brands_PATableByProducts_Handler,
+		},
+		{
+			MethodName: "PARoundBySeller",
+			Handler:    _Brands_PARoundBySeller_Handler,
+		},
+		{
+			MethodName: "PATableBySeller",
+			Handler:    _Brands_PATableBySeller_Handler,
+		},
+		{
+			MethodName: "GetProductSellerWidget",
+			Handler:    _Brands_GetProductSellerWidget_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
