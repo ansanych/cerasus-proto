@@ -72,6 +72,22 @@ service Brands {
     rpc PARoundBySeller(PARequest) returns(SARoundByProductsReply) {}
     rpc PATableBySeller(PARequest) returns(SATableByProductsReply) {}
     rpc GetProductSellerWidget(RequestByID) returns(WidgetData) {}
+    rpc GetDumpingMainGraph(SARequest) returns(SALineGraphReply) {}
+    rpc GetDumpingCalender(SARequest) returns(DumpingCalenderRequest) {}
+}
+
+message DumpingCalenderData {
+    string label = 1;
+    int32 value = 2;
+}
+
+message DumpingCalenderDate {
+    string date = 1;
+    repeated DumpingCalenderData data = 2;
+}
+
+message DumpingCalenderRequest {
+    repeated DumpingCalenderDate data = 1;
 }
 
 message SALineGraphData {

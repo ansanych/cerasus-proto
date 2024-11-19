@@ -88,6 +88,8 @@ type BrandsClient interface {
 	PARoundBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SARoundByProductsReply, error)
 	PATableBySeller(ctx context.Context, in *PARequest, opts ...grpc.CallOption) (*SATableByProductsReply, error)
 	GetProductSellerWidget(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*WidgetData, error)
+	GetDumpingMainGraph(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SALineGraphReply, error)
+	GetDumpingCalender(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*DumpingCalenderRequest, error)
 }
 
 type brandsClient struct {
@@ -692,6 +694,24 @@ func (c *brandsClient) GetProductSellerWidget(ctx context.Context, in *RequestBy
 	return out, nil
 }
 
+func (c *brandsClient) GetDumpingMainGraph(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SALineGraphReply, error) {
+	out := new(SALineGraphReply)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingMainGraph", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *brandsClient) GetDumpingCalender(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*DumpingCalenderRequest, error) {
+	out := new(DumpingCalenderRequest)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingCalender", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -762,6 +782,8 @@ type BrandsServer interface {
 	PARoundBySeller(context.Context, *PARequest) (*SARoundByProductsReply, error)
 	PATableBySeller(context.Context, *PARequest) (*SATableByProductsReply, error)
 	GetProductSellerWidget(context.Context, *RequestByID) (*WidgetData, error)
+	GetDumpingMainGraph(context.Context, *SARequest) (*SALineGraphReply, error)
+	GetDumpingCalender(context.Context, *SARequest) (*DumpingCalenderRequest, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -966,6 +988,12 @@ func (UnimplementedBrandsServer) PATableBySeller(context.Context, *PARequest) (*
 }
 func (UnimplementedBrandsServer) GetProductSellerWidget(context.Context, *RequestByID) (*WidgetData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductSellerWidget not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingMainGraph(context.Context, *SARequest) (*SALineGraphReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingMainGraph not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingCalender(context.Context, *SARequest) (*DumpingCalenderRequest, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingCalender not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -2168,6 +2196,42 @@ func _Brands_GetProductSellerWidget_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetDumpingMainGraph_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingMainGraph(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingMainGraph",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingMainGraph(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brands_GetDumpingCalender_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SARequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingCalender(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingCalender",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingCalender(ctx, req.(*SARequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2438,6 +2502,14 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductSellerWidget",
 			Handler:    _Brands_GetProductSellerWidget_Handler,
+		},
+		{
+			MethodName: "GetDumpingMainGraph",
+			Handler:    _Brands_GetDumpingMainGraph_Handler,
+		},
+		{
+			MethodName: "GetDumpingCalender",
+			Handler:    _Brands_GetDumpingCalender_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
