@@ -74,6 +74,37 @@ service Brands {
     rpc GetProductSellerWidget(RequestByID) returns(WidgetData) {}
     rpc GetDumpingMainGraph(SARequest) returns(SALineGraphReply) {}
     rpc GetDumpingCalender(SARequest) returns(DumpingCalenderRequest) {}
+    rpc GetDumpingCalenderDay(DumpingDayRequest) returns(DumpingDayReply) {}
+}
+
+message DumpingDayRequest {
+    Auth auth = 1;
+    string date = 2;
+    bool viewed = 3;
+    bool noviewed = 4;
+    bool noproduct = 5;
+}
+
+message DumpingDayReply {
+    repeated DumpingData data = 1;
+}
+
+message DumpingData {
+    int64 ID = 1;
+    BSeller b_seller = 2;
+    BProduct b_product = 3;
+    bool view = 4;
+    string shopCode = 5;
+    string url = 6;
+    int64 productPrice = 7;
+    int64 parsePrice = 8;
+    string update = 9;
+    Company company = 10;
+    string dumpingType = 11;
+    int64 targetMin = 12;
+    int64 targetMax = 13;
+    string screenShot = 14;
+    bool checkedMatch = 15;
 }
 
 message DumpingCalenderData {
@@ -294,23 +325,7 @@ message DumpingListRequest {
     string dumpingType = 6;
 }
 
-message DumpingData {
-    int64 ID = 1;
-    BSeller b_seller = 2;
-    BProduct b_product = 3;
-    bool view = 4;
-    string shopCode = 5;
-    string url = 6;
-    int64 productPrice = 7;
-    int64 parsePrice = 8;
-    string update = 9;
-    Company company = 10;
-    string dumpingType = 11;
-    int64 targetMin = 12;
-    int64 targetMax = 13;
-    string screenShot = 14;
-    bool checkedMatch = 15;
-}
+
 
 message DumpingList {
     repeated DumpingData list = 1;
