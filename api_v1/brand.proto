@@ -85,7 +85,7 @@ message DumpingRaitingRow {
     int32 products = 4;
     int32 orders = 5;
     int64 sum = 6;
-    bool pricer = 7;
+    int32 pricer = 7;
 }
 
 message DumpingRaiting {
