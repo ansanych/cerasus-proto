@@ -75,6 +75,21 @@ service Brands {
     rpc GetDumpingMainGraph(SARequest) returns(SALineGraphReply) {}
     rpc GetDumpingCalender(SARequest) returns(DumpingCalenderRequest) {}
     rpc GetDumpingCalenderDay(DumpingDayRequest) returns(DumpingDayReply) {}
+    rpc GetDumpingRaiting(Auth) returns(DumpingRaiting) {}
+}
+
+message DumpingRaitingRow {
+    int32 sort = 1;
+    string seller = 2;
+    float ratio = 3;
+    int32 products = 4;
+    int32 orders = 5;
+    int64 sum = 6;
+    bool pricer = 7;
+}
+
+message DumpingRaiting {
+    repeated DumpingRaitingRow data = 1;
 }
 
 message DumpingDayRequest {
@@ -324,8 +339,6 @@ message DumpingListRequest {
     int64 page = 5;
     string dumpingType = 6;
 }
-
-
 
 message DumpingList {
     repeated DumpingData list = 1;

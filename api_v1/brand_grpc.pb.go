@@ -91,6 +91,7 @@ type BrandsClient interface {
 	GetDumpingMainGraph(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*SALineGraphReply, error)
 	GetDumpingCalender(ctx context.Context, in *SARequest, opts ...grpc.CallOption) (*DumpingCalenderRequest, error)
 	GetDumpingCalenderDay(ctx context.Context, in *DumpingDayRequest, opts ...grpc.CallOption) (*DumpingDayReply, error)
+	GetDumpingRaiting(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingRaiting, error)
 }
 
 type brandsClient struct {
@@ -722,6 +723,15 @@ func (c *brandsClient) GetDumpingCalenderDay(ctx context.Context, in *DumpingDay
 	return out, nil
 }
 
+func (c *brandsClient) GetDumpingRaiting(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingRaiting, error) {
+	out := new(DumpingRaiting)
+	err := c.cc.Invoke(ctx, "/cerasus.Brands/GetDumpingRaiting", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BrandsServer is the server API for Brands service.
 // All implementations must embed UnimplementedBrandsServer
 // for forward compatibility
@@ -795,6 +805,7 @@ type BrandsServer interface {
 	GetDumpingMainGraph(context.Context, *SARequest) (*SALineGraphReply, error)
 	GetDumpingCalender(context.Context, *SARequest) (*DumpingCalenderRequest, error)
 	GetDumpingCalenderDay(context.Context, *DumpingDayRequest) (*DumpingDayReply, error)
+	GetDumpingRaiting(context.Context, *Auth) (*DumpingRaiting, error)
 	mustEmbedUnimplementedBrandsServer()
 }
 
@@ -1008,6 +1019,9 @@ func (UnimplementedBrandsServer) GetDumpingCalender(context.Context, *SARequest)
 }
 func (UnimplementedBrandsServer) GetDumpingCalenderDay(context.Context, *DumpingDayRequest) (*DumpingDayReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingCalenderDay not implemented")
+}
+func (UnimplementedBrandsServer) GetDumpingRaiting(context.Context, *Auth) (*DumpingRaiting, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingRaiting not implemented")
 }
 func (UnimplementedBrandsServer) mustEmbedUnimplementedBrandsServer() {}
 
@@ -2264,6 +2278,24 @@ func _Brands_GetDumpingCalenderDay_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brands_GetDumpingRaiting_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BrandsServer).GetDumpingRaiting(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasus.Brands/GetDumpingRaiting",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BrandsServer).GetDumpingRaiting(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brands_ServiceDesc is the grpc.ServiceDesc for Brands service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2546,6 +2578,10 @@ var Brands_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDumpingCalenderDay",
 			Handler:    _Brands_GetDumpingCalenderDay_Handler,
+		},
+		{
+			MethodName: "GetDumpingRaiting",
+			Handler:    _Brands_GetDumpingRaiting_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
