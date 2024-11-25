@@ -15,8 +15,9 @@ message Log {
     string resource = 2;
     string uuid = 3;
     string datetime = 4;
-    string level = 5;
-    string message = 6;
-    int64 userID = 7;
-    int64 companyID = 8;
+    int64 duration = 5;
+    string level = 6;
+    string message = 7;
+    int64 userID = 8;
+    int64 companyID = 9;
 }
