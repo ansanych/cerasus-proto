@@ -26,7 +26,6 @@ type AuthentyClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
-	SystemAccess(ctx context.Context, in *SystemAccessRequest, opts ...grpc.CallOption) (*Auth, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 }
 
@@ -74,15 +73,6 @@ func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opt
 	return out, nil
 }
 
-func (c *authentyClient) SystemAccess(ctx context.Context, in *SystemAccessRequest, opts ...grpc.CallOption) (*Auth, error) {
-	out := new(Auth)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/SystemAccess", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *authentyClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Ping", in, out, opts...)
@@ -100,7 +90,6 @@ type AuthentyServer interface {
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
 	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
-	SystemAccess(context.Context, *SystemAccessRequest) (*Auth, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
@@ -120,9 +109,6 @@ func (UnimplementedAuthentyServer) Refresh(context.Context, *RefreshRequest) (*L
 }
 func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAccess not implemented")
-}
-func (UnimplementedAuthentyServer) SystemAccess(context.Context, *SystemAccessRequest) (*Auth, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SystemAccess not implemented")
 }
 func (UnimplementedAuthentyServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
@@ -212,24 +198,6 @@ func _Authenty_CheckAccess_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Authenty_SystemAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SystemAccessRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthentyServer).SystemAccess(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasus.Authenty/SystemAccess",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthentyServer).SystemAccess(ctx, req.(*SystemAccessRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Authenty_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PingRequest)
 	if err := dec(in); err != nil {
@@ -270,10 +238,6 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAccess",
 			Handler:    _Authenty_CheckAccess_Handler,
-		},
-		{
-			MethodName: "SystemAccess",
-			Handler:    _Authenty_SystemAccess_Handler,
 		},
 		{
 			MethodName: "Ping",

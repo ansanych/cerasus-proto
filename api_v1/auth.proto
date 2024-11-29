@@ -10,7 +10,6 @@ service Authenty {
     rpc Login (LoginRequest) returns (LoginReply) {}
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
     rpc CheckAccess (AccessRequest) returns (Auth) {}
-    rpc SystemAccess (SystemAccessRequest) returns (Auth) {}
     rpc Ping (PingRequest) returns (PingReply) {}
 }
 
