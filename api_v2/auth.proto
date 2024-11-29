@@ -1,0 +1,44 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasus_2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Authenty {
+    rpc Register (RegisterRequest) returns (StatusReply) {}
+    rpc Login (LoginRequest) returns (StatusReply) {}
+    rpc Refresh (RefreshRequest) returns (StatusReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
+}
+
+message RegisterRequest {
+    string company = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    string password = 5;
+}
+
+message LoginRequest {
+    string email = 1;
+    string phone = 2;
+    string password = 3;
+    bool brand = 4;
+}
+
+message LoginReply {
+    User user = 1;
+    string accessToken = 2;
+    string refreshToken = 3;
+}
+
+message RefreshRequest {
+    string token = 1;
+    bool brand = 2;
+}
+
+message AccessRequest {
+    string token = 1;
+    bool brand = 2;
+}
