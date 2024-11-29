@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthentyClient interface {
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*BoolReply, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
@@ -38,8 +38,8 @@ func NewAuthentyClient(cc grpc.ClientConnInterface) AuthentyClient {
 	return &authentyClient{cc}
 }
 
-func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*BoolReply, error) {
-	out := new(BoolReply)
+func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (c *authentyClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
 type AuthentyServer interface {
-	Register(context.Context, *RegisterRequest) (*BoolReply, error)
+	Register(context.Context, *RegisterRequest) (*StatusReply, error)
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
 	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
@@ -109,7 +109,7 @@ type AuthentyServer interface {
 type UnimplementedAuthentyServer struct {
 }
 
-func (UnimplementedAuthentyServer) Register(context.Context, *RegisterRequest) (*BoolReply, error) {
+func (UnimplementedAuthentyServer) Register(context.Context, *RegisterRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthentyServer) Login(context.Context, *LoginRequest) (*LoginReply, error) {
