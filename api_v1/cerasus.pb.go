@@ -20,6 +20,57 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// NEW
+type Status int32
+
+const (
+	Status_UNKNOWN Status = 0
+	Status_OK      Status = 1
+	Status_ERROR   Status = 2
+)
+
+// Enum value maps for Status.
+var (
+	Status_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "OK",
+		2: "ERROR",
+	}
+	Status_value = map[string]int32{
+		"UNKNOWN": 0,
+		"OK":      1,
+		"ERROR":   2,
+	}
+)
+
+func (x Status) Enum() *Status {
+	p := new(Status)
+	*p = x
+	return p
+}
+
+func (x Status) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Status) Descriptor() protoreflect.EnumDescriptor {
+	return file_cerasus_proto_enumTypes[0].Descriptor()
+}
+
+func (Status) Type() protoreflect.EnumType {
+	return &file_cerasus_proto_enumTypes[0]
+}
+
+func (x Status) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Status.Descriptor instead.
+func (Status) EnumDescriptor() ([]byte, []int) {
+	return file_cerasus_proto_rawDescGZIP(), []int{0}
+}
+
+// GOOD
 type Role struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -328,6 +379,7 @@ func (x *Company) GetBrand() bool {
 	return false
 }
 
+// BAD
 type BoolReply struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4694,10 +4746,12 @@ var file_cerasus_proto_rawDesc = []byte{
 	0x64, 0x67, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x18,
 	0x0a, 0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52,
-	0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f,
-	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x07, 0x70, 0x65, 0x72, 0x63, 0x65, 0x6e, 0x74, 0x2a, 0x28, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12,
+	0x06, 0x0a, 0x02, 0x4f, 0x4b, 0x10, 0x01, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x52, 0x52, 0x4f, 0x52,
+	0x10, 0x02, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4712,115 +4766,117 @@ func file_cerasus_proto_rawDescGZIP() []byte {
 	return file_cerasus_proto_rawDescData
 }
 
+var file_cerasus_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_cerasus_proto_msgTypes = make([]protoimpl.MessageInfo, 64)
 var file_cerasus_proto_goTypes = []interface{}{
-	(*Role)(nil),                     // 0: cerasus.Role
-	(*User)(nil),                     // 1: cerasus.User
-	(*Auth)(nil),                     // 2: cerasus.Auth
-	(*Company)(nil),                  // 3: cerasus.Company
-	(*BoolReply)(nil),                // 4: cerasus.BoolReply
-	(*CountReply)(nil),               // 5: cerasus.CountReply
-	(*Pagination)(nil),               // 6: cerasus.Pagination
-	(*ShopProductLinks)(nil),         // 7: cerasus.ShopProductLinks
-	(*Brand)(nil),                    // 8: cerasus.Brand
-	(*Product)(nil),                  // 9: cerasus.Product
-	(*ShopProductRequest)(nil),       // 10: cerasus.ShopProductRequest
-	(*ShopProduct)(nil),              // 11: cerasus.ShopProduct
-	(*Filter)(nil),                   // 12: cerasus.Filter
-	(*Sorting)(nil),                  // 13: cerasus.Sorting
-	(*ShopProductListRequest)(nil),   // 14: cerasus.ShopProductListRequest
-	(*ShopProductListReply)(nil),     // 15: cerasus.ShopProductListReply
-	(*DaySales)(nil),                 // 16: cerasus.DaySales
-	(*DaysSalesReply)(nil),           // 17: cerasus.DaysSalesReply
-	(*InsertReply)(nil),              // 18: cerasus.InsertReply
-	(*DeleteRequest)(nil),            // 19: cerasus.DeleteRequest
-	(*SearchRequest)(nil),            // 20: cerasus.SearchRequest
-	(*SalesRequest)(nil),             // 21: cerasus.SalesRequest
-	(*Sale)(nil),                     // 22: cerasus.Sale
-	(*SalesReply)(nil),               // 23: cerasus.SalesReply
-	(*SaleLinkData)(nil),             // 24: cerasus.SaleLinkData
-	(*SaleDetailsReply)(nil),         // 25: cerasus.SaleDetailsReply
-	(*SaleDetailsRequest)(nil),       // 26: cerasus.SaleDetailsRequest
-	(*ProductSalesRequest)(nil),      // 27: cerasus.ProductSalesRequest
-	(*ShopService)(nil),              // 28: cerasus.ShopService
-	(*ShopServiceRequest)(nil),       // 29: cerasus.ShopServiceRequest
-	(*ShopServiceReply)(nil),         // 30: cerasus.ShopServiceReply
-	(*MainGraphicRequest)(nil),       // 31: cerasus.MainGraphicRequest
-	(*MainGraphicShop)(nil),          // 32: cerasus.MainGraphicShop
-	(*MainGraphicType)(nil),          // 33: cerasus.MainGraphicType
-	(*MainGraphicReply)(nil),         // 34: cerasus.MainGraphicReply
-	(*ImageRequest)(nil),             // 35: cerasus.ImageRequest
-	(*ImageReply)(nil),               // 36: cerasus.ImageReply
-	(*CompanyShopData)(nil),          // 37: cerasus.CompanyShopData
-	(*DonutGraphicData)(nil),         // 38: cerasus.DonutGraphicData
-	(*DonutGraphic)(nil),             // 39: cerasus.DonutGraphic
-	(*DonutGraphics)(nil),            // 40: cerasus.DonutGraphics
-	(*WeekGraphicData)(nil),          // 41: cerasus.WeekGraphicData
-	(*WeekGraphics)(nil),             // 42: cerasus.WeekGraphics
-	(*ShopProductUpdateRequest)(nil), // 43: cerasus.ShopProductUpdateRequest
-	(*PingRequest)(nil),              // 44: cerasus.PingRequest
-	(*PingReply)(nil),                // 45: cerasus.PingReply
-	(*BProductPrice)(nil),            // 46: cerasus.BProductPrice
-	(*CompanyesListRequest)(nil),     // 47: cerasus.CompanyesListRequest
-	(*CompanyesListReply)(nil),       // 48: cerasus.CompanyesListReply
-	(*IDRequest)(nil),                // 49: cerasus.IDRequest
-	(*ProductShopUrls)(nil),          // 50: cerasus.ProductShopUrls
-	(*RequestByID)(nil),              // 51: cerasus.RequestByID
-	(*GetPricerItemRequest)(nil),     // 52: cerasus.GetPricerItemRequest
-	(*GetPricerItemReply)(nil),       // 53: cerasus.GetPricerItemReply
-	(*SetPricerItemRequest)(nil),     // 54: cerasus.SetPricerItemRequest
-	(*ForBrandSale)(nil),             // 55: cerasus.ForBrandSale
-	(*ForBrandSalesReply)(nil),       // 56: cerasus.ForBrandSalesReply
-	(*ForBrandSalesRequest)(nil),     // 57: cerasus.ForBrandSalesRequest
-	(*GeoPlace)(nil),                 // 58: cerasus.GeoPlace
-	(*GeoPlaceData)(nil),             // 59: cerasus.GeoPlaceData
-	(*ForBrandOrdersRequest)(nil),    // 60: cerasus.ForBrandOrdersRequest
-	(*ForBrandOrder)(nil),            // 61: cerasus.ForBrandOrder
-	(*ForBrandOrdersReply)(nil),      // 62: cerasus.ForBrandOrdersReply
-	(*WidgetData)(nil),               // 63: cerasus.WidgetData
+	(Status)(0),                      // 0: cerasus.Status
+	(*Role)(nil),                     // 1: cerasus.Role
+	(*User)(nil),                     // 2: cerasus.User
+	(*Auth)(nil),                     // 3: cerasus.Auth
+	(*Company)(nil),                  // 4: cerasus.Company
+	(*BoolReply)(nil),                // 5: cerasus.BoolReply
+	(*CountReply)(nil),               // 6: cerasus.CountReply
+	(*Pagination)(nil),               // 7: cerasus.Pagination
+	(*ShopProductLinks)(nil),         // 8: cerasus.ShopProductLinks
+	(*Brand)(nil),                    // 9: cerasus.Brand
+	(*Product)(nil),                  // 10: cerasus.Product
+	(*ShopProductRequest)(nil),       // 11: cerasus.ShopProductRequest
+	(*ShopProduct)(nil),              // 12: cerasus.ShopProduct
+	(*Filter)(nil),                   // 13: cerasus.Filter
+	(*Sorting)(nil),                  // 14: cerasus.Sorting
+	(*ShopProductListRequest)(nil),   // 15: cerasus.ShopProductListRequest
+	(*ShopProductListReply)(nil),     // 16: cerasus.ShopProductListReply
+	(*DaySales)(nil),                 // 17: cerasus.DaySales
+	(*DaysSalesReply)(nil),           // 18: cerasus.DaysSalesReply
+	(*InsertReply)(nil),              // 19: cerasus.InsertReply
+	(*DeleteRequest)(nil),            // 20: cerasus.DeleteRequest
+	(*SearchRequest)(nil),            // 21: cerasus.SearchRequest
+	(*SalesRequest)(nil),             // 22: cerasus.SalesRequest
+	(*Sale)(nil),                     // 23: cerasus.Sale
+	(*SalesReply)(nil),               // 24: cerasus.SalesReply
+	(*SaleLinkData)(nil),             // 25: cerasus.SaleLinkData
+	(*SaleDetailsReply)(nil),         // 26: cerasus.SaleDetailsReply
+	(*SaleDetailsRequest)(nil),       // 27: cerasus.SaleDetailsRequest
+	(*ProductSalesRequest)(nil),      // 28: cerasus.ProductSalesRequest
+	(*ShopService)(nil),              // 29: cerasus.ShopService
+	(*ShopServiceRequest)(nil),       // 30: cerasus.ShopServiceRequest
+	(*ShopServiceReply)(nil),         // 31: cerasus.ShopServiceReply
+	(*MainGraphicRequest)(nil),       // 32: cerasus.MainGraphicRequest
+	(*MainGraphicShop)(nil),          // 33: cerasus.MainGraphicShop
+	(*MainGraphicType)(nil),          // 34: cerasus.MainGraphicType
+	(*MainGraphicReply)(nil),         // 35: cerasus.MainGraphicReply
+	(*ImageRequest)(nil),             // 36: cerasus.ImageRequest
+	(*ImageReply)(nil),               // 37: cerasus.ImageReply
+	(*CompanyShopData)(nil),          // 38: cerasus.CompanyShopData
+	(*DonutGraphicData)(nil),         // 39: cerasus.DonutGraphicData
+	(*DonutGraphic)(nil),             // 40: cerasus.DonutGraphic
+	(*DonutGraphics)(nil),            // 41: cerasus.DonutGraphics
+	(*WeekGraphicData)(nil),          // 42: cerasus.WeekGraphicData
+	(*WeekGraphics)(nil),             // 43: cerasus.WeekGraphics
+	(*ShopProductUpdateRequest)(nil), // 44: cerasus.ShopProductUpdateRequest
+	(*PingRequest)(nil),              // 45: cerasus.PingRequest
+	(*PingReply)(nil),                // 46: cerasus.PingReply
+	(*BProductPrice)(nil),            // 47: cerasus.BProductPrice
+	(*CompanyesListRequest)(nil),     // 48: cerasus.CompanyesListRequest
+	(*CompanyesListReply)(nil),       // 49: cerasus.CompanyesListReply
+	(*IDRequest)(nil),                // 50: cerasus.IDRequest
+	(*ProductShopUrls)(nil),          // 51: cerasus.ProductShopUrls
+	(*RequestByID)(nil),              // 52: cerasus.RequestByID
+	(*GetPricerItemRequest)(nil),     // 53: cerasus.GetPricerItemRequest
+	(*GetPricerItemReply)(nil),       // 54: cerasus.GetPricerItemReply
+	(*SetPricerItemRequest)(nil),     // 55: cerasus.SetPricerItemRequest
+	(*ForBrandSale)(nil),             // 56: cerasus.ForBrandSale
+	(*ForBrandSalesReply)(nil),       // 57: cerasus.ForBrandSalesReply
+	(*ForBrandSalesRequest)(nil),     // 58: cerasus.ForBrandSalesRequest
+	(*GeoPlace)(nil),                 // 59: cerasus.GeoPlace
+	(*GeoPlaceData)(nil),             // 60: cerasus.GeoPlaceData
+	(*ForBrandOrdersRequest)(nil),    // 61: cerasus.ForBrandOrdersRequest
+	(*ForBrandOrder)(nil),            // 62: cerasus.ForBrandOrder
+	(*ForBrandOrdersReply)(nil),      // 63: cerasus.ForBrandOrdersReply
+	(*WidgetData)(nil),               // 64: cerasus.WidgetData
 }
 var file_cerasus_proto_depIdxs = []int32{
-	3,  // 0: cerasus.User.company:type_name -> cerasus.Company
-	0,  // 1: cerasus.User.roles:type_name -> cerasus.Role
-	0,  // 2: cerasus.Auth.roles:type_name -> cerasus.Role
-	7,  // 3: cerasus.Product.shopProductLinks:type_name -> cerasus.ShopProductLinks
-	2,  // 4: cerasus.ShopProductRequest.auth:type_name -> cerasus.Auth
-	2,  // 5: cerasus.ShopProductListRequest.auth:type_name -> cerasus.Auth
-	12, // 6: cerasus.ShopProductListRequest.filters:type_name -> cerasus.Filter
-	13, // 7: cerasus.ShopProductListRequest.sort:type_name -> cerasus.Sorting
-	11, // 8: cerasus.ShopProductListReply.products:type_name -> cerasus.ShopProduct
-	6,  // 9: cerasus.ShopProductListReply.pagination:type_name -> cerasus.Pagination
-	16, // 10: cerasus.DaysSalesReply.sales:type_name -> cerasus.DaySales
-	2,  // 11: cerasus.DeleteRequest.auth:type_name -> cerasus.Auth
-	2,  // 12: cerasus.SearchRequest.auth:type_name -> cerasus.Auth
-	2,  // 13: cerasus.SalesRequest.auth:type_name -> cerasus.Auth
-	12, // 14: cerasus.SalesRequest.filters:type_name -> cerasus.Filter
-	13, // 15: cerasus.SalesRequest.sort:type_name -> cerasus.Sorting
-	11, // 16: cerasus.Sale.item:type_name -> cerasus.ShopProduct
-	22, // 17: cerasus.SalesReply.sales:type_name -> cerasus.Sale
-	22, // 18: cerasus.SaleDetailsReply.sale:type_name -> cerasus.Sale
-	24, // 19: cerasus.SaleDetailsReply.details:type_name -> cerasus.SaleLinkData
-	2,  // 20: cerasus.SaleDetailsRequest.auth:type_name -> cerasus.Auth
-	2,  // 21: cerasus.ProductSalesRequest.auth:type_name -> cerasus.Auth
-	12, // 22: cerasus.ProductSalesRequest.filters:type_name -> cerasus.Filter
-	13, // 23: cerasus.ProductSalesRequest.sort:type_name -> cerasus.Sorting
-	2,  // 24: cerasus.ShopServiceRequest.auth:type_name -> cerasus.Auth
-	28, // 25: cerasus.ShopServiceReply.services:type_name -> cerasus.ShopService
-	2,  // 26: cerasus.MainGraphicRequest.auth:type_name -> cerasus.Auth
-	32, // 27: cerasus.MainGraphicReply.shops:type_name -> cerasus.MainGraphicShop
-	33, // 28: cerasus.MainGraphicReply.data:type_name -> cerasus.MainGraphicType
-	38, // 29: cerasus.DonutGraphic.data:type_name -> cerasus.DonutGraphicData
-	39, // 30: cerasus.DonutGraphics.data:type_name -> cerasus.DonutGraphic
-	41, // 31: cerasus.WeekGraphics.data:type_name -> cerasus.WeekGraphicData
-	2,  // 32: cerasus.ShopProductUpdateRequest.auth:type_name -> cerasus.Auth
-	3,  // 33: cerasus.CompanyesListReply.companies:type_name -> cerasus.Company
-	2,  // 34: cerasus.RequestByID.auth:type_name -> cerasus.Auth
-	55, // 35: cerasus.ForBrandSalesReply.sales:type_name -> cerasus.ForBrandSale
-	58, // 36: cerasus.GeoPlaceData.country:type_name -> cerasus.GeoPlace
-	58, // 37: cerasus.GeoPlaceData.region:type_name -> cerasus.GeoPlace
-	58, // 38: cerasus.GeoPlaceData.city:type_name -> cerasus.GeoPlace
-	59, // 39: cerasus.ForBrandOrder.geo:type_name -> cerasus.GeoPlaceData
-	61, // 40: cerasus.ForBrandOrdersReply.orders:type_name -> cerasus.ForBrandOrder
+	4,  // 0: cerasus.User.company:type_name -> cerasus.Company
+	1,  // 1: cerasus.User.roles:type_name -> cerasus.Role
+	1,  // 2: cerasus.Auth.roles:type_name -> cerasus.Role
+	8,  // 3: cerasus.Product.shopProductLinks:type_name -> cerasus.ShopProductLinks
+	3,  // 4: cerasus.ShopProductRequest.auth:type_name -> cerasus.Auth
+	3,  // 5: cerasus.ShopProductListRequest.auth:type_name -> cerasus.Auth
+	13, // 6: cerasus.ShopProductListRequest.filters:type_name -> cerasus.Filter
+	14, // 7: cerasus.ShopProductListRequest.sort:type_name -> cerasus.Sorting
+	12, // 8: cerasus.ShopProductListReply.products:type_name -> cerasus.ShopProduct
+	7,  // 9: cerasus.ShopProductListReply.pagination:type_name -> cerasus.Pagination
+	17, // 10: cerasus.DaysSalesReply.sales:type_name -> cerasus.DaySales
+	3,  // 11: cerasus.DeleteRequest.auth:type_name -> cerasus.Auth
+	3,  // 12: cerasus.SearchRequest.auth:type_name -> cerasus.Auth
+	3,  // 13: cerasus.SalesRequest.auth:type_name -> cerasus.Auth
+	13, // 14: cerasus.SalesRequest.filters:type_name -> cerasus.Filter
+	14, // 15: cerasus.SalesRequest.sort:type_name -> cerasus.Sorting
+	12, // 16: cerasus.Sale.item:type_name -> cerasus.ShopProduct
+	23, // 17: cerasus.SalesReply.sales:type_name -> cerasus.Sale
+	23, // 18: cerasus.SaleDetailsReply.sale:type_name -> cerasus.Sale
+	25, // 19: cerasus.SaleDetailsReply.details:type_name -> cerasus.SaleLinkData
+	3,  // 20: cerasus.SaleDetailsRequest.auth:type_name -> cerasus.Auth
+	3,  // 21: cerasus.ProductSalesRequest.auth:type_name -> cerasus.Auth
+	13, // 22: cerasus.ProductSalesRequest.filters:type_name -> cerasus.Filter
+	14, // 23: cerasus.ProductSalesRequest.sort:type_name -> cerasus.Sorting
+	3,  // 24: cerasus.ShopServiceRequest.auth:type_name -> cerasus.Auth
+	29, // 25: cerasus.ShopServiceReply.services:type_name -> cerasus.ShopService
+	3,  // 26: cerasus.MainGraphicRequest.auth:type_name -> cerasus.Auth
+	33, // 27: cerasus.MainGraphicReply.shops:type_name -> cerasus.MainGraphicShop
+	34, // 28: cerasus.MainGraphicReply.data:type_name -> cerasus.MainGraphicType
+	39, // 29: cerasus.DonutGraphic.data:type_name -> cerasus.DonutGraphicData
+	40, // 30: cerasus.DonutGraphics.data:type_name -> cerasus.DonutGraphic
+	42, // 31: cerasus.WeekGraphics.data:type_name -> cerasus.WeekGraphicData
+	3,  // 32: cerasus.ShopProductUpdateRequest.auth:type_name -> cerasus.Auth
+	4,  // 33: cerasus.CompanyesListReply.companies:type_name -> cerasus.Company
+	3,  // 34: cerasus.RequestByID.auth:type_name -> cerasus.Auth
+	56, // 35: cerasus.ForBrandSalesReply.sales:type_name -> cerasus.ForBrandSale
+	59, // 36: cerasus.GeoPlaceData.country:type_name -> cerasus.GeoPlace
+	59, // 37: cerasus.GeoPlaceData.region:type_name -> cerasus.GeoPlace
+	59, // 38: cerasus.GeoPlaceData.city:type_name -> cerasus.GeoPlace
+	60, // 39: cerasus.ForBrandOrder.geo:type_name -> cerasus.GeoPlaceData
+	62, // 40: cerasus.ForBrandOrdersReply.orders:type_name -> cerasus.ForBrandOrder
 	41, // [41:41] is the sub-list for method output_type
 	41, // [41:41] is the sub-list for method input_type
 	41, // [41:41] is the sub-list for extension type_name
@@ -5608,13 +5664,14 @@ func file_cerasus_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   64,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_cerasus_proto_goTypes,
 		DependencyIndexes: file_cerasus_proto_depIdxs,
+		EnumInfos:         file_cerasus_proto_enumTypes,
 		MessageInfos:      file_cerasus_proto_msgTypes,
 	}.Build()
 	File_cerasus_proto = out.File

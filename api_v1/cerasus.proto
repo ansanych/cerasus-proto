@@ -4,6 +4,15 @@ package cerasus;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
+//NEW
+enum Status {
+    UNKNOWN = 0;
+    OK = 1;
+    ERROR = 2;
+}
+
+
+// GOOD
 message Role {
     int64 ID = 1;
     string title = 2;
@@ -35,6 +44,8 @@ message Company {
     bool brand = 3;
 }
 
+
+//BAD
 message BoolReply {
     bool status = 1;
 }
