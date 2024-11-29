@@ -23,13 +23,13 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProfileClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
-	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*BoolReply, error)
-	GetRoles(ctx context.Context, in *RolesRequest, opts ...grpc.CallOption) (*RolesReply, error)
-	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*BoolReply, error)
-	UpdateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*BoolReply, error)
-	GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error)
-	GetCompanyUsers(ctx context.Context, in *UsersRequest, opts ...grpc.CallOption) (*UsersReply, error)
-	GetCompaniesList(ctx context.Context, in *CompanyesListRequest, opts ...grpc.CallOption) (*CompanyesListReply, error)
+	UpdateCompany(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetRoles(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Roles, error)
+	CreateUser(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateUser(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetUser(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*User, error)
+	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error)
+	GetCompaniesList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*CompanyesList, error)
 }
 
 type profileClient struct {
@@ -49,8 +49,8 @@ func (c *profileClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *profileClient) UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*BoolReply, error) {
-	out := new(BoolReply)
+func (c *profileClient) UpdateCompany(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/UpdateCompany", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -58,8 +58,8 @@ func (c *profileClient) UpdateCompany(ctx context.Context, in *UpdateCompanyRequ
 	return out, nil
 }
 
-func (c *profileClient) GetRoles(ctx context.Context, in *RolesRequest, opts ...grpc.CallOption) (*RolesReply, error) {
-	out := new(RolesReply)
+func (c *profileClient) GetRoles(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Roles, error) {
+	out := new(Roles)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/GetRoles", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,8 +67,8 @@ func (c *profileClient) GetRoles(ctx context.Context, in *RolesRequest, opts ...
 	return out, nil
 }
 
-func (c *profileClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*BoolReply, error) {
-	out := new(BoolReply)
+func (c *profileClient) CreateUser(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,8 +76,8 @@ func (c *profileClient) CreateUser(ctx context.Context, in *CreateUserRequest, o
 	return out, nil
 }
 
-func (c *profileClient) UpdateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*BoolReply, error) {
-	out := new(BoolReply)
+func (c *profileClient) UpdateUser(ctx context.Context, in *SetProfileRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func (c *profileClient) UpdateUser(ctx context.Context, in *CreateUserRequest, o
 	return out, nil
 }
 
-func (c *profileClient) GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*User, error) {
+func (c *profileClient) GetUser(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/GetUser", in, out, opts...)
 	if err != nil {
@@ -94,8 +94,8 @@ func (c *profileClient) GetUser(ctx context.Context, in *UserRequest, opts ...gr
 	return out, nil
 }
 
-func (c *profileClient) GetCompanyUsers(ctx context.Context, in *UsersRequest, opts ...grpc.CallOption) (*UsersReply, error) {
-	out := new(UsersReply)
+func (c *profileClient) GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error) {
+	out := new(Users)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/GetCompanyUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -103,8 +103,8 @@ func (c *profileClient) GetCompanyUsers(ctx context.Context, in *UsersRequest, o
 	return out, nil
 }
 
-func (c *profileClient) GetCompaniesList(ctx context.Context, in *CompanyesListRequest, opts ...grpc.CallOption) (*CompanyesListReply, error) {
-	out := new(CompanyesListReply)
+func (c *profileClient) GetCompaniesList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*CompanyesList, error) {
+	out := new(CompanyesList)
 	err := c.cc.Invoke(ctx, "/cerasus.Profile/GetCompaniesList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -117,13 +117,13 @@ func (c *profileClient) GetCompaniesList(ctx context.Context, in *CompanyesListR
 // for forward compatibility
 type ProfileServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
-	UpdateCompany(context.Context, *UpdateCompanyRequest) (*BoolReply, error)
-	GetRoles(context.Context, *RolesRequest) (*RolesReply, error)
-	CreateUser(context.Context, *CreateUserRequest) (*BoolReply, error)
-	UpdateUser(context.Context, *CreateUserRequest) (*BoolReply, error)
-	GetUser(context.Context, *UserRequest) (*User, error)
-	GetCompanyUsers(context.Context, *UsersRequest) (*UsersReply, error)
-	GetCompaniesList(context.Context, *CompanyesListRequest) (*CompanyesListReply, error)
+	UpdateCompany(context.Context, *SetProfileRequest) (*StatusReply, error)
+	GetRoles(context.Context, *Auth) (*Roles, error)
+	CreateUser(context.Context, *SetProfileRequest) (*StatusReply, error)
+	UpdateUser(context.Context, *SetProfileRequest) (*StatusReply, error)
+	GetUser(context.Context, *RequestByID) (*User, error)
+	GetCompanyUsers(context.Context, *Auth) (*Users, error)
+	GetCompaniesList(context.Context, *RequestByIDs) (*CompanyesList, error)
 	mustEmbedUnimplementedProfileServer()
 }
 
@@ -134,25 +134,25 @@ type UnimplementedProfileServer struct {
 func (UnimplementedProfileServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedProfileServer) UpdateCompany(context.Context, *UpdateCompanyRequest) (*BoolReply, error) {
+func (UnimplementedProfileServer) UpdateCompany(context.Context, *SetProfileRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
 }
-func (UnimplementedProfileServer) GetRoles(context.Context, *RolesRequest) (*RolesReply, error) {
+func (UnimplementedProfileServer) GetRoles(context.Context, *Auth) (*Roles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoles not implemented")
 }
-func (UnimplementedProfileServer) CreateUser(context.Context, *CreateUserRequest) (*BoolReply, error) {
+func (UnimplementedProfileServer) CreateUser(context.Context, *SetProfileRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
-func (UnimplementedProfileServer) UpdateUser(context.Context, *CreateUserRequest) (*BoolReply, error) {
+func (UnimplementedProfileServer) UpdateUser(context.Context, *SetProfileRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedProfileServer) GetUser(context.Context, *UserRequest) (*User, error) {
+func (UnimplementedProfileServer) GetUser(context.Context, *RequestByID) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedProfileServer) GetCompanyUsers(context.Context, *UsersRequest) (*UsersReply, error) {
+func (UnimplementedProfileServer) GetCompanyUsers(context.Context, *Auth) (*Users, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyUsers not implemented")
 }
-func (UnimplementedProfileServer) GetCompaniesList(context.Context, *CompanyesListRequest) (*CompanyesListReply, error) {
+func (UnimplementedProfileServer) GetCompaniesList(context.Context, *RequestByIDs) (*CompanyesList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesList not implemented")
 }
 func (UnimplementedProfileServer) mustEmbedUnimplementedProfileServer() {}
@@ -187,7 +187,7 @@ func _Profile_Ping_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 func _Profile_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateCompanyRequest)
+	in := new(SetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -199,13 +199,13 @@ func _Profile_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/cerasus.Profile/UpdateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).UpdateCompany(ctx, req.(*UpdateCompanyRequest))
+		return srv.(ProfileServer).UpdateCompany(ctx, req.(*SetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_GetRoles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RolesRequest)
+	in := new(Auth)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -217,13 +217,13 @@ func _Profile_GetRoles_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/cerasus.Profile/GetRoles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).GetRoles(ctx, req.(*RolesRequest))
+		return srv.(ProfileServer).GetRoles(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserRequest)
+	in := new(SetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -235,13 +235,13 @@ func _Profile_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/cerasus.Profile/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).CreateUser(ctx, req.(*CreateUserRequest))
+		return srv.(ProfileServer).CreateUser(ctx, req.(*SetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserRequest)
+	in := new(SetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -253,13 +253,13 @@ func _Profile_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/cerasus.Profile/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).UpdateUser(ctx, req.(*CreateUserRequest))
+		return srv.(ProfileServer).UpdateUser(ctx, req.(*SetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserRequest)
+	in := new(RequestByID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -271,13 +271,13 @@ func _Profile_GetUser_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/cerasus.Profile/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).GetUser(ctx, req.(*UserRequest))
+		return srv.(ProfileServer).GetUser(ctx, req.(*RequestByID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_GetCompanyUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UsersRequest)
+	in := new(Auth)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -289,13 +289,13 @@ func _Profile_GetCompanyUsers_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/cerasus.Profile/GetCompanyUsers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).GetCompanyUsers(ctx, req.(*UsersRequest))
+		return srv.(ProfileServer).GetCompanyUsers(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Profile_GetCompaniesList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompanyesListRequest)
+	in := new(RequestByIDs)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -307,7 +307,7 @@ func _Profile_GetCompaniesList_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/cerasus.Profile/GetCompaniesList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServer).GetCompaniesList(ctx, req.(*CompanyesListRequest))
+		return srv.(ProfileServer).GetCompaniesList(ctx, req.(*RequestByIDs))
 	}
 	return interceptor(ctx, in, info, handler)
 }

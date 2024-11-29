@@ -15,11 +15,33 @@ message StatusReply {
     Status status = 1;
 }
 
+message Roles {
+    repeated Role roles = 1;
+}
+
+message Users {
+    repeated User users = 1;
+}
+
+message RequestByIDs {
+    Auth auth = 1;
+    repeated int64 ID = 2;
+}
+
+message CompanyesList {
+    repeated Company companies = 1;
+}
+
 // GOOD
 message Role {
     int64 ID = 1;
     string title = 2;
     string code = 3;
+}
+
+message RequestByID {
+    Auth auth = 1;
+    int64 ID = 2;
 }
 
 message User {
@@ -343,10 +365,6 @@ message ProductShopUrls {
     repeated string urls = 2;
 }
 
-message RequestByID {
-    Auth auth = 1;
-    int64 ID = 2;
-}
 
 message GetPricerItemRequest {
     string shopCode = 1;

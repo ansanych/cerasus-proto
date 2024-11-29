@@ -7,30 +7,16 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Profile {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc UpdateCompany (UpdateCompanyRequest) returns (BoolReply) {}
-    rpc GetRoles (RolesRequest) returns (RolesReply) {}
-    rpc CreateUser (CreateUserRequest) returns (BoolReply) {}
-    rpc UpdateUser (CreateUserRequest) returns (BoolReply) {}
-    rpc GetUser (UserRequest) returns (User) {}
-    rpc GetCompanyUsers (UsersRequest) returns (UsersReply) {}
-    rpc GetCompaniesList (CompanyesListRequest) returns (CompanyesListReply) {}
+    rpc UpdateCompany (SetProfileRequest) returns (StatusReply) {}
+    rpc GetRoles (Auth) returns (Roles) {}
+    rpc CreateUser (SetProfileRequest) returns (StatusReply) {}
+    rpc UpdateUser (SetProfileRequest) returns (StatusReply) {}
+    rpc GetUser (RequestByID) returns (User) {}
+    rpc GetCompanyUsers (Auth) returns (Users) {}
+    rpc GetCompaniesList (RequestByIDs) returns (CompanyesList) {}
 }
 
-message UpdateCompanyRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-    string name = 3;
-}
-
-message RolesRequest {
-    Auth auth = 1;
-}
-
-message RolesReply {
-    repeated Role roles = 1;
-}
-
-message CreateUserRequest {
+message SetProfileRequest {
     Auth auth = 1;
     string name = 2;
     string email = 3;
@@ -39,17 +25,4 @@ message CreateUserRequest {
     repeated int64 roles = 6;
     int64 ID = 7;
     bool active = 8;
-}
-
-message UserRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-}
-
-message UsersRequest {
-    Auth auth = 1;
-}
-
-message UsersReply {
-    repeated User user = 1;
 }
