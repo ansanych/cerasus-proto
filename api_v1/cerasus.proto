@@ -11,6 +11,9 @@ enum Status {
     ERROR = 2;
 }
 
+message StatusReply {
+    Status status = 1;
+}
 
 // GOOD
 message Role {
