@@ -6,42 +6,74 @@ package cerasus;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service Products {
-    rpc Ping (PingRequest) returns (PingReply) {}
-    rpc GetProducts (ProductsRequest) returns (ProductsReply) {}
-    rpc GetProduct (RequestByID) returns (Product) {}
-    rpc CreateFromShop (ProductLink) returns (StatusReply) {}
-    rpc LinkToShop (ProductLink) returns (StatusReply) {}
-    rpc UnlinkToShop (ProductLink) returns (StatusReply) {}
-    rpc UpdateProduct (UpdateProductRequest) returns (StatusReply) {}
-    rpc SetProductBrand (SetProductBrandRequest) returns (StatusReply) {}
-    rpc RemoveProductBrand (SetProductBrandRequest) returns (StatusReply) {}
-    rpc SetProductPurchase (SetProductPurchaseRequest) returns (StatusReply) {}
-    rpc GetProductPurchase (RequestByID) returns (ProductPurchase) {}
-    rpc GetProductPurchases (RequestByID) returns (PurchasesReply) {}
-    rpc RemoveProductPurchase (RequestByID) returns (StatusReply) {}
+    rpc GetProducts (ProductListRequest) returns (ProductsReply) {}
+    rpc GetProduct (ProductRequest) returns (Product) {}
+    rpc CreateFromShop (ProductLink) returns (BoolReply) {}
+    rpc LinkToShop (ProductLink) returns (BoolReply) {}
+    rpc UnlinkToShop (ProductLink) returns (BoolReply) {}
+    rpc UpdateProduct (UpdateProductRequest) returns (BoolReply) {}
+    rpc SetProductBrand (SetProductBrandRequest) returns (BoolReply) {}
+    rpc RemoveProductBrand (SetProductBrandRequest) returns (BoolReply) {}
+    rpc SetProductPurchase (SetProductPurchaseRequest) returns (BoolReply) {}
+    rpc GetProductPurchase (ProductRequest) returns (ProductPurchase) {}
+    rpc GetProductPurchases (ProductRequest) returns (PurchasesReply) {}
+    rpc RemoveProductPurchase (DeleteRequest) returns (BoolReply) {}
     rpc SearchProduct (SearchRequest) returns (ProductsReply) {}
     rpc CheckLinkedShopProducts (CheckLinksReqest) returns (ProductsLinks) {}
     rpc CheckLinkedShopProduct (CheckLinksReqest) returns (ProductLink) {}
-    rpc GetProductsByID (RequestByIDs) returns (ProductsReply) {}
-    rpc GetProductByShopID (ProductsByShopRequest) returns (Product) {}
-    rpc GetCompanyProductsID (ProductsByShopRequest) returns (ListID) {}
-    rpc GetShopProductPurcases (ProductsByShopRequest) returns (PurchasesReply) {}
-    rpc GetBrandsIDProduct (ProductsByShopRequest) returns (BrandListID) {}
+    rpc GetCompanyProductsID (ListIDRequest) returns (ListID) {}
+    rpc GetShopProductPurcases (ShopProductPurcasesRequest) returns (PurchasesReply) {}
+    rpc GetProductByShopID (ProductByShopRequest) returns (Product) {}
     rpc GetBrandProductsID (BrandListIDRequest) returns (ListID) {}
+    rpc GetBrandsIDProduct (BrandProductRequest) returns (BrandListID) {}
+    rpc SetProductCount(CountDataSet) returns (BoolReply) {}
+    rpc GetProductCount(CountDataGetRequest) returns (CountDataGetReply) {}
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetProductsByID (ProductsIDRequest) returns (ProductsReply) {}
     rpc GetBrandCompanyProducts (BrandCompanyRequest) returns (BrandCompanyProductsReply) {}
-    rpc GetBrandCompanyProduct (RequestByID) returns (BrandCompanyProduct) {}
+    rpc GetBrandCompanyProduct (IDRequest) returns (BrandCompanyProduct) {}
 }
 
-message ProductsRequest {
+message CountData {
+    int64 ID = 2;
+    int64 count = 3;
+}
+
+message CountDataSet {
     Auth auth = 1;
-    int64 page = 2;
-    repeated FilterParam filters = 3;
-    SortParam sort = 4;
+    int64 ID = 2;
+    int64 count = 3;
+}
+
+message CountDataGetRequest {
+    repeated int64 ID = 1;
+}
+
+message CountDataGetReply {
+    repeated CountData countData = 1;
 }
 
 message ProductsReply {
     repeated Product products = 1;
     Pagination pagination = 2;
+}
+
+message ProductRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message ShopProductPurcasesRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string shopCode = 3;
+}
+
+message ProductListRequest {
+    Auth auth = 1;
+    int64 page = 2;
+    repeated Filter filters = 3;
+    repeated Sorting sort = 4;
 }
 
 message ProductLink {
@@ -52,20 +84,33 @@ message ProductLink {
     string name = 5;
 }
 
+message ProductsLinks {
+    repeated ProductLink links = 1;
+}
+
+message CheckLinksReqest {
+    Auth auth = 1;
+    repeated int64 shopProductsID = 2;
+    string shopCode = 3;
+}
+
 message UpdateProductRequest {
     Auth auth = 1;
-    Product data = 2;
+    int64 ID = 2;
+    string title = 3;
+    string comment = 4;
+    bool active = 5;
 }
 
 message SetProductBrandRequest {
     Auth auth = 1;
-    int64 productID = 2;
+    int64 ID = 2;
     int64 brandID = 3;
 }
 
 message SetProductPurchaseRequest {
     Auth auth = 1;
-    int64 productID = 2;
+    int64 ID = 2;
     float purchase = 3;
     string dateFrom = 4;
 }
@@ -80,21 +125,19 @@ message PurchasesReply {
     repeated ProductPurchase purchases = 1;
 }
 
-message CheckLinksReqest {
-    Auth auth = 1;
-    repeated int64 shopProductsID = 2;
-    string shopCode = 3;
-}
-
-message ProductsLinks {
-    repeated ProductLink links = 1;
-}
-
-message ProductsByShopRequest {
+message ListIDRequest {
     Auth auth = 1;
     string shopCode = 2;
-    int64 shopProductID = 3;
-    repeated int64 shopProductsID = 4;
+}
+
+message BrandListIDRequest {
+    Auth auth = 1;
+    string shopCode = 2;
+    repeated int64 brandID = 3;
+}
+
+message ListID {
+    repeated int64 shopProductID = 1;
 }
 
 message ShopProductBrandID {
@@ -102,14 +145,24 @@ message ShopProductBrandID {
     int64 brandID = 2;
 }
 
+message BrandProductRequest {
+    Auth auth = 1;
+    string shopCode = 2;
+    repeated int64 shopProductID = 3;
+}
+
 message BrandListID {
     repeated ShopProductBrandID list = 1;
 }
 
-message BrandListIDRequest {
+message ProductByShopRequest {
+    string shopCode = 1;
+    int64 shopProductID = 2;
+}
+
+message ProductsIDRequest {
     Auth auth = 1;
-    string shopCode = 2;
-    repeated int64 brandID = 3;
+    repeated int64 ID = 2;
 }
 
 message BrandCompanyRequest {
