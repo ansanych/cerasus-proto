@@ -32,6 +32,30 @@ message CompanyesList {
     repeated Company companies = 1;
 }
 
+enum SortOrder {
+    ASC = 0;
+    DESC = 1;
+}
+
+message SortParam {
+    string sort = 1;
+    SortOrder sortOrder = 2;
+}
+
+message FilterParam {
+    string name = 1;
+    string stringValue = 2;
+    repeated string stringValues = 3;
+    int64 intValue = 4;
+    repeated int64 intValues = 5;
+    bool boolVlaue = 6;
+    repeated bool boolValues = 7;
+}
+
+message ListID {
+    repeated int64 ID = 1;
+}
+
 // GOOD
 message Role {
     int64 ID = 1;
@@ -69,6 +93,29 @@ message Company {
     bool brand = 3;
 }
 
+message Pagination {
+    int64 page = 1;
+    int64 pages = 2;
+}
+
+message Product {
+    int64 ID = 1;
+    int64 companyID = 2;
+    string title = 3;
+    string comment = 4;
+    repeated int64 groupsID = 5;
+    int64 brandID = 6;
+    bool active = 7;
+    string updated = 8;
+    float purchase = 9;
+    repeated ShopProductLinks shopProductLinks = 10;
+    string preview = 11;
+}
+
+message SearchRequest {
+    Auth auth = 1;
+    string search = 2;
+}
 
 //BAD
 message BoolReply {
@@ -79,10 +126,7 @@ message CountReply {
     int64 count = 1;
 }
 
-message Pagination {
-    int64 page = 1;
-    int64 pages = 2;
-}
+
 
 message ShopProductLinks {
     string shopCode = 1;
@@ -99,19 +143,7 @@ message Brand {
     bool linked = 7;
 }
 
-message Product {
-    int64 ID = 1;
-    int64 companyID = 2;
-    string title = 3;
-    string comment = 4;
-    repeated int64 groupsID = 5;
-    int64 brandID = 6;
-    bool active = 7;
-    string updated = 8;
-    float purchase = 9;
-    repeated ShopProductLinks shopProductLinks = 10;
-    string preview = 11;
-}
+
 
 message ShopProductRequest {
     Auth auth = 1;
@@ -171,10 +203,7 @@ message DeleteRequest {
     int64 ID = 2;
 }
 
-message SearchRequest {
-    Auth auth = 1;
-    string search = 2;
-}
+
 
 message SalesRequest {
     Auth auth = 1;
