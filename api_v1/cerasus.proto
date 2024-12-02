@@ -48,7 +48,7 @@ message FilterParam {
     repeated string stringValues = 3;
     int64 intValue = 4;
     repeated int64 intValues = 5;
-    bool boolVlaue = 6;
+    bool boolValue = 6;
     repeated bool boolValues = 7;
 }
 
