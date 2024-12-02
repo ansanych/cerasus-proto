@@ -44,12 +44,13 @@ message SortParam {
 
 message FilterParam {
     string name = 1;
-    string stringValue = 2;
-    repeated string stringValues = 3;
-    int64 intValue = 4;
-    repeated int64 intValues = 5;
-    bool boolValue = 6;
-    repeated bool boolValues = 7;
+    string type = 2;
+    string stringValue = 3;
+    repeated string stringValues = 4;
+    int64 intValue = 5;
+    repeated int64 intValues = 6;
+    bool boolValue = 7;
+    repeated bool boolValues = 8;
 }
 
 message ListID {
