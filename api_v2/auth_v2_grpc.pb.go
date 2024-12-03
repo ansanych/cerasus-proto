@@ -39,7 +39,7 @@ func NewAuthentyClient(cc grpc.ClientConnInterface) AuthentyClient {
 
 func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Register", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts
 
 func (c *authentyClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error) {
 	out := new(LoginReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *authentyClient) Login(ctx context.Context, in *LoginRequest, opts ...gr
 
 func (c *authentyClient) Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error) {
 	out := new(LoginReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Refresh", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/Refresh", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *authentyClient) Refresh(ctx context.Context, in *RefreshRequest, opts .
 
 func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error) {
 	out := new(Auth)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/CheckAccess", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/CheckAccess", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opt
 
 func (c *authentyClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
-	err := c.cc.Invoke(ctx, "/cerasus.Authenty/Ping", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/Ping", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func _Authenty_Register_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Authenty/Register",
+		FullMethod: "/cerasusV2.Authenty/Register",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Register(ctx, req.(*RegisterRequest))
@@ -154,7 +154,7 @@ func _Authenty_Login_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Authenty/Login",
+		FullMethod: "/cerasusV2.Authenty/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Login(ctx, req.(*LoginRequest))
@@ -172,7 +172,7 @@ func _Authenty_Refresh_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Authenty/Refresh",
+		FullMethod: "/cerasusV2.Authenty/Refresh",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Refresh(ctx, req.(*RefreshRequest))
@@ -190,7 +190,7 @@ func _Authenty_CheckAccess_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Authenty/CheckAccess",
+		FullMethod: "/cerasusV2.Authenty/CheckAccess",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).CheckAccess(ctx, req.(*AccessRequest))
@@ -208,7 +208,7 @@ func _Authenty_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasus.Authenty/Ping",
+		FullMethod: "/cerasusV2.Authenty/Ping",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Ping(ctx, req.(*PingRequest))
@@ -220,7 +220,7 @@ func _Authenty_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Authenty_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cerasus.Authenty",
+	ServiceName: "cerasusV2.Authenty",
 	HandlerType: (*AuthentyServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

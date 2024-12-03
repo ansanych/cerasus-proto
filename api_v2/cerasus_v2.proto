@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package cerasus;
+package cerasusV2;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
