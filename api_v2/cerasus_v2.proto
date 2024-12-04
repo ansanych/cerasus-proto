@@ -63,3 +63,23 @@ message User {
     bool active = 9;
 }
 
+//Shops
+message Shop {
+    int64 ID = 1;
+    string title = 2;
+    string code = 3;
+    string logo = 4;
+    string url = 5;
+    bool active = 6;
+}
+
+message AppShopData {
+    Shop shop = 1;
+    bool auth = 2;
+    bool products = 3;
+    bool sales = 4;
+    bool orders = 5;
+    bool days = 6;
+    bool active = 7;
+    bool access = 8;
+}

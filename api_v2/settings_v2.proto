@@ -10,23 +10,6 @@ service Settings {
     rpc GetUserAppData (Auth) returns (UserAppData) {}
 }
 
-message Shop {
-    int64 ID = 1;
-    string title = 2;
-    string code = 3;
-    string logo = 4;
-    string url = 5;
-    bool active = 6;
-}
-
-message AppShopData {
-    Shop shop = 1;
-    bool auth = 2;
-    bool data = 3;
-    bool active = 4;
-    bool access = 5;
-}
-
 message AppServiceData {
     string code = 1;
     ServiceStatus status = 2;

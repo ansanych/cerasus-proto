@@ -161,3 +161,27 @@ genSettings2:
 			--go-grpc_out ./api_v2 \
 			--go-grpc_opt paths=source_relative \
 			./api_v2/settings_v2.proto
+
+genWB2:
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/wb_v2.proto
+
+genOZ2:
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz_v2.proto
+
+genYM2:
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/ym_v2.proto
