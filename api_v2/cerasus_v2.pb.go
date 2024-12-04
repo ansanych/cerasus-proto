@@ -70,6 +70,56 @@ func (Status) EnumDescriptor() ([]byte, []int) {
 	return file_cerasus_v2_proto_rawDescGZIP(), []int{0}
 }
 
+// Service status
+type ServiceStatus int32
+
+const (
+	ServiceStatus_DISABLED ServiceStatus = 0
+	ServiceStatus_ENABLED  ServiceStatus = 1
+	ServiceStatus_BID      ServiceStatus = 2
+)
+
+// Enum value maps for ServiceStatus.
+var (
+	ServiceStatus_name = map[int32]string{
+		0: "DISABLED",
+		1: "ENABLED",
+		2: "BID",
+	}
+	ServiceStatus_value = map[string]int32{
+		"DISABLED": 0,
+		"ENABLED":  1,
+		"BID":      2,
+	}
+)
+
+func (x ServiceStatus) Enum() *ServiceStatus {
+	p := new(ServiceStatus)
+	*p = x
+	return p
+}
+
+func (x ServiceStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ServiceStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_cerasus_v2_proto_enumTypes[1].Descriptor()
+}
+
+func (ServiceStatus) Type() protoreflect.EnumType {
+	return &file_cerasus_v2_proto_enumTypes[1]
+}
+
+func (x ServiceStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ServiceStatus.Descriptor instead.
+func (ServiceStatus) EnumDescriptor() ([]byte, []int) {
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{1}
+}
+
 // Ping
 type PingRequest struct {
 	state         protoimpl.MessageState
@@ -571,9 +621,13 @@ var file_cerasus_v2_proto_rawDesc = []byte{
 	0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x2a, 0x28, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74,
 	0x75, 0x73, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12,
 	0x06, 0x0a, 0x02, 0x4f, 0x4b, 0x10, 0x01, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x52, 0x52, 0x4f, 0x52,
-	0x10, 0x02, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
-	0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x10, 0x02, 0x2a, 0x33, 0x0a, 0x0d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x12, 0x0c, 0x0a, 0x08, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4c, 0x45, 0x44, 0x10,
+	0x00, 0x12, 0x0b, 0x0a, 0x07, 0x45, 0x4e, 0x41, 0x42, 0x4c, 0x45, 0x44, 0x10, 0x01, 0x12, 0x07,
+	0x0a, 0x03, 0x42, 0x49, 0x44, 0x10, 0x02, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75,
+	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -588,23 +642,24 @@ func file_cerasus_v2_proto_rawDescGZIP() []byte {
 	return file_cerasus_v2_proto_rawDescData
 }
 
-var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_cerasus_v2_proto_goTypes = []interface{}{
 	(Status)(0),         // 0: cerasusV2.Status
-	(*PingRequest)(nil), // 1: cerasusV2.PingRequest
-	(*PingReply)(nil),   // 2: cerasusV2.PingReply
-	(*StatusReply)(nil), // 3: cerasusV2.StatusReply
-	(*Auth)(nil),        // 4: cerasusV2.Auth
-	(*Company)(nil),     // 5: cerasusV2.Company
-	(*Role)(nil),        // 6: cerasusV2.Role
-	(*User)(nil),        // 7: cerasusV2.User
+	(ServiceStatus)(0),  // 1: cerasusV2.ServiceStatus
+	(*PingRequest)(nil), // 2: cerasusV2.PingRequest
+	(*PingReply)(nil),   // 3: cerasusV2.PingReply
+	(*StatusReply)(nil), // 4: cerasusV2.StatusReply
+	(*Auth)(nil),        // 5: cerasusV2.Auth
+	(*Company)(nil),     // 6: cerasusV2.Company
+	(*Role)(nil),        // 7: cerasusV2.Role
+	(*User)(nil),        // 8: cerasusV2.User
 }
 var file_cerasus_v2_proto_depIdxs = []int32{
 	0, // 0: cerasusV2.StatusReply.status:type_name -> cerasusV2.Status
-	6, // 1: cerasusV2.Auth.roles:type_name -> cerasusV2.Role
-	5, // 2: cerasusV2.User.company:type_name -> cerasusV2.Company
-	6, // 3: cerasusV2.User.roles:type_name -> cerasusV2.Role
+	7, // 1: cerasusV2.Auth.roles:type_name -> cerasusV2.Role
+	6, // 2: cerasusV2.User.company:type_name -> cerasusV2.Company
+	7, // 3: cerasusV2.User.roles:type_name -> cerasusV2.Role
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -708,7 +763,7 @@ func file_cerasus_v2_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_v2_proto_rawDesc,
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,

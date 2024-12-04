@@ -24,6 +24,13 @@ message StatusReply {
     Status status = 1;
 }
 
+// Service status
+enum ServiceStatus {
+    DISABLED = 0;
+    ENABLED = 1;
+    BID = 2;
+}
+
 // Auth
 message Auth {
     bool tokenValidation = 1;
