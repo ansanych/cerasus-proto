@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type WBClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
+	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 }
 
 type wBClient struct {
@@ -52,12 +53,22 @@ func (c *wBClient) GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOp
 	return out, nil
 }
 
+func (c *wBClient) GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error) {
+	out := new(ShopWidget)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetShopWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
 type WBServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
+	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedWBServer) Ping(context.Context, *PingRequest) (*PingReply, er
 }
 func (UnimplementedWBServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
+}
+func (UnimplementedWBServer) GetShopWidget(context.Context, *Auth) (*ShopWidget, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopWidget not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -120,6 +134,24 @@ func _WB_GetAppData_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetShopWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetShopWidget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetShopWidget",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetShopWidget(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAppData",
 			Handler:    _WB_GetAppData_Handler,
+		},
+		{
+			MethodName: "GetShopWidget",
+			Handler:    _WB_GetShopWidget_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

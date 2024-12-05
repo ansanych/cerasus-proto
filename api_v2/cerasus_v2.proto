@@ -83,3 +83,15 @@ message AppShopData {
     bool active = 7;
     bool access = 8;
 }
+
+message ShopWidgetData {
+    string title = 1;
+    int32 salesCount = 2;
+    int32 salesSum = 3;
+    int32 ordersCount = 4;
+    int32 ordersSum = 5;
+}
+
+message ShopWidget {
+    repeated ShopWidgetData data = 1;
+}
