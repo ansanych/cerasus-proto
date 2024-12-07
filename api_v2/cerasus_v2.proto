@@ -117,7 +117,7 @@ message LineGraph {
 
 message LineGraphRequest {
     Auth auth = 1;
-    string type = 2;
-    string periodStep = 3;
-    string offset = 4;
+    string t = 2;
+    string p = 3;
+    string o = 4;
 }
