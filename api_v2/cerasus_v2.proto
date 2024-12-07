@@ -95,3 +95,29 @@ message ShopWidgetData {
 message ShopWidget {
     repeated ShopWidgetData data = 1;
 }
+
+//GRAPHS
+message LineGraphDataset {
+    string type = 1;
+    repeated float data = 2;
+}
+
+message LineGraphShop {
+    string shop = 1;
+    int32 index = 2;
+}
+
+message LineGraph {
+    repeated string labels = 1;
+    repeated LineGraphDataset datasets = 2;
+    float min = 3;
+    float max = 4;
+    repeated LineGraphShop shops = 5;
+}
+
+message LineGraphRequest {
+    Auth auth = 1;
+    string type = 2;
+    string periodStep = 3;
+    string offset = 4;
+}

@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type SettingsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetUserAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UserAppData, error)
+	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 }
 
 type settingsClient struct {
@@ -52,12 +53,22 @@ func (c *settingsClient) GetUserAppData(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *settingsClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
+	out := new(LineGraph)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
 type SettingsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetUserAppData(context.Context, *Auth) (*UserAppData, error)
+	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedSettingsServer) Ping(context.Context, *PingRequest) (*PingRep
 }
 func (UnimplementedSettingsServer) GetUserAppData(context.Context, *Auth) (*UserAppData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAppData not implemented")
+}
+func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -120,6 +134,24 @@ func _Settings_GetUserAppData_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMainGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserAppData",
 			Handler:    _Settings_GetUserAppData_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _Settings_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

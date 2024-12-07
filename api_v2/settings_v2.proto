@@ -8,6 +8,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Settings {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetUserAppData (Auth) returns (UserAppData) {}
+    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
 }
 
 message AppServiceData {

@@ -25,6 +25,7 @@ type WBClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
+	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 }
 
 type wBClient struct {
@@ -62,6 +63,15 @@ func (c *wBClient) GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *wBClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
+	out := new(LineGraph)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type WBServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
+	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedWBServer) GetAppData(context.Context, *Auth) (*AppShopData, e
 }
 func (UnimplementedWBServer) GetShopWidget(context.Context, *Auth) (*ShopWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopWidget not implemented")
+}
+func (UnimplementedWBServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -152,6 +166,24 @@ func _WB_GetShopWidget_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetMainGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopWidget",
 			Handler:    _WB_GetShopWidget_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _WB_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

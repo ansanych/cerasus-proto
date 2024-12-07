@@ -25,6 +25,7 @@ type YMClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
+	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 }
 
 type yMClient struct {
@@ -62,6 +63,15 @@ func (c *yMClient) GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *yMClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
+	out := new(LineGraph)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type YMServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
+	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedYMServer) GetAppData(context.Context, *Auth) (*AppShopData, e
 }
 func (UnimplementedYMServer) GetShopWidget(context.Context, *Auth) (*ShopWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopWidget not implemented")
+}
+func (UnimplementedYMServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -152,6 +166,24 @@ func _YM_GetShopWidget_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetMainGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopWidget",
 			Handler:    _YM_GetShopWidget_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _YM_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

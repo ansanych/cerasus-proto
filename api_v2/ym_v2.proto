@@ -9,4 +9,5 @@ service YM {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
+    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
 }
