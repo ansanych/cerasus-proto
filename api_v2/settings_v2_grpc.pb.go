@@ -25,6 +25,8 @@ type SettingsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetUserAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UserAppData, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
+	GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type settingsClient struct {
@@ -62,6 +64,24 @@ func (c *settingsClient) GetMainGraphic(ctx context.Context, in *LineGraphReques
 	return out, nil
 }
 
+func (c *settingsClient) GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetFlowGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetMarginGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -69,6 +89,8 @@ type SettingsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetUserAppData(context.Context, *Auth) (*UserAppData, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
+	GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -84,6 +106,12 @@ func (UnimplementedSettingsServer) GetUserAppData(context.Context, *Auth) (*User
 }
 func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
+}
+func (UnimplementedSettingsServer) GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFlowGraphic not implemented")
+}
+func (UnimplementedSettingsServer) GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphic not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -152,6 +180,42 @@ func _Settings_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetFlowGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetFlowGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetFlowGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetFlowGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetMarginGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMarginGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetMarginGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMarginGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +234,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMainGraphic",
 			Handler:    _Settings_GetMainGraphic_Handler,
+		},
+		{
+			MethodName: "GetFlowGraphic",
+			Handler:    _Settings_GetFlowGraphic_Handler,
+		},
+		{
+			MethodName: "GetMarginGraphic",
+			Handler:    _Settings_GetMarginGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

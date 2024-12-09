@@ -9,6 +9,8 @@ service Settings {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetUserAppData (Auth) returns (UserAppData) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
+    rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
 }
 
 message AppServiceData {

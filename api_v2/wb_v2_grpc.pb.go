@@ -27,6 +27,8 @@ type WBClient interface {
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
+	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
 }
 
 type wBClient struct {
@@ -82,6 +84,24 @@ func (c *wBClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.
 	return out, nil
 }
 
+func (c *wBClient) GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
+	out := new(FloatData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetFlowGraphicData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
+	out := new(FloatData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetMarginGraphicData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -91,6 +111,8 @@ type WBServer interface {
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
+	GetFlowGraphicData(context.Context, *Auth) (*FloatData, error)
+	GetMarginGraphicData(context.Context, *Auth) (*FloatData, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -112,6 +134,12 @@ func (UnimplementedWBServer) GetMainGraphic(context.Context, *LineGraphRequest) 
 }
 func (UnimplementedWBServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedWBServer) GetFlowGraphicData(context.Context, *Auth) (*FloatData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFlowGraphicData not implemented")
+}
+func (UnimplementedWBServer) GetMarginGraphicData(context.Context, *Auth) (*FloatData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphicData not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -216,6 +244,42 @@ func _WB_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetFlowGraphicData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetFlowGraphicData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetFlowGraphicData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetFlowGraphicData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_GetMarginGraphicData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetMarginGraphicData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetMarginGraphicData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetMarginGraphicData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +306,14 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsCount",
 			Handler:    _WB_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetFlowGraphicData",
+			Handler:    _WB_GetFlowGraphicData_Handler,
+		},
+		{
+			MethodName: "GetMarginGraphicData",
+			Handler:    _WB_GetMarginGraphicData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -27,6 +27,8 @@ type YMClient interface {
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
+	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
 }
 
 type yMClient struct {
@@ -82,6 +84,24 @@ func (c *yMClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.
 	return out, nil
 }
 
+func (c *yMClient) GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
+	out := new(FloatData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetFlowGraphicData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
+	out := new(FloatData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetMarginGraphicData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -91,6 +111,8 @@ type YMServer interface {
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
+	GetFlowGraphicData(context.Context, *Auth) (*FloatData, error)
+	GetMarginGraphicData(context.Context, *Auth) (*FloatData, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -112,6 +134,12 @@ func (UnimplementedYMServer) GetMainGraphic(context.Context, *LineGraphRequest) 
 }
 func (UnimplementedYMServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedYMServer) GetFlowGraphicData(context.Context, *Auth) (*FloatData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFlowGraphicData not implemented")
+}
+func (UnimplementedYMServer) GetMarginGraphicData(context.Context, *Auth) (*FloatData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphicData not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -216,6 +244,42 @@ func _YM_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetFlowGraphicData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetFlowGraphicData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetFlowGraphicData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetFlowGraphicData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetMarginGraphicData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetMarginGraphicData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetMarginGraphicData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetMarginGraphicData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +306,14 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsCount",
 			Handler:    _YM_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetFlowGraphicData",
+			Handler:    _YM_GetFlowGraphicData_Handler,
+		},
+		{
+			MethodName: "GetMarginGraphicData",
+			Handler:    _YM_GetMarginGraphicData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
