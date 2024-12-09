@@ -27,8 +27,8 @@ type OZClient interface {
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
-	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
-	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error)
+	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 }
 
 type oZClient struct {
@@ -84,8 +84,8 @@ func (c *oZClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.
 	return out, nil
 }
 
-func (c *oZClient) GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
-	out := new(FloatData)
+func (c *oZClient) GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetFlowGraphicData", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -93,8 +93,8 @@ func (c *oZClient) GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grp
 	return out, nil
 }
 
-func (c *oZClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*FloatData, error) {
-	out := new(FloatData)
+func (c *oZClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetMarginGraphicData", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -111,8 +111,8 @@ type OZServer interface {
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
-	GetFlowGraphicData(context.Context, *Auth) (*FloatData, error)
-	GetMarginGraphicData(context.Context, *Auth) (*FloatData, error)
+	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
+	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -135,10 +135,10 @@ func (UnimplementedOZServer) GetMainGraphic(context.Context, *LineGraphRequest) 
 func (UnimplementedOZServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
 }
-func (UnimplementedOZServer) GetFlowGraphicData(context.Context, *Auth) (*FloatData, error) {
+func (UnimplementedOZServer) GetFlowGraphicData(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFlowGraphicData not implemented")
 }
-func (UnimplementedOZServer) GetMarginGraphicData(context.Context, *Auth) (*FloatData, error) {
+func (UnimplementedOZServer) GetMarginGraphicData(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphicData not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
