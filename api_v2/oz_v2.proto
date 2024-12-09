@@ -10,4 +10,5 @@ service OZ {
     rpc GetAppData (Auth) returns (AppShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
+    rpc GetProductsCount (Auth) returns (Count) {}
 }

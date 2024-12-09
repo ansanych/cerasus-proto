@@ -31,6 +31,11 @@ enum ServiceStatus {
     BID = 2;
 }
 
+//any
+message Count {
+    int32 count = 1;
+}
+
 // Auth
 message Auth {
     bool tokenValidation = 1;
@@ -121,3 +126,4 @@ message LineGraphRequest {
     string p = 3;
     string o = 4;
 }
+
