@@ -1547,22 +1547,78 @@ func (x *WeekGraphic) GetNow() float32 {
 }
 
 // PRODUCT
+type ShopProductLinks struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ShopCode      string  `protobuf:"bytes,1,opt,name=shopCode,proto3" json:"shopCode,omitempty"`
+	ShopProductID []int64 `protobuf:"varint,2,rep,packed,name=shopProductID,proto3" json:"shopProductID,omitempty"`
+}
+
+func (x *ShopProductLinks) Reset() {
+	*x = ShopProductLinks{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_v2_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ShopProductLinks) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ShopProductLinks) ProtoMessage() {}
+
+func (x *ShopProductLinks) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_v2_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ShopProductLinks.ProtoReflect.Descriptor instead.
+func (*ShopProductLinks) Descriptor() ([]byte, []int) {
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ShopProductLinks) GetShopCode() string {
+	if x != nil {
+		return x.ShopCode
+	}
+	return ""
+}
+
+func (x *ShopProductLinks) GetShopProductID() []int64 {
+	if x != nil {
+		return x.ShopProductID
+	}
+	return nil
+}
+
 type Product struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ID      int64  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	Title   string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Comment string `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`
-	Active  bool   `protobuf:"varint,4,opt,name=active,proto3" json:"active,omitempty"`
-	Preview string `protobuf:"bytes,5,opt,name=preview,proto3" json:"preview,omitempty"`
+	ID               int64               `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	Title            string              `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Comment          string              `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`
+	Active           bool                `protobuf:"varint,4,opt,name=active,proto3" json:"active,omitempty"`
+	Preview          string              `protobuf:"bytes,5,opt,name=preview,proto3" json:"preview,omitempty"`
+	ShopProductLinks []*ShopProductLinks `protobuf:"bytes,6,rep,name=shopProductLinks,proto3" json:"shopProductLinks,omitempty"`
 }
 
 func (x *Product) Reset() {
 	*x = Product{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[22]
+		mi := &file_cerasus_v2_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1575,7 +1631,7 @@ func (x *Product) String() string {
 func (*Product) ProtoMessage() {}
 
 func (x *Product) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[22]
+	mi := &file_cerasus_v2_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1588,7 +1644,7 @@ func (x *Product) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Product.ProtoReflect.Descriptor instead.
 func (*Product) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{22}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Product) GetID() int64 {
@@ -1626,6 +1682,13 @@ func (x *Product) GetPreview() string {
 	return ""
 }
 
+func (x *Product) GetShopProductLinks() []*ShopProductLinks {
+	if x != nil {
+		return x.ShopProductLinks
+	}
+	return nil
+}
+
 type Products struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1637,7 +1700,7 @@ type Products struct {
 func (x *Products) Reset() {
 	*x = Products{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[23]
+		mi := &file_cerasus_v2_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1650,7 +1713,7 @@ func (x *Products) String() string {
 func (*Products) ProtoMessage() {}
 
 func (x *Products) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[23]
+	mi := &file_cerasus_v2_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1663,7 +1726,7 @@ func (x *Products) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Products.ProtoReflect.Descriptor instead.
 func (*Products) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{23}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *Products) GetProducts() []*Product {
@@ -1810,14 +1873,24 @@ var file_cerasus_v2_proto_rawDesc = []byte{
 	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6d, 0x69, 0x64, 0x12, 0x10, 0x0a,
 	0x03, 0x6d, 0x61, 0x78, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6d, 0x61, 0x78, 0x12,
 	0x10, 0x0a, 0x03, 0x6e, 0x6f, 0x77, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x03, 0x6e, 0x6f,
-	0x77, 0x22, 0x7b, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x0e, 0x0a, 0x02,
-	0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05,
-	0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74,
-	0x6c, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06,
-	0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63,
-	0x74, 0x69, 0x76, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x22, 0x3a,
+	0x77, 0x22, 0x54, 0x0a, 0x10, 0x53, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x68, 0x6f, 0x70, 0x43, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x68, 0x6f, 0x70, 0x43, 0x6f, 0x64,
+	0x65, 0x12, 0x24, 0x0a, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x49, 0x44, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0d, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x22, 0xc4, 0x01, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x02, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6d,
+	0x6d, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x6d,
+	0x65, 0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x70,
+	0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x72,
+	0x65, 0x76, 0x69, 0x65, 0x77, 0x12, 0x47, 0x0a, 0x10, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x68, 0x6f, 0x70,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x52, 0x10, 0x73, 0x68,
+	0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x22, 0x3a,
 	0x0a, 0x08, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x2e, 0x0a, 0x08, 0x70, 0x72,
 	0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
@@ -1846,7 +1919,7 @@ func file_cerasus_v2_proto_rawDescGZIP() []byte {
 }
 
 var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
+var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_cerasus_v2_proto_goTypes = []interface{}{
 	(Status)(0),              // 0: cerasusV2.Status
 	(ServiceStatus)(0),       // 1: cerasusV2.ServiceStatus
@@ -1872,8 +1945,9 @@ var file_cerasus_v2_proto_goTypes = []interface{}{
 	(*RoundGrapDataset)(nil), // 21: cerasusV2.RoundGrapDataset
 	(*RoundGraphic)(nil),     // 22: cerasusV2.RoundGraphic
 	(*WeekGraphic)(nil),      // 23: cerasusV2.WeekGraphic
-	(*Product)(nil),          // 24: cerasusV2.Product
-	(*Products)(nil),         // 25: cerasusV2.Products
+	(*ShopProductLinks)(nil), // 24: cerasusV2.ShopProductLinks
+	(*Product)(nil),          // 25: cerasusV2.Product
+	(*Products)(nil),         // 26: cerasusV2.Products
 }
 var file_cerasus_v2_proto_depIdxs = []int32{
 	0,  // 0: cerasusV2.StatusReply.status:type_name -> cerasusV2.Status
@@ -1888,12 +1962,13 @@ var file_cerasus_v2_proto_depIdxs = []int32{
 	18, // 9: cerasusV2.LineGraph.shops:type_name -> cerasusV2.LineGraphShop
 	9,  // 10: cerasusV2.LineGraphRequest.auth:type_name -> cerasusV2.Auth
 	21, // 11: cerasusV2.RoundGraphic.datasets:type_name -> cerasusV2.RoundGrapDataset
-	24, // 12: cerasusV2.Products.products:type_name -> cerasusV2.Product
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	24, // 12: cerasusV2.Product.shopProductLinks:type_name -> cerasusV2.ShopProductLinks
+	25, // 13: cerasusV2.Products.products:type_name -> cerasusV2.Product
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_v2_proto_init() }
@@ -2167,7 +2242,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Product); i {
+			switch v := v.(*ShopProductLinks); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2179,6 +2254,18 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Product); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_v2_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Products); i {
 			case 0:
 				return &v.state
@@ -2197,7 +2284,7 @@ func file_cerasus_v2_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_v2_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   24,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

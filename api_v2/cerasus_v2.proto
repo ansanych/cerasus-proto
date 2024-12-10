@@ -163,12 +163,18 @@ message WeekGraphic {
 }
 
 //PRODUCT
+message ShopProductLinks {
+    string shopCode = 1;
+    repeated int64 shopProductID = 2;
+}
+
 message Product {
     int64 ID = 1;
     string title = 2;
     string comment = 3;
     bool active = 4;
     string preview = 5;
+    repeated ShopProductLinks shopProductLinks = 6;
 }
 
 message Products {
