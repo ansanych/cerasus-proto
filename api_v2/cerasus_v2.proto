@@ -40,6 +40,17 @@ message FloatData {
     repeated float data = 1;
 }
 
+//REQUESTS
+message RequestByID {
+    Auth auth = 1;
+    int64 ID = 2;
+}
+
+message RequestByIDs {
+    Auth auth = 1;
+    repeated int64 ID = 2;
+}
+
 // Auth
 message Auth {
     bool tokenValidation = 1;
@@ -149,4 +160,17 @@ message WeekGraphic {
     float mid = 2;
     float max = 3;
     float now = 4;
+}
+
+//PRODUCT
+message Product {
+    int64 ID = 1;
+    string title = 2;
+    string comment = 3;
+    bool active = 4;
+    string preview = 5;
+}
+
+message Products {
+    repeated Product products = 1;
 }
