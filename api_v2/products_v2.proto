@@ -9,4 +9,5 @@ service ProductsV2 {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductByID (RequestByID) returns (Product) {}
     rpc GetProductsByIDs (RequestByIDs) returns (Products) {}
+    rpc GetProductsByShopIDs (RequestByIDs) returns (Products) {}
 }
