@@ -14,4 +14,6 @@ service WB {
     rpc GetFlowGraphicData (Auth) returns (Count) {}
     rpc GetMarginGraphicData (Auth) returns (Count) {}
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+    rpc GetPayRoundGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
 }

@@ -30,6 +30,8 @@ type WBClient interface {
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
+	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type wBClient struct {
@@ -112,6 +114,24 @@ func (c *wBClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opt
 	return out, nil
 }
 
+func (c *wBClient) GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetPayRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetCountRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -124,6 +144,8 @@ type WBServer interface {
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
+	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -154,6 +176,12 @@ func (UnimplementedWBServer) GetMarginGraphicData(context.Context, *Auth) (*Coun
 }
 func (UnimplementedWBServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
+}
+func (UnimplementedWBServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPayRoundGraphic not implemented")
+}
+func (UnimplementedWBServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -312,6 +340,42 @@ func _WB_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetPayRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetPayRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetPayRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetCountRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetCountRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetCountRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +414,14 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeekGraphic",
 			Handler:    _WB_GetWeekGraphic_Handler,
+		},
+		{
+			MethodName: "GetPayRoundGraphic",
+			Handler:    _WB_GetPayRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetCountRoundGraphic",
+			Handler:    _WB_GetCountRoundGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

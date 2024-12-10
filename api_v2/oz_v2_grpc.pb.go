@@ -30,6 +30,8 @@ type OZClient interface {
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
+	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type oZClient struct {
@@ -112,6 +114,24 @@ func (c *oZClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opt
 	return out, nil
 }
 
+func (c *oZClient) GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetPayRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetCountRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
@@ -124,6 +144,8 @@ type OZServer interface {
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
+	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -154,6 +176,12 @@ func (UnimplementedOZServer) GetMarginGraphicData(context.Context, *Auth) (*Coun
 }
 func (UnimplementedOZServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
+}
+func (UnimplementedOZServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPayRoundGraphic not implemented")
+}
+func (UnimplementedOZServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -312,6 +340,42 @@ func _OZ_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetPayRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetPayRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetPayRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetCountRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetCountRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetCountRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_ServiceDesc is the grpc.ServiceDesc for OZ service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +414,14 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeekGraphic",
 			Handler:    _OZ_GetWeekGraphic_Handler,
+		},
+		{
+			MethodName: "GetPayRoundGraphic",
+			Handler:    _OZ_GetPayRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetCountRoundGraphic",
+			Handler:    _OZ_GetCountRoundGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

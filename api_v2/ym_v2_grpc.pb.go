@@ -30,6 +30,8 @@ type YMClient interface {
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
+	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type yMClient struct {
@@ -112,6 +114,24 @@ func (c *yMClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opt
 	return out, nil
 }
 
+func (c *yMClient) GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetPayRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetCountRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -124,6 +144,8 @@ type YMServer interface {
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
+	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -154,6 +176,12 @@ func (UnimplementedYMServer) GetMarginGraphicData(context.Context, *Auth) (*Coun
 }
 func (UnimplementedYMServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
+}
+func (UnimplementedYMServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPayRoundGraphic not implemented")
+}
+func (UnimplementedYMServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -312,6 +340,42 @@ func _YM_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetPayRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetPayRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetPayRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetCountRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetCountRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetCountRoundGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +414,14 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWeekGraphic",
 			Handler:    _YM_GetWeekGraphic_Handler,
+		},
+		{
+			MethodName: "GetPayRoundGraphic",
+			Handler:    _YM_GetPayRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetCountRoundGraphic",
+			Handler:    _YM_GetCountRoundGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
