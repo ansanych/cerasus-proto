@@ -29,6 +29,7 @@ type YMClient interface {
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 }
 
 type yMClient struct {
@@ -102,6 +103,15 @@ func (c *yMClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *yMClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error) {
+	out := new(WeekGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetWeekGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -113,6 +123,7 @@ type YMServer interface {
 	GetProductsCount(context.Context, *Auth) (*Count, error)
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
+	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -140,6 +151,9 @@ func (UnimplementedYMServer) GetFlowGraphicData(context.Context, *Auth) (*Count,
 }
 func (UnimplementedYMServer) GetMarginGraphicData(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphicData not implemented")
+}
+func (UnimplementedYMServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -280,6 +294,24 @@ func _YM_GetMarginGraphicData_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetWeekGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetWeekGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetWeekGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +346,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMarginGraphicData",
 			Handler:    _YM_GetMarginGraphicData_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphic",
+			Handler:    _YM_GetWeekGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

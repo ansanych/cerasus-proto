@@ -29,6 +29,7 @@ type WBClient interface {
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 }
 
 type wBClient struct {
@@ -102,6 +103,15 @@ func (c *wBClient) GetMarginGraphicData(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *wBClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error) {
+	out := new(WeekGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetWeekGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -113,6 +123,7 @@ type WBServer interface {
 	GetProductsCount(context.Context, *Auth) (*Count, error)
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
+	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -140,6 +151,9 @@ func (UnimplementedWBServer) GetFlowGraphicData(context.Context, *Auth) (*Count,
 }
 func (UnimplementedWBServer) GetMarginGraphicData(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphicData not implemented")
+}
+func (UnimplementedWBServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -280,6 +294,24 @@ func _WB_GetMarginGraphicData_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetWeekGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetWeekGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetWeekGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +346,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMarginGraphicData",
 			Handler:    _WB_GetMarginGraphicData_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphic",
+			Handler:    _WB_GetWeekGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

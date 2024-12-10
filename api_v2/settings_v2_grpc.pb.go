@@ -27,6 +27,7 @@ type SettingsClient interface {
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 }
 
 type settingsClient struct {
@@ -82,6 +83,15 @@ func (c *settingsClient) GetMarginGraphic(ctx context.Context, in *Auth, opts ..
 	return out, nil
 }
 
+func (c *settingsClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error) {
+	out := new(WeekGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetWeekGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type SettingsServer interface {
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedSettingsServer) GetFlowGraphic(context.Context, *Auth) (*Roun
 }
 func (UnimplementedSettingsServer) GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphic not implemented")
+}
+func (UnimplementedSettingsServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -216,6 +230,24 @@ func _Settings_GetMarginGraphic_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetWeekGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetWeekGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetWeekGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMarginGraphic",
 			Handler:    _Settings_GetMarginGraphic_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphic",
+			Handler:    _Settings_GetWeekGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

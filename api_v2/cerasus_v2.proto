@@ -142,3 +142,11 @@ message RoundGraphic {
     repeated string labels = 1;
     repeated RoundGrapDataset datasets = 2;
 }
+
+//week
+message WeekGraphic {
+    float min = 1;
+    float mid = 2;
+    float max = 3;
+    float now = 4;
+}

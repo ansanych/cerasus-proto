@@ -11,6 +11,7 @@ service Settings {
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
     rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
     rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
 }
 
 message AppServiceData {

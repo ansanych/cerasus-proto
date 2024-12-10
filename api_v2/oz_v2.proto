@@ -13,4 +13,5 @@ service OZ {
     rpc GetProductsCount (Auth) returns (Count) {}
     rpc GetFlowGraphicData (Auth) returns (Count) {}
     rpc GetMarginGraphicData (Auth) returns (Count) {}
+    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
 }
