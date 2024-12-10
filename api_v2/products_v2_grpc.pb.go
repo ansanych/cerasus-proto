@@ -25,7 +25,7 @@ type ProductsV2Client interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductByID(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error)
 	GetProductsByIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*Products, error)
-	GetProductsByShopIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*Products, error)
+	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*Products, error)
 }
 
 type productsV2Client struct {
@@ -63,7 +63,7 @@ func (c *productsV2Client) GetProductsByIDs(ctx context.Context, in *RequestByID
 	return out, nil
 }
 
-func (c *productsV2Client) GetProductsByShopIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*Products, error) {
+func (c *productsV2Client) GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*Products, error) {
 	out := new(Products)
 	err := c.cc.Invoke(ctx, "/cerasusV2.ProductsV2/GetProductsByShopIDs", in, out, opts...)
 	if err != nil {
@@ -79,7 +79,7 @@ type ProductsV2Server interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductByID(context.Context, *RequestByID) (*Product, error)
 	GetProductsByIDs(context.Context, *RequestByIDs) (*Products, error)
-	GetProductsByShopIDs(context.Context, *RequestByIDs) (*Products, error)
+	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*Products, error)
 	mustEmbedUnimplementedProductsV2Server()
 }
 
@@ -96,7 +96,7 @@ func (UnimplementedProductsV2Server) GetProductByID(context.Context, *RequestByI
 func (UnimplementedProductsV2Server) GetProductsByIDs(context.Context, *RequestByIDs) (*Products, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByIDs not implemented")
 }
-func (UnimplementedProductsV2Server) GetProductsByShopIDs(context.Context, *RequestByIDs) (*Products, error) {
+func (UnimplementedProductsV2Server) GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*Products, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByShopIDs not implemented")
 }
 func (UnimplementedProductsV2Server) mustEmbedUnimplementedProductsV2Server() {}
@@ -167,7 +167,7 @@ func _ProductsV2_GetProductsByIDs_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _ProductsV2_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByIDs)
+	in := new(RequestByShopIDs)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func _ProductsV2_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/cerasusV2.ProductsV2/GetProductsByShopIDs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsV2Server).GetProductsByShopIDs(ctx, req.(*RequestByIDs))
+		return srv.(ProductsV2Server).GetProductsByShopIDs(ctx, req.(*RequestByShopIDs))
 	}
 	return interceptor(ctx, in, info, handler)
 }
