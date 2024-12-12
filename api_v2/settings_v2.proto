@@ -12,6 +12,7 @@ service Settings {
     rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
     rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+    rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
 }
 
 message AppServiceData {

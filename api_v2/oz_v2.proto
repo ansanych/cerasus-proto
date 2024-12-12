@@ -16,4 +16,5 @@ service OZ {
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
     rpc GetPayRoundGraphic (Auth) returns (RoundGraphic) {}
     rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
 }

@@ -32,6 +32,7 @@ type WBClient interface {
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
 }
 
 type wBClient struct {
@@ -132,6 +133,15 @@ func (c *wBClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *wBClient) GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error) {
+	out := new(OrderLeaders)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetOrderLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -146,6 +156,7 @@ type WBServer interface {
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -182,6 +193,9 @@ func (UnimplementedWBServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundG
 }
 func (UnimplementedWBServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
+}
+func (UnimplementedWBServer) GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -376,6 +390,24 @@ func _WB_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetOrderLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetOrderLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetOrderLeaders(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +454,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCountRoundGraphic",
 			Handler:    _WB_GetCountRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetOrderLeaders",
+			Handler:    _WB_GetOrderLeaders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

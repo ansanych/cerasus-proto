@@ -180,3 +180,19 @@ message Product {
 message Products {
     repeated Product products = 1;
 }
+
+//LEADERS
+//orders
+message OrderLeader {
+    int64 productID = 1;
+    string title = 2;
+    string preview = 3;
+    string shop = 4;
+    int32 count = 5;
+    int32 sort = 6;
+    int32 index = 7;
+}
+
+message OrderLeaders {
+    repeated OrderLeader leaders = 1;
+}

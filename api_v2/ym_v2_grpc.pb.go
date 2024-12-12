@@ -32,6 +32,7 @@ type YMClient interface {
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
 }
 
 type yMClient struct {
@@ -132,6 +133,15 @@ func (c *yMClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...g
 	return out, nil
 }
 
+func (c *yMClient) GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error) {
+	out := new(OrderLeaders)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetOrderLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -146,6 +156,7 @@ type YMServer interface {
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -182,6 +193,9 @@ func (UnimplementedYMServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundG
 }
 func (UnimplementedYMServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
+}
+func (UnimplementedYMServer) GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -376,6 +390,24 @@ func _YM_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetOrderLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetOrderLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetOrderLeaders(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +454,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCountRoundGraphic",
 			Handler:    _YM_GetCountRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetOrderLeaders",
+			Handler:    _YM_GetOrderLeaders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
