@@ -191,6 +191,7 @@ message OrderLeader {
     int32 count = 5;
     int32 sort = 6;
     int32 index = 7;
+    int64 shopProductID = 8;
 }
 
 message OrderLeaders {
