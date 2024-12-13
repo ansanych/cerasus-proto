@@ -197,3 +197,18 @@ message OrderLeader {
 message OrderLeaders {
     repeated OrderLeader leaders = 1;
 }
+
+//BRAND
+message Brand {
+    int64 ID = 1;
+    string name = 2;
+    string description = 3;
+    string logo = 4;
+    string url = 5;
+    bool global = 6;
+    bool linked = 7;
+}
+
+message Brands {
+    repeated Brand brands = 1;
+}
