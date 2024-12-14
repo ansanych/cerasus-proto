@@ -22,4 +22,7 @@ message ProductListRequest {
     string shop = 2;
     repeated int64 brands = 3;
     int32 page = 4;
+    string sort = 5;
+    SortOrder order = 6;
+    int32 limit = 7;
 }

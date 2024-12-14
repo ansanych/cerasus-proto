@@ -41,6 +41,11 @@ message Pagination {
     int32 pages = 2;
 }
 
+enum SortOrder {
+    ASC = 0;
+    DESC = 1;
+}
+
 //REQUESTS
 message RequestByID {
     Auth auth = 1;

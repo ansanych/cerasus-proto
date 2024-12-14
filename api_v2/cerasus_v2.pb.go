@@ -120,6 +120,52 @@ func (ServiceStatus) EnumDescriptor() ([]byte, []int) {
 	return file_cerasus_v2_proto_rawDescGZIP(), []int{1}
 }
 
+type SortOrder int32
+
+const (
+	SortOrder_ASC  SortOrder = 0
+	SortOrder_DESC SortOrder = 1
+)
+
+// Enum value maps for SortOrder.
+var (
+	SortOrder_name = map[int32]string{
+		0: "ASC",
+		1: "DESC",
+	}
+	SortOrder_value = map[string]int32{
+		"ASC":  0,
+		"DESC": 1,
+	}
+)
+
+func (x SortOrder) Enum() *SortOrder {
+	p := new(SortOrder)
+	*p = x
+	return p
+}
+
+func (x SortOrder) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SortOrder) Descriptor() protoreflect.EnumDescriptor {
+	return file_cerasus_v2_proto_enumTypes[2].Descriptor()
+}
+
+func (SortOrder) Type() protoreflect.EnumType {
+	return &file_cerasus_v2_proto_enumTypes[2]
+}
+
+func (x SortOrder) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SortOrder.Descriptor instead.
+func (SortOrder) EnumDescriptor() ([]byte, []int) {
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{2}
+}
+
 // Ping
 type PingRequest struct {
 	state         protoimpl.MessageState
@@ -2228,7 +2274,9 @@ var file_cerasus_v2_proto_rawDesc = []byte{
 	0x33, 0x0a, 0x0d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
 	0x12, 0x0c, 0x0a, 0x08, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4c, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b,
 	0x0a, 0x07, 0x45, 0x4e, 0x41, 0x42, 0x4c, 0x45, 0x44, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x42,
-	0x49, 0x44, 0x10, 0x02, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x49, 0x44, 0x10, 0x02, 0x2a, 0x1e, 0x0a, 0x09, 0x53, 0x6f, 0x72, 0x74, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x12, 0x07, 0x0a, 0x03, 0x41, 0x53, 0x43, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x44, 0x45,
+	0x53, 0x43, 0x10, 0x01, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
 	0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61,
 	0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x33,
@@ -2246,59 +2294,60 @@ func file_cerasus_v2_proto_rawDescGZIP() []byte {
 	return file_cerasus_v2_proto_rawDescData
 }
 
-var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_cerasus_v2_proto_goTypes = []interface{}{
 	(Status)(0),              // 0: cerasusV2.Status
 	(ServiceStatus)(0),       // 1: cerasusV2.ServiceStatus
-	(*PingRequest)(nil),      // 2: cerasusV2.PingRequest
-	(*PingReply)(nil),        // 3: cerasusV2.PingReply
-	(*StatusReply)(nil),      // 4: cerasusV2.StatusReply
-	(*Count)(nil),            // 5: cerasusV2.Count
-	(*Pagination)(nil),       // 6: cerasusV2.Pagination
-	(*RequestByID)(nil),      // 7: cerasusV2.RequestByID
-	(*RequestByIDs)(nil),     // 8: cerasusV2.RequestByIDs
-	(*Auth)(nil),             // 9: cerasusV2.Auth
-	(*Company)(nil),          // 10: cerasusV2.Company
-	(*Role)(nil),             // 11: cerasusV2.Role
-	(*User)(nil),             // 12: cerasusV2.User
-	(*Shop)(nil),             // 13: cerasusV2.Shop
-	(*AppShopData)(nil),      // 14: cerasusV2.AppShopData
-	(*ShopWidgetData)(nil),   // 15: cerasusV2.ShopWidgetData
-	(*ShopWidget)(nil),       // 16: cerasusV2.ShopWidget
-	(*LineGraphDataset)(nil), // 17: cerasusV2.LineGraphDataset
-	(*LineGraphShop)(nil),    // 18: cerasusV2.LineGraphShop
-	(*LineGraph)(nil),        // 19: cerasusV2.LineGraph
-	(*LineGraphRequest)(nil), // 20: cerasusV2.LineGraphRequest
-	(*RoundGrapDataset)(nil), // 21: cerasusV2.RoundGrapDataset
-	(*RoundGraphic)(nil),     // 22: cerasusV2.RoundGraphic
-	(*WeekGraphic)(nil),      // 23: cerasusV2.WeekGraphic
-	(*ShopProductLinks)(nil), // 24: cerasusV2.ShopProductLinks
-	(*Product)(nil),          // 25: cerasusV2.Product
-	(*ProductList)(nil),      // 26: cerasusV2.ProductList
-	(*OrderLeader)(nil),      // 27: cerasusV2.OrderLeader
-	(*OrderLeaders)(nil),     // 28: cerasusV2.OrderLeaders
-	(*Brand)(nil),            // 29: cerasusV2.Brand
-	(*Brands)(nil),           // 30: cerasusV2.Brands
+	(SortOrder)(0),           // 2: cerasusV2.SortOrder
+	(*PingRequest)(nil),      // 3: cerasusV2.PingRequest
+	(*PingReply)(nil),        // 4: cerasusV2.PingReply
+	(*StatusReply)(nil),      // 5: cerasusV2.StatusReply
+	(*Count)(nil),            // 6: cerasusV2.Count
+	(*Pagination)(nil),       // 7: cerasusV2.Pagination
+	(*RequestByID)(nil),      // 8: cerasusV2.RequestByID
+	(*RequestByIDs)(nil),     // 9: cerasusV2.RequestByIDs
+	(*Auth)(nil),             // 10: cerasusV2.Auth
+	(*Company)(nil),          // 11: cerasusV2.Company
+	(*Role)(nil),             // 12: cerasusV2.Role
+	(*User)(nil),             // 13: cerasusV2.User
+	(*Shop)(nil),             // 14: cerasusV2.Shop
+	(*AppShopData)(nil),      // 15: cerasusV2.AppShopData
+	(*ShopWidgetData)(nil),   // 16: cerasusV2.ShopWidgetData
+	(*ShopWidget)(nil),       // 17: cerasusV2.ShopWidget
+	(*LineGraphDataset)(nil), // 18: cerasusV2.LineGraphDataset
+	(*LineGraphShop)(nil),    // 19: cerasusV2.LineGraphShop
+	(*LineGraph)(nil),        // 20: cerasusV2.LineGraph
+	(*LineGraphRequest)(nil), // 21: cerasusV2.LineGraphRequest
+	(*RoundGrapDataset)(nil), // 22: cerasusV2.RoundGrapDataset
+	(*RoundGraphic)(nil),     // 23: cerasusV2.RoundGraphic
+	(*WeekGraphic)(nil),      // 24: cerasusV2.WeekGraphic
+	(*ShopProductLinks)(nil), // 25: cerasusV2.ShopProductLinks
+	(*Product)(nil),          // 26: cerasusV2.Product
+	(*ProductList)(nil),      // 27: cerasusV2.ProductList
+	(*OrderLeader)(nil),      // 28: cerasusV2.OrderLeader
+	(*OrderLeaders)(nil),     // 29: cerasusV2.OrderLeaders
+	(*Brand)(nil),            // 30: cerasusV2.Brand
+	(*Brands)(nil),           // 31: cerasusV2.Brands
 }
 var file_cerasus_v2_proto_depIdxs = []int32{
 	0,  // 0: cerasusV2.StatusReply.status:type_name -> cerasusV2.Status
-	9,  // 1: cerasusV2.RequestByID.auth:type_name -> cerasusV2.Auth
-	9,  // 2: cerasusV2.RequestByIDs.auth:type_name -> cerasusV2.Auth
-	11, // 3: cerasusV2.Auth.roles:type_name -> cerasusV2.Role
-	10, // 4: cerasusV2.User.company:type_name -> cerasusV2.Company
-	11, // 5: cerasusV2.User.roles:type_name -> cerasusV2.Role
-	13, // 6: cerasusV2.AppShopData.shop:type_name -> cerasusV2.Shop
-	15, // 7: cerasusV2.ShopWidget.data:type_name -> cerasusV2.ShopWidgetData
-	17, // 8: cerasusV2.LineGraph.datasets:type_name -> cerasusV2.LineGraphDataset
-	18, // 9: cerasusV2.LineGraph.shops:type_name -> cerasusV2.LineGraphShop
-	9,  // 10: cerasusV2.LineGraphRequest.auth:type_name -> cerasusV2.Auth
-	21, // 11: cerasusV2.RoundGraphic.datasets:type_name -> cerasusV2.RoundGrapDataset
-	24, // 12: cerasusV2.Product.shopProductLinks:type_name -> cerasusV2.ShopProductLinks
-	25, // 13: cerasusV2.ProductList.products:type_name -> cerasusV2.Product
-	6,  // 14: cerasusV2.ProductList.pagination:type_name -> cerasusV2.Pagination
-	27, // 15: cerasusV2.OrderLeaders.leaders:type_name -> cerasusV2.OrderLeader
-	29, // 16: cerasusV2.Brands.brands:type_name -> cerasusV2.Brand
+	10, // 1: cerasusV2.RequestByID.auth:type_name -> cerasusV2.Auth
+	10, // 2: cerasusV2.RequestByIDs.auth:type_name -> cerasusV2.Auth
+	12, // 3: cerasusV2.Auth.roles:type_name -> cerasusV2.Role
+	11, // 4: cerasusV2.User.company:type_name -> cerasusV2.Company
+	12, // 5: cerasusV2.User.roles:type_name -> cerasusV2.Role
+	14, // 6: cerasusV2.AppShopData.shop:type_name -> cerasusV2.Shop
+	16, // 7: cerasusV2.ShopWidget.data:type_name -> cerasusV2.ShopWidgetData
+	18, // 8: cerasusV2.LineGraph.datasets:type_name -> cerasusV2.LineGraphDataset
+	19, // 9: cerasusV2.LineGraph.shops:type_name -> cerasusV2.LineGraphShop
+	10, // 10: cerasusV2.LineGraphRequest.auth:type_name -> cerasusV2.Auth
+	22, // 11: cerasusV2.RoundGraphic.datasets:type_name -> cerasusV2.RoundGrapDataset
+	25, // 12: cerasusV2.Product.shopProductLinks:type_name -> cerasusV2.ShopProductLinks
+	26, // 13: cerasusV2.ProductList.products:type_name -> cerasusV2.Product
+	7,  // 14: cerasusV2.ProductList.pagination:type_name -> cerasusV2.Pagination
+	28, // 15: cerasusV2.OrderLeaders.leaders:type_name -> cerasusV2.OrderLeader
+	30, // 16: cerasusV2.Brands.brands:type_name -> cerasusV2.Brand
 	17, // [17:17] is the sub-list for method output_type
 	17, // [17:17] is the sub-list for method input_type
 	17, // [17:17] is the sub-list for extension type_name
@@ -2666,7 +2715,7 @@ func file_cerasus_v2_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_v2_proto_rawDesc,
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   0,
