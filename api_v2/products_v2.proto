@@ -5,11 +5,11 @@ package cerasusV2;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-service ProductsV2 {
+service Products {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductByID (RequestByID) returns (Product) {}
-    rpc GetProductsByIDs (RequestByIDs) returns (Products) {}
-    rpc GetProductsByShopIDs (RequestByShopIDs) returns (Products) {}
+    rpc GetProductsByIDs (RequestByIDs) returns (ProductList) {}
+    rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
 }
 
 message RequestByShopIDs {

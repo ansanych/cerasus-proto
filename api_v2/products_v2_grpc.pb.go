@@ -18,194 +18,194 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ProductsV2Client is the client API for ProductsV2 service.
+// ProductsClient is the client API for Products service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ProductsV2Client interface {
+type ProductsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductByID(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error)
-	GetProductsByIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*Products, error)
-	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*Products, error)
+	GetProductsByIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductList, error)
+	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error)
 }
 
-type productsV2Client struct {
+type productsClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewProductsV2Client(cc grpc.ClientConnInterface) ProductsV2Client {
-	return &productsV2Client{cc}
+func NewProductsClient(cc grpc.ClientConnInterface) ProductsClient {
+	return &productsClient{cc}
 }
 
-func (c *productsV2Client) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+func (c *productsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.ProductsV2/Ping", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/Ping", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productsV2Client) GetProductByID(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error) {
+func (c *productsClient) GetProductByID(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
-	err := c.cc.Invoke(ctx, "/cerasusV2.ProductsV2/GetProductByID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productsV2Client) GetProductsByIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*Products, error) {
-	out := new(Products)
-	err := c.cc.Invoke(ctx, "/cerasusV2.ProductsV2/GetProductsByIDs", in, out, opts...)
+func (c *productsClient) GetProductsByIDs(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductsByIDs", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *productsV2Client) GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*Products, error) {
-	out := new(Products)
-	err := c.cc.Invoke(ctx, "/cerasusV2.ProductsV2/GetProductsByShopIDs", in, out, opts...)
+func (c *productsClient) GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductsByShopIDs", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ProductsV2Server is the server API for ProductsV2 service.
-// All implementations must embed UnimplementedProductsV2Server
+// ProductsServer is the server API for Products service.
+// All implementations must embed UnimplementedProductsServer
 // for forward compatibility
-type ProductsV2Server interface {
+type ProductsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductByID(context.Context, *RequestByID) (*Product, error)
-	GetProductsByIDs(context.Context, *RequestByIDs) (*Products, error)
-	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*Products, error)
-	mustEmbedUnimplementedProductsV2Server()
+	GetProductsByIDs(context.Context, *RequestByIDs) (*ProductList, error)
+	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error)
+	mustEmbedUnimplementedProductsServer()
 }
 
-// UnimplementedProductsV2Server must be embedded to have forward compatible implementations.
-type UnimplementedProductsV2Server struct {
+// UnimplementedProductsServer must be embedded to have forward compatible implementations.
+type UnimplementedProductsServer struct {
 }
 
-func (UnimplementedProductsV2Server) Ping(context.Context, *PingRequest) (*PingReply, error) {
+func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedProductsV2Server) GetProductByID(context.Context, *RequestByID) (*Product, error) {
+func (UnimplementedProductsServer) GetProductByID(context.Context, *RequestByID) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductByID not implemented")
 }
-func (UnimplementedProductsV2Server) GetProductsByIDs(context.Context, *RequestByIDs) (*Products, error) {
+func (UnimplementedProductsServer) GetProductsByIDs(context.Context, *RequestByIDs) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByIDs not implemented")
 }
-func (UnimplementedProductsV2Server) GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*Products, error) {
+func (UnimplementedProductsServer) GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByShopIDs not implemented")
 }
-func (UnimplementedProductsV2Server) mustEmbedUnimplementedProductsV2Server() {}
+func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
-// UnsafeProductsV2Server may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ProductsV2Server will
+// UnsafeProductsServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ProductsServer will
 // result in compilation errors.
-type UnsafeProductsV2Server interface {
-	mustEmbedUnimplementedProductsV2Server()
+type UnsafeProductsServer interface {
+	mustEmbedUnimplementedProductsServer()
 }
 
-func RegisterProductsV2Server(s grpc.ServiceRegistrar, srv ProductsV2Server) {
-	s.RegisterService(&ProductsV2_ServiceDesc, srv)
+func RegisterProductsServer(s grpc.ServiceRegistrar, srv ProductsServer) {
+	s.RegisterService(&Products_ServiceDesc, srv)
 }
 
-func _ProductsV2_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Products_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductsV2Server).Ping(ctx, in)
+		return srv.(ProductsServer).Ping(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.ProductsV2/Ping",
+		FullMethod: "/cerasusV2.Products/Ping",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsV2Server).Ping(ctx, req.(*PingRequest))
+		return srv.(ProductsServer).Ping(ctx, req.(*PingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProductsV2_GetProductByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Products_GetProductByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByID)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductsV2Server).GetProductByID(ctx, in)
+		return srv.(ProductsServer).GetProductByID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.ProductsV2/GetProductByID",
+		FullMethod: "/cerasusV2.Products/GetProductByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsV2Server).GetProductByID(ctx, req.(*RequestByID))
+		return srv.(ProductsServer).GetProductByID(ctx, req.(*RequestByID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProductsV2_GetProductsByIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Products_GetProductsByIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByIDs)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductsV2Server).GetProductsByIDs(ctx, in)
+		return srv.(ProductsServer).GetProductsByIDs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.ProductsV2/GetProductsByIDs",
+		FullMethod: "/cerasusV2.Products/GetProductsByIDs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsV2Server).GetProductsByIDs(ctx, req.(*RequestByIDs))
+		return srv.(ProductsServer).GetProductsByIDs(ctx, req.(*RequestByIDs))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProductsV2_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Products_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByShopIDs)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductsV2Server).GetProductsByShopIDs(ctx, in)
+		return srv.(ProductsServer).GetProductsByShopIDs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.ProductsV2/GetProductsByShopIDs",
+		FullMethod: "/cerasusV2.Products/GetProductsByShopIDs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsV2Server).GetProductsByShopIDs(ctx, req.(*RequestByShopIDs))
+		return srv.(ProductsServer).GetProductsByShopIDs(ctx, req.(*RequestByShopIDs))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ProductsV2_ServiceDesc is the grpc.ServiceDesc for ProductsV2 service.
+// Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ProductsV2_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cerasusV2.ProductsV2",
-	HandlerType: (*ProductsV2Server)(nil),
+var Products_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "cerasusV2.Products",
+	HandlerType: (*ProductsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Ping",
-			Handler:    _ProductsV2_Ping_Handler,
+			Handler:    _Products_Ping_Handler,
 		},
 		{
 			MethodName: "GetProductByID",
-			Handler:    _ProductsV2_GetProductByID_Handler,
+			Handler:    _Products_GetProductByID_Handler,
 		},
 		{
 			MethodName: "GetProductsByIDs",
-			Handler:    _ProductsV2_GetProductsByIDs_Handler,
+			Handler:    _Products_GetProductsByIDs_Handler,
 		},
 		{
 			MethodName: "GetProductsByShopIDs",
-			Handler:    _ProductsV2_GetProductsByShopIDs_Handler,
+			Handler:    _Products_GetProductsByShopIDs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

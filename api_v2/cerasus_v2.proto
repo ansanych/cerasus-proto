@@ -177,7 +177,7 @@ message Product {
     repeated ShopProductLinks shopProductLinks = 6;
 }
 
-message Products {
+message ProductList {
     repeated Product products = 1;
 }
 
