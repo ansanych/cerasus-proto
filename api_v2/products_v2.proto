@@ -7,8 +7,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Products {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc GetProductByID (RequestByID) returns (Product) {}
-    rpc GetProductsByIDs (RequestByIDs) returns (ProductList) {}
+    rpc GetProductList (ProductListRequest) returns (ProductList) {}
     rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
 }
 
@@ -16,4 +15,11 @@ message RequestByShopIDs {
     Auth auth = 1;
     repeated int64 ID = 2;
     string shop = 3;
+}
+
+message ProductListRequest {
+    Auth auth = 1;
+    string shop = 2;
+    repeated int64 brands = 3;
+    int32 page = 4;
 }

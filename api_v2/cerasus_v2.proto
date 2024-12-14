@@ -36,8 +36,9 @@ message Count {
     int32 count = 1;
 }
 
-message FloatData {
-    repeated float data = 1;
+message Pagination {
+    int32 page = 1;
+    int32 pages = 2;
 }
 
 //REQUESTS
@@ -179,6 +180,7 @@ message Product {
 
 message ProductList {
     repeated Product products = 1;
+    Pagination pagination = 2;
 }
 
 //LEADERS
