@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetProductsCount(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*Count, error)
 	GetProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error)
@@ -39,6 +40,15 @@ func NewProductsClient(cc grpc.ClientConnInterface) ProductsClient {
 func (c *productsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Products/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) GetProductsCount(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductsCount", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,6 +87,7 @@ func (c *productsClient) GetProductsByShopIDs(ctx context.Context, in *RequestBy
 // for forward compatibility
 type ProductsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetProductsCount(context.Context, *ProductListRequest) (*Count, error)
 	GetProductList(context.Context, *ProductListRequest) (*ProductList, error)
 	GetProductSearch(context.Context, *SearchRequest) (*ProductList, error)
 	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error)
@@ -89,6 +100,9 @@ type UnimplementedProductsServer struct {
 
 func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedProductsServer) GetProductsCount(context.Context, *ProductListRequest) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
 }
 func (UnimplementedProductsServer) GetProductList(context.Context, *ProductListRequest) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
@@ -126,6 +140,24 @@ func _Products_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductsServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetProductsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductsCount(ctx, req.(*ProductListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -194,6 +226,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Products_Ping_Handler,
+		},
+		{
+			MethodName: "GetProductsCount",
+			Handler:    _Products_GetProductsCount_Handler,
 		},
 		{
 			MethodName: "GetProductList",

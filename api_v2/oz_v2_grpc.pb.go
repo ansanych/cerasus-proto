@@ -27,6 +27,7 @@ type OZClient interface {
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetProductsCountUnsorted(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
@@ -82,6 +83,15 @@ func (c *oZClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opt
 func (c *oZClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
 	out := new(Count)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetProductsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetProductsCountUnsorted(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetProductsCountUnsorted", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -151,6 +161,7 @@ type OZServer interface {
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
+	GetProductsCountUnsorted(context.Context, *Auth) (*Count, error)
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
@@ -178,6 +189,9 @@ func (UnimplementedOZServer) GetMainGraphic(context.Context, *LineGraphRequest) 
 }
 func (UnimplementedOZServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedOZServer) GetProductsCountUnsorted(context.Context, *Auth) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCountUnsorted not implemented")
 }
 func (UnimplementedOZServer) GetFlowGraphicData(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFlowGraphicData not implemented")
@@ -296,6 +310,24 @@ func _OZ_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OZServer).GetProductsCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetProductsCountUnsorted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetProductsCountUnsorted(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetProductsCountUnsorted",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetProductsCountUnsorted(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -434,6 +466,10 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsCount",
 			Handler:    _OZ_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetProductsCountUnsorted",
+			Handler:    _OZ_GetProductsCountUnsorted_Handler,
 		},
 		{
 			MethodName: "GetFlowGraphicData",
