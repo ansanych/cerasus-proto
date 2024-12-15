@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error)
+	GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error)
 }
 
@@ -53,6 +54,15 @@ func (c *productsClient) GetProductList(ctx context.Context, in *ProductListRequ
 	return out, nil
 }
 
+func (c *productsClient) GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productsClient) GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error) {
 	out := new(ProductList)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductsByShopIDs", in, out, opts...)
@@ -68,6 +78,7 @@ func (c *productsClient) GetProductsByShopIDs(ctx context.Context, in *RequestBy
 type ProductsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductList(context.Context, *ProductListRequest) (*ProductList, error)
+	GetProductSearch(context.Context, *SearchRequest) (*ProductList, error)
 	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error)
 	mustEmbedUnimplementedProductsServer()
 }
@@ -81,6 +92,9 @@ func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingRep
 }
 func (UnimplementedProductsServer) GetProductList(context.Context, *ProductListRequest) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
+}
+func (UnimplementedProductsServer) GetProductSearch(context.Context, *SearchRequest) (*ProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductSearch not implemented")
 }
 func (UnimplementedProductsServer) GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByShopIDs not implemented")
@@ -134,6 +148,24 @@ func _Products_GetProductList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_GetProductSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetProductSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductSearch(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Products_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByShopIDs)
 	if err := dec(in); err != nil {
@@ -166,6 +198,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductList",
 			Handler:    _Products_GetProductList_Handler,
+		},
+		{
+			MethodName: "GetProductSearch",
+			Handler:    _Products_GetProductSearch_Handler,
 		},
 		{
 			MethodName: "GetProductsByShopIDs",
