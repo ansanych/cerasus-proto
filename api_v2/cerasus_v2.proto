@@ -188,6 +188,7 @@ message Product {
     bool active = 4;
     string preview = 5;
     repeated ShopProductLinks shopProductLinks = 6;
+    Brand brand = 7;
 }
 
 message ProductList {
