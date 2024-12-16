@@ -11,6 +11,7 @@ service Products {
     rpc GetProductList (ProductListRequest) returns (ProductList) {}
     rpc GetProductSearch (SearchRequest) returns (ProductList) {}
     rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
+    rpc GetProduct (RequestByID) returns (Product) {}
 }
 
 message RequestByShopIDs {

@@ -27,6 +27,7 @@ type ProductsClient interface {
 	GetProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error)
+	GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error)
 }
 
 type productsClient struct {
@@ -82,6 +83,15 @@ func (c *productsClient) GetProductsByShopIDs(ctx context.Context, in *RequestBy
 	return out, nil
 }
 
+func (c *productsClient) GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type ProductsServer interface {
 	GetProductList(context.Context, *ProductListRequest) (*ProductList, error)
 	GetProductSearch(context.Context, *SearchRequest) (*ProductList, error)
 	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error)
+	GetProduct(context.Context, *RequestByID) (*Product, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedProductsServer) GetProductSearch(context.Context, *SearchRequ
 }
 func (UnimplementedProductsServer) GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsByShopIDs not implemented")
+}
+func (UnimplementedProductsServer) GetProduct(context.Context, *RequestByID) (*Product, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -216,6 +230,24 @@ func _Products_GetProductsByShopIDs_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProduct(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsByShopIDs",
 			Handler:    _Products_GetProductsByShopIDs_Handler,
+		},
+		{
+			MethodName: "GetProduct",
+			Handler:    _Products_GetProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
