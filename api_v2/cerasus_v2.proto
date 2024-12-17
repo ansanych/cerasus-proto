@@ -203,6 +203,10 @@ message ShopProduct {
     string article = 3;
 }
 
+message ShopProductList {
+    repeated ShopProduct shopProducts = 1;
+}
+
 //LEADERS
 //orders
 message OrderLeader {

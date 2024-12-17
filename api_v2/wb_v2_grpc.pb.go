@@ -34,6 +34,7 @@ type WBClient interface {
 	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
+	GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 }
 
 type wBClient struct {
@@ -152,6 +153,15 @@ func (c *wBClient) GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.C
 	return out, nil
 }
 
+func (c *wBClient) GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetShopProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -168,6 +178,7 @@ type WBServer interface {
 	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
+	GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -210,6 +221,9 @@ func (UnimplementedWBServer) GetCountRoundGraphic(context.Context, *Auth) (*Roun
 }
 func (UnimplementedWBServer) GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
+}
+func (UnimplementedWBServer) GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProducts not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -440,6 +454,24 @@ func _WB_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetShopProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetShopProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetShopProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetShopProducts(ctx, req.(*RequestByIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +526,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrderLeaders",
 			Handler:    _WB_GetOrderLeaders_Handler,
+		},
+		{
+			MethodName: "GetShopProducts",
+			Handler:    _WB_GetShopProducts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -18,4 +18,5 @@ service WB {
     rpc GetPayRoundGraphic (Auth) returns (RoundGraphic) {}
     rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
 }
