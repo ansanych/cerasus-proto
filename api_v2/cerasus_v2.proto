@@ -179,6 +179,7 @@ message WeekGraphic {
 message ShopProductLinks {
     string shopCode = 1;
     repeated int64 shopProductID = 2;
+    repeated Product shopProducts = 3;
 }
 
 message Product {
