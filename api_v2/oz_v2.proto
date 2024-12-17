@@ -19,4 +19,5 @@ service OZ {
     rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }

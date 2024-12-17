@@ -46,6 +46,13 @@ enum SortOrder {
     DESC = 1;
 }
 
+enum Level {
+    NOLEVEL = 0;
+    LOW = 1;
+    MIDDLE = 2;
+    HIGH = 3;
+}
+
 //REQUESTS
 message RequestByID {
     Auth auth = 1;
@@ -62,6 +69,14 @@ message SearchRequest {
     Auth auth = 1;
     string search = 2;
     string shop = 3;
+}
+
+message RequestByDates {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+    int64 ID = 4;
+    repeated int64 IDS = 5;
 }
 
 // Auth
@@ -146,6 +161,11 @@ message LineGraph {
     repeated string labels = 1;
     repeated LineGraphDataset datasets = 2;
     repeated LineGraphShop shops = 3;
+    string graphicName = 4;
+}
+
+message LineGraphics {
+    repeated LineGraph graphics = 1;
 }
 
 message LineGraphRequest {
@@ -235,4 +255,27 @@ message Brand {
 
 message Brands {
     repeated Brand brands = 1;
+}
+
+//SALES
+message Sale {
+    int64 ID = 1;
+    string shop = 2;
+    string date = 3;
+    ShopProduct shopProduct = 4;
+    Product product = 5;
+    int32 count = 6;
+    float realisation = 7;
+    float purchase = 8;
+    float pay = 9;
+    float tax = 10;
+    float margin = 11;
+    float marginality = 12;
+    Level marginalityLevel = 13;
+    bool final = 14;
+    bool return = 15;
+}
+
+message Sales {
+    repeated Sale sales = 1;
 }

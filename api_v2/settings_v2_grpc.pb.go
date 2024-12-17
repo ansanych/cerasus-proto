@@ -31,6 +31,7 @@ type SettingsClient interface {
 	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
 	GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error)
 	GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
+	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 }
 
 type settingsClient struct {
@@ -122,6 +123,15 @@ func (c *settingsClient) GetBrand(ctx context.Context, in *RequestByID, opts ...
 	return out, nil
 }
 
+func (c *settingsClient) GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error) {
+	out := new(LineGraphics)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetProductGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type SettingsServer interface {
 	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
 	GetCompanyBrands(context.Context, *Auth) (*Brands, error)
 	GetBrand(context.Context, *RequestByID) (*Brand, error)
+	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedSettingsServer) GetCompanyBrands(context.Context, *Auth) (*Br
 }
 func (UnimplementedSettingsServer) GetBrand(context.Context, *RequestByID) (*Brand, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
+}
+func (UnimplementedSettingsServer) GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductGraphics not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -344,6 +358,24 @@ func _Settings_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetProductGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetProductGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetProductGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetProductGraphics(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBrand",
 			Handler:    _Settings_GetBrand_Handler,
+		},
+		{
+			MethodName: "GetProductGraphics",
+			Handler:    _Settings_GetProductGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

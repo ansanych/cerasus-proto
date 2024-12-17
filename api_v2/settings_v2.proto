@@ -15,6 +15,7 @@ service Settings {
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
     rpc GetCompanyBrands (Auth) returns (Brands) {}
     rpc GetBrand (RequestByID) returns (Brand) {}
+    rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
 }
 
 message AppServiceData {
