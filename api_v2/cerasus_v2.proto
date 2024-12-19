@@ -280,3 +280,21 @@ message Sale {
 message Sales {
     repeated Sale sales = 1;
 }
+
+//PURCHASE
+message Purchase {
+    float purchase = 1;
+    string date_from = 2;
+}
+
+//TAX
+message Tax {
+    int32 year = 1;
+    float value = 2;
+    string name = 3;
+    string description = 4;
+}
+
+message Taxes {
+    repeated Tax data = 1;
+}

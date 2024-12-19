@@ -13,6 +13,7 @@ service Products {
     rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
     rpc GetProduct (RequestByID) returns (Product) {}
     rpc GetShopProductsMatch (RequestByShopIDs) returns (ShopProductsMatches) {}
+    rpc GetPurchases (RequestByIDs) returns (ProductsPurchases) {}
 }
 
 message RequestByShopIDs {
@@ -39,4 +40,13 @@ message ShopProductsMatch {
 message ShopProductsMatches {
     string shop = 1;
     repeated ShopProductsMatch data = 2;
+}
+
+message ProductPurchases {
+    int64 productID = 1;
+    repeated Purchase purchase = 2;
+}
+
+message ProductsPurchases {
+    repeated ProductPurchases data = 1;
 }
