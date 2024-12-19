@@ -28,6 +28,7 @@ type ProductsClient interface {
 	GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductsByShopIDs(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ProductList, error)
 	GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error)
+	GetShopProductsMatch(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ShopProductsMatches, error)
 }
 
 type productsClient struct {
@@ -92,6 +93,15 @@ func (c *productsClient) GetProduct(ctx context.Context, in *RequestByID, opts .
 	return out, nil
 }
 
+func (c *productsClient) GetShopProductsMatch(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ShopProductsMatches, error) {
+	out := new(ShopProductsMatches)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetShopProductsMatch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -102,6 +112,7 @@ type ProductsServer interface {
 	GetProductSearch(context.Context, *SearchRequest) (*ProductList, error)
 	GetProductsByShopIDs(context.Context, *RequestByShopIDs) (*ProductList, error)
 	GetProduct(context.Context, *RequestByID) (*Product, error)
+	GetShopProductsMatch(context.Context, *RequestByShopIDs) (*ShopProductsMatches, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -126,6 +137,9 @@ func (UnimplementedProductsServer) GetProductsByShopIDs(context.Context, *Reques
 }
 func (UnimplementedProductsServer) GetProduct(context.Context, *RequestByID) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
+}
+func (UnimplementedProductsServer) GetShopProductsMatch(context.Context, *RequestByShopIDs) (*ShopProductsMatches, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductsMatch not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -248,6 +262,24 @@ func _Products_GetProduct_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_GetShopProductsMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByShopIDs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetShopProductsMatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetShopProductsMatch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetShopProductsMatch(ctx, req.(*RequestByShopIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +310,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProduct",
 			Handler:    _Products_GetProduct_Handler,
+		},
+		{
+			MethodName: "GetShopProductsMatch",
+			Handler:    _Products_GetShopProductsMatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
