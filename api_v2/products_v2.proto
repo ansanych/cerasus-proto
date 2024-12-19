@@ -12,6 +12,7 @@ service Products {
     rpc GetProductSearch (SearchRequest) returns (ProductList) {}
     rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
     rpc GetProduct (RequestByID) returns (Product) {}
+    rpc GetShopProductsMatch (RequestByShopIDs) returns (ShopProductsMatches) {}
 }
 
 message RequestByShopIDs {
@@ -28,4 +29,14 @@ message ProductListRequest {
     string sort = 5;
     SortOrder order = 6;
     int32 limit = 7;
+}
+
+message ShopProductsMatch {
+    int64 productID = 1;
+    int64 shopProductID = 2;
+}
+
+message ShopProductsMatches {
+    string shop = 1;
+    repeated ShopProductsMatch data = 2;
 }
