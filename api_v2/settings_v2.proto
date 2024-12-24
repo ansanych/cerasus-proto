@@ -17,6 +17,7 @@ service Settings {
     rpc GetBrand (RequestByID) returns (Brand) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetTaxes(Auth) returns (Taxes) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }
 
 message AppServiceData {
