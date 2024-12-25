@@ -78,6 +78,7 @@ message RequestByDates {
     int64 ID = 4;
     repeated int64 IDS = 5;
     string shop = 6;
+    string step = 7;
 }
 
 // Auth
