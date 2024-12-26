@@ -79,6 +79,8 @@ message RequestByDates {
     repeated int64 IDS = 5;
     string shop = 6;
     string step = 7;
+    int32 page = 8;
+    int32 limit = 9;
 }
 
 // Auth
@@ -280,6 +282,7 @@ message Sale {
 
 message Sales {
     repeated Sale sales = 1;
+    Pagination pagination = 2;
 }
 
 //PURCHASE
