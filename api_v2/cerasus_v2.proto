@@ -48,9 +48,10 @@ enum SortOrder {
 
 enum Level {
     NOLEVEL = 0;
-    LOW = 1;
-    MIDDLE = 2;
-    HIGH = 3;
+    INFERIOR = 1;
+    LOW = 2;
+    MIDDLE = 3;
+    SUPERIOR = 4;
 }
 
 //REQUESTS
