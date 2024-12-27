@@ -51,7 +51,8 @@ enum Level {
     INFERIOR = 1;
     LOW = 2;
     MIDDLE = 3;
-    SUPERIOR = 4;
+    HIGH = 4;
+    SUPERIOR = 5;
 }
 
 //REQUESTS
