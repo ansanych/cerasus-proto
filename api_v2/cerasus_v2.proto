@@ -233,6 +233,17 @@ message ShopProductList {
     repeated ShopProduct shopProducts = 1;
 }
 
+message ProductWidgetShops {
+    string shop = 1;
+    float value = 2;
+}
+
+message ProductWidget {
+    string type = 1;
+    float value = 2;
+    repeated ProductWidgetShops shopData = 3;
+}
+
 //LEADERS
 //orders
 message OrderLeader {

@@ -21,4 +21,5 @@ service OZ {
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidget) {}
 }

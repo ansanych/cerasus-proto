@@ -37,6 +37,7 @@ type OZClient interface {
 	GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
+	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
 }
 
 type oZClient struct {
@@ -182,6 +183,15 @@ func (c *oZClient) GetSales(ctx context.Context, in *RequestByDates, opts ...grp
 	return out, nil
 }
 
+func (c *oZClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
+	out := new(ProductWidget)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetProductWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
@@ -201,6 +211,7 @@ type OZServer interface {
 	GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
+	GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -252,6 +263,9 @@ func (UnimplementedOZServer) GetProductGraphics(context.Context, *RequestByDates
 }
 func (UnimplementedOZServer) GetSales(context.Context, *RequestByDates) (*Sales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
+}
+func (UnimplementedOZServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -536,6 +550,24 @@ func _OZ_GetSales_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_GetProductWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetProductWidget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetProductWidget",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetProductWidget(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_ServiceDesc is the grpc.ServiceDesc for OZ service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +634,10 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSales",
 			Handler:    _OZ_GetSales_Handler,
+		},
+		{
+			MethodName: "GetProductWidget",
+			Handler:    _OZ_GetProductWidget_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
