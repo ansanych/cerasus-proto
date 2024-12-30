@@ -34,8 +34,8 @@ type SettingsClient interface {
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Taxes, error)
 	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
-	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
-	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
+	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
+	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 }
 
 type settingsClient struct {
@@ -154,8 +154,8 @@ func (c *settingsClient) GetMarginLevels(ctx context.Context, in *Auth, opts ...
 	return out, nil
 }
 
-func (c *settingsClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
-	out := new(ProductWidget)
+func (c *settingsClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error) {
+	out := new(ProductWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetProductWidget", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -163,8 +163,8 @@ func (c *settingsClient) GetProductWidget(ctx context.Context, in *RequestByDate
 	return out, nil
 }
 
-func (c *settingsClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
-	out := new(ProductWidget)
+func (c *settingsClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error) {
+	out := new(ProductWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetProductWidgetOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -188,8 +188,8 @@ type SettingsServer interface {
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetTaxes(context.Context, *Auth) (*Taxes, error)
 	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
-	GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error)
-	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error)
+	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
+	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -233,10 +233,10 @@ func (UnimplementedSettingsServer) GetTaxes(context.Context, *Auth) (*Taxes, err
 func (UnimplementedSettingsServer) GetMarginLevels(context.Context, *Auth) (*MarginLevels, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginLevels not implemented")
 }
-func (UnimplementedSettingsServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error) {
+func (UnimplementedSettingsServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
 }
-func (UnimplementedSettingsServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error) {
+func (UnimplementedSettingsServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}

@@ -244,6 +244,10 @@ message ProductWidget {
     repeated ProductWidgetShops shopData = 3;
 }
 
+message ProductWidgets {
+    repeated ProductWidget data = 1;
+}
+
 //LEADERS
 //orders
 message OrderLeader {

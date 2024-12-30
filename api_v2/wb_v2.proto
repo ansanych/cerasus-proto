@@ -21,6 +21,6 @@ service WB {
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
-    rpc GetProductWidget(RequestByDates) returns (ProductWidget) {}
-    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidget) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
 }

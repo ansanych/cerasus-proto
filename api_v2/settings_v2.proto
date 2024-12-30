@@ -18,8 +18,8 @@ service Settings {
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetTaxes(Auth) returns (Taxes) {}
     rpc GetMarginLevels (Auth) returns (MarginLevels) {}
-    rpc GetProductWidget(RequestByDates) returns (ProductWidget) {}
-    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidget) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
 }
 
 message AppServiceData {

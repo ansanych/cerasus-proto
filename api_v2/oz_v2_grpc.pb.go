@@ -37,8 +37,8 @@ type OZClient interface {
 	GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
-	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
-	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
+	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
+	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 }
 
 type oZClient struct {
@@ -184,8 +184,8 @@ func (c *oZClient) GetSales(ctx context.Context, in *RequestByDates, opts ...grp
 	return out, nil
 }
 
-func (c *oZClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
-	out := new(ProductWidget)
+func (c *oZClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error) {
+	out := new(ProductWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetProductWidget", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -193,8 +193,8 @@ func (c *oZClient) GetProductWidget(ctx context.Context, in *RequestByDates, opt
 	return out, nil
 }
 
-func (c *oZClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
-	out := new(ProductWidget)
+func (c *oZClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error) {
+	out := new(ProductWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetProductWidgetOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -221,8 +221,8 @@ type OZServer interface {
 	GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
-	GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error)
-	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error)
+	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
+	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -275,10 +275,10 @@ func (UnimplementedOZServer) GetProductGraphics(context.Context, *RequestByDates
 func (UnimplementedOZServer) GetSales(context.Context, *RequestByDates) (*Sales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
 }
-func (UnimplementedOZServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error) {
+func (UnimplementedOZServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
 }
-func (UnimplementedOZServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error) {
+func (UnimplementedOZServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
