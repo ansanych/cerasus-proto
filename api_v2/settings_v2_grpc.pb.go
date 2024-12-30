@@ -35,6 +35,7 @@ type SettingsClient interface {
 	GetTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Taxes, error)
 	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
+	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
 }
 
 type settingsClient struct {
@@ -162,6 +163,15 @@ func (c *settingsClient) GetProductWidget(ctx context.Context, in *RequestByDate
 	return out, nil
 }
 
+func (c *settingsClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
+	out := new(ProductWidget)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetProductWidgetOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -179,6 +189,7 @@ type SettingsServer interface {
 	GetTaxes(context.Context, *Auth) (*Taxes, error)
 	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error)
+	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -224,6 +235,9 @@ func (UnimplementedSettingsServer) GetMarginLevels(context.Context, *Auth) (*Mar
 }
 func (UnimplementedSettingsServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
+}
+func (UnimplementedSettingsServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -472,6 +486,24 @@ func _Settings_GetProductWidget_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetProductWidgetOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetProductWidgetOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetProductWidgetOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetProductWidgetOrders(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +562,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductWidget",
 			Handler:    _Settings_GetProductWidget_Handler,
+		},
+		{
+			MethodName: "GetProductWidgetOrders",
+			Handler:    _Settings_GetProductWidgetOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,6 +19,7 @@ service Settings {
     rpc GetTaxes(Auth) returns (Taxes) {}
     rpc GetMarginLevels (Auth) returns (MarginLevels) {}
     rpc GetProductWidget(RequestByDates) returns (ProductWidget) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidget) {}
 }
 
 message AppServiceData {

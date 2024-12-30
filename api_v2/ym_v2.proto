@@ -22,4 +22,5 @@ service YM {
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
     rpc GetProductWidget(RequestByDates) returns (ProductWidget) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidget) {}
 }

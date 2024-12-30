@@ -38,6 +38,7 @@ type WBClient interface {
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
+	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error)
 }
 
 type wBClient struct {
@@ -192,6 +193,15 @@ func (c *wBClient) GetProductWidget(ctx context.Context, in *RequestByDates, opt
 	return out, nil
 }
 
+func (c *wBClient) GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidget, error) {
+	out := new(ProductWidget)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetProductWidgetOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -212,6 +222,7 @@ type WBServer interface {
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error)
+	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -266,6 +277,9 @@ func (UnimplementedWBServer) GetSales(context.Context, *RequestByDates) (*Sales,
 }
 func (UnimplementedWBServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
+}
+func (UnimplementedWBServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidget, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -568,6 +582,24 @@ func _WB_GetProductWidget_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetProductWidgetOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetProductWidgetOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetProductWidgetOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetProductWidgetOrders(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +670,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductWidget",
 			Handler:    _WB_GetProductWidget_Handler,
+		},
+		{
+			MethodName: "GetProductWidgetOrders",
+			Handler:    _WB_GetProductWidgetOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
