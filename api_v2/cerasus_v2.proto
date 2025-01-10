@@ -295,11 +295,18 @@ message Sale {
     Level marginalityLevel = 13;
     bool final = 14;
     bool return = 15;
+    string type = 16;
 }
 
 message Sales {
     repeated Sale sales = 1;
     Pagination pagination = 2;
+}
+
+message SaleRequest {
+    Auth auth = 1;
+    string type = 2;
+    int64 ID = 3;
 }
 
 //PURCHASE
