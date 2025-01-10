@@ -296,6 +296,7 @@ message Sale {
     bool final = 14;
     bool return = 15;
     string type = 16;
+    repeated SaleDetail details = 17;
 }
 
 message Sales {
@@ -307,6 +308,12 @@ message SaleRequest {
     Auth auth = 1;
     string type = 2;
     int64 ID = 3;
+}
+
+message SaleDetail {
+    string name = 1;
+    string date = 2;
+    float value = 3;
 }
 
 //PURCHASE
