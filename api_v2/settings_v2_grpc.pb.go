@@ -36,6 +36,7 @@ type SettingsClient interface {
 	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
+	SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type settingsClient struct {
@@ -172,6 +173,15 @@ func (c *settingsClient) GetProductWidgetOrders(ctx context.Context, in *Request
 	return out, nil
 }
 
+func (c *settingsClient) SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SetGeoPlace", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -190,6 +200,7 @@ type SettingsServer interface {
 	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
+	SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*StatusReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -238,6 +249,9 @@ func (UnimplementedSettingsServer) GetProductWidget(context.Context, *RequestByD
 }
 func (UnimplementedSettingsServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
+}
+func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetGeoPlace not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -504,6 +518,24 @@ func _Settings_GetProductWidgetOrders_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_SetGeoPlace_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetGeoPlaceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SetGeoPlace(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/SetGeoPlace",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SetGeoPlace(ctx, req.(*SetGeoPlaceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +598,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductWidgetOrders",
 			Handler:    _Settings_GetProductWidgetOrders_Handler,
+		},
+		{
+			MethodName: "SetGeoPlace",
+			Handler:    _Settings_SetGeoPlace_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

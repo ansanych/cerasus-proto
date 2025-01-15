@@ -20,6 +20,7 @@ service Settings {
     rpc GetMarginLevels (Auth) returns (MarginLevels) {}
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
+    rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
 }
 
 message AppServiceData {
@@ -49,4 +50,8 @@ message MarginLevelsBrand {
 message MarginLevels {
     repeated MarginLevel levels = 1;
     repeated MarginLevelsBrand brandLevels = 2;
+}
+
+message SetGeoPlaceRequest {
+    repeated GeoPlaceData data = 1;
 }
