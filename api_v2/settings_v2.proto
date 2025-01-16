@@ -56,3 +56,12 @@ message MarginLevels {
 message SetGeoPlaceRequest {
     repeated GeoPlaceData data = 1;
 }
+
+message CompanyShop {
+    string code = 1;
+    bool active = 2;
+}
+
+message CompanyShops {
+    repeated CompanyShop data = 1;
+}
