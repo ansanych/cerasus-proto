@@ -150,6 +150,69 @@ message ShopWidget {
     repeated ShopWidgetData data = 1;
 }
 
+//ShopData
+message ShopData {
+    Shop shop = 1;
+    ShopDataAuth shopAuth = 2;
+    WBParams wbParams = 3;
+    OZParams ozParams = 4;
+    YMParams ymParams = 5;
+}
+
+//---
+message WBDataAuth {
+    int64 token = 1;
+}
+
+message OZDataAuth {
+    int64 clientID = 1;
+    string apiKey = 2;
+}
+
+message YMDataAuth {
+    string token = 1;
+    int64 businessID = 2;
+}
+
+message ShopDataAuth {
+    error bool = 1;
+    string updated = 2;
+    WBDataAuth wb = 3;
+    OZDataAuth oz = 4;
+    YMDataAuth ym = 5;
+}
+
+//---
+message Warehouse {
+    string name = 1;
+    int64 officeID = 2;
+    int64 warehouseID = 3;
+    bool cargoType = 4;
+    bool deliveryType = 5;
+    bool active = 6;
+    string updated = 7;
+}
+message WBParams {
+    repeated Warehouse warehouses = 1;
+}
+
+message OZParams {
+    repeated Warehouse warehouses = 1;
+}
+
+message YMCampaign {
+    string domain = 1;
+    int64 campaignID = 2;
+    int64 clientID = 3;
+    string placementType = 4;
+    string updated = 5;
+}
+
+message YMParams {
+    int64 businessID = 1;
+    repeated YMCampaign campaigns = 2; 
+}
+
 //GRAPHS
 message LineGraphDataset {
     string type = 1;
