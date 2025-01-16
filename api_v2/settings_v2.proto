@@ -21,6 +21,7 @@ service Settings {
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
+    rpc GetCompanyShops(Auth) returns (StatusReply) {}
 }
 
 message AppServiceData {

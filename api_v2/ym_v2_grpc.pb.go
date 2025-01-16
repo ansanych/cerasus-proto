@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type YMClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
+	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
@@ -62,6 +63,15 @@ func (c *yMClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallO
 func (c *yMClient) GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error) {
 	out := new(AppShopData)
 	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetAppData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error) {
+	out := new(ShopData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetShopData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -218,6 +228,7 @@ func (c *yMClient) GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.Ca
 type YMServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
+	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
@@ -246,6 +257,9 @@ func (UnimplementedYMServer) Ping(context.Context, *PingRequest) (*PingReply, er
 }
 func (UnimplementedYMServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
+}
+func (UnimplementedYMServer) GetShopData(context.Context, *Auth) (*ShopData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopData not implemented")
 }
 func (UnimplementedYMServer) GetShopWidget(context.Context, *Auth) (*ShopWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopWidget not implemented")
@@ -340,6 +354,24 @@ func _YM_GetAppData_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(YMServer).GetAppData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetShopData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetShopData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetShopData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetShopData(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -646,6 +678,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAppData",
 			Handler:    _YM_GetAppData_Handler,
+		},
+		{
+			MethodName: "GetShopData",
+			Handler:    _YM_GetShopData_Handler,
 		},
 		{
 			MethodName: "GetShopWidget",

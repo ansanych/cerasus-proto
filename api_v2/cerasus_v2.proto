@@ -18,6 +18,8 @@ enum Status {
     UNKNOWN = 0;
     OK = 1;
     ERROR = 2;
+    TRUE = 3;
+    FALSE = 4;
 }
 
 message StatusReply {
@@ -157,6 +159,7 @@ message ShopData {
     WBParams wbParams = 3;
     OZParams ozParams = 4;
     YMParams ymParams = 5;
+    bool active = 6;
 }
 
 //---
@@ -175,7 +178,7 @@ message YMDataAuth {
 }
 
 message ShopDataAuth {
-    error bool = 1;
+    bool error = 1;
     string updated = 2;
     WBDataAuth wb = 3;
     OZDataAuth oz = 4;

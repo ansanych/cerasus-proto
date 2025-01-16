@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type OZClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
+	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
@@ -62,6 +63,15 @@ func (c *oZClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallO
 func (c *oZClient) GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error) {
 	out := new(AppShopData)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetAppData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error) {
+	out := new(ShopData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetShopData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -218,6 +228,7 @@ func (c *oZClient) GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.Ca
 type OZServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
+	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
@@ -246,6 +257,9 @@ func (UnimplementedOZServer) Ping(context.Context, *PingRequest) (*PingReply, er
 }
 func (UnimplementedOZServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
+}
+func (UnimplementedOZServer) GetShopData(context.Context, *Auth) (*ShopData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopData not implemented")
 }
 func (UnimplementedOZServer) GetShopWidget(context.Context, *Auth) (*ShopWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopWidget not implemented")
@@ -340,6 +354,24 @@ func _OZ_GetAppData_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OZServer).GetAppData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetShopData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetShopData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetShopData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetShopData(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -646,6 +678,10 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAppData",
 			Handler:    _OZ_GetAppData_Handler,
+		},
+		{
+			MethodName: "GetShopData",
+			Handler:    _OZ_GetShopData_Handler,
 		},
 		{
 			MethodName: "GetShopWidget",
