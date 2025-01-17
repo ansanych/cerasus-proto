@@ -41,6 +41,7 @@ type SettingsClient interface {
 	GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error)
 	SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 }
 
 type settingsClient struct {
@@ -222,6 +223,15 @@ func (c *settingsClient) DeleteMargin(ctx context.Context, in *RequestByID, opts
 	return out, nil
 }
 
+func (c *settingsClient) GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error) {
+	out := new(AppTaxes)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetAppTaxes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -245,6 +255,7 @@ type SettingsServer interface {
 	GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error)
 	SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error)
 	DeleteMargin(context.Context, *RequestByID) (*StatusReply, error)
+	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -308,6 +319,9 @@ func (UnimplementedSettingsServer) SetMargin(context.Context, *SetMarginRequest)
 }
 func (UnimplementedSettingsServer) DeleteMargin(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMargin not implemented")
+}
+func (UnimplementedSettingsServer) GetAppTaxes(context.Context, *Auth) (*AppTaxes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAppTaxes not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -664,6 +678,24 @@ func _Settings_DeleteMargin_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetAppTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetAppTaxes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetAppTaxes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetAppTaxes(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +778,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteMargin",
 			Handler:    _Settings_DeleteMargin_Handler,
+		},
+		{
+			MethodName: "GetAppTaxes",
+			Handler:    _Settings_GetAppTaxes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -25,6 +25,7 @@ service Settings {
     rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
     rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
     rpc DeleteMargin(RequestByID) returns (StatusReply) {}
+    rpc GetAppTaxes(Auth) returns (AppTaxes) {}
 }
 
 message AppServiceData {
