@@ -783,6 +783,78 @@ func (x *SetMarginRequest) GetBrandID() int64 {
 	return 0
 }
 
+// /---
+type SetTaxRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth  *Auth   `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Year  int32   `protobuf:"varint,2,opt,name=year,proto3" json:"year,omitempty"`
+	ID    int64   `protobuf:"varint,3,opt,name=ID,proto3" json:"ID,omitempty"`
+	Value float32 `protobuf:"fixed32,4,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *SetTaxRequest) Reset() {
+	*x = SetTaxRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_settings_v2_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetTaxRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetTaxRequest) ProtoMessage() {}
+
+func (x *SetTaxRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_settings_v2_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetTaxRequest.ProtoReflect.Descriptor instead.
+func (*SetTaxRequest) Descriptor() ([]byte, []int) {
+	return file_settings_v2_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SetTaxRequest) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *SetTaxRequest) GetYear() int32 {
+	if x != nil {
+		return x.Year
+	}
+	return 0
+}
+
+func (x *SetTaxRequest) GetID() int64 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
+func (x *SetTaxRequest) GetValue() float32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
 var File_settings_v2_proto protoreflect.FileDescriptor
 
 var file_settings_v2_proto_rawDesc = []byte{
@@ -871,7 +943,14 @@ var file_settings_v2_proto_rawDesc = []byte{
 	0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4d, 0x61, 0x72, 0x67, 0x69, 0x6e, 0x44, 0x61, 0x74,
 	0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x72, 0x61, 0x6e, 0x64,
 	0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x49,
-	0x44, 0x32, 0xa3, 0x0a, 0x0a, 0x08, 0x53, 0x65, 0x74, 0x74, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x36,
+	0x44, 0x22, 0x6e, 0x0a, 0x0d, 0x53, 0x65, 0x74, 0x54, 0x61, 0x78, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x23, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41, 0x75, 0x74,
+	0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x12, 0x0a, 0x04, 0x79, 0x65, 0x61, 0x72, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x79, 0x65, 0x61, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x49,
+	0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x32, 0xe1, 0x0a, 0x0a, 0x08, 0x53, 0x65, 0x74, 0x74, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x36,
 	0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
 	0x56, 0x32, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14,
 	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52,
@@ -953,10 +1032,14 @@ var file_settings_v2_proto_rawDesc = []byte{
 	0x12, 0x35, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x41, 0x70, 0x70, 0x54, 0x61, 0x78, 0x65, 0x73, 0x12,
 	0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41, 0x75, 0x74, 0x68,
 	0x1a, 0x13, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41, 0x70, 0x70,
-	0x54, 0x61, 0x78, 0x65, 0x73, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63,
-	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x54, 0x61, 0x78, 0x65, 0x73, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x06, 0x53, 0x65, 0x74, 0x54, 0x61,
+	0x78, 0x12, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65,
+	0x74, 0x54, 0x61, 0x78, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65,
+	0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72,
+	0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -971,7 +1054,7 @@ func file_settings_v2_proto_rawDescGZIP() []byte {
 	return file_settings_v2_proto_rawDescData
 }
 
-var file_settings_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_settings_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_settings_v2_proto_goTypes = []interface{}{
 	(*AppServiceData)(nil),     // 0: cerasusV2.AppServiceData
 	(*UserAppData)(nil),        // 1: cerasusV2.UserAppData
@@ -986,90 +1069,94 @@ var file_settings_v2_proto_goTypes = []interface{}{
 	(*MarginSettings)(nil),     // 10: cerasusV2.MarginSettings
 	(*GetMarginRequest)(nil),   // 11: cerasusV2.GetMarginRequest
 	(*SetMarginRequest)(nil),   // 12: cerasusV2.SetMarginRequest
-	(ServiceStatus)(0),         // 13: cerasusV2.ServiceStatus
-	(*AppShopData)(nil),        // 14: cerasusV2.AppShopData
-	(Level)(0),                 // 15: cerasusV2.Level
-	(*Brand)(nil),              // 16: cerasusV2.Brand
-	(*GeoPlaceData)(nil),       // 17: cerasusV2.GeoPlaceData
-	(*Auth)(nil),               // 18: cerasusV2.Auth
-	(*PingRequest)(nil),        // 19: cerasusV2.PingRequest
-	(*LineGraphRequest)(nil),   // 20: cerasusV2.LineGraphRequest
-	(*RequestByID)(nil),        // 21: cerasusV2.RequestByID
-	(*RequestByDates)(nil),     // 22: cerasusV2.RequestByDates
-	(*PingReply)(nil),          // 23: cerasusV2.PingReply
-	(*LineGraph)(nil),          // 24: cerasusV2.LineGraph
-	(*RoundGraphic)(nil),       // 25: cerasusV2.RoundGraphic
-	(*WeekGraphic)(nil),        // 26: cerasusV2.WeekGraphic
-	(*OrderLeaders)(nil),       // 27: cerasusV2.OrderLeaders
-	(*Brands)(nil),             // 28: cerasusV2.Brands
-	(*LineGraphics)(nil),       // 29: cerasusV2.LineGraphics
-	(*Taxes)(nil),              // 30: cerasusV2.Taxes
-	(*ProductWidgets)(nil),     // 31: cerasusV2.ProductWidgets
-	(*StatusReply)(nil),        // 32: cerasusV2.StatusReply
-	(*AppTaxes)(nil),           // 33: cerasusV2.AppTaxes
+	(*SetTaxRequest)(nil),      // 13: cerasusV2.SetTaxRequest
+	(ServiceStatus)(0),         // 14: cerasusV2.ServiceStatus
+	(*AppShopData)(nil),        // 15: cerasusV2.AppShopData
+	(Level)(0),                 // 16: cerasusV2.Level
+	(*Brand)(nil),              // 17: cerasusV2.Brand
+	(*GeoPlaceData)(nil),       // 18: cerasusV2.GeoPlaceData
+	(*Auth)(nil),               // 19: cerasusV2.Auth
+	(*PingRequest)(nil),        // 20: cerasusV2.PingRequest
+	(*LineGraphRequest)(nil),   // 21: cerasusV2.LineGraphRequest
+	(*RequestByID)(nil),        // 22: cerasusV2.RequestByID
+	(*RequestByDates)(nil),     // 23: cerasusV2.RequestByDates
+	(*PingReply)(nil),          // 24: cerasusV2.PingReply
+	(*LineGraph)(nil),          // 25: cerasusV2.LineGraph
+	(*RoundGraphic)(nil),       // 26: cerasusV2.RoundGraphic
+	(*WeekGraphic)(nil),        // 27: cerasusV2.WeekGraphic
+	(*OrderLeaders)(nil),       // 28: cerasusV2.OrderLeaders
+	(*Brands)(nil),             // 29: cerasusV2.Brands
+	(*LineGraphics)(nil),       // 30: cerasusV2.LineGraphics
+	(*Taxes)(nil),              // 31: cerasusV2.Taxes
+	(*ProductWidgets)(nil),     // 32: cerasusV2.ProductWidgets
+	(*StatusReply)(nil),        // 33: cerasusV2.StatusReply
+	(*AppTaxes)(nil),           // 34: cerasusV2.AppTaxes
 }
 var file_settings_v2_proto_depIdxs = []int32{
-	13, // 0: cerasusV2.AppServiceData.status:type_name -> cerasusV2.ServiceStatus
-	14, // 1: cerasusV2.UserAppData.shops:type_name -> cerasusV2.AppShopData
+	14, // 0: cerasusV2.AppServiceData.status:type_name -> cerasusV2.ServiceStatus
+	15, // 1: cerasusV2.UserAppData.shops:type_name -> cerasusV2.AppShopData
 	0,  // 2: cerasusV2.UserAppData.services:type_name -> cerasusV2.AppServiceData
-	15, // 3: cerasusV2.MarginLevel.level:type_name -> cerasusV2.Level
-	16, // 4: cerasusV2.MarginLevelsBrand.brand:type_name -> cerasusV2.Brand
+	16, // 3: cerasusV2.MarginLevel.level:type_name -> cerasusV2.Level
+	17, // 4: cerasusV2.MarginLevelsBrand.brand:type_name -> cerasusV2.Brand
 	2,  // 5: cerasusV2.MarginLevelsBrand.levels:type_name -> cerasusV2.MarginLevel
 	2,  // 6: cerasusV2.MarginLevels.levels:type_name -> cerasusV2.MarginLevel
 	3,  // 7: cerasusV2.MarginLevels.brandLevels:type_name -> cerasusV2.MarginLevelsBrand
-	17, // 8: cerasusV2.SetGeoPlaceRequest.data:type_name -> cerasusV2.GeoPlaceData
+	18, // 8: cerasusV2.SetGeoPlaceRequest.data:type_name -> cerasusV2.GeoPlaceData
 	6,  // 9: cerasusV2.CompanyShops.data:type_name -> cerasusV2.CompanyShop
 	8,  // 10: cerasusV2.MarginHistory.data:type_name -> cerasusV2.MarginData
 	8,  // 11: cerasusV2.MarginSettings.data:type_name -> cerasusV2.MarginData
 	9,  // 12: cerasusV2.MarginSettings.history:type_name -> cerasusV2.MarginHistory
-	18, // 13: cerasusV2.GetMarginRequest.auth:type_name -> cerasusV2.Auth
-	18, // 14: cerasusV2.SetMarginRequest.auth:type_name -> cerasusV2.Auth
+	19, // 13: cerasusV2.GetMarginRequest.auth:type_name -> cerasusV2.Auth
+	19, // 14: cerasusV2.SetMarginRequest.auth:type_name -> cerasusV2.Auth
 	8,  // 15: cerasusV2.SetMarginRequest.data:type_name -> cerasusV2.MarginData
-	19, // 16: cerasusV2.Settings.Ping:input_type -> cerasusV2.PingRequest
-	18, // 17: cerasusV2.Settings.GetUserAppData:input_type -> cerasusV2.Auth
-	20, // 18: cerasusV2.Settings.GetMainGraphic:input_type -> cerasusV2.LineGraphRequest
-	18, // 19: cerasusV2.Settings.GetFlowGraphic:input_type -> cerasusV2.Auth
-	18, // 20: cerasusV2.Settings.GetMarginGraphic:input_type -> cerasusV2.Auth
-	20, // 21: cerasusV2.Settings.GetWeekGraphic:input_type -> cerasusV2.LineGraphRequest
-	18, // 22: cerasusV2.Settings.GetOrderLeaders:input_type -> cerasusV2.Auth
-	18, // 23: cerasusV2.Settings.GetCompanyBrands:input_type -> cerasusV2.Auth
-	21, // 24: cerasusV2.Settings.GetBrand:input_type -> cerasusV2.RequestByID
-	22, // 25: cerasusV2.Settings.GetProductGraphics:input_type -> cerasusV2.RequestByDates
-	18, // 26: cerasusV2.Settings.GetTaxes:input_type -> cerasusV2.Auth
-	18, // 27: cerasusV2.Settings.GetMarginLevels:input_type -> cerasusV2.Auth
-	22, // 28: cerasusV2.Settings.GetProductWidget:input_type -> cerasusV2.RequestByDates
-	22, // 29: cerasusV2.Settings.GetProductWidgetOrders:input_type -> cerasusV2.RequestByDates
-	5,  // 30: cerasusV2.Settings.SetGeoPlace:input_type -> cerasusV2.SetGeoPlaceRequest
-	18, // 31: cerasusV2.Settings.GetCompanyShops:input_type -> cerasusV2.Auth
-	11, // 32: cerasusV2.Settings.GetMargin:input_type -> cerasusV2.GetMarginRequest
-	12, // 33: cerasusV2.Settings.SetMargin:input_type -> cerasusV2.SetMarginRequest
-	21, // 34: cerasusV2.Settings.DeleteMargin:input_type -> cerasusV2.RequestByID
-	18, // 35: cerasusV2.Settings.GetAppTaxes:input_type -> cerasusV2.Auth
-	23, // 36: cerasusV2.Settings.Ping:output_type -> cerasusV2.PingReply
-	1,  // 37: cerasusV2.Settings.GetUserAppData:output_type -> cerasusV2.UserAppData
-	24, // 38: cerasusV2.Settings.GetMainGraphic:output_type -> cerasusV2.LineGraph
-	25, // 39: cerasusV2.Settings.GetFlowGraphic:output_type -> cerasusV2.RoundGraphic
-	25, // 40: cerasusV2.Settings.GetMarginGraphic:output_type -> cerasusV2.RoundGraphic
-	26, // 41: cerasusV2.Settings.GetWeekGraphic:output_type -> cerasusV2.WeekGraphic
-	27, // 42: cerasusV2.Settings.GetOrderLeaders:output_type -> cerasusV2.OrderLeaders
-	28, // 43: cerasusV2.Settings.GetCompanyBrands:output_type -> cerasusV2.Brands
-	16, // 44: cerasusV2.Settings.GetBrand:output_type -> cerasusV2.Brand
-	29, // 45: cerasusV2.Settings.GetProductGraphics:output_type -> cerasusV2.LineGraphics
-	30, // 46: cerasusV2.Settings.GetTaxes:output_type -> cerasusV2.Taxes
-	4,  // 47: cerasusV2.Settings.GetMarginLevels:output_type -> cerasusV2.MarginLevels
-	31, // 48: cerasusV2.Settings.GetProductWidget:output_type -> cerasusV2.ProductWidgets
-	31, // 49: cerasusV2.Settings.GetProductWidgetOrders:output_type -> cerasusV2.ProductWidgets
-	32, // 50: cerasusV2.Settings.SetGeoPlace:output_type -> cerasusV2.StatusReply
-	7,  // 51: cerasusV2.Settings.GetCompanyShops:output_type -> cerasusV2.CompanyShops
-	10, // 52: cerasusV2.Settings.GetMargin:output_type -> cerasusV2.MarginSettings
-	32, // 53: cerasusV2.Settings.SetMargin:output_type -> cerasusV2.StatusReply
-	32, // 54: cerasusV2.Settings.DeleteMargin:output_type -> cerasusV2.StatusReply
-	33, // 55: cerasusV2.Settings.GetAppTaxes:output_type -> cerasusV2.AppTaxes
-	36, // [36:56] is the sub-list for method output_type
-	16, // [16:36] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	19, // 16: cerasusV2.SetTaxRequest.auth:type_name -> cerasusV2.Auth
+	20, // 17: cerasusV2.Settings.Ping:input_type -> cerasusV2.PingRequest
+	19, // 18: cerasusV2.Settings.GetUserAppData:input_type -> cerasusV2.Auth
+	21, // 19: cerasusV2.Settings.GetMainGraphic:input_type -> cerasusV2.LineGraphRequest
+	19, // 20: cerasusV2.Settings.GetFlowGraphic:input_type -> cerasusV2.Auth
+	19, // 21: cerasusV2.Settings.GetMarginGraphic:input_type -> cerasusV2.Auth
+	21, // 22: cerasusV2.Settings.GetWeekGraphic:input_type -> cerasusV2.LineGraphRequest
+	19, // 23: cerasusV2.Settings.GetOrderLeaders:input_type -> cerasusV2.Auth
+	19, // 24: cerasusV2.Settings.GetCompanyBrands:input_type -> cerasusV2.Auth
+	22, // 25: cerasusV2.Settings.GetBrand:input_type -> cerasusV2.RequestByID
+	23, // 26: cerasusV2.Settings.GetProductGraphics:input_type -> cerasusV2.RequestByDates
+	19, // 27: cerasusV2.Settings.GetTaxes:input_type -> cerasusV2.Auth
+	19, // 28: cerasusV2.Settings.GetMarginLevels:input_type -> cerasusV2.Auth
+	23, // 29: cerasusV2.Settings.GetProductWidget:input_type -> cerasusV2.RequestByDates
+	23, // 30: cerasusV2.Settings.GetProductWidgetOrders:input_type -> cerasusV2.RequestByDates
+	5,  // 31: cerasusV2.Settings.SetGeoPlace:input_type -> cerasusV2.SetGeoPlaceRequest
+	19, // 32: cerasusV2.Settings.GetCompanyShops:input_type -> cerasusV2.Auth
+	11, // 33: cerasusV2.Settings.GetMargin:input_type -> cerasusV2.GetMarginRequest
+	12, // 34: cerasusV2.Settings.SetMargin:input_type -> cerasusV2.SetMarginRequest
+	22, // 35: cerasusV2.Settings.DeleteMargin:input_type -> cerasusV2.RequestByID
+	19, // 36: cerasusV2.Settings.GetAppTaxes:input_type -> cerasusV2.Auth
+	13, // 37: cerasusV2.Settings.SetTax:input_type -> cerasusV2.SetTaxRequest
+	24, // 38: cerasusV2.Settings.Ping:output_type -> cerasusV2.PingReply
+	1,  // 39: cerasusV2.Settings.GetUserAppData:output_type -> cerasusV2.UserAppData
+	25, // 40: cerasusV2.Settings.GetMainGraphic:output_type -> cerasusV2.LineGraph
+	26, // 41: cerasusV2.Settings.GetFlowGraphic:output_type -> cerasusV2.RoundGraphic
+	26, // 42: cerasusV2.Settings.GetMarginGraphic:output_type -> cerasusV2.RoundGraphic
+	27, // 43: cerasusV2.Settings.GetWeekGraphic:output_type -> cerasusV2.WeekGraphic
+	28, // 44: cerasusV2.Settings.GetOrderLeaders:output_type -> cerasusV2.OrderLeaders
+	29, // 45: cerasusV2.Settings.GetCompanyBrands:output_type -> cerasusV2.Brands
+	17, // 46: cerasusV2.Settings.GetBrand:output_type -> cerasusV2.Brand
+	30, // 47: cerasusV2.Settings.GetProductGraphics:output_type -> cerasusV2.LineGraphics
+	31, // 48: cerasusV2.Settings.GetTaxes:output_type -> cerasusV2.Taxes
+	4,  // 49: cerasusV2.Settings.GetMarginLevels:output_type -> cerasusV2.MarginLevels
+	32, // 50: cerasusV2.Settings.GetProductWidget:output_type -> cerasusV2.ProductWidgets
+	32, // 51: cerasusV2.Settings.GetProductWidgetOrders:output_type -> cerasusV2.ProductWidgets
+	33, // 52: cerasusV2.Settings.SetGeoPlace:output_type -> cerasusV2.StatusReply
+	7,  // 53: cerasusV2.Settings.GetCompanyShops:output_type -> cerasusV2.CompanyShops
+	10, // 54: cerasusV2.Settings.GetMargin:output_type -> cerasusV2.MarginSettings
+	33, // 55: cerasusV2.Settings.SetMargin:output_type -> cerasusV2.StatusReply
+	33, // 56: cerasusV2.Settings.DeleteMargin:output_type -> cerasusV2.StatusReply
+	34, // 57: cerasusV2.Settings.GetAppTaxes:output_type -> cerasusV2.AppTaxes
+	33, // 58: cerasusV2.Settings.SetTax:output_type -> cerasusV2.StatusReply
+	38, // [38:59] is the sub-list for method output_type
+	17, // [17:38] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_settings_v2_proto_init() }
@@ -1235,6 +1322,18 @@ func file_settings_v2_proto_init() {
 				return nil
 			}
 		}
+		file_settings_v2_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SetTaxRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1242,7 +1341,7 @@ func file_settings_v2_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_settings_v2_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

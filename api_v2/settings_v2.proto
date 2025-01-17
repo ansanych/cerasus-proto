@@ -26,6 +26,7 @@ service Settings {
     rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
     rpc DeleteMargin(RequestByID) returns (StatusReply) {}
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
+    rpc SetTax(SetTaxRequest) returns (StatusReply) {}
 }
 
 message AppServiceData {
@@ -99,4 +100,12 @@ message SetMarginRequest {
     Auth auth = 1;
     MarginData data = 2;
     int64 brandID = 3;
+}
+
+///---
+message SetTaxRequest {
+    Auth auth = 1;
+    int32 year = 2;
+    int64 ID = 3;
+    float value = 4;
 }
