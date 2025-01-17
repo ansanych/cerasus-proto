@@ -22,7 +22,7 @@ service Settings {
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
     rpc GetCompanyShops(Auth) returns (CompanyShops) {}
-    rpc GetMargin(Auth) returns (MarginSettings) {}
+    rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
     rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
     rpc DeleteMargin(RequestByID) returns (StatusReply) {}
 }
@@ -89,7 +89,13 @@ message MarginSettings {
     MarginHistory history = 2;
 }
 
+message GetMarginRequest {
+    Auth auth = 1;
+    int64 brandID = 2;
+}
+
 message SetMarginRequest {
     Auth auth = 1;
     MarginData data = 2;
+    int64 brandID = 3;
 }
