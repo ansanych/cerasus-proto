@@ -164,7 +164,7 @@ message ShopData {
 
 //---
 message WBDataAuth {
-    int64 token = 1;
+    string token = 1;
 }
 
 message OZDataAuth {

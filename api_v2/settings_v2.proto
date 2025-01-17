@@ -22,6 +22,9 @@ service Settings {
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
     rpc GetCompanyShops(Auth) returns (CompanyShops) {}
+    rpc GetMargin(Auth) returns (MarginSettings) {}
+    rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
+    rpc DeleteMargin(RequestByID) returns (StatusReply) {}
 }
 
 message AppServiceData {
@@ -41,6 +44,7 @@ message UserAppData {
 message MarginLevel {
     Level level = 1;
     float value = 2;
+    string date = 3;
 }
 
 message MarginLevelsBrand {
@@ -64,4 +68,28 @@ message CompanyShop {
 
 message CompanyShops {
     repeated CompanyShop data = 1;
+}
+
+//--
+
+message MarginData {
+    int64 ID = 1;
+    float min = 2;
+    float mid = 3;
+    float max = 4;
+    string date = 5;
+}
+
+message MarginHistory {
+    repeated MarginData data = 1;
+}
+
+message MarginSettings {
+    MarginData data = 1;
+    MarginHistory history = 2;
+}
+
+message SetMarginRequest {
+    Auth auth = 1;
+    MarginData data = 2;
 }

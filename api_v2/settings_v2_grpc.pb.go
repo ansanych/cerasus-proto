@@ -38,6 +38,9 @@ type SettingsClient interface {
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompanyShops(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShops, error)
+	GetMargin(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginSettings, error)
+	SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type settingsClient struct {
@@ -192,6 +195,33 @@ func (c *settingsClient) GetCompanyShops(ctx context.Context, in *Auth, opts ...
 	return out, nil
 }
 
+func (c *settingsClient) GetMargin(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginSettings, error) {
+	out := new(MarginSettings)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SetMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/DeleteMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -212,6 +242,9 @@ type SettingsServer interface {
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*StatusReply, error)
 	GetCompanyShops(context.Context, *Auth) (*CompanyShops, error)
+	GetMargin(context.Context, *Auth) (*MarginSettings, error)
+	SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error)
+	DeleteMargin(context.Context, *RequestByID) (*StatusReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -266,6 +299,15 @@ func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *SetGeoPlaceRequ
 }
 func (UnimplementedSettingsServer) GetCompanyShops(context.Context, *Auth) (*CompanyShops, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyShops not implemented")
+}
+func (UnimplementedSettingsServer) GetMargin(context.Context, *Auth) (*MarginSettings, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMargin not implemented")
+}
+func (UnimplementedSettingsServer) SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetMargin not implemented")
+}
+func (UnimplementedSettingsServer) DeleteMargin(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMargin not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -568,6 +610,60 @@ func _Settings_GetCompanyShops_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMargin(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_SetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetMarginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SetMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/SetMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SetMargin(ctx, req.(*SetMarginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_DeleteMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).DeleteMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/DeleteMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).DeleteMargin(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +734,18 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyShops",
 			Handler:    _Settings_GetCompanyShops_Handler,
+		},
+		{
+			MethodName: "GetMargin",
+			Handler:    _Settings_GetMargin_Handler,
+		},
+		{
+			MethodName: "SetMargin",
+			Handler:    _Settings_SetMargin_Handler,
+		},
+		{
+			MethodName: "DeleteMargin",
+			Handler:    _Settings_DeleteMargin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
