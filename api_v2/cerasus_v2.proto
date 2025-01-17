@@ -394,6 +394,7 @@ message Tax {
     float value = 2;
     string name = 3;
     string description = 4;
+    int64 ID = 5;
 }
 
 message Taxes {
