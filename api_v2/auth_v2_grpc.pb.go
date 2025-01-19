@@ -31,7 +31,7 @@ type AuthentyClient interface {
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompany(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error)
-	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error)
+	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error)
 	UpdateCompany(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
@@ -124,8 +124,8 @@ func (c *authentyClient) GetCompany(ctx context.Context, in *Auth, opts ...grpc.
 	return out, nil
 }
 
-func (c *authentyClient) GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error) {
-	out := new(Company)
+func (c *authentyClient) GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error) {
+	out := new(Users)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/GetCompanyUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -155,7 +155,7 @@ type AuthentyServer interface {
 	UpdateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	DeleteUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	GetCompany(context.Context, *Auth) (*Company, error)
-	GetCompanyUsers(context.Context, *Auth) (*Company, error)
+	GetCompanyUsers(context.Context, *Auth) (*Users, error)
 	UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
@@ -191,7 +191,7 @@ func (UnimplementedAuthentyServer) DeleteUser(context.Context, *UpdateUserReques
 func (UnimplementedAuthentyServer) GetCompany(context.Context, *Auth) (*Company, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompany not implemented")
 }
-func (UnimplementedAuthentyServer) GetCompanyUsers(context.Context, *Auth) (*Company, error) {
+func (UnimplementedAuthentyServer) GetCompanyUsers(context.Context, *Auth) (*Users, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyUsers not implemented")
 }
 func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error) {
