@@ -16,7 +16,7 @@ service Authenty {
     rpc DeleteUser(UpdateUserRequest) returns (StatusReply) {}
     rpc GetCompany(Auth) returns (Company) {}
     rpc GetCompanyUsers(Auth) returns (Users) {}
-    rpc UpdateCompany(UpdateUserRequest) returns (StatusReply) {}
+    rpc UpdateCompany(UpdateCompanyRequest) returns (StatusReply) {}
 }
 
 message RegisterRequest {

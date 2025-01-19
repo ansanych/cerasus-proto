@@ -32,7 +32,7 @@ type AuthentyClient interface {
 	DeleteUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompany(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error)
 	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error)
-	UpdateCompany(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type authentyClient struct {
@@ -133,7 +133,7 @@ func (c *authentyClient) GetCompanyUsers(ctx context.Context, in *Auth, opts ...
 	return out, nil
 }
 
-func (c *authentyClient) UpdateCompany(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *authentyClient) UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/UpdateCompany", in, out, opts...)
 	if err != nil {
@@ -156,7 +156,7 @@ type AuthentyServer interface {
 	DeleteUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	GetCompany(context.Context, *Auth) (*Company, error)
 	GetCompanyUsers(context.Context, *Auth) (*Users, error)
-	UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error)
+	UpdateCompany(context.Context, *UpdateCompanyRequest) (*StatusReply, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -194,7 +194,7 @@ func (UnimplementedAuthentyServer) GetCompany(context.Context, *Auth) (*Company,
 func (UnimplementedAuthentyServer) GetCompanyUsers(context.Context, *Auth) (*Users, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyUsers not implemented")
 }
-func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error) {
+func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateCompanyRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
@@ -391,7 +391,7 @@ func _Authenty_GetCompanyUsers_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _Authenty_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserRequest)
+	in := new(UpdateCompanyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -403,7 +403,7 @@ func _Authenty_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/cerasusV2.Authenty/UpdateCompany",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthentyServer).UpdateCompany(ctx, req.(*UpdateUserRequest))
+		return srv.(AuthentyServer).UpdateCompany(ctx, req.(*UpdateCompanyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
