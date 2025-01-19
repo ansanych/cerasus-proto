@@ -117,6 +117,7 @@ message User {
     Company company = 7;
     repeated Role roles = 8;
     bool active = 9;
+    string password = 10;
 }
 
 message Users {
