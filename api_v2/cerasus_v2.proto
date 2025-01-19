@@ -119,6 +119,10 @@ message User {
     bool active = 9;
 }
 
+message Users {
+    repeated User users = 1;
+}
+
 //Shops
 message Shop {
     int64 ID = 1;

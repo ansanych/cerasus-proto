@@ -1077,6 +1077,53 @@ func (x *User) GetActive() bool {
 	return false
 }
 
+type Users struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Users []*User `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+}
+
+func (x *Users) Reset() {
+	*x = Users{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_cerasus_v2_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Users) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Users) ProtoMessage() {}
+
+func (x *Users) ProtoReflect() protoreflect.Message {
+	mi := &file_cerasus_v2_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Users.ProtoReflect.Descriptor instead.
+func (*Users) Descriptor() ([]byte, []int) {
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *Users) GetUsers() []*User {
+	if x != nil {
+		return x.Users
+	}
+	return nil
+}
+
 // Shops
 type Shop struct {
 	state         protoimpl.MessageState
@@ -1094,7 +1141,7 @@ type Shop struct {
 func (x *Shop) Reset() {
 	*x = Shop{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[13]
+		mi := &file_cerasus_v2_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1107,7 +1154,7 @@ func (x *Shop) String() string {
 func (*Shop) ProtoMessage() {}
 
 func (x *Shop) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[13]
+	mi := &file_cerasus_v2_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1120,7 +1167,7 @@ func (x *Shop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Shop.ProtoReflect.Descriptor instead.
 func (*Shop) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{13}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Shop) GetID() int64 {
@@ -1183,7 +1230,7 @@ type AppShopData struct {
 func (x *AppShopData) Reset() {
 	*x = AppShopData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[14]
+		mi := &file_cerasus_v2_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1196,7 +1243,7 @@ func (x *AppShopData) String() string {
 func (*AppShopData) ProtoMessage() {}
 
 func (x *AppShopData) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[14]
+	mi := &file_cerasus_v2_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1209,7 +1256,7 @@ func (x *AppShopData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppShopData.ProtoReflect.Descriptor instead.
 func (*AppShopData) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{14}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *AppShopData) GetShop() *Shop {
@@ -1283,7 +1330,7 @@ type ShopWidgetData struct {
 func (x *ShopWidgetData) Reset() {
 	*x = ShopWidgetData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[15]
+		mi := &file_cerasus_v2_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1296,7 +1343,7 @@ func (x *ShopWidgetData) String() string {
 func (*ShopWidgetData) ProtoMessage() {}
 
 func (x *ShopWidgetData) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[15]
+	mi := &file_cerasus_v2_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1309,7 +1356,7 @@ func (x *ShopWidgetData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopWidgetData.ProtoReflect.Descriptor instead.
 func (*ShopWidgetData) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{15}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ShopWidgetData) GetTitle() string {
@@ -1358,7 +1405,7 @@ type ShopWidget struct {
 func (x *ShopWidget) Reset() {
 	*x = ShopWidget{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[16]
+		mi := &file_cerasus_v2_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1371,7 +1418,7 @@ func (x *ShopWidget) String() string {
 func (*ShopWidget) ProtoMessage() {}
 
 func (x *ShopWidget) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[16]
+	mi := &file_cerasus_v2_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1384,7 +1431,7 @@ func (x *ShopWidget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopWidget.ProtoReflect.Descriptor instead.
 func (*ShopWidget) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{16}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ShopWidget) GetData() []*ShopWidgetData {
@@ -1411,7 +1458,7 @@ type ShopData struct {
 func (x *ShopData) Reset() {
 	*x = ShopData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[17]
+		mi := &file_cerasus_v2_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1424,7 +1471,7 @@ func (x *ShopData) String() string {
 func (*ShopData) ProtoMessage() {}
 
 func (x *ShopData) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[17]
+	mi := &file_cerasus_v2_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1437,7 +1484,7 @@ func (x *ShopData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopData.ProtoReflect.Descriptor instead.
 func (*ShopData) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{17}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ShopData) GetShop() *Shop {
@@ -1494,7 +1541,7 @@ type WBDataAuth struct {
 func (x *WBDataAuth) Reset() {
 	*x = WBDataAuth{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[18]
+		mi := &file_cerasus_v2_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1507,7 +1554,7 @@ func (x *WBDataAuth) String() string {
 func (*WBDataAuth) ProtoMessage() {}
 
 func (x *WBDataAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[18]
+	mi := &file_cerasus_v2_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1520,7 +1567,7 @@ func (x *WBDataAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WBDataAuth.ProtoReflect.Descriptor instead.
 func (*WBDataAuth) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{18}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *WBDataAuth) GetToken() string {
@@ -1542,7 +1589,7 @@ type OZDataAuth struct {
 func (x *OZDataAuth) Reset() {
 	*x = OZDataAuth{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[19]
+		mi := &file_cerasus_v2_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1555,7 +1602,7 @@ func (x *OZDataAuth) String() string {
 func (*OZDataAuth) ProtoMessage() {}
 
 func (x *OZDataAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[19]
+	mi := &file_cerasus_v2_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1568,7 +1615,7 @@ func (x *OZDataAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OZDataAuth.ProtoReflect.Descriptor instead.
 func (*OZDataAuth) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{19}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *OZDataAuth) GetClientID() int64 {
@@ -1597,7 +1644,7 @@ type YMDataAuth struct {
 func (x *YMDataAuth) Reset() {
 	*x = YMDataAuth{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[20]
+		mi := &file_cerasus_v2_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1610,7 +1657,7 @@ func (x *YMDataAuth) String() string {
 func (*YMDataAuth) ProtoMessage() {}
 
 func (x *YMDataAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[20]
+	mi := &file_cerasus_v2_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1623,7 +1670,7 @@ func (x *YMDataAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use YMDataAuth.ProtoReflect.Descriptor instead.
 func (*YMDataAuth) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{20}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *YMDataAuth) GetToken() string {
@@ -1655,7 +1702,7 @@ type ShopDataAuth struct {
 func (x *ShopDataAuth) Reset() {
 	*x = ShopDataAuth{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[21]
+		mi := &file_cerasus_v2_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1668,7 +1715,7 @@ func (x *ShopDataAuth) String() string {
 func (*ShopDataAuth) ProtoMessage() {}
 
 func (x *ShopDataAuth) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[21]
+	mi := &file_cerasus_v2_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1681,7 +1728,7 @@ func (x *ShopDataAuth) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopDataAuth.ProtoReflect.Descriptor instead.
 func (*ShopDataAuth) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{21}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ShopDataAuth) GetError() bool {
@@ -1737,7 +1784,7 @@ type Warehouse struct {
 func (x *Warehouse) Reset() {
 	*x = Warehouse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[22]
+		mi := &file_cerasus_v2_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1750,7 +1797,7 @@ func (x *Warehouse) String() string {
 func (*Warehouse) ProtoMessage() {}
 
 func (x *Warehouse) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[22]
+	mi := &file_cerasus_v2_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1763,7 +1810,7 @@ func (x *Warehouse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Warehouse.ProtoReflect.Descriptor instead.
 func (*Warehouse) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{22}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *Warehouse) GetName() string {
@@ -1826,7 +1873,7 @@ type WBParams struct {
 func (x *WBParams) Reset() {
 	*x = WBParams{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[23]
+		mi := &file_cerasus_v2_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1839,7 +1886,7 @@ func (x *WBParams) String() string {
 func (*WBParams) ProtoMessage() {}
 
 func (x *WBParams) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[23]
+	mi := &file_cerasus_v2_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1852,7 +1899,7 @@ func (x *WBParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WBParams.ProtoReflect.Descriptor instead.
 func (*WBParams) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{23}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *WBParams) GetWarehouses() []*Warehouse {
@@ -1873,7 +1920,7 @@ type OZParams struct {
 func (x *OZParams) Reset() {
 	*x = OZParams{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[24]
+		mi := &file_cerasus_v2_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1886,7 +1933,7 @@ func (x *OZParams) String() string {
 func (*OZParams) ProtoMessage() {}
 
 func (x *OZParams) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[24]
+	mi := &file_cerasus_v2_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1899,7 +1946,7 @@ func (x *OZParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OZParams.ProtoReflect.Descriptor instead.
 func (*OZParams) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{24}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *OZParams) GetWarehouses() []*Warehouse {
@@ -1924,7 +1971,7 @@ type YMCampaign struct {
 func (x *YMCampaign) Reset() {
 	*x = YMCampaign{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[25]
+		mi := &file_cerasus_v2_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1937,7 +1984,7 @@ func (x *YMCampaign) String() string {
 func (*YMCampaign) ProtoMessage() {}
 
 func (x *YMCampaign) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[25]
+	mi := &file_cerasus_v2_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1950,7 +1997,7 @@ func (x *YMCampaign) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use YMCampaign.ProtoReflect.Descriptor instead.
 func (*YMCampaign) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{25}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *YMCampaign) GetDomain() string {
@@ -2000,7 +2047,7 @@ type YMParams struct {
 func (x *YMParams) Reset() {
 	*x = YMParams{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[26]
+		mi := &file_cerasus_v2_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2013,7 +2060,7 @@ func (x *YMParams) String() string {
 func (*YMParams) ProtoMessage() {}
 
 func (x *YMParams) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[26]
+	mi := &file_cerasus_v2_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2026,7 +2073,7 @@ func (x *YMParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use YMParams.ProtoReflect.Descriptor instead.
 func (*YMParams) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{26}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *YMParams) GetBusinessID() int64 {
@@ -2058,7 +2105,7 @@ type LineGraphDataset struct {
 func (x *LineGraphDataset) Reset() {
 	*x = LineGraphDataset{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[27]
+		mi := &file_cerasus_v2_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2071,7 +2118,7 @@ func (x *LineGraphDataset) String() string {
 func (*LineGraphDataset) ProtoMessage() {}
 
 func (x *LineGraphDataset) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[27]
+	mi := &file_cerasus_v2_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2084,7 +2131,7 @@ func (x *LineGraphDataset) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LineGraphDataset.ProtoReflect.Descriptor instead.
 func (*LineGraphDataset) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{27}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *LineGraphDataset) GetType() string {
@@ -2127,7 +2174,7 @@ type LineGraphShop struct {
 func (x *LineGraphShop) Reset() {
 	*x = LineGraphShop{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[28]
+		mi := &file_cerasus_v2_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2140,7 +2187,7 @@ func (x *LineGraphShop) String() string {
 func (*LineGraphShop) ProtoMessage() {}
 
 func (x *LineGraphShop) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[28]
+	mi := &file_cerasus_v2_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2153,7 +2200,7 @@ func (x *LineGraphShop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LineGraphShop.ProtoReflect.Descriptor instead.
 func (*LineGraphShop) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{28}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *LineGraphShop) GetShop() string {
@@ -2184,7 +2231,7 @@ type LineGraph struct {
 func (x *LineGraph) Reset() {
 	*x = LineGraph{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[29]
+		mi := &file_cerasus_v2_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2197,7 +2244,7 @@ func (x *LineGraph) String() string {
 func (*LineGraph) ProtoMessage() {}
 
 func (x *LineGraph) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[29]
+	mi := &file_cerasus_v2_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2210,7 +2257,7 @@ func (x *LineGraph) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LineGraph.ProtoReflect.Descriptor instead.
 func (*LineGraph) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{29}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *LineGraph) GetLabels() []string {
@@ -2252,7 +2299,7 @@ type LineGraphics struct {
 func (x *LineGraphics) Reset() {
 	*x = LineGraphics{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[30]
+		mi := &file_cerasus_v2_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2265,7 +2312,7 @@ func (x *LineGraphics) String() string {
 func (*LineGraphics) ProtoMessage() {}
 
 func (x *LineGraphics) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[30]
+	mi := &file_cerasus_v2_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2278,7 +2325,7 @@ func (x *LineGraphics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LineGraphics.ProtoReflect.Descriptor instead.
 func (*LineGraphics) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{30}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *LineGraphics) GetGraphics() []*LineGraph {
@@ -2302,7 +2349,7 @@ type LineGraphRequest struct {
 func (x *LineGraphRequest) Reset() {
 	*x = LineGraphRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[31]
+		mi := &file_cerasus_v2_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2315,7 +2362,7 @@ func (x *LineGraphRequest) String() string {
 func (*LineGraphRequest) ProtoMessage() {}
 
 func (x *LineGraphRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[31]
+	mi := &file_cerasus_v2_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2328,7 +2375,7 @@ func (x *LineGraphRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LineGraphRequest.ProtoReflect.Descriptor instead.
 func (*LineGraphRequest) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{31}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *LineGraphRequest) GetAuth() *Auth {
@@ -2373,7 +2420,7 @@ type RoundGrapDataset struct {
 func (x *RoundGrapDataset) Reset() {
 	*x = RoundGrapDataset{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[32]
+		mi := &file_cerasus_v2_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2386,7 +2433,7 @@ func (x *RoundGrapDataset) String() string {
 func (*RoundGrapDataset) ProtoMessage() {}
 
 func (x *RoundGrapDataset) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[32]
+	mi := &file_cerasus_v2_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2399,7 +2446,7 @@ func (x *RoundGrapDataset) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RoundGrapDataset.ProtoReflect.Descriptor instead.
 func (*RoundGrapDataset) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{32}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *RoundGrapDataset) GetType() string {
@@ -2435,7 +2482,7 @@ type RoundGraphic struct {
 func (x *RoundGraphic) Reset() {
 	*x = RoundGraphic{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[33]
+		mi := &file_cerasus_v2_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2448,7 +2495,7 @@ func (x *RoundGraphic) String() string {
 func (*RoundGraphic) ProtoMessage() {}
 
 func (x *RoundGraphic) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[33]
+	mi := &file_cerasus_v2_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2461,7 +2508,7 @@ func (x *RoundGraphic) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RoundGraphic.ProtoReflect.Descriptor instead.
 func (*RoundGraphic) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{33}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *RoundGraphic) GetLabels() []string {
@@ -2493,7 +2540,7 @@ type WeekGraphic struct {
 func (x *WeekGraphic) Reset() {
 	*x = WeekGraphic{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[34]
+		mi := &file_cerasus_v2_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2506,7 +2553,7 @@ func (x *WeekGraphic) String() string {
 func (*WeekGraphic) ProtoMessage() {}
 
 func (x *WeekGraphic) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[34]
+	mi := &file_cerasus_v2_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2519,7 +2566,7 @@ func (x *WeekGraphic) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WeekGraphic.ProtoReflect.Descriptor instead.
 func (*WeekGraphic) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{34}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *WeekGraphic) GetMin() float32 {
@@ -2564,7 +2611,7 @@ type ShopProductLinks struct {
 func (x *ShopProductLinks) Reset() {
 	*x = ShopProductLinks{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[35]
+		mi := &file_cerasus_v2_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2577,7 +2624,7 @@ func (x *ShopProductLinks) String() string {
 func (*ShopProductLinks) ProtoMessage() {}
 
 func (x *ShopProductLinks) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[35]
+	mi := &file_cerasus_v2_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2590,7 +2637,7 @@ func (x *ShopProductLinks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopProductLinks.ProtoReflect.Descriptor instead.
 func (*ShopProductLinks) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{35}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *ShopProductLinks) GetShopCode() string {
@@ -2631,7 +2678,7 @@ type Product struct {
 func (x *Product) Reset() {
 	*x = Product{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[36]
+		mi := &file_cerasus_v2_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2644,7 +2691,7 @@ func (x *Product) String() string {
 func (*Product) ProtoMessage() {}
 
 func (x *Product) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[36]
+	mi := &file_cerasus_v2_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2657,7 +2704,7 @@ func (x *Product) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Product.ProtoReflect.Descriptor instead.
 func (*Product) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{36}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *Product) GetID() int64 {
@@ -2721,7 +2768,7 @@ type ProductList struct {
 func (x *ProductList) Reset() {
 	*x = ProductList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[37]
+		mi := &file_cerasus_v2_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2734,7 +2781,7 @@ func (x *ProductList) String() string {
 func (*ProductList) ProtoMessage() {}
 
 func (x *ProductList) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[37]
+	mi := &file_cerasus_v2_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2747,7 +2794,7 @@ func (x *ProductList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductList.ProtoReflect.Descriptor instead.
 func (*ProductList) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{37}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *ProductList) GetProducts() []*Product {
@@ -2777,7 +2824,7 @@ type ShopProduct struct {
 func (x *ShopProduct) Reset() {
 	*x = ShopProduct{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[38]
+		mi := &file_cerasus_v2_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2790,7 +2837,7 @@ func (x *ShopProduct) String() string {
 func (*ShopProduct) ProtoMessage() {}
 
 func (x *ShopProduct) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[38]
+	mi := &file_cerasus_v2_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2803,7 +2850,7 @@ func (x *ShopProduct) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopProduct.ProtoReflect.Descriptor instead.
 func (*ShopProduct) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{38}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *ShopProduct) GetID() int64 {
@@ -2838,7 +2885,7 @@ type ShopProductList struct {
 func (x *ShopProductList) Reset() {
 	*x = ShopProductList{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[39]
+		mi := &file_cerasus_v2_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2851,7 +2898,7 @@ func (x *ShopProductList) String() string {
 func (*ShopProductList) ProtoMessage() {}
 
 func (x *ShopProductList) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[39]
+	mi := &file_cerasus_v2_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2864,7 +2911,7 @@ func (x *ShopProductList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopProductList.ProtoReflect.Descriptor instead.
 func (*ShopProductList) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{39}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *ShopProductList) GetShopProducts() []*ShopProduct {
@@ -2886,7 +2933,7 @@ type ProductWidgetShops struct {
 func (x *ProductWidgetShops) Reset() {
 	*x = ProductWidgetShops{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[40]
+		mi := &file_cerasus_v2_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2899,7 +2946,7 @@ func (x *ProductWidgetShops) String() string {
 func (*ProductWidgetShops) ProtoMessage() {}
 
 func (x *ProductWidgetShops) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[40]
+	mi := &file_cerasus_v2_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2912,7 +2959,7 @@ func (x *ProductWidgetShops) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductWidgetShops.ProtoReflect.Descriptor instead.
 func (*ProductWidgetShops) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{40}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *ProductWidgetShops) GetShop() string {
@@ -2942,7 +2989,7 @@ type ProductWidget struct {
 func (x *ProductWidget) Reset() {
 	*x = ProductWidget{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[41]
+		mi := &file_cerasus_v2_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2955,7 +3002,7 @@ func (x *ProductWidget) String() string {
 func (*ProductWidget) ProtoMessage() {}
 
 func (x *ProductWidget) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[41]
+	mi := &file_cerasus_v2_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2968,7 +3015,7 @@ func (x *ProductWidget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductWidget.ProtoReflect.Descriptor instead.
 func (*ProductWidget) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{41}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *ProductWidget) GetType() string {
@@ -3003,7 +3050,7 @@ type ProductWidgets struct {
 func (x *ProductWidgets) Reset() {
 	*x = ProductWidgets{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[42]
+		mi := &file_cerasus_v2_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3016,7 +3063,7 @@ func (x *ProductWidgets) String() string {
 func (*ProductWidgets) ProtoMessage() {}
 
 func (x *ProductWidgets) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[42]
+	mi := &file_cerasus_v2_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3029,7 +3076,7 @@ func (x *ProductWidgets) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductWidgets.ProtoReflect.Descriptor instead.
 func (*ProductWidgets) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{42}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *ProductWidgets) GetData() []*ProductWidget {
@@ -3057,7 +3104,7 @@ type OrderLeader struct {
 func (x *OrderLeader) Reset() {
 	*x = OrderLeader{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[43]
+		mi := &file_cerasus_v2_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3070,7 +3117,7 @@ func (x *OrderLeader) String() string {
 func (*OrderLeader) ProtoMessage() {}
 
 func (x *OrderLeader) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[43]
+	mi := &file_cerasus_v2_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3083,7 +3130,7 @@ func (x *OrderLeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderLeader.ProtoReflect.Descriptor instead.
 func (*OrderLeader) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{43}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *OrderLeader) GetProductID() int64 {
@@ -3139,7 +3186,7 @@ type OrderLeaders struct {
 func (x *OrderLeaders) Reset() {
 	*x = OrderLeaders{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[44]
+		mi := &file_cerasus_v2_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3152,7 +3199,7 @@ func (x *OrderLeaders) String() string {
 func (*OrderLeaders) ProtoMessage() {}
 
 func (x *OrderLeaders) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[44]
+	mi := &file_cerasus_v2_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3165,7 +3212,7 @@ func (x *OrderLeaders) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderLeaders.ProtoReflect.Descriptor instead.
 func (*OrderLeaders) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{44}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *OrderLeaders) GetLeaders() []*OrderLeader {
@@ -3193,7 +3240,7 @@ type Brand struct {
 func (x *Brand) Reset() {
 	*x = Brand{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[45]
+		mi := &file_cerasus_v2_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3206,7 +3253,7 @@ func (x *Brand) String() string {
 func (*Brand) ProtoMessage() {}
 
 func (x *Brand) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[45]
+	mi := &file_cerasus_v2_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3219,7 +3266,7 @@ func (x *Brand) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Brand.ProtoReflect.Descriptor instead.
 func (*Brand) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{45}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *Brand) GetID() int64 {
@@ -3282,7 +3329,7 @@ type Brands struct {
 func (x *Brands) Reset() {
 	*x = Brands{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[46]
+		mi := &file_cerasus_v2_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3295,7 +3342,7 @@ func (x *Brands) String() string {
 func (*Brands) ProtoMessage() {}
 
 func (x *Brands) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[46]
+	mi := &file_cerasus_v2_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3308,7 +3355,7 @@ func (x *Brands) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Brands.ProtoReflect.Descriptor instead.
 func (*Brands) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{46}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *Brands) GetBrands() []*Brand {
@@ -3346,7 +3393,7 @@ type Sale struct {
 func (x *Sale) Reset() {
 	*x = Sale{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[47]
+		mi := &file_cerasus_v2_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3359,7 +3406,7 @@ func (x *Sale) String() string {
 func (*Sale) ProtoMessage() {}
 
 func (x *Sale) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[47]
+	mi := &file_cerasus_v2_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3372,7 +3419,7 @@ func (x *Sale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Sale.ProtoReflect.Descriptor instead.
 func (*Sale) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{47}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *Sale) GetID() int64 {
@@ -3506,7 +3553,7 @@ type Sales struct {
 func (x *Sales) Reset() {
 	*x = Sales{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[48]
+		mi := &file_cerasus_v2_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3519,7 +3566,7 @@ func (x *Sales) String() string {
 func (*Sales) ProtoMessage() {}
 
 func (x *Sales) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[48]
+	mi := &file_cerasus_v2_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3532,7 +3579,7 @@ func (x *Sales) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Sales.ProtoReflect.Descriptor instead.
 func (*Sales) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{48}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *Sales) GetSales() []*Sale {
@@ -3562,7 +3609,7 @@ type SaleRequest struct {
 func (x *SaleRequest) Reset() {
 	*x = SaleRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[49]
+		mi := &file_cerasus_v2_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3575,7 +3622,7 @@ func (x *SaleRequest) String() string {
 func (*SaleRequest) ProtoMessage() {}
 
 func (x *SaleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[49]
+	mi := &file_cerasus_v2_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3588,7 +3635,7 @@ func (x *SaleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SaleRequest.ProtoReflect.Descriptor instead.
 func (*SaleRequest) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{49}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *SaleRequest) GetAuth() *Auth {
@@ -3625,7 +3672,7 @@ type SaleDetail struct {
 func (x *SaleDetail) Reset() {
 	*x = SaleDetail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[50]
+		mi := &file_cerasus_v2_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3638,7 +3685,7 @@ func (x *SaleDetail) String() string {
 func (*SaleDetail) ProtoMessage() {}
 
 func (x *SaleDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[50]
+	mi := &file_cerasus_v2_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3651,7 +3698,7 @@ func (x *SaleDetail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SaleDetail.ProtoReflect.Descriptor instead.
 func (*SaleDetail) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{50}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *SaleDetail) GetName() string {
@@ -3688,7 +3735,7 @@ type Purchase struct {
 func (x *Purchase) Reset() {
 	*x = Purchase{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[51]
+		mi := &file_cerasus_v2_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3701,7 +3748,7 @@ func (x *Purchase) String() string {
 func (*Purchase) ProtoMessage() {}
 
 func (x *Purchase) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[51]
+	mi := &file_cerasus_v2_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3714,7 +3761,7 @@ func (x *Purchase) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Purchase.ProtoReflect.Descriptor instead.
 func (*Purchase) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{51}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *Purchase) GetPurchase() float32 {
@@ -3747,7 +3794,7 @@ type Tax struct {
 func (x *Tax) Reset() {
 	*x = Tax{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[52]
+		mi := &file_cerasus_v2_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3760,7 +3807,7 @@ func (x *Tax) String() string {
 func (*Tax) ProtoMessage() {}
 
 func (x *Tax) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[52]
+	mi := &file_cerasus_v2_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3773,7 +3820,7 @@ func (x *Tax) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Tax.ProtoReflect.Descriptor instead.
 func (*Tax) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{52}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *Tax) GetYear() int32 {
@@ -3822,7 +3869,7 @@ type Taxes struct {
 func (x *Taxes) Reset() {
 	*x = Taxes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[53]
+		mi := &file_cerasus_v2_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3835,7 +3882,7 @@ func (x *Taxes) String() string {
 func (*Taxes) ProtoMessage() {}
 
 func (x *Taxes) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[53]
+	mi := &file_cerasus_v2_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3848,7 +3895,7 @@ func (x *Taxes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Taxes.ProtoReflect.Descriptor instead.
 func (*Taxes) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{53}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *Taxes) GetData() []*Tax {
@@ -3870,7 +3917,7 @@ type AppTaxes struct {
 func (x *AppTaxes) Reset() {
 	*x = AppTaxes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[54]
+		mi := &file_cerasus_v2_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3883,7 +3930,7 @@ func (x *AppTaxes) String() string {
 func (*AppTaxes) ProtoMessage() {}
 
 func (x *AppTaxes) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[54]
+	mi := &file_cerasus_v2_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3896,7 +3943,7 @@ func (x *AppTaxes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppTaxes.ProtoReflect.Descriptor instead.
 func (*AppTaxes) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{54}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *AppTaxes) GetTaxes() []*Tax {
@@ -3928,7 +3975,7 @@ type GeoPlace struct {
 func (x *GeoPlace) Reset() {
 	*x = GeoPlace{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[55]
+		mi := &file_cerasus_v2_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3941,7 +3988,7 @@ func (x *GeoPlace) String() string {
 func (*GeoPlace) ProtoMessage() {}
 
 func (x *GeoPlace) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[55]
+	mi := &file_cerasus_v2_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3954,7 +4001,7 @@ func (x *GeoPlace) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GeoPlace.ProtoReflect.Descriptor instead.
 func (*GeoPlace) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{55}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *GeoPlace) GetID() int64 {
@@ -3998,7 +4045,7 @@ type GeoPlaceData struct {
 func (x *GeoPlaceData) Reset() {
 	*x = GeoPlaceData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_cerasus_v2_proto_msgTypes[56]
+		mi := &file_cerasus_v2_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4011,7 +4058,7 @@ func (x *GeoPlaceData) String() string {
 func (*GeoPlaceData) ProtoMessage() {}
 
 func (x *GeoPlaceData) ProtoReflect() protoreflect.Message {
-	mi := &file_cerasus_v2_proto_msgTypes[56]
+	mi := &file_cerasus_v2_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4024,7 +4071,7 @@ func (x *GeoPlaceData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GeoPlaceData.ProtoReflect.Descriptor instead.
 func (*GeoPlaceData) Descriptor() ([]byte, []int) {
-	return file_cerasus_v2_proto_rawDescGZIP(), []int{56}
+	return file_cerasus_v2_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *GeoPlaceData) GetCountry() *GeoPlace {
@@ -4129,7 +4176,10 @@ var file_cerasus_v2_proto_rawDesc = []byte{
 	0x25, 0x0a, 0x05, 0x72, 0x6f, 0x6c, 0x65, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f,
 	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x6f, 0x6c, 0x65, 0x52,
 	0x05, 0x72, 0x6f, 0x6c, 0x65, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65,
-	0x18, 0x09, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x22, 0x7e,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x76, 0x65, 0x22, 0x2e,
+	0x0a, 0x05, 0x55, 0x73, 0x65, 0x72, 0x73, 0x12, 0x25, 0x0a, 0x05, 0x75, 0x73, 0x65, 0x72, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x56, 0x32, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x52, 0x05, 0x75, 0x73, 0x65, 0x72, 0x73, 0x22, 0x7e,
 	0x0a, 0x04, 0x53, 0x68, 0x6f, 0x70, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x02, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04,
@@ -4490,7 +4540,7 @@ func file_cerasus_v2_proto_rawDescGZIP() []byte {
 }
 
 var file_cerasus_v2_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
+var file_cerasus_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 58)
 var file_cerasus_v2_proto_goTypes = []interface{}{
 	(Status)(0),                // 0: cerasusV2.Status
 	(ServiceStatus)(0),         // 1: cerasusV2.ServiceStatus
@@ -4509,50 +4559,51 @@ var file_cerasus_v2_proto_goTypes = []interface{}{
 	(*Company)(nil),            // 14: cerasusV2.Company
 	(*Role)(nil),               // 15: cerasusV2.Role
 	(*User)(nil),               // 16: cerasusV2.User
-	(*Shop)(nil),               // 17: cerasusV2.Shop
-	(*AppShopData)(nil),        // 18: cerasusV2.AppShopData
-	(*ShopWidgetData)(nil),     // 19: cerasusV2.ShopWidgetData
-	(*ShopWidget)(nil),         // 20: cerasusV2.ShopWidget
-	(*ShopData)(nil),           // 21: cerasusV2.ShopData
-	(*WBDataAuth)(nil),         // 22: cerasusV2.WBDataAuth
-	(*OZDataAuth)(nil),         // 23: cerasusV2.OZDataAuth
-	(*YMDataAuth)(nil),         // 24: cerasusV2.YMDataAuth
-	(*ShopDataAuth)(nil),       // 25: cerasusV2.ShopDataAuth
-	(*Warehouse)(nil),          // 26: cerasusV2.Warehouse
-	(*WBParams)(nil),           // 27: cerasusV2.WBParams
-	(*OZParams)(nil),           // 28: cerasusV2.OZParams
-	(*YMCampaign)(nil),         // 29: cerasusV2.YMCampaign
-	(*YMParams)(nil),           // 30: cerasusV2.YMParams
-	(*LineGraphDataset)(nil),   // 31: cerasusV2.LineGraphDataset
-	(*LineGraphShop)(nil),      // 32: cerasusV2.LineGraphShop
-	(*LineGraph)(nil),          // 33: cerasusV2.LineGraph
-	(*LineGraphics)(nil),       // 34: cerasusV2.LineGraphics
-	(*LineGraphRequest)(nil),   // 35: cerasusV2.LineGraphRequest
-	(*RoundGrapDataset)(nil),   // 36: cerasusV2.RoundGrapDataset
-	(*RoundGraphic)(nil),       // 37: cerasusV2.RoundGraphic
-	(*WeekGraphic)(nil),        // 38: cerasusV2.WeekGraphic
-	(*ShopProductLinks)(nil),   // 39: cerasusV2.ShopProductLinks
-	(*Product)(nil),            // 40: cerasusV2.Product
-	(*ProductList)(nil),        // 41: cerasusV2.ProductList
-	(*ShopProduct)(nil),        // 42: cerasusV2.ShopProduct
-	(*ShopProductList)(nil),    // 43: cerasusV2.ShopProductList
-	(*ProductWidgetShops)(nil), // 44: cerasusV2.ProductWidgetShops
-	(*ProductWidget)(nil),      // 45: cerasusV2.ProductWidget
-	(*ProductWidgets)(nil),     // 46: cerasusV2.ProductWidgets
-	(*OrderLeader)(nil),        // 47: cerasusV2.OrderLeader
-	(*OrderLeaders)(nil),       // 48: cerasusV2.OrderLeaders
-	(*Brand)(nil),              // 49: cerasusV2.Brand
-	(*Brands)(nil),             // 50: cerasusV2.Brands
-	(*Sale)(nil),               // 51: cerasusV2.Sale
-	(*Sales)(nil),              // 52: cerasusV2.Sales
-	(*SaleRequest)(nil),        // 53: cerasusV2.SaleRequest
-	(*SaleDetail)(nil),         // 54: cerasusV2.SaleDetail
-	(*Purchase)(nil),           // 55: cerasusV2.Purchase
-	(*Tax)(nil),                // 56: cerasusV2.Tax
-	(*Taxes)(nil),              // 57: cerasusV2.Taxes
-	(*AppTaxes)(nil),           // 58: cerasusV2.AppTaxes
-	(*GeoPlace)(nil),           // 59: cerasusV2.GeoPlace
-	(*GeoPlaceData)(nil),       // 60: cerasusV2.GeoPlaceData
+	(*Users)(nil),              // 17: cerasusV2.Users
+	(*Shop)(nil),               // 18: cerasusV2.Shop
+	(*AppShopData)(nil),        // 19: cerasusV2.AppShopData
+	(*ShopWidgetData)(nil),     // 20: cerasusV2.ShopWidgetData
+	(*ShopWidget)(nil),         // 21: cerasusV2.ShopWidget
+	(*ShopData)(nil),           // 22: cerasusV2.ShopData
+	(*WBDataAuth)(nil),         // 23: cerasusV2.WBDataAuth
+	(*OZDataAuth)(nil),         // 24: cerasusV2.OZDataAuth
+	(*YMDataAuth)(nil),         // 25: cerasusV2.YMDataAuth
+	(*ShopDataAuth)(nil),       // 26: cerasusV2.ShopDataAuth
+	(*Warehouse)(nil),          // 27: cerasusV2.Warehouse
+	(*WBParams)(nil),           // 28: cerasusV2.WBParams
+	(*OZParams)(nil),           // 29: cerasusV2.OZParams
+	(*YMCampaign)(nil),         // 30: cerasusV2.YMCampaign
+	(*YMParams)(nil),           // 31: cerasusV2.YMParams
+	(*LineGraphDataset)(nil),   // 32: cerasusV2.LineGraphDataset
+	(*LineGraphShop)(nil),      // 33: cerasusV2.LineGraphShop
+	(*LineGraph)(nil),          // 34: cerasusV2.LineGraph
+	(*LineGraphics)(nil),       // 35: cerasusV2.LineGraphics
+	(*LineGraphRequest)(nil),   // 36: cerasusV2.LineGraphRequest
+	(*RoundGrapDataset)(nil),   // 37: cerasusV2.RoundGrapDataset
+	(*RoundGraphic)(nil),       // 38: cerasusV2.RoundGraphic
+	(*WeekGraphic)(nil),        // 39: cerasusV2.WeekGraphic
+	(*ShopProductLinks)(nil),   // 40: cerasusV2.ShopProductLinks
+	(*Product)(nil),            // 41: cerasusV2.Product
+	(*ProductList)(nil),        // 42: cerasusV2.ProductList
+	(*ShopProduct)(nil),        // 43: cerasusV2.ShopProduct
+	(*ShopProductList)(nil),    // 44: cerasusV2.ShopProductList
+	(*ProductWidgetShops)(nil), // 45: cerasusV2.ProductWidgetShops
+	(*ProductWidget)(nil),      // 46: cerasusV2.ProductWidget
+	(*ProductWidgets)(nil),     // 47: cerasusV2.ProductWidgets
+	(*OrderLeader)(nil),        // 48: cerasusV2.OrderLeader
+	(*OrderLeaders)(nil),       // 49: cerasusV2.OrderLeaders
+	(*Brand)(nil),              // 50: cerasusV2.Brand
+	(*Brands)(nil),             // 51: cerasusV2.Brands
+	(*Sale)(nil),               // 52: cerasusV2.Sale
+	(*Sales)(nil),              // 53: cerasusV2.Sales
+	(*SaleRequest)(nil),        // 54: cerasusV2.SaleRequest
+	(*SaleDetail)(nil),         // 55: cerasusV2.SaleDetail
+	(*Purchase)(nil),           // 56: cerasusV2.Purchase
+	(*Tax)(nil),                // 57: cerasusV2.Tax
+	(*Taxes)(nil),              // 58: cerasusV2.Taxes
+	(*AppTaxes)(nil),           // 59: cerasusV2.AppTaxes
+	(*GeoPlace)(nil),           // 60: cerasusV2.GeoPlace
+	(*GeoPlaceData)(nil),       // 61: cerasusV2.GeoPlaceData
 }
 var file_cerasus_v2_proto_depIdxs = []int32{
 	0,  // 0: cerasusV2.StatusReply.status:type_name -> cerasusV2.Status
@@ -4563,51 +4614,52 @@ var file_cerasus_v2_proto_depIdxs = []int32{
 	15, // 5: cerasusV2.Auth.roles:type_name -> cerasusV2.Role
 	14, // 6: cerasusV2.User.company:type_name -> cerasusV2.Company
 	15, // 7: cerasusV2.User.roles:type_name -> cerasusV2.Role
-	17, // 8: cerasusV2.AppShopData.shop:type_name -> cerasusV2.Shop
-	19, // 9: cerasusV2.ShopWidget.data:type_name -> cerasusV2.ShopWidgetData
-	17, // 10: cerasusV2.ShopData.shop:type_name -> cerasusV2.Shop
-	25, // 11: cerasusV2.ShopData.shopAuth:type_name -> cerasusV2.ShopDataAuth
-	27, // 12: cerasusV2.ShopData.wbParams:type_name -> cerasusV2.WBParams
-	28, // 13: cerasusV2.ShopData.ozParams:type_name -> cerasusV2.OZParams
-	30, // 14: cerasusV2.ShopData.ymParams:type_name -> cerasusV2.YMParams
-	22, // 15: cerasusV2.ShopDataAuth.wb:type_name -> cerasusV2.WBDataAuth
-	23, // 16: cerasusV2.ShopDataAuth.oz:type_name -> cerasusV2.OZDataAuth
-	24, // 17: cerasusV2.ShopDataAuth.ym:type_name -> cerasusV2.YMDataAuth
-	26, // 18: cerasusV2.WBParams.warehouses:type_name -> cerasusV2.Warehouse
-	26, // 19: cerasusV2.OZParams.warehouses:type_name -> cerasusV2.Warehouse
-	29, // 20: cerasusV2.YMParams.campaigns:type_name -> cerasusV2.YMCampaign
-	31, // 21: cerasusV2.LineGraph.datasets:type_name -> cerasusV2.LineGraphDataset
-	32, // 22: cerasusV2.LineGraph.shops:type_name -> cerasusV2.LineGraphShop
-	33, // 23: cerasusV2.LineGraphics.graphics:type_name -> cerasusV2.LineGraph
-	13, // 24: cerasusV2.LineGraphRequest.auth:type_name -> cerasusV2.Auth
-	36, // 25: cerasusV2.RoundGraphic.datasets:type_name -> cerasusV2.RoundGrapDataset
-	42, // 26: cerasusV2.ShopProductLinks.shopProducts:type_name -> cerasusV2.ShopProduct
-	39, // 27: cerasusV2.Product.shopProductLinks:type_name -> cerasusV2.ShopProductLinks
-	49, // 28: cerasusV2.Product.brand:type_name -> cerasusV2.Brand
-	40, // 29: cerasusV2.ProductList.products:type_name -> cerasusV2.Product
-	8,  // 30: cerasusV2.ProductList.pagination:type_name -> cerasusV2.Pagination
-	42, // 31: cerasusV2.ShopProductList.shopProducts:type_name -> cerasusV2.ShopProduct
-	44, // 32: cerasusV2.ProductWidget.shopData:type_name -> cerasusV2.ProductWidgetShops
-	45, // 33: cerasusV2.ProductWidgets.data:type_name -> cerasusV2.ProductWidget
-	47, // 34: cerasusV2.OrderLeaders.leaders:type_name -> cerasusV2.OrderLeader
-	49, // 35: cerasusV2.Brands.brands:type_name -> cerasusV2.Brand
-	42, // 36: cerasusV2.Sale.shopProduct:type_name -> cerasusV2.ShopProduct
-	40, // 37: cerasusV2.Sale.product:type_name -> cerasusV2.Product
-	3,  // 38: cerasusV2.Sale.marginalityLevel:type_name -> cerasusV2.Level
-	54, // 39: cerasusV2.Sale.details:type_name -> cerasusV2.SaleDetail
-	51, // 40: cerasusV2.Sales.sales:type_name -> cerasusV2.Sale
-	8,  // 41: cerasusV2.Sales.pagination:type_name -> cerasusV2.Pagination
-	13, // 42: cerasusV2.SaleRequest.auth:type_name -> cerasusV2.Auth
-	56, // 43: cerasusV2.Taxes.data:type_name -> cerasusV2.Tax
-	56, // 44: cerasusV2.AppTaxes.taxes:type_name -> cerasusV2.Tax
-	59, // 45: cerasusV2.GeoPlaceData.country:type_name -> cerasusV2.GeoPlace
-	59, // 46: cerasusV2.GeoPlaceData.region:type_name -> cerasusV2.GeoPlace
-	59, // 47: cerasusV2.GeoPlaceData.city:type_name -> cerasusV2.GeoPlace
-	48, // [48:48] is the sub-list for method output_type
-	48, // [48:48] is the sub-list for method input_type
-	48, // [48:48] is the sub-list for extension type_name
-	48, // [48:48] is the sub-list for extension extendee
-	0,  // [0:48] is the sub-list for field type_name
+	16, // 8: cerasusV2.Users.users:type_name -> cerasusV2.User
+	18, // 9: cerasusV2.AppShopData.shop:type_name -> cerasusV2.Shop
+	20, // 10: cerasusV2.ShopWidget.data:type_name -> cerasusV2.ShopWidgetData
+	18, // 11: cerasusV2.ShopData.shop:type_name -> cerasusV2.Shop
+	26, // 12: cerasusV2.ShopData.shopAuth:type_name -> cerasusV2.ShopDataAuth
+	28, // 13: cerasusV2.ShopData.wbParams:type_name -> cerasusV2.WBParams
+	29, // 14: cerasusV2.ShopData.ozParams:type_name -> cerasusV2.OZParams
+	31, // 15: cerasusV2.ShopData.ymParams:type_name -> cerasusV2.YMParams
+	23, // 16: cerasusV2.ShopDataAuth.wb:type_name -> cerasusV2.WBDataAuth
+	24, // 17: cerasusV2.ShopDataAuth.oz:type_name -> cerasusV2.OZDataAuth
+	25, // 18: cerasusV2.ShopDataAuth.ym:type_name -> cerasusV2.YMDataAuth
+	27, // 19: cerasusV2.WBParams.warehouses:type_name -> cerasusV2.Warehouse
+	27, // 20: cerasusV2.OZParams.warehouses:type_name -> cerasusV2.Warehouse
+	30, // 21: cerasusV2.YMParams.campaigns:type_name -> cerasusV2.YMCampaign
+	32, // 22: cerasusV2.LineGraph.datasets:type_name -> cerasusV2.LineGraphDataset
+	33, // 23: cerasusV2.LineGraph.shops:type_name -> cerasusV2.LineGraphShop
+	34, // 24: cerasusV2.LineGraphics.graphics:type_name -> cerasusV2.LineGraph
+	13, // 25: cerasusV2.LineGraphRequest.auth:type_name -> cerasusV2.Auth
+	37, // 26: cerasusV2.RoundGraphic.datasets:type_name -> cerasusV2.RoundGrapDataset
+	43, // 27: cerasusV2.ShopProductLinks.shopProducts:type_name -> cerasusV2.ShopProduct
+	40, // 28: cerasusV2.Product.shopProductLinks:type_name -> cerasusV2.ShopProductLinks
+	50, // 29: cerasusV2.Product.brand:type_name -> cerasusV2.Brand
+	41, // 30: cerasusV2.ProductList.products:type_name -> cerasusV2.Product
+	8,  // 31: cerasusV2.ProductList.pagination:type_name -> cerasusV2.Pagination
+	43, // 32: cerasusV2.ShopProductList.shopProducts:type_name -> cerasusV2.ShopProduct
+	45, // 33: cerasusV2.ProductWidget.shopData:type_name -> cerasusV2.ProductWidgetShops
+	46, // 34: cerasusV2.ProductWidgets.data:type_name -> cerasusV2.ProductWidget
+	48, // 35: cerasusV2.OrderLeaders.leaders:type_name -> cerasusV2.OrderLeader
+	50, // 36: cerasusV2.Brands.brands:type_name -> cerasusV2.Brand
+	43, // 37: cerasusV2.Sale.shopProduct:type_name -> cerasusV2.ShopProduct
+	41, // 38: cerasusV2.Sale.product:type_name -> cerasusV2.Product
+	3,  // 39: cerasusV2.Sale.marginalityLevel:type_name -> cerasusV2.Level
+	55, // 40: cerasusV2.Sale.details:type_name -> cerasusV2.SaleDetail
+	52, // 41: cerasusV2.Sales.sales:type_name -> cerasusV2.Sale
+	8,  // 42: cerasusV2.Sales.pagination:type_name -> cerasusV2.Pagination
+	13, // 43: cerasusV2.SaleRequest.auth:type_name -> cerasusV2.Auth
+	57, // 44: cerasusV2.Taxes.data:type_name -> cerasusV2.Tax
+	57, // 45: cerasusV2.AppTaxes.taxes:type_name -> cerasusV2.Tax
+	60, // 46: cerasusV2.GeoPlaceData.country:type_name -> cerasusV2.GeoPlace
+	60, // 47: cerasusV2.GeoPlaceData.region:type_name -> cerasusV2.GeoPlace
+	60, // 48: cerasusV2.GeoPlaceData.city:type_name -> cerasusV2.GeoPlace
+	49, // [49:49] is the sub-list for method output_type
+	49, // [49:49] is the sub-list for method input_type
+	49, // [49:49] is the sub-list for extension type_name
+	49, // [49:49] is the sub-list for extension extendee
+	0,  // [0:49] is the sub-list for field type_name
 }
 
 func init() { file_cerasus_v2_proto_init() }
@@ -4773,7 +4825,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Shop); i {
+			switch v := v.(*Users); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4785,7 +4837,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AppShopData); i {
+			switch v := v.(*Shop); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4797,7 +4849,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopWidgetData); i {
+			switch v := v.(*AppShopData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4809,7 +4861,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopWidget); i {
+			switch v := v.(*ShopWidgetData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4821,7 +4873,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopData); i {
+			switch v := v.(*ShopWidget); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4833,7 +4885,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WBDataAuth); i {
+			switch v := v.(*ShopData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4845,7 +4897,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OZDataAuth); i {
+			switch v := v.(*WBDataAuth); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4857,7 +4909,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*YMDataAuth); i {
+			switch v := v.(*OZDataAuth); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4869,7 +4921,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopDataAuth); i {
+			switch v := v.(*YMDataAuth); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4881,7 +4933,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Warehouse); i {
+			switch v := v.(*ShopDataAuth); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4893,7 +4945,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WBParams); i {
+			switch v := v.(*Warehouse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4905,7 +4957,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OZParams); i {
+			switch v := v.(*WBParams); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4917,7 +4969,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*YMCampaign); i {
+			switch v := v.(*OZParams); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4929,7 +4981,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*YMParams); i {
+			switch v := v.(*YMCampaign); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4941,7 +4993,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LineGraphDataset); i {
+			switch v := v.(*YMParams); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4953,7 +5005,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LineGraphShop); i {
+			switch v := v.(*LineGraphDataset); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4965,7 +5017,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LineGraph); i {
+			switch v := v.(*LineGraphShop); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4977,7 +5029,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LineGraphics); i {
+			switch v := v.(*LineGraph); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -4989,7 +5041,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LineGraphRequest); i {
+			switch v := v.(*LineGraphics); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5001,7 +5053,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RoundGrapDataset); i {
+			switch v := v.(*LineGraphRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5013,7 +5065,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RoundGraphic); i {
+			switch v := v.(*RoundGrapDataset); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5025,7 +5077,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WeekGraphic); i {
+			switch v := v.(*RoundGraphic); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5037,7 +5089,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopProductLinks); i {
+			switch v := v.(*WeekGraphic); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5049,7 +5101,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Product); i {
+			switch v := v.(*ShopProductLinks); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5061,7 +5113,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductList); i {
+			switch v := v.(*Product); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5073,7 +5125,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopProduct); i {
+			switch v := v.(*ProductList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5085,7 +5137,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopProductList); i {
+			switch v := v.(*ShopProduct); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5097,7 +5149,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductWidgetShops); i {
+			switch v := v.(*ShopProductList); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5109,7 +5161,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductWidget); i {
+			switch v := v.(*ProductWidgetShops); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5121,7 +5173,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductWidgets); i {
+			switch v := v.(*ProductWidget); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5133,7 +5185,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OrderLeader); i {
+			switch v := v.(*ProductWidgets); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5145,7 +5197,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OrderLeaders); i {
+			switch v := v.(*OrderLeader); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5157,7 +5209,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Brand); i {
+			switch v := v.(*OrderLeaders); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5169,7 +5221,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Brands); i {
+			switch v := v.(*Brand); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5181,7 +5233,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Sale); i {
+			switch v := v.(*Brands); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5193,7 +5245,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Sales); i {
+			switch v := v.(*Sale); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5205,7 +5257,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SaleRequest); i {
+			switch v := v.(*Sales); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5217,7 +5269,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SaleDetail); i {
+			switch v := v.(*SaleRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5229,7 +5281,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Purchase); i {
+			switch v := v.(*SaleDetail); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5241,7 +5293,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Tax); i {
+			switch v := v.(*Purchase); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5253,7 +5305,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Taxes); i {
+			switch v := v.(*Tax); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5265,7 +5317,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AppTaxes); i {
+			switch v := v.(*Taxes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5277,7 +5329,7 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeoPlace); i {
+			switch v := v.(*AppTaxes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5289,6 +5341,18 @@ func file_cerasus_v2_proto_init() {
 			}
 		}
 		file_cerasus_v2_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GeoPlace); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_cerasus_v2_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GeoPlaceData); i {
 			case 0:
 				return &v.state
@@ -5307,7 +5371,7 @@ func file_cerasus_v2_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_cerasus_v2_proto_rawDesc,
 			NumEnums:      4,
-			NumMessages:   57,
+			NumMessages:   58,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

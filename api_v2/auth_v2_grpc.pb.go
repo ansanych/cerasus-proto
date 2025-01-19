@@ -27,6 +27,12 @@ type AuthentyClient interface {
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	CreateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompany(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error)
+	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error)
+	UpdateCompany(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type authentyClient struct {
@@ -82,6 +88,60 @@ func (c *authentyClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *authentyClient) CreateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/CreateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/UpdateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) DeleteUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/DeleteUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) GetCompany(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error) {
+	out := new(Company)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/GetCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Company, error) {
+	out := new(Company)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/GetCompanyUsers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) UpdateCompany(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/UpdateCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -91,6 +151,12 @@ type AuthentyServer interface {
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
 	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	CreateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
+	UpdateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
+	DeleteUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
+	GetCompany(context.Context, *Auth) (*Company, error)
+	GetCompanyUsers(context.Context, *Auth) (*Company, error)
+	UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -112,6 +178,24 @@ func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) 
 }
 func (UnimplementedAuthentyServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedAuthentyServer) CreateUser(context.Context, *UpdateUserRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedAuthentyServer) UpdateUser(context.Context, *UpdateUserRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedAuthentyServer) DeleteUser(context.Context, *UpdateUserRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedAuthentyServer) GetCompany(context.Context, *Auth) (*Company, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompany not implemented")
+}
+func (UnimplementedAuthentyServer) GetCompanyUsers(context.Context, *Auth) (*Company, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyUsers not implemented")
+}
+func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateUserRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -216,6 +300,114 @@ func _Authenty_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Authenty_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).CreateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/CreateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).CreateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/DeleteUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).DeleteUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_GetCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).GetCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/GetCompany",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).GetCompany(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_GetCompanyUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).GetCompanyUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/GetCompanyUsers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).GetCompanyUsers(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).UpdateCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/UpdateCompany",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).UpdateCompany(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Authenty_ServiceDesc is the grpc.ServiceDesc for Authenty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +434,30 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Authenty_Ping_Handler,
+		},
+		{
+			MethodName: "CreateUser",
+			Handler:    _Authenty_CreateUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _Authenty_UpdateUser_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _Authenty_DeleteUser_Handler,
+		},
+		{
+			MethodName: "GetCompany",
+			Handler:    _Authenty_GetCompany_Handler,
+		},
+		{
+			MethodName: "GetCompanyUsers",
+			Handler:    _Authenty_GetCompanyUsers_Handler,
+		},
+		{
+			MethodName: "UpdateCompany",
+			Handler:    _Authenty_UpdateCompany_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

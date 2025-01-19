@@ -11,6 +11,12 @@ service Authenty {
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
     rpc CheckAccess (AccessRequest) returns (Auth) {}
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc CreateUser(UpdateUserRequest) returns (StatusReply) {}
+    rpc UpdateUser(UpdateUserRequest) returns (StatusReply) {}
+    rpc DeleteUser(UpdateUserRequest) returns (StatusReply) {}
+    rpc GetCompany(Auth) returns (Company) {}
+    rpc GetCompanyUsers(Auth) returns (Company) {}
+    rpc UpdateCompany(UpdateUserRequest) returns (StatusReply) {}
 }
 
 message RegisterRequest {
@@ -46,4 +52,14 @@ message AccessRequest {
 
 message SystemAccessRequest {
     int64 companyID = 1;
+}
+
+message UpdateUserRequest {
+    Auth auth = 1;
+    User user = 2;
+}
+
+message UpdateCompanyRequest {
+    Auth auth = 1;
+    Company company = 2;
 }
