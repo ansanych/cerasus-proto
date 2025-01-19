@@ -17,6 +17,7 @@ service Authenty {
     rpc GetCompany(Auth) returns (Company) {}
     rpc GetCompanyUsers(Auth) returns (Users) {}
     rpc UpdateCompany(UpdateCompanyRequest) returns (StatusReply) {}
+    rpc GetRoles(Auth) returns (Roles) {}
 }
 
 message RegisterRequest {

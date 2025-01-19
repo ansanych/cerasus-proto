@@ -107,6 +107,10 @@ message Role {
     string code = 3;
 }
 
+message Roles {
+    repeated Role roles = 1;
+}
+
 message User {
     int64 ID = 1;
     string name = 2;
