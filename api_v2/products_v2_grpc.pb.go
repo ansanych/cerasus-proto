@@ -31,6 +31,7 @@ type ProductsClient interface {
 	GetShopProductsMatch(ctx context.Context, in *RequestByShopIDs, opts ...grpc.CallOption) (*ShopProductsMatches, error)
 	GetPurchases(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductsPurchases, error)
 	GetProductsUnsortedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UnsortedCount, error)
+	ConnectUnsorted(ctx context.Context, in *ConnectUnsortedRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type productsClient struct {
@@ -122,6 +123,15 @@ func (c *productsClient) GetProductsUnsortedCount(ctx context.Context, in *Auth,
 	return out, nil
 }
 
+func (c *productsClient) ConnectUnsorted(ctx context.Context, in *ConnectUnsortedRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/ConnectUnsorted", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type ProductsServer interface {
 	GetShopProductsMatch(context.Context, *RequestByShopIDs) (*ShopProductsMatches, error)
 	GetPurchases(context.Context, *RequestByIDs) (*ProductsPurchases, error)
 	GetProductsUnsortedCount(context.Context, *Auth) (*UnsortedCount, error)
+	ConnectUnsorted(context.Context, *ConnectUnsortedRequest) (*StatusReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedProductsServer) GetPurchases(context.Context, *RequestByIDs) 
 }
 func (UnimplementedProductsServer) GetProductsUnsortedCount(context.Context, *Auth) (*UnsortedCount, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsUnsortedCount not implemented")
+}
+func (UnimplementedProductsServer) ConnectUnsorted(context.Context, *ConnectUnsortedRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectUnsorted not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -344,6 +358,24 @@ func _Products_GetProductsUnsortedCount_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_ConnectUnsorted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectUnsortedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).ConnectUnsorted(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/ConnectUnsorted",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).ConnectUnsorted(ctx, req.(*ConnectUnsortedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsUnsortedCount",
 			Handler:    _Products_GetProductsUnsortedCount_Handler,
+		},
+		{
+			MethodName: "ConnectUnsorted",
+			Handler:    _Products_ConnectUnsorted_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
