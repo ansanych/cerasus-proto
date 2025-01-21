@@ -14,6 +14,7 @@ service Products {
     rpc GetProduct (RequestByID) returns (Product) {}
     rpc GetShopProductsMatch (RequestByShopIDs) returns (ShopProductsMatches) {}
     rpc GetPurchases (RequestByIDs) returns (ProductsPurchases) {}
+    rpc GetProductsUnsortedCount (Auth) returns (UnsortedCount) {}
 }
 
 message RequestByShopIDs {
@@ -49,4 +50,12 @@ message ProductPurchases {
 
 message ProductsPurchases {
     repeated ProductPurchases data = 1;
+}
+
+message ShopUnsortedCount {
+    string shop = 1;
+    int32 count = 2;
+}
+message UnsortedCount {
+    repeated ShopUnsortedCount data = 1;
 }

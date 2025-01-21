@@ -41,6 +41,7 @@ type YMClient interface {
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
+	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 }
 
 type yMClient struct {
@@ -222,6 +223,15 @@ func (c *yMClient) GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *yMClient) GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetProductsUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -245,6 +255,7 @@ type YMServer interface {
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
+	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -308,6 +319,9 @@ func (UnimplementedYMServer) GetProductWidgetOrders(context.Context, *RequestByD
 }
 func (UnimplementedYMServer) GetSale(context.Context, *SaleRequest) (*Sale, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSale not implemented")
+}
+func (UnimplementedYMServer) GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsUnsortedList not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -664,6 +678,24 @@ func _YM_GetSale_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetProductsUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetProductsUnsortedList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetProductsUnsortedList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetProductsUnsortedList(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +778,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSale",
 			Handler:    _YM_GetSale_Handler,
+		},
+		{
+			MethodName: "GetProductsUnsortedList",
+			Handler:    _YM_GetProductsUnsortedList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

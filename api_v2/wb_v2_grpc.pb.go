@@ -41,6 +41,7 @@ type WBClient interface {
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
+	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 }
 
 type wBClient struct {
@@ -222,6 +223,15 @@ func (c *wBClient) GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *wBClient) GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetProductsUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -245,6 +255,7 @@ type WBServer interface {
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
+	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -308,6 +319,9 @@ func (UnimplementedWBServer) GetProductWidgetOrders(context.Context, *RequestByD
 }
 func (UnimplementedWBServer) GetSale(context.Context, *SaleRequest) (*Sale, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSale not implemented")
+}
+func (UnimplementedWBServer) GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsUnsortedList not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -664,6 +678,24 @@ func _WB_GetSale_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetProductsUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetProductsUnsortedList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetProductsUnsortedList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetProductsUnsortedList(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -746,6 +778,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSale",
 			Handler:    _WB_GetSale_Handler,
+		},
+		{
+			MethodName: "GetProductsUnsortedList",
+			Handler:    _WB_GetProductsUnsortedList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
