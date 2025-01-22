@@ -291,6 +291,7 @@ message Product {
     string preview = 5;
     repeated ShopProductLinks shopProductLinks = 6;
     Brand brand = 7;
+    float purchase = 8;
 }
 
 message ProductList {
