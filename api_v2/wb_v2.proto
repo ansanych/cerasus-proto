@@ -20,6 +20,7 @@ service WB {
     rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
+    rpc GetShopProduct (RequestByID) returns (ShopProduct) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}

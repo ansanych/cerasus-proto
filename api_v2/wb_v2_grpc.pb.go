@@ -36,6 +36,7 @@ type WBClient interface {
 	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
 	GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
+	GetShopProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
@@ -178,6 +179,15 @@ func (c *wBClient) GetShopProducts(ctx context.Context, in *RequestByIDs, opts .
 	return out, nil
 }
 
+func (c *wBClient) GetShopProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ShopProduct, error) {
+	out := new(ShopProduct)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetShopProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wBClient) GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error) {
 	out := new(LineGraphics)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetProductGraphics", in, out, opts...)
@@ -250,6 +260,7 @@ type WBServer interface {
 	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
 	GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error)
+	GetShopProduct(context.Context, *RequestByID) (*ShopProduct, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
@@ -304,6 +315,9 @@ func (UnimplementedWBServer) GetOrderLeaders(context.Context, *Auth) (*OrderLead
 }
 func (UnimplementedWBServer) GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProducts not implemented")
+}
+func (UnimplementedWBServer) GetShopProduct(context.Context, *RequestByID) (*ShopProduct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProduct not implemented")
 }
 func (UnimplementedWBServer) GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductGraphics not implemented")
@@ -588,6 +602,24 @@ func _WB_GetShopProducts_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetShopProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetShopProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetShopProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetShopProduct(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WB_GetProductGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByDates)
 	if err := dec(in); err != nil {
@@ -758,6 +790,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopProducts",
 			Handler:    _WB_GetShopProducts_Handler,
+		},
+		{
+			MethodName: "GetShopProduct",
+			Handler:    _WB_GetShopProduct_Handler,
 		},
 		{
 			MethodName: "GetProductGraphics",

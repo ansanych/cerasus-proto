@@ -302,6 +302,7 @@ message ShopProduct {
     int64 ID = 1;
     string title = 2;
     string article = 3;
+    string preview = 4;
 }
 
 message ShopProductList {
