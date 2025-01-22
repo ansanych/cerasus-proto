@@ -32,6 +32,9 @@ message ProductListRequest {
     string sort = 5;
     SortOrder order = 6;
     int32 limit = 7;
+    bool pricer = 8;
+    bool counter = 9;
+    bool purchase = 10;
 }
 
 message ShopProductsMatch {
@@ -57,6 +60,7 @@ message ShopUnsortedCount {
     string shop = 1;
     int32 count = 2;
 }
+
 message UnsortedCount {
     repeated ShopUnsortedCount data = 1;
 }
