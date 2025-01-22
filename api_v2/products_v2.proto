@@ -66,4 +66,5 @@ message ConnectUnsortedRequest {
     string name = 2;
     int64 product = 3;
     repeated int64 shopProducts = 4;
+    string shop = 5;
 }
