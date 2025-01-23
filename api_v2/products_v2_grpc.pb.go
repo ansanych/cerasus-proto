@@ -32,6 +32,9 @@ type ProductsClient interface {
 	GetPurchases(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductsPurchases, error)
 	GetProductsUnsortedCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UnsortedCount, error)
 	ConnectUnsorted(ctx context.Context, in *ConnectUnsortedRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SetProductPurchase(ctx context.Context, in *SetProductPurchaseRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SetProductBrand(ctx context.Context, in *SetProductBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type productsClient struct {
@@ -132,6 +135,33 @@ func (c *productsClient) ConnectUnsorted(ctx context.Context, in *ConnectUnsorte
 	return out, nil
 }
 
+func (c *productsClient) UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/UpdateProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) SetProductPurchase(ctx context.Context, in *SetProductPurchaseRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/SetProductPurchase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) SetProductBrand(ctx context.Context, in *SetProductBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/SetProductBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -146,6 +176,9 @@ type ProductsServer interface {
 	GetPurchases(context.Context, *RequestByIDs) (*ProductsPurchases, error)
 	GetProductsUnsortedCount(context.Context, *Auth) (*UnsortedCount, error)
 	ConnectUnsorted(context.Context, *ConnectUnsortedRequest) (*StatusReply, error)
+	UpdateProduct(context.Context, *UpdateProductRequest) (*StatusReply, error)
+	SetProductPurchase(context.Context, *SetProductPurchaseRequest) (*StatusReply, error)
+	SetProductBrand(context.Context, *SetProductBrandRequest) (*StatusReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -182,6 +215,15 @@ func (UnimplementedProductsServer) GetProductsUnsortedCount(context.Context, *Au
 }
 func (UnimplementedProductsServer) ConnectUnsorted(context.Context, *ConnectUnsortedRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectUnsorted not implemented")
+}
+func (UnimplementedProductsServer) UpdateProduct(context.Context, *UpdateProductRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
+}
+func (UnimplementedProductsServer) SetProductPurchase(context.Context, *SetProductPurchaseRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetProductPurchase not implemented")
+}
+func (UnimplementedProductsServer) SetProductBrand(context.Context, *SetProductBrandRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetProductBrand not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -376,6 +418,60 @@ func _Products_ConnectUnsorted_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).UpdateProduct(ctx, req.(*UpdateProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_SetProductPurchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetProductPurchaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).SetProductPurchase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/SetProductPurchase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).SetProductPurchase(ctx, req.(*SetProductPurchaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_SetProductBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetProductBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).SetProductBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/SetProductBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).SetProductBrand(ctx, req.(*SetProductBrandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +518,18 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConnectUnsorted",
 			Handler:    _Products_ConnectUnsorted_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _Products_UpdateProduct_Handler,
+		},
+		{
+			MethodName: "SetProductPurchase",
+			Handler:    _Products_SetProductPurchase_Handler,
+		},
+		{
+			MethodName: "SetProductBrand",
+			Handler:    _Products_SetProductBrand_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
