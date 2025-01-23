@@ -397,6 +397,7 @@ message SaleDetail {
 message Purchase {
     float purchase = 1;
     string date_from = 2;
+    int64 ID = 3;
 }
 
 //TAX
