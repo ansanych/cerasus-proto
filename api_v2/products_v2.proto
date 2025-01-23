@@ -17,7 +17,9 @@ service Products {
     rpc GetProductsUnsortedCount (Auth) returns (UnsortedCount) {}
     rpc ConnectUnsorted (ConnectUnsortedRequest) returns (StatusReply) {}
     rpc UpdateProduct (UpdateProductRequest) returns (StatusReply) {}
+    rpc GetProductPurchase (RequestByID) returns (ProductPurchases) {}
     rpc SetProductPurchase (SetProductPurchaseRequest) returns (StatusReply) {}
+    rpc DeleteProductPurchase (RequestByID) returns (StatusReply) {}
     rpc SetProductBrand (SetProductBrandRequest) returns (StatusReply) {}
 }
 
@@ -74,6 +76,7 @@ message ShopProductsMatches {
 message ProductPurchases {
     int64 productID = 1;
     repeated Purchase purchase = 2;
+    Purchase actual = 3;
 }
 
 message ProductsPurchases {
