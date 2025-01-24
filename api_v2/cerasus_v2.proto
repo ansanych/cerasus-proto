@@ -326,6 +326,13 @@ message ProductWidgets {
     repeated ProductWidget data = 1;
 }
 
+message ShopProductUrlSetter {
+    Auth auth = 1;
+    string shop = 2;
+    int64 shopProductID = 3;
+    string url = 5;
+}
+
 //LEADERS
 //orders
 message OrderLeader {

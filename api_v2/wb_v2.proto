@@ -27,4 +27,5 @@ service WB {
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc GetSale (SaleRequest) returns (Sale) {}
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
+    rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
 }
