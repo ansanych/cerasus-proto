@@ -21,6 +21,8 @@ service Products {
     rpc SetProductPurchase (SetProductPurchaseRequest) returns (StatusReply) {}
     rpc DeleteProductPurchase (RequestByID) returns (StatusReply) {}
     rpc SetProductBrand (SetProductBrandRequest) returns (StatusReply) {}
+    rpc GetProductLinks (RequestByID) returns (ProductLinks) {}
+    rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
 }
 
 message SetProductPurchaseRequest {
@@ -98,4 +100,18 @@ message ConnectUnsortedRequest {
     int64 product = 3;
     repeated int64 shopProducts = 4;
     string shop = 5;
+}
+
+message ProductLink {
+    int64 ID = 1;
+    ShopProduct shopProduct = 2;
+}
+
+message ProductLinkShop {
+    string shop = 1;
+    repeated ProductLink links = 2;
+}
+
+message ProductLinks {
+    repeated ProductLinkShop data = 1;
 }

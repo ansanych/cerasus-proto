@@ -304,6 +304,7 @@ message ShopProduct {
     string title = 2;
     string article = 3;
     string preview = 4;
+    string url = 5;
 }
 
 message ShopProductList {

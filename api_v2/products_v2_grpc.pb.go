@@ -37,6 +37,8 @@ type ProductsClient interface {
 	SetProductPurchase(ctx context.Context, in *SetProductPurchaseRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteProductPurchase(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	SetProductBrand(ctx context.Context, in *SetProductBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetProductLinks(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductLinks, error)
+	DeleteProductLink(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type productsClient struct {
@@ -182,6 +184,24 @@ func (c *productsClient) SetProductBrand(ctx context.Context, in *SetProductBran
 	return out, nil
 }
 
+func (c *productsClient) GetProductLinks(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductLinks, error) {
+	out := new(ProductLinks)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductLinks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) DeleteProductLink(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/DeleteProductLink", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -201,6 +221,8 @@ type ProductsServer interface {
 	SetProductPurchase(context.Context, *SetProductPurchaseRequest) (*StatusReply, error)
 	DeleteProductPurchase(context.Context, *RequestByID) (*StatusReply, error)
 	SetProductBrand(context.Context, *SetProductBrandRequest) (*StatusReply, error)
+	GetProductLinks(context.Context, *RequestByID) (*ProductLinks, error)
+	DeleteProductLink(context.Context, *RequestByID) (*StatusReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -252,6 +274,12 @@ func (UnimplementedProductsServer) DeleteProductPurchase(context.Context, *Reque
 }
 func (UnimplementedProductsServer) SetProductBrand(context.Context, *SetProductBrandRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetProductBrand not implemented")
+}
+func (UnimplementedProductsServer) GetProductLinks(context.Context, *RequestByID) (*ProductLinks, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductLinks not implemented")
+}
+func (UnimplementedProductsServer) DeleteProductLink(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductLink not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -536,6 +564,42 @@ func _Products_SetProductBrand_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_GetProductLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetProductLinks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductLinks(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_DeleteProductLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).DeleteProductLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/DeleteProductLink",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).DeleteProductLink(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +666,14 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetProductBrand",
 			Handler:    _Products_SetProductBrand_Handler,
+		},
+		{
+			MethodName: "GetProductLinks",
+			Handler:    _Products_GetProductLinks_Handler,
+		},
+		{
+			MethodName: "DeleteProductLink",
+			Handler:    _Products_DeleteProductLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
