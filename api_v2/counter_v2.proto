@@ -16,13 +16,18 @@ message ProductCount {
     int64 productID = 2;
     int32 count = 3;
     int64 ID = 4;
-    repeated ShopCounterData shopData = 5;
+    repeated ShopCounter shopData = 5;
+}
+
+message ShopCounter {
+    string shop = 1;
+    bool active = 2;
+    repeated ShopCounterData counterData = 3;
 }
 
 message ShopCounterData {
-    string shop = 1;
-    bool active = 2;
-    int32 count = 3;
-    string date = 4;
-    int32 countStock = 5;
+    int64 shopProductID = 1;
+    int32 count = 2;
+    int32 stockCount = 3;
+    string updated = 4;
 }
