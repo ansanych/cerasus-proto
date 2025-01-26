@@ -24,4 +24,5 @@ message ShopCounterData {
     bool active = 2;
     int32 count = 3;
     string date = 4;
+    int32 countStock = 5;
 }
