@@ -28,4 +28,11 @@ service WB {
     rpc GetSale (SaleRequest) returns (Sale) {}
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
+    rpc GetCounterParams(RequestByIDs) returns (WBCounterParams) {}
+}
+
+message WBCounterParams {
+    string token = 1;
+    repeated int64 warehouses = 2;
+    repeated ShopProduct shopProducts = 1;
 }
