@@ -306,6 +306,7 @@ message ShopProduct {
     string preview = 4;
     string url = 5;
     repeated string wbSkus = 6;
+    repeated int64 ozProductID = 7;
 }
 
 message ShopProductList {

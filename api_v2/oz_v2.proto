@@ -28,4 +28,12 @@ service OZ {
     rpc GetSale (SaleRequest) returns (Sale) {}
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
+    rpc GetCounterParams(RequestByIDs) returns (OZCounterParams) {}
+}
+
+message OZCounterParams {
+    int64 clientID = 1;
+    string apiKey = 2;
+    repeated int64 warehouses = 3;
+    repeated ShopProduct shopProducts = 4;
 }
