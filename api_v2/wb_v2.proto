@@ -34,5 +34,5 @@ service WB {
 message WBCounterParams {
     string token = 1;
     repeated int64 warehouses = 2;
-    repeated ShopProduct shopProducts = 1;
+    repeated ShopProduct shopProducts = 3;
 }

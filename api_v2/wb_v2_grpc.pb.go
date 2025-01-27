@@ -44,6 +44,7 @@ type WBClient interface {
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
 	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 	SetShopProductUrl(ctx context.Context, in *ShopProductUrlSetter, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*WBCounterParams, error)
 }
 
 type wBClient struct {
@@ -252,6 +253,15 @@ func (c *wBClient) SetShopProductUrl(ctx context.Context, in *ShopProductUrlSett
 	return out, nil
 }
 
+func (c *wBClient) GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*WBCounterParams, error) {
+	out := new(WBCounterParams)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetCounterParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -278,6 +288,7 @@ type WBServer interface {
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
 	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error)
+	GetCounterParams(context.Context, *RequestByIDs) (*WBCounterParams, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -350,6 +361,9 @@ func (UnimplementedWBServer) GetProductsUnsortedList(context.Context, *Auth) (*S
 }
 func (UnimplementedWBServer) SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetShopProductUrl not implemented")
+}
+func (UnimplementedWBServer) GetCounterParams(context.Context, *RequestByIDs) (*WBCounterParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCounterParams not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -760,6 +774,24 @@ func _WB_SetShopProductUrl_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetCounterParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetCounterParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetCounterParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetCounterParams(ctx, req.(*RequestByIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +886,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetShopProductUrl",
 			Handler:    _WB_SetShopProductUrl_Handler,
+		},
+		{
+			MethodName: "GetCounterParams",
+			Handler:    _WB_GetCounterParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
