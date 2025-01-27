@@ -17,6 +17,7 @@ message ProductCount {
     int32 count = 3;
     int64 ID = 4;
     repeated ShopCounter shopData = 5;
+    bool access = 6;
 }
 
 message ShopCounter {
