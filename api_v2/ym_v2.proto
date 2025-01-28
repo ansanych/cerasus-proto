@@ -32,8 +32,8 @@ service YM {
 }
 
 message YMCounterParams {
-    int64 token = 1;
-    string businessID = 2;
+    string token = 1;
+    int64 businessID = 2;
     repeated YMCampaign campaigns = 3;
     repeated ShopProduct shopProducts = 4;
 }
