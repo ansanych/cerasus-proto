@@ -44,6 +44,7 @@ type YMClient interface {
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
 	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 	SetShopProductUrl(ctx context.Context, in *ShopProductUrlSetter, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMCounterParams, error)
 }
 
 type yMClient struct {
@@ -252,6 +253,15 @@ func (c *yMClient) SetShopProductUrl(ctx context.Context, in *ShopProductUrlSett
 	return out, nil
 }
 
+func (c *yMClient) GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMCounterParams, error) {
+	out := new(YMCounterParams)
+	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetCounterParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -278,6 +288,7 @@ type YMServer interface {
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
 	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error)
+	GetCounterParams(context.Context, *RequestByIDs) (*YMCounterParams, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -350,6 +361,9 @@ func (UnimplementedYMServer) GetProductsUnsortedList(context.Context, *Auth) (*S
 }
 func (UnimplementedYMServer) SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetShopProductUrl not implemented")
+}
+func (UnimplementedYMServer) GetCounterParams(context.Context, *RequestByIDs) (*YMCounterParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCounterParams not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -760,6 +774,24 @@ func _YM_SetShopProductUrl_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetCounterParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetCounterParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.YM/GetCounterParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetCounterParams(ctx, req.(*RequestByIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +886,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetShopProductUrl",
 			Handler:    _YM_SetShopProductUrl_Handler,
+		},
+		{
+			MethodName: "GetCounterParams",
+			Handler:    _YM_GetCounterParams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

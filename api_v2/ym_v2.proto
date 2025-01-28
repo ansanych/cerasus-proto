@@ -28,4 +28,12 @@ service YM {
     rpc GetSale (SaleRequest) returns (Sale) {}
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
+    rpc GetCounterParams(RequestByIDs) returns (YMCounterParams) {}
+}
+
+message YMCounterParams {
+    int64 token = 1;
+    string businessID = 2;
+    repeated YMCampaign campaigns = 3;
+    repeated ShopProduct shopProducts = 4;
 }
