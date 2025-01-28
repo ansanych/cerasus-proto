@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PricerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
-	GetParamsForCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*PingReply, error)
+	GetParamsForCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ParamsForCounter, error)
 }
 
 type pricerClient struct {
@@ -43,8 +43,8 @@ func (c *pricerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *pricerClient) GetParamsForCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*PingReply, error) {
-	out := new(PingReply)
+func (c *pricerClient) GetParamsForCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ParamsForCounter, error) {
+	out := new(ParamsForCounter)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Pricer/GetParamsForCounter", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (c *pricerClient) GetParamsForCounter(ctx context.Context, in *Company, opt
 // for forward compatibility
 type PricerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
-	GetParamsForCounter(context.Context, *Company) (*PingReply, error)
+	GetParamsForCounter(context.Context, *Company) (*ParamsForCounter, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -68,7 +68,7 @@ type UnimplementedPricerServer struct {
 func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedPricerServer) GetParamsForCounter(context.Context, *Company) (*PingReply, error) {
+func (UnimplementedPricerServer) GetParamsForCounter(context.Context, *Company) (*ParamsForCounter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParamsForCounter not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
