@@ -1,0 +1,20 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Pricer {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetParamsForCounter (Company) returns (PingReply) {}
+}
+
+message ParamForCounter {
+    int64 productID = 1;
+    repeated string shop = 2;
+}
+
+message ParamsForCounter {
+    repeated ParamForCounter params = 1;
+}
