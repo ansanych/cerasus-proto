@@ -1,0 +1,25 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Services {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc CompanyAccess (AccessRequest) returns (StatusReply) {}
+    rpc CompaniesWhithAccess (Service) returns (CompanyList) {}
+}
+
+message Service {
+    int64 ID = 1;
+    string	Title = 2;
+    string	Code = 3;
+    bool	Paid = 4;
+    bool	Active = 5;
+}
+
+message AccessRequest {
+    int64 companyID = 1;
+    Service service = 2;
+}

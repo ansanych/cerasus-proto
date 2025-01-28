@@ -101,6 +101,10 @@ message Company {
     bool brand = 3;
 }
 
+message CompanyList {
+    repeated Company companies = 1;
+}
+
 message Role {
     int64 ID = 1;
     string title = 2;

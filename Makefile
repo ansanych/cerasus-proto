@@ -201,3 +201,11 @@ genCounter2:
 			--go-grpc_out ./api_v2 \
 			--go-grpc_opt paths=source_relative \
 			./api_v2/counter_v2.proto
+
+genServices2:
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/services_v2.proto
