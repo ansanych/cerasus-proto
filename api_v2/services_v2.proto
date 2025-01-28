@@ -7,7 +7,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Services {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc CompanyAccess (AccessRequest) returns (StatusReply) {}
+    rpc CompanyAccess (ServiceAccessRequest) returns (StatusReply) {}
     rpc CompaniesWhithAccess (Service) returns (CompanyList) {}
 }
 
@@ -19,7 +19,7 @@ message Service {
     bool	Active = 5;
 }
 
-message AccessRequest {
+message ServiceAccessRequest {
     int64 companyID = 1;
     Service service = 2;
 }

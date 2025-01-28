@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServicesClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
-	CompanyAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	CompanyAccess(ctx context.Context, in *ServiceAccessRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	CompaniesWhithAccess(ctx context.Context, in *Service, opts ...grpc.CallOption) (*CompanyList, error)
 }
 
@@ -44,7 +44,7 @@ func (c *servicesClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 	return out, nil
 }
 
-func (c *servicesClient) CompanyAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *servicesClient) CompanyAccess(ctx context.Context, in *ServiceAccessRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Services/CompanyAccess", in, out, opts...)
 	if err != nil {
@@ -67,7 +67,7 @@ func (c *servicesClient) CompaniesWhithAccess(ctx context.Context, in *Service, 
 // for forward compatibility
 type ServicesServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
-	CompanyAccess(context.Context, *AccessRequest) (*StatusReply, error)
+	CompanyAccess(context.Context, *ServiceAccessRequest) (*StatusReply, error)
 	CompaniesWhithAccess(context.Context, *Service) (*CompanyList, error)
 	mustEmbedUnimplementedServicesServer()
 }
@@ -79,7 +79,7 @@ type UnimplementedServicesServer struct {
 func (UnimplementedServicesServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedServicesServer) CompanyAccess(context.Context, *AccessRequest) (*StatusReply, error) {
+func (UnimplementedServicesServer) CompanyAccess(context.Context, *ServiceAccessRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompanyAccess not implemented")
 }
 func (UnimplementedServicesServer) CompaniesWhithAccess(context.Context, *Service) (*CompanyList, error) {
@@ -117,7 +117,7 @@ func _Services_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 }
 
 func _Services_CompanyAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AccessRequest)
+	in := new(ServiceAccessRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func _Services_CompanyAccess_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/cerasusV2.Services/CompanyAccess",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServicesServer).CompanyAccess(ctx, req.(*AccessRequest))
+		return srv.(ServicesServer).CompanyAccess(ctx, req.(*ServiceAccessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
