@@ -448,3 +448,9 @@ message GeoPlaceData {
     GeoPlace region = 2;
     GeoPlace city = 3;   
 }
+
+//Detector
+message DetectedPrice {
+    int64 jobID = 1;
+    int32 price = 2; 
+}

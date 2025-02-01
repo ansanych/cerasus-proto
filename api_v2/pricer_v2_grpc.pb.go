@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type PricerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetParamsForCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ParamsForCounter, error)
+	GetPricerJobParams(ctx context.Context, in *PricerJobParamsRequest, opts ...grpc.CallOption) (*PricerJobParams, error)
+	SetDetectedPrice(ctx context.Context, in *DetectedPrice, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -52,12 +54,32 @@ func (c *pricerClient) GetParamsForCounter(ctx context.Context, in *Company, opt
 	return out, nil
 }
 
+func (c *pricerClient) GetPricerJobParams(ctx context.Context, in *PricerJobParamsRequest, opts ...grpc.CallOption) (*PricerJobParams, error) {
+	out := new(PricerJobParams)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Pricer/GetPricerJobParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetDetectedPrice(ctx context.Context, in *DetectedPrice, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Pricer/SetDetectedPrice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
 type PricerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetParamsForCounter(context.Context, *Company) (*ParamsForCounter, error)
+	GetPricerJobParams(context.Context, *PricerJobParamsRequest) (*PricerJobParams, error)
+	SetDetectedPrice(context.Context, *DetectedPrice) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -70,6 +92,12 @@ func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply
 }
 func (UnimplementedPricerServer) GetParamsForCounter(context.Context, *Company) (*ParamsForCounter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetParamsForCounter not implemented")
+}
+func (UnimplementedPricerServer) GetPricerJobParams(context.Context, *PricerJobParamsRequest) (*PricerJobParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPricerJobParams not implemented")
+}
+func (UnimplementedPricerServer) SetDetectedPrice(context.Context, *DetectedPrice) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDetectedPrice not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -120,6 +148,42 @@ func _Pricer_GetParamsForCounter_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetPricerJobParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PricerJobParamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetPricerJobParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Pricer/GetPricerJobParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetPricerJobParams(ctx, req.(*PricerJobParamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetDetectedPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetectedPrice)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetDetectedPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Pricer/SetDetectedPrice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetDetectedPrice(ctx, req.(*DetectedPrice))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +198,14 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetParamsForCounter",
 			Handler:    _Pricer_GetParamsForCounter_Handler,
+		},
+		{
+			MethodName: "GetPricerJobParams",
+			Handler:    _Pricer_GetPricerJobParams_Handler,
+		},
+		{
+			MethodName: "SetDetectedPrice",
+			Handler:    _Pricer_SetDetectedPrice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
