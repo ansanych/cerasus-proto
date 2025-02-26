@@ -9,6 +9,22 @@ service Counter {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductCount (RequestByID) returns (ProductCount) {}
     rpc SetProductCount (ProductCount) returns (StatusReply) {}
+    rpc GetParamsForPricer (PricerRequest) returns (ParamsForPricer) {}
+}
+
+message PricerRequest {
+    int64 companyID = 1;
+    string shop = 2;
+}
+
+message ParamForPricer {
+    int64 productID = 1;
+    int64 shopProductID = 2;
+    int32 count = 3;
+}
+
+message ParamsForPricer {
+    repeated ParamForPricer data = 1;
 }
 
 message ProductCount {

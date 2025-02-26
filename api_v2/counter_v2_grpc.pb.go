@@ -25,6 +25,7 @@ type CounterClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductCount(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductCount, error)
 	SetProductCount(ctx context.Context, in *ProductCount, opts ...grpc.CallOption) (*StatusReply, error)
+	GetParamsForPricer(ctx context.Context, in *PricerRequest, opts ...grpc.CallOption) (*ParamsForPricer, error)
 }
 
 type counterClient struct {
@@ -62,6 +63,15 @@ func (c *counterClient) SetProductCount(ctx context.Context, in *ProductCount, o
 	return out, nil
 }
 
+func (c *counterClient) GetParamsForPricer(ctx context.Context, in *PricerRequest, opts ...grpc.CallOption) (*ParamsForPricer, error) {
+	out := new(ParamsForPricer)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Counter/GetParamsForPricer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CounterServer is the server API for Counter service.
 // All implementations must embed UnimplementedCounterServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type CounterServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductCount(context.Context, *RequestByID) (*ProductCount, error)
 	SetProductCount(context.Context, *ProductCount) (*StatusReply, error)
+	GetParamsForPricer(context.Context, *PricerRequest) (*ParamsForPricer, error)
 	mustEmbedUnimplementedCounterServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedCounterServer) GetProductCount(context.Context, *RequestByID)
 }
 func (UnimplementedCounterServer) SetProductCount(context.Context, *ProductCount) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetProductCount not implemented")
+}
+func (UnimplementedCounterServer) GetParamsForPricer(context.Context, *PricerRequest) (*ParamsForPricer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetParamsForPricer not implemented")
 }
 func (UnimplementedCounterServer) mustEmbedUnimplementedCounterServer() {}
 
@@ -152,6 +166,24 @@ func _Counter_SetProductCount_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Counter_GetParamsForPricer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PricerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CounterServer).GetParamsForPricer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Counter/GetParamsForPricer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CounterServer).GetParamsForPricer(ctx, req.(*PricerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Counter_ServiceDesc is the grpc.ServiceDesc for Counter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var Counter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetProductCount",
 			Handler:    _Counter_SetProductCount_Handler,
+		},
+		{
+			MethodName: "GetParamsForPricer",
+			Handler:    _Counter_GetParamsForPricer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
