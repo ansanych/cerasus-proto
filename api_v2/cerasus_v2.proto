@@ -479,16 +479,15 @@ message DetectorCount {
 }
 
 message DetectorWork {
-    string client = 1;
     int64 JobID = 2;
     bytes file = 3;
 }
 
 message DetectorGetReply {
     string detector = 1;
-    DetectorWork work = 2;
-    DetectorCount pricer = 3;
-    DetectorCount dumper = 4;
+    string client = 2;
+    DetectorWork work = 3;
+    DetectorCount count = 4;
 }
 
 message DetectorSetRequest {
