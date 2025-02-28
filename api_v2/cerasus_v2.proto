@@ -480,8 +480,9 @@ message DetectorCount {
 }
 
 message DetectorWork {
-    int64 JobID = 2;
-    bytes file = 3;
+    int64 JobID = 1;
+    bytes file = 2;
+    string shop = 3;
 }
 
 message DetectorGetReply {
