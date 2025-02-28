@@ -8,26 +8,10 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Pricer {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetParamsForCounter (Company) returns (ParamsForCounter) {}
-    rpc GetPricerJobParams (PricerJobParamsRequest) returns (PricerJobParams) {}
-    rpc SetDetectedPrice (DetectedPrice) returns (StatusReply) {}
     rpc GetParserData (ParserGetRequest) returns (ParserJob) {}
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
-}
-
-message ParserSetRequest {
-    string parser = 1;
-    int64 queueDataID = 2;
-    bytes file = 3;
-}
-
-message ParserGetRequest {
-    string parser = 1;
-}
-
-message ParserJob {
-    string parser = 1;
-    int64 queueDataID = 2;
-    string url = 3;
+    rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
+    rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
 }
 
 message ParamForCounter {
@@ -37,14 +21,4 @@ message ParamForCounter {
 
 message ParamsForCounter {
     repeated ParamForCounter params = 1;
-}
-
-message PricerJobParamsRequest {
-    string shop = 1;
-}
-
-message PricerJobParams {
-    int64 jobID = 1;
-    string shop = 2;
-    string url = 3;
 }

@@ -449,8 +449,51 @@ message GeoPlaceData {
     GeoPlace city = 3;   
 }
 
-//Detector
-message DetectedPrice {
-    int64 jobID = 1;
-    int32 price = 2; 
+//Parser
+message ParserGetRequest {
+    string parser = 1;
+}
+
+message ParserJob {
+    string parser = 1;
+    int64 queueDataID = 2;
+    string url = 3;
+    string client = 4;
+}
+
+message ParserSetRequest {
+    string parser = 1;
+    int64 queueDataID = 2;
+    bytes file = 3;
+}
+
+message DetectorGetRequest {
+    string detector = 1;
+}
+
+message DetectorCount {
+    int32 waiting = 1;
+    int32 done = 2;
+    int32 error = 3;
+    int32 unknown = 4;
+}
+
+message DetectorWork {
+    string client = 1;
+    int64 JobID = 2;
+    bytes file = 3;
+}
+
+message DetectorGetReply {
+    string detector = 1;
+    DetectorWork work = 2;
+    DetectorCount pricer = 3;
+    DetectorCount dumper = 4;
+}
+
+message DetectorSetRequest {
+    string detector = 1;
+    string client = 2;
+    int64 JobID = 3;
+    int32 value = 4;
 }
