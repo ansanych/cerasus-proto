@@ -469,6 +469,7 @@ message ParserSetRequest {
 
 message DetectorGetRequest {
     string detector = 1;
+    bool getGob = 2;
 }
 
 message DetectorCount {
