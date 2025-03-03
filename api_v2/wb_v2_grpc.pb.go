@@ -45,6 +45,7 @@ type WBClient interface {
 	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 	SetShopProductUrl(ctx context.Context, in *ShopProductUrlSetter, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*WBCounterParams, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 }
 
 type wBClient struct {
@@ -262,6 +263,15 @@ func (c *wBClient) GetCounterParams(ctx context.Context, in *RequestByIDs, opts 
 	return out, nil
 }
 
+func (c *wBClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -289,6 +299,7 @@ type WBServer interface {
 	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error)
 	GetCounterParams(context.Context, *RequestByIDs) (*WBCounterParams, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -364,6 +375,9 @@ func (UnimplementedWBServer) SetShopProductUrl(context.Context, *ShopProductUrlS
 }
 func (UnimplementedWBServer) GetCounterParams(context.Context, *RequestByIDs) (*WBCounterParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCounterParams not implemented")
+}
+func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -792,6 +806,24 @@ func _WB_GetCounterParams_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -890,6 +922,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCounterParams",
 			Handler:    _WB_GetCounterParams_Handler,
+		},
+		{
+			MethodName: "GetImage",
+			Handler:    _WB_GetImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

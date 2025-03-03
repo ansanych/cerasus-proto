@@ -29,6 +29,7 @@ service YM {
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
     rpc GetCounterParams(RequestByIDs) returns (YMCounterParams) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
 
 message YMCounterParams {

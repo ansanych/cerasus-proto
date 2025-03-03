@@ -29,6 +29,7 @@ service WB {
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
     rpc GetCounterParams(RequestByIDs) returns (WBCounterParams) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
 
 message WBCounterParams {

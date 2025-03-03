@@ -499,3 +499,15 @@ message DetectorSetRequest {
     int32 value = 4;
     string error = 5;
 }
+
+message ImageRequest {
+    int64 fileID = 1;
+    string filename = 2;
+    string code = 3;
+    string folder = 4;
+}
+
+message ImageReply {
+    string filename = 1;
+    bytes chunk = 2;
+}
