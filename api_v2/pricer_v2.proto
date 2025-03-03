@@ -13,6 +13,8 @@ service Pricer {
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
     rpc GetProductsWithPricer (Company) returns(ReplyID) {}
+    rpc GetProductPricers (RequestByID) returns (ProductPricers) {}
+    rpc SetProductPricer (ProductPricer) returns (StatusReply) {}
 }
 
 message ParamForCounter {
@@ -22,4 +24,29 @@ message ParamForCounter {
 
 message ParamsForCounter {
     repeated ParamForCounter params = 1;
+}
+
+message ProductPricerHistory {
+    string updated = 1;
+    int32 shopPrice = 2;
+    int32 parsePrice = 3;
+    int32 setPrice = 4;
+    bool sendPrice = 5;
+    bool error = 6;
+}
+
+message ProductPricer {
+    int64 productID = 1;
+    string shop = 2;
+    bool active = 3;
+    float target = 4;
+    float offsetMin = 5;
+    float offsetMax = 6;
+    string updated = 7;
+    repeated ProductPricerHistory history = 8;
+    int64 companyID = 9;
+}
+
+message ProductPricers {
+    repeated ProductPricer data = 1;
 }
