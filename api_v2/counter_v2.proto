@@ -10,6 +10,7 @@ service Counter {
     rpc GetProductCount (RequestByID) returns (ProductCount) {}
     rpc SetProductCount (ProductCount) returns (StatusReply) {}
     rpc GetParamsForPricer (PricerRequest) returns (ParamsForPricer) {}
+    rpc GetProductsWithCounter (Company) returns(ReplyID) {}
 }
 
 message PricerRequest {

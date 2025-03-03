@@ -12,6 +12,7 @@ service Pricer {
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
+    rpc GetProductsWithPricer (Company) returns(ReplyID) {}
 }
 
 message ParamForCounter {

@@ -87,6 +87,11 @@ message RequestByDates {
     int32 limit = 9;
 }
 
+//RESPONSES
+message ReplyID {
+    repeated int64 ID = 1;
+}
+
 // Auth
 message Auth {
     bool tokenValidation = 1;
