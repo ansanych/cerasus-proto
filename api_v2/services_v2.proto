@@ -9,6 +9,7 @@ service Services {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc CompanyAccess (ServiceAccessRequest) returns (StatusReply) {}
     rpc CompaniesWhithAccess (Service) returns (CompanyList) {}
+    rpc CompanyServices (Company) returns (ServicesList) {}
 }
 
 message Service {
@@ -17,6 +18,10 @@ message Service {
     string	Code = 3;
     bool	Paid = 4;
     bool	Active = 5;
+}
+
+message ServicesList {
+    repeated Service data = 1;
 }
 
 message ServiceAccessRequest {
