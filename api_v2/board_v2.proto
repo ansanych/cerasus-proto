@@ -8,11 +8,20 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Board {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetQueues (QueuesRequest) returns (Queues) {}
+    rpc GetQueue (QueueRequest) returns (Queue) {}
 }
 
 message QueuesRequest {
     Auth auth = 1;
     int64 companyID = 2;
+}
+
+message QueueRequest {
+    Auth auth = 1;
+    int64 companyID = 2;
+    string code = 3;
+    string msv = 4;
+    bool getAllJobs = 5;
 }
 
 message Queue {
@@ -23,8 +32,25 @@ message Queue {
     bool errors = 5;
     bool warning = 6;
     string lastDT = 7;
+    repeated QueueJob jobs = 8;
 }
 
 message Queues {
     repeated Queue data = 1;
+}
+
+message QueueJob {
+    int64 id = 1;
+    int64 companyID = 2;
+    string shop = 3;
+    int32 status = 4;
+    bool error = 5;
+    string created = 6;
+    string updated = 7;
+    repeated QueueJobLog logs = 8;
+}
+
+message QueueJobLog {
+    string datetime = 1;
+    string message = 2;
 }

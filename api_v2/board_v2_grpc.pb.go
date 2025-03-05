@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type BoardClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetQueues(ctx context.Context, in *QueuesRequest, opts ...grpc.CallOption) (*Queues, error)
+	GetQueue(ctx context.Context, in *QueueRequest, opts ...grpc.CallOption) (*Queue, error)
 }
 
 type boardClient struct {
@@ -52,12 +53,22 @@ func (c *boardClient) GetQueues(ctx context.Context, in *QueuesRequest, opts ...
 	return out, nil
 }
 
+func (c *boardClient) GetQueue(ctx context.Context, in *QueueRequest, opts ...grpc.CallOption) (*Queue, error) {
+	out := new(Queue)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/GetQueue", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
 type BoardServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetQueues(context.Context, *QueuesRequest) (*Queues, error)
+	GetQueue(context.Context, *QueueRequest) (*Queue, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedBoardServer) Ping(context.Context, *PingRequest) (*PingReply,
 }
 func (UnimplementedBoardServer) GetQueues(context.Context, *QueuesRequest) (*Queues, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueues not implemented")
+}
+func (UnimplementedBoardServer) GetQueue(context.Context, *QueueRequest) (*Queue, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQueue not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -120,6 +134,24 @@ func _Board_GetQueues_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_GetQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).GetQueue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/GetQueue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).GetQueue(ctx, req.(*QueueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQueues",
 			Handler:    _Board_GetQueues_Handler,
+		},
+		{
+			MethodName: "GetQueue",
+			Handler:    _Board_GetQueue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
