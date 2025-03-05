@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Board {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetQueues (QueuesRequest) returns (Queues) {}
+}
+
+message QueuesRequest {
+    Auth auth = 1;
+    int64 companyID = 2;
+}
+
+message Queue {
+    string title = 1;
+    string code = 2;
+    string msv = 3;
+    int32 processing = 4;
+    bool errors = 5;
+    bool warning = 6;
+    string lastDT = 7;
+}
+
+message Queues {
+    repeated Queue data = 1;
+}
