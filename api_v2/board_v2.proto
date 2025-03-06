@@ -9,6 +9,15 @@ service Board {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetQueues (QueuesRequest) returns (Queues) {}
     rpc GetQueue (QueueRequest) returns (Queue) {}
+    rpc ReQueue (ReQueueRequest) returns (StatusReply) {}
+}
+
+message ReQueueRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string code = 3;
+    string msv = 4;
+    string action = 5;
 }
 
 message QueuesRequest {
