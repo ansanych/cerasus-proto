@@ -42,6 +42,8 @@ message Queue {
     bool warning = 6;
     string lastDT = 7;
     repeated QueueJob jobs = 8;
+    repeated QueueJob jobsError = 9;
+    repeated QueueJob jobsWarning = 10;
 }
 
 message Queues {
