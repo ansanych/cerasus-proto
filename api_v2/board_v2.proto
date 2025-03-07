@@ -10,6 +10,7 @@ service Board {
     rpc GetQueues (QueuesRequest) returns (Queues) {}
     rpc GetQueue (QueueRequest) returns (Queue) {}
     rpc ReQueue (ReQueueRequest) returns (StatusReply) {}
+    rpc SetQueueParams (QueueParamsSet) returns (StatusReply) {}
 }
 
 message ReQueueRequest {
@@ -31,6 +32,12 @@ message QueueRequest {
     string code = 3;
     string msv = 4;
     bool getAllJobs = 5;
+}
+
+message QueueParamsSet {
+    QueueParams params = 1;
+    string code = 2;
+    string msv = 3;
 }
 
 message QueueParams {
