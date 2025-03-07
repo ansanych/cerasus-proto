@@ -33,6 +33,13 @@ message QueueRequest {
     bool getAllJobs = 5;
 }
 
+message QueueParams {
+    int32 period = 1;
+    bool autoReset = 2;
+    int32 autoResetTime = 3;
+    int32 warningTime = 4;
+}
+
 message Queue {
     string title = 1;
     string code = 2;
@@ -44,6 +51,7 @@ message Queue {
     repeated QueueJob jobs = 8;
     repeated QueueJob jobsError = 9;
     repeated QueueJob jobsWarning = 10;
+    QueueParams params = 11;
 }
 
 message Queues {
