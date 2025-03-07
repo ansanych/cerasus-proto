@@ -11,6 +11,7 @@ service Board {
     rpc GetQueue (QueueRequest) returns (Queue) {}
     rpc ReQueue (ReQueueRequest) returns (StatusReply) {}
     rpc SetQueueParams (QueueParamsSet) returns (StatusReply) {}
+    rpc GetLogsCount (RequestByDates) returns (Count) {}
 }
 
 message ReQueueRequest {

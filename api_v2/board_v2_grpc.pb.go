@@ -27,6 +27,7 @@ type BoardClient interface {
 	GetQueue(ctx context.Context, in *QueueRequest, opts ...grpc.CallOption) (*Queue, error)
 	ReQueue(ctx context.Context, in *ReQueueRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetQueueParams(ctx context.Context, in *QueueParamsSet, opts ...grpc.CallOption) (*StatusReply, error)
+	GetLogsCount(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Count, error)
 }
 
 type boardClient struct {
@@ -82,6 +83,15 @@ func (c *boardClient) SetQueueParams(ctx context.Context, in *QueueParamsSet, op
 	return out, nil
 }
 
+func (c *boardClient) GetLogsCount(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/GetLogsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type BoardServer interface {
 	GetQueue(context.Context, *QueueRequest) (*Queue, error)
 	ReQueue(context.Context, *ReQueueRequest) (*StatusReply, error)
 	SetQueueParams(context.Context, *QueueParamsSet) (*StatusReply, error)
+	GetLogsCount(context.Context, *RequestByDates) (*Count, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedBoardServer) ReQueue(context.Context, *ReQueueRequest) (*Stat
 }
 func (UnimplementedBoardServer) SetQueueParams(context.Context, *QueueParamsSet) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueParams not implemented")
+}
+func (UnimplementedBoardServer) GetLogsCount(context.Context, *RequestByDates) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLogsCount not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -216,6 +230,24 @@ func _Board_SetQueueParams_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_GetLogsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).GetLogsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/GetLogsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).GetLogsCount(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetQueueParams",
 			Handler:    _Board_SetQueueParams_Handler,
+		},
+		{
+			MethodName: "GetLogsCount",
+			Handler:    _Board_GetLogsCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
