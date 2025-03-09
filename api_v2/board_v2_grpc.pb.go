@@ -28,6 +28,9 @@ type BoardClient interface {
 	ReQueue(ctx context.Context, in *ReQueueRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetQueueParams(ctx context.Context, in *QueueParamsSet, opts ...grpc.CallOption) (*StatusReply, error)
 	GetLogsCount(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Count, error)
+	GetCompanies(ctx context.Context, in *BoardCompaniesRequest, opts ...grpc.CallOption) (*CompanyList, error)
+	SearchCompanies(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompanyList, error)
+	GetCompany(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoardCompanyData, error)
 }
 
 type boardClient struct {
@@ -92,6 +95,33 @@ func (c *boardClient) GetLogsCount(ctx context.Context, in *RequestByDates, opts
 	return out, nil
 }
 
+func (c *boardClient) GetCompanies(ctx context.Context, in *BoardCompaniesRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/GetCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *boardClient) SearchCompanies(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/SearchCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *boardClient) GetCompany(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoardCompanyData, error) {
+	out := new(BoardCompanyData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/GetCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
@@ -102,6 +132,9 @@ type BoardServer interface {
 	ReQueue(context.Context, *ReQueueRequest) (*StatusReply, error)
 	SetQueueParams(context.Context, *QueueParamsSet) (*StatusReply, error)
 	GetLogsCount(context.Context, *RequestByDates) (*Count, error)
+	GetCompanies(context.Context, *BoardCompaniesRequest) (*CompanyList, error)
+	SearchCompanies(context.Context, *SearchRequest) (*CompanyList, error)
+	GetCompany(context.Context, *RequestByID) (*BoardCompanyData, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -126,6 +159,15 @@ func (UnimplementedBoardServer) SetQueueParams(context.Context, *QueueParamsSet)
 }
 func (UnimplementedBoardServer) GetLogsCount(context.Context, *RequestByDates) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogsCount not implemented")
+}
+func (UnimplementedBoardServer) GetCompanies(context.Context, *BoardCompaniesRequest) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanies not implemented")
+}
+func (UnimplementedBoardServer) SearchCompanies(context.Context, *SearchRequest) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchCompanies not implemented")
+}
+func (UnimplementedBoardServer) GetCompany(context.Context, *RequestByID) (*BoardCompanyData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompany not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -248,6 +290,60 @@ func _Board_GetLogsCount_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_GetCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BoardCompaniesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).GetCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/GetCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).GetCompanies(ctx, req.(*BoardCompaniesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Board_SearchCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).SearchCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/SearchCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).SearchCompanies(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Board_GetCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).GetCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/GetCompany",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).GetCompany(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +374,18 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLogsCount",
 			Handler:    _Board_GetLogsCount_Handler,
+		},
+		{
+			MethodName: "GetCompanies",
+			Handler:    _Board_GetCompanies_Handler,
+		},
+		{
+			MethodName: "SearchCompanies",
+			Handler:    _Board_SearchCompanies_Handler,
+		},
+		{
+			MethodName: "GetCompany",
+			Handler:    _Board_GetCompany_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

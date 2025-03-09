@@ -12,6 +12,53 @@ service Board {
     rpc ReQueue (ReQueueRequest) returns (StatusReply) {}
     rpc SetQueueParams (QueueParamsSet) returns (StatusReply) {}
     rpc GetLogsCount (RequestByDates) returns (Count) {}
+    rpc GetCompanies (BoardCompaniesRequest) returns (CompanyList) {}
+    rpc SearchCompanies (SearchRequest) returns (CompanyList) {}
+    rpc GetCompany (RequestByID) returns (BoardCompanyData) {}
+}
+
+message BoardPricerShop {
+    string shop = 1;
+    bool active = 2;
+    string start = 3;
+    string end = 4;
+    int32 period = 5;
+    int32 productsLimit = 6;
+    int32 productsActive = 7;
+    int32 queueStatus = 8;
+    bool queueError = 9;
+    string queueUpdated = 10;
+}
+
+message BoardPricerData {
+    repeated BoardPricerShop data = 1;
+}
+
+message BoardCounterShop {
+    string shop = 1;
+    bool active = 2;
+    string start = 3;
+    string end = 4;
+    int32 activeProducts = 5;
+    int32 queueStatus = 6;
+    bool queueError = 7;
+    string queueUpdated = 8;
+}
+
+message BoardCounterData {
+    repeated BoardCounterShop data = 1;
+}
+
+message BoardCompanyData {
+    Company company = 1;
+    repeated ShopData shopData = 2;
+    BoardPricerData pricerData = 3;
+    BoardCounterData counterData = 4;
+}
+
+message BoardCompaniesRequest {
+    int32 page = 1;
+    int32 limit = 2;
 }
 
 message ReQueueRequest {

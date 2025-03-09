@@ -104,10 +104,12 @@ message Company {
     int64 ID = 1;
     string name = 2;
     bool brand = 3;
+    bool active = 4;
 }
 
 message CompanyList {
     repeated Company companies = 1;
+    Pagination pagination = 2;
 }
 
 message Role {
