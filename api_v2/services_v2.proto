@@ -18,6 +18,8 @@ message Service {
     string	Code = 3;
     bool	Paid = 4;
     bool	Active = 5;
+    string start = 6;
+    string end = 7;
 }
 
 message ServicesList {
