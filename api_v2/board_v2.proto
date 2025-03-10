@@ -15,6 +15,21 @@ service Board {
     rpc GetCompanies (BoardCompaniesRequest) returns (CompanyList) {}
     rpc SearchCompanies (SearchRequest) returns (CompanyList) {}
     rpc GetCompany (RequestByID) returns (BoardCompanyData) {}
+    rpc UpdateCompany (UpdateBoardCompanyRequest) returns (StatusReply) {}
+    rpc UpdateCompanyCounter (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
+    rpc UpdateCompanyPricer (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
+}
+
+message UpdateBoardCompanyServiceRequest {
+    bool active = 1;
+    string end = 2;
+    int32 limit = 3;
+    string shop = 4;
+}
+
+message UpdateBoardCompanyRequest {
+    int64 ID = 1;
+    bool active = 2;
 }
 
 message BoardPricerShop {

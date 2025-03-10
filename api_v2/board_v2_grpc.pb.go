@@ -31,6 +31,9 @@ type BoardClient interface {
 	GetCompanies(ctx context.Context, in *BoardCompaniesRequest, opts ...grpc.CallOption) (*CompanyList, error)
 	SearchCompanies(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompanyList, error)
 	GetCompany(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BoardCompanyData, error)
+	UpdateCompany(ctx context.Context, in *UpdateBoardCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateCompanyCounter(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	UpdateCompanyPricer(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type boardClient struct {
@@ -122,6 +125,33 @@ func (c *boardClient) GetCompany(ctx context.Context, in *RequestByID, opts ...g
 	return out, nil
 }
 
+func (c *boardClient) UpdateCompany(ctx context.Context, in *UpdateBoardCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/UpdateCompany", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *boardClient) UpdateCompanyCounter(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/UpdateCompanyCounter", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *boardClient) UpdateCompanyPricer(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/UpdateCompanyPricer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
@@ -135,6 +165,9 @@ type BoardServer interface {
 	GetCompanies(context.Context, *BoardCompaniesRequest) (*CompanyList, error)
 	SearchCompanies(context.Context, *SearchRequest) (*CompanyList, error)
 	GetCompany(context.Context, *RequestByID) (*BoardCompanyData, error)
+	UpdateCompany(context.Context, *UpdateBoardCompanyRequest) (*StatusReply, error)
+	UpdateCompanyCounter(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error)
+	UpdateCompanyPricer(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -168,6 +201,15 @@ func (UnimplementedBoardServer) SearchCompanies(context.Context, *SearchRequest)
 }
 func (UnimplementedBoardServer) GetCompany(context.Context, *RequestByID) (*BoardCompanyData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompany not implemented")
+}
+func (UnimplementedBoardServer) UpdateCompany(context.Context, *UpdateBoardCompanyRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompany not implemented")
+}
+func (UnimplementedBoardServer) UpdateCompanyCounter(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompanyCounter not implemented")
+}
+func (UnimplementedBoardServer) UpdateCompanyPricer(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompanyPricer not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -344,6 +386,60 @@ func _Board_GetCompany_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_UpdateCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBoardCompanyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).UpdateCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/UpdateCompany",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).UpdateCompany(ctx, req.(*UpdateBoardCompanyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Board_UpdateCompanyCounter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBoardCompanyServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).UpdateCompanyCounter(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/UpdateCompanyCounter",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).UpdateCompanyCounter(ctx, req.(*UpdateBoardCompanyServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Board_UpdateCompanyPricer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBoardCompanyServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).UpdateCompanyPricer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/UpdateCompanyPricer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).UpdateCompanyPricer(ctx, req.(*UpdateBoardCompanyServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +482,18 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompany",
 			Handler:    _Board_GetCompany_Handler,
+		},
+		{
+			MethodName: "UpdateCompany",
+			Handler:    _Board_UpdateCompany_Handler,
+		},
+		{
+			MethodName: "UpdateCompanyCounter",
+			Handler:    _Board_UpdateCompanyCounter_Handler,
+		},
+		{
+			MethodName: "UpdateCompanyPricer",
+			Handler:    _Board_UpdateCompanyPricer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
