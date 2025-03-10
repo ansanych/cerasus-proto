@@ -25,6 +25,7 @@ message UpdateBoardCompanyServiceRequest {
     string end = 2;
     int32 limit = 3;
     string shop = 4;
+    int64 companyID = 5;
 }
 
 message UpdateBoardCompanyRequest {
