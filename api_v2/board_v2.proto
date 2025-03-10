@@ -30,29 +30,16 @@ message BoardPricerShop {
     string queueUpdated = 10;
 }
 
-message BoardPricerData {
-    repeated BoardPricerShop data = 1;
-}
-
-message BoardCounterShop {
-    string shop = 1;
-    bool active = 2;
-    string start = 3;
-    string end = 4;
-    int32 activeProducts = 5;
-    int32 queueStatus = 6;
-    bool queueError = 7;
-    string queueUpdated = 8;
-}
-
 message BoardCounterData {
-    repeated BoardCounterShop data = 1;
+    bool active = 1;
+    string start = 2;
+    string end = 3;
 }
 
 message BoardCompanyData {
     Company company = 1;
     repeated ShopData shopData = 2;
-    BoardPricerData pricerData = 3;
+    repeated BoardPricerShop pricerData = 3;
     BoardCounterData counterData = 4;
 }
 
