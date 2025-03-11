@@ -39,9 +39,40 @@ message BoardProduct {
     string updated = 6;
 }
 
+message BoardShopProduct {
+    string shop = 1;
+    ShopProduct shopProduct = 2;
+    int32 files = 3;
+    bool isSales = 4;
+    bool isOrders = 5;
+}
+
+message BoardProductPricer {
+    string shop = 1;
+    bool active = 2;
+}
+
+message BoardProductCounterQueueData {
+    int64 shopProductID = 1;
+    int32 count = 2;
+    int32 mpCount = 3;
+}
+
+message BoardProductCounter {
+    string shop = 1;
+    bool active = 2;
+    int32 count = 3;
+    repeated BoardProductCounterQueueData shopProductsCount = 4;
+}
+
 message BoardProductData {
     BoardProduct product = 1;
     Company company = 2;
+    float purchase = 3;
+    Brand brand = 4;
+    repeated BoardShopProduct shopProducts = 5;
+    repeated BoardProductPricer pricerData = 6;
+    repeated BoardProductCounter counterData = 7;
 }
 
 message UpdateBoardCompanyServiceRequest {
