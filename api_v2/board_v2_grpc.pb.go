@@ -34,6 +34,7 @@ type BoardClient interface {
 	UpdateCompany(ctx context.Context, in *UpdateBoardCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	UpdateCompanyCounter(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	UpdateCompanyPricer(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SearchProduct(ctx context.Context, in *SearchProductRequest, opts ...grpc.CallOption) (*BoardProductData, error)
 }
 
 type boardClient struct {
@@ -152,6 +153,15 @@ func (c *boardClient) UpdateCompanyPricer(ctx context.Context, in *UpdateBoardCo
 	return out, nil
 }
 
+func (c *boardClient) SearchProduct(ctx context.Context, in *SearchProductRequest, opts ...grpc.CallOption) (*BoardProductData, error) {
+	out := new(BoardProductData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/SearchProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
@@ -168,6 +178,7 @@ type BoardServer interface {
 	UpdateCompany(context.Context, *UpdateBoardCompanyRequest) (*StatusReply, error)
 	UpdateCompanyCounter(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error)
 	UpdateCompanyPricer(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error)
+	SearchProduct(context.Context, *SearchProductRequest) (*BoardProductData, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -210,6 +221,9 @@ func (UnimplementedBoardServer) UpdateCompanyCounter(context.Context, *UpdateBoa
 }
 func (UnimplementedBoardServer) UpdateCompanyPricer(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompanyPricer not implemented")
+}
+func (UnimplementedBoardServer) SearchProduct(context.Context, *SearchProductRequest) (*BoardProductData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchProduct not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -440,6 +454,24 @@ func _Board_UpdateCompanyPricer_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_SearchProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).SearchProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/SearchProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).SearchProduct(ctx, req.(*SearchProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +526,10 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCompanyPricer",
 			Handler:    _Board_UpdateCompanyPricer_Handler,
+		},
+		{
+			MethodName: "SearchProduct",
+			Handler:    _Board_SearchProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

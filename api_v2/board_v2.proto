@@ -18,6 +18,30 @@ service Board {
     rpc UpdateCompany (UpdateBoardCompanyRequest) returns (StatusReply) {}
     rpc UpdateCompanyCounter (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
     rpc UpdateCompanyPricer (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
+    rpc SearchProduct (SearchProductRequest) returns (BoardProductData) {}
+}
+
+message SearchProductRequest {
+    int64 ID = 1;
+    string shop = 2;
+    string url = 3;
+    string shopID = 4;
+    string article = 5;
+    string name = 6;
+}
+
+message BoardProduct {
+    int64 ID = 1;
+    string title = 2;
+    string comment = 3;
+    bool active = 4;
+    string preview = 5;
+    string updated = 6;
+}
+
+message BoardProductData {
+    BoardProduct product = 1;
+    Company company = 2;
 }
 
 message UpdateBoardCompanyServiceRequest {
