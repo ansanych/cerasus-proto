@@ -519,3 +519,22 @@ message ImageReply {
     string filename = 1;
     bytes chunk = 2;
 }
+
+message Log {
+    string service = 1;
+    string resource = 2;
+    string uuid = 3;
+    string datetime = 4;
+    int64 duration = 5;
+    string level = 6;
+    string message = 7;
+    int64 userID = 8;
+    int64 companyID = 9;
+    int64 jobID = 10;
+    bool viewed = 11;
+    int64 time = 12;
+}
+
+message Logs {
+    repeated Log logs = 1; 
+}

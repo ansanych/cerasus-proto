@@ -36,6 +36,7 @@ type BoardClient interface {
 	UpdateCompanyPricer(ctx context.Context, in *UpdateBoardCompanyServiceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SearchProduct(ctx context.Context, in *SearchProductRequest, opts ...grpc.CallOption) (*BoardProductData, error)
 	PingServices(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingServicesReply, error)
+	GetLogs(ctx context.Context, in *LogsRequest, opts ...grpc.CallOption) (*Logs, error)
 }
 
 type boardClient struct {
@@ -172,6 +173,15 @@ func (c *boardClient) PingServices(ctx context.Context, in *PingRequest, opts ..
 	return out, nil
 }
 
+func (c *boardClient) GetLogs(ctx context.Context, in *LogsRequest, opts ...grpc.CallOption) (*Logs, error) {
+	out := new(Logs)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Board/GetLogs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BoardServer is the server API for Board service.
 // All implementations must embed UnimplementedBoardServer
 // for forward compatibility
@@ -190,6 +200,7 @@ type BoardServer interface {
 	UpdateCompanyPricer(context.Context, *UpdateBoardCompanyServiceRequest) (*StatusReply, error)
 	SearchProduct(context.Context, *SearchProductRequest) (*BoardProductData, error)
 	PingServices(context.Context, *PingRequest) (*PingServicesReply, error)
+	GetLogs(context.Context, *LogsRequest) (*Logs, error)
 	mustEmbedUnimplementedBoardServer()
 }
 
@@ -238,6 +249,9 @@ func (UnimplementedBoardServer) SearchProduct(context.Context, *SearchProductReq
 }
 func (UnimplementedBoardServer) PingServices(context.Context, *PingRequest) (*PingServicesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PingServices not implemented")
+}
+func (UnimplementedBoardServer) GetLogs(context.Context, *LogsRequest) (*Logs, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLogs not implemented")
 }
 func (UnimplementedBoardServer) mustEmbedUnimplementedBoardServer() {}
 
@@ -504,6 +518,24 @@ func _Board_PingServices_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Board_GetLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LogsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BoardServer).GetLogs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Board/GetLogs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BoardServer).GetLogs(ctx, req.(*LogsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Board_ServiceDesc is the grpc.ServiceDesc for Board service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +598,10 @@ var Board_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PingServices",
 			Handler:    _Board_PingServices_Handler,
+		},
+		{
+			MethodName: "GetLogs",
+			Handler:    _Board_GetLogs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

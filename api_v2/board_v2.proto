@@ -20,6 +20,21 @@ service Board {
     rpc UpdateCompanyPricer (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
     rpc SearchProduct (SearchProductRequest) returns (BoardProductData) {}
     rpc PingServices (PingRequest) returns (PingServicesReply) {}
+    rpc GetLogs (LogsRequest) returns (Logs) {}
+}
+
+message LogsRequest {
+    string service = 1;
+    string resource = 2;
+    string uuid = 3;
+    string from = 4;
+    string to = 5;
+    int64 durationFrom = 6;
+    string level = 7;
+    int64 userID = 8;
+    int64 companyID = 9;
+    int64 jobID = 10;
+    bool viewed = 11;
 }
 
 message PingService {
