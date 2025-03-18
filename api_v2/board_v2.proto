@@ -19,6 +19,16 @@ service Board {
     rpc UpdateCompanyCounter (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
     rpc UpdateCompanyPricer (UpdateBoardCompanyServiceRequest) returns (StatusReply) {}
     rpc SearchProduct (SearchProductRequest) returns (BoardProductData) {}
+    rpc PingServices (PingRequest) returns (PingServicesReply) {}
+}
+
+message PingService {
+    string service = 1;
+    bool ping = 2;
+}
+
+message PingServicesReply {
+    repeated PingService data = 1;
 }
 
 message SearchProductRequest {
