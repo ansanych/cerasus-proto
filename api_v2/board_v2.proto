@@ -21,6 +21,31 @@ service Board {
     rpc SearchProduct (SearchProductRequest) returns (BoardProductData) {}
     rpc PingServices (PingRequest) returns (PingServicesReply) {}
     rpc GetLogs (LogsRequest) returns (Logs) {}
+    rpc GetActivePricerProducts (ActivePPRequest) returns (ActivePPResponse) {}
+}
+
+message ActivePPRequest {
+    int64 companyID = 1;
+    string shop = 2;
+}
+
+message ActivePP {
+    BoardProduct product = 1;
+    int64 shopProductID = 2;
+    int32 count = 3;
+    int32 mpCount = 4;
+    string counterUpdated = 5;
+    float shopPrice = 6;
+    int32 parsePrice = 7;
+    int32 setPrice = 8;
+    string pricerUpdated = 9;
+    float target = 10;
+    float minTarget = 11;
+    float maxTarget = 12;
+}
+
+message ActivePPResponse {
+    repeated ActivePP data = 1;
 }
 
 message LogsRequest {
