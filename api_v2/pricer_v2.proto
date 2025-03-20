@@ -26,13 +26,18 @@ message ParamsForCounter {
     repeated ParamForCounter params = 1;
 }
 
-message ProductPricerHistory {
+message ShopProductPricerHistory {
     string updated = 1;
     int32 shopPrice = 2;
     int32 parsePrice = 3;
     int32 setPrice = 4;
     bool sendPrice = 5;
     bool error = 6;
+}
+
+message ProductPricerHistory {
+    ShopProduct shopProduct = 1;
+    repeated ShopProductPricerHistory data = 2;
 }
 
 message ProductPricer {
