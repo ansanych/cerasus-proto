@@ -15,6 +15,7 @@ service Pricer {
     rpc GetProductsWithPricer (Company) returns(ReplyID) {}
     rpc GetProductPricers (RequestByID) returns (ProductPricers) {}
     rpc SetProductPricer (ProductPricer) returns (StatusReply) {}
+    rpc GetProductPricerHistory(RequestByID) returns(ProductPricerHistory) {}
 }
 
 message ParamForCounter {
@@ -35,9 +36,14 @@ message ShopProductPricerHistory {
     bool error = 6;
 }
 
-message ProductPricerHistory {
+message ProductPricerHistoryItem {
     ShopProduct shopProduct = 1;
     repeated ShopProductPricerHistory data = 2;
+}
+
+message ProductPricerHistory {
+    string shop = 1;
+    repeated ProductPricerHistoryItem items = 2;
 }
 
 message ProductPricer {
@@ -48,8 +54,7 @@ message ProductPricer {
     float offsetMin = 5;
     float offsetMax = 6;
     string updated = 7;
-    repeated ProductPricerHistory history = 8;
-    int64 companyID = 9;
+    int64 companyID = 8;
 }
 
 message ProductPricers {
