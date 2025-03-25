@@ -21,7 +21,27 @@ service Board {
     rpc SearchProduct (SearchProductRequest) returns (BoardProductData) {}
     rpc PingServices (PingRequest) returns (PingServicesReply) {}
     rpc GetLogs (LogsRequest) returns (Logs) {}
+    rpc GetServicesLoading (ServicesLoadingRequest) returns (ServicesLoading) {}
     rpc GetActivePricerProducts (ActivePPRequest) returns (ActivePPResponse) {}
+}
+
+message ServiceLoadingResource {
+    string service = 1;
+    int64 requestCount = 2;
+}
+
+message ServiceLoading {
+    string service = 1;
+    int64 inCount = 2;
+    repeated ServiceLoadingResource resources = 3;
+}
+
+message ServicesLoading {
+    repeated ServiceLoading data = 1;
+}
+
+message ServicesLoadingRequest {
+    string service = 1;
 }
 
 message ActivePPRequest {
@@ -64,6 +84,7 @@ message LogsRequest {
     int64 companyID = 9;
     int64 jobID = 10;
     bool viewed = 11;
+    int32 limit = 12;
 }
 
 message PingService {
