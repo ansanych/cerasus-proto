@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BranderClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetCountWidgets(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BrandCountWidgets, error)
 	GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
 	UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	// Sellers
@@ -68,6 +69,15 @@ func NewBranderClient(cc grpc.ClientConnInterface) BranderClient {
 func (c *branderClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) GetCountWidgets(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BrandCountWidgets, error) {
+	out := new(BrandCountWidgets)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetCountWidgets", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -331,6 +341,7 @@ func (c *branderClient) SellerOutProductDeleteUrl(ctx context.Context, in *Reque
 // for forward compatibility
 type BranderServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetCountWidgets(context.Context, *Auth) (*BrandCountWidgets, error)
 	GetBrand(context.Context, *Auth) (*Brand, error)
 	UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error)
 	// Sellers
@@ -372,6 +383,9 @@ type UnimplementedBranderServer struct {
 
 func (UnimplementedBranderServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedBranderServer) GetCountWidgets(context.Context, *Auth) (*BrandCountWidgets, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountWidgets not implemented")
 }
 func (UnimplementedBranderServer) GetBrand(context.Context, *Auth) (*Brand, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
@@ -484,6 +498,24 @@ func _Brander_Ping_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BranderServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_GetCountWidgets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetCountWidgets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetCountWidgets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetCountWidgets(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1002,6 +1034,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Brander_Ping_Handler,
+		},
+		{
+			MethodName: "GetCountWidgets",
+			Handler:    _Brander_GetCountWidgets_Handler,
 		},
 		{
 			MethodName: "GetBrand",

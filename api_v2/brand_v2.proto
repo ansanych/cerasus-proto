@@ -7,6 +7,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Brander {
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetCountWidgets(Auth) returns (BrandCountWidgets) {}
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
     // Sellers
@@ -39,6 +40,15 @@ service Brander {
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+}
+
+message BrandCountWidget {
+    string code = 1;
+    int32 count = 2;
+}
+
+message BrandCountWidgets {
+    repeated BrandCountWidget data = 1;
 }
 
 message SellerOutProductUrlRequest {
