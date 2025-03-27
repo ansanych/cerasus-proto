@@ -87,6 +87,11 @@ message RequestByDates {
     int32 limit = 9;
 }
 
+message RequestByPage {
+    Auth auth = 1;
+    int32 page = 2;
+}
+
 //RESPONSES
 message ReplyID {
     repeated int64 ID = 1;
@@ -376,6 +381,11 @@ message Brand {
 
 message Brands {
     repeated Brand brands = 1;
+}
+
+message UpdateBrandRequest {
+    Auth auth = 1;
+    Brand brand = 2;
 }
 
 //SALES

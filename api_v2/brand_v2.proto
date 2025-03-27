@@ -1,0 +1,165 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Brander {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetBrand (Auth) returns (Brand) {}
+    rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
+    // Sellers
+    rpc GetSellers (RequestByPage) returns (Sellers) {}
+    rpc GetSeller (RequestByID) returns (Seller) {}
+    rpc CreateSeller (SellerRequest) returns (StatusReply) {}
+    rpc UpdateSeller (SellerRequest) returns (StatusReply) {}
+    rpc GetCompaniesWithBrandProducts (RequestByPage) returns (CompanyList) {}
+    rpc GetSellerCompanies (RequestByID) returns (CompanyList) {}
+    rpc SearchSeller (SearchRequest) returns (Sellers) {}
+    // Products
+    rpc GetProducts (RequestByPage) returns (BrandProducts) {}
+    rpc GetProduct (RequestByID) returns (BrandProduct) {}
+    rpc CreateProduct (ProductRequest) returns (StatusReply) {}
+    rpc UpdateProduct (ProductRequest) returns (StatusReply) {}
+    rpc DeleteProduct (ProductRequest) returns (StatusReply) {}
+    rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
+    rpc GetProductPrice (RequestByID) returns (ProductPrice) {}
+    rpc GetProductPrices (RequestByID) returns (ProductPrices) {}
+    rpc SetProductPrice (ProductPriceRequest) returns (StatusReply) {}
+    rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
+    // Seller Products In Cerasus
+    rpc GetSellerProducts (SellerProductsRequest) returns (SellerProducts) {}
+    rpc GetSellerProduct (SellerProductsRequest) returns (SellerProduct) {}
+    rpc LinkSellerProduct (SellerProductLinkRequest) returns (StatusReply) {}
+    // Seller Product WO Cerasus
+    rpc GetSellerOutProducts(OutProductsRequest) returns (OutProducts) {}
+    rpc GetSellerOutProduct(RequestByID) returns (OutProduct) {}
+    rpc CreateSellerOutProduct(SellerOutProductRequest) returns (StatusReply) {}
+    rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
+    rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
+    rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+}
+
+message SellerOutProductUrlRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string shop = 3;
+    string url = 4;
+}
+
+message SellerOutProductRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int64 productID = 3;
+}
+
+message OutProductUrl {
+    int64 ID = 1;
+    string url = 2;
+}
+
+message OutProductUrlData {
+    string shop = 1;
+    repeated OutProductUrl urls = 2;
+}
+
+message OutProduct {
+    int64 ID = 1;
+    BrandProduct product = 2;
+    repeated OutProductUrlData urlData = 3;
+}
+
+message OutProducts {
+    repeated OutProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message OutProductsRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int32 page = 3;
+}
+
+message SellerProductLinkRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int64 sellerProductID = 3;
+    int64 brandProductID = 4;
+}
+
+message SellerProductsRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int32 page = 3;
+    bool unsorted = 4;
+    int64 productID = 5;
+}
+
+message SellerProducts {
+    repeated SellerProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message SellerProduct {
+    Product product = 1;
+    int64 brandProductID = 2;
+}
+
+message ProductPriceRequest {
+    Auth auth = 1;
+    int64 productID = 2;
+    int32 price = 3;
+    string date = 4;
+}
+
+message ProductPrice {
+    int32 price = 1;
+    string date = 2;
+}
+
+message ProductPrices {
+    repeated ProductPrice prices = 1;
+}
+
+message ProductRequest {
+    Auth auth = 1;
+    BrandProduct product = 2;
+}
+
+message BrandProducts {
+    repeated BrandProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message BrandProduct {
+    int64 ID = 1;
+    string title = 2;
+    string article = 3;
+    string comment = 4;
+    string preview = 5;
+    bool active = 6;
+    string updated = 7;
+}
+
+message Seller {
+    int64 ID = 1;
+    string name = 2;
+    string comment = 3;
+    string person = 4;
+    string phone = 5;
+    string email = 6;
+    bool active = 7;
+    int32 linkedCompaniesCount = 8;
+    bool pricer = 9;
+}
+
+message Sellers {
+    repeated Seller sellers = 1;
+    Pagination pagination = 2;
+}
+
+message SellerRequest {
+    Auth auth = 1;
+    Seller seller = 2;
+}
