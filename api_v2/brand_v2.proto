@@ -104,6 +104,7 @@ message SellerProductsRequest {
     int32 page = 3;
     bool unsorted = 4;
     int64 productID = 5;
+    int64 companyID = 6;
 }
 
 message SellerProducts {
