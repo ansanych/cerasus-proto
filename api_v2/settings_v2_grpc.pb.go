@@ -44,7 +44,6 @@ type SettingsClient interface {
 	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 	SetTax(ctx context.Context, in *SetTaxRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
-	GetBrandByCompany(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
 }
 
 type settingsClient struct {
@@ -253,15 +252,6 @@ func (c *settingsClient) GetImage(ctx context.Context, in *ImageRequest, opts ..
 	return out, nil
 }
 
-func (c *settingsClient) GetBrandByCompany(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetBrandByCompany", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -288,7 +278,6 @@ type SettingsServer interface {
 	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	SetTax(context.Context, *SetTaxRequest) (*StatusReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
-	GetBrandByCompany(context.Context, *RequestByID) (*Brand, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -361,9 +350,6 @@ func (UnimplementedSettingsServer) SetTax(context.Context, *SetTaxRequest) (*Sta
 }
 func (UnimplementedSettingsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
-}
-func (UnimplementedSettingsServer) GetBrandByCompany(context.Context, *RequestByID) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBrandByCompany not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -774,24 +760,6 @@ func _Settings_GetImage_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Settings_GetBrandByCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetBrandByCompany(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetBrandByCompany",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetBrandByCompany(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -886,10 +854,6 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _Settings_GetImage_Handler,
-		},
-		{
-			MethodName: "GetBrandByCompany",
-			Handler:    _Settings_GetBrandByCompany_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
