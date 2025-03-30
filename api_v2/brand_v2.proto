@@ -40,6 +40,7 @@ service Brander {
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
 
 message BrandCountWidget {

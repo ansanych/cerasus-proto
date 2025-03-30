@@ -56,6 +56,7 @@ type BranderClient interface {
 	DeleteSellerOutProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	SellerOutProductSetUrl(ctx context.Context, in *SellerOutProductUrlRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SellerOutProductDeleteUrl(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 }
 
 type branderClient struct {
@@ -336,6 +337,15 @@ func (c *branderClient) SellerOutProductDeleteUrl(ctx context.Context, in *Reque
 	return out, nil
 }
 
+func (c *branderClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -374,6 +384,7 @@ type BranderServer interface {
 	DeleteSellerOutProduct(context.Context, *RequestByID) (*StatusReply, error)
 	SellerOutProductSetUrl(context.Context, *SellerOutProductUrlRequest) (*StatusReply, error)
 	SellerOutProductDeleteUrl(context.Context, *RequestByID) (*StatusReply, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -470,6 +481,9 @@ func (UnimplementedBranderServer) SellerOutProductSetUrl(context.Context, *Selle
 }
 func (UnimplementedBranderServer) SellerOutProductDeleteUrl(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SellerOutProductDeleteUrl not implemented")
+}
+func (UnimplementedBranderServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1024,6 +1038,24 @@ func _Brander_SellerOutProductDeleteUrl_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1150,6 +1182,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SellerOutProductDeleteUrl",
 			Handler:    _Brander_SellerOutProductDeleteUrl_Handler,
+		},
+		{
+			MethodName: "GetImage",
+			Handler:    _Brander_GetImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
