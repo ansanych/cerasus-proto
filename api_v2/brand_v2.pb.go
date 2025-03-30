@@ -20,6 +20,85 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type BrandUploadRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth      *Auth  `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	ProductID int64  `protobuf:"varint,2,opt,name=productID,proto3" json:"productID,omitempty"`
+	Chunk     []byte `protobuf:"bytes,3,opt,name=chunk,proto3" json:"chunk,omitempty"`
+	FileName  string `protobuf:"bytes,4,opt,name=fileName,proto3" json:"fileName,omitempty"`
+	Type      string `protobuf:"bytes,5,opt,name=type,proto3" json:"type,omitempty"`
+}
+
+func (x *BrandUploadRequest) Reset() {
+	*x = BrandUploadRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_brand_v2_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BrandUploadRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BrandUploadRequest) ProtoMessage() {}
+
+func (x *BrandUploadRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_brand_v2_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BrandUploadRequest.ProtoReflect.Descriptor instead.
+func (*BrandUploadRequest) Descriptor() ([]byte, []int) {
+	return file_brand_v2_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *BrandUploadRequest) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *BrandUploadRequest) GetProductID() int64 {
+	if x != nil {
+		return x.ProductID
+	}
+	return 0
+}
+
+func (x *BrandUploadRequest) GetChunk() []byte {
+	if x != nil {
+		return x.Chunk
+	}
+	return nil
+}
+
+func (x *BrandUploadRequest) GetFileName() string {
+	if x != nil {
+		return x.FileName
+	}
+	return ""
+}
+
+func (x *BrandUploadRequest) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
 type BrandCountWidget struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -32,7 +111,7 @@ type BrandCountWidget struct {
 func (x *BrandCountWidget) Reset() {
 	*x = BrandCountWidget{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[0]
+		mi := &file_brand_v2_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +124,7 @@ func (x *BrandCountWidget) String() string {
 func (*BrandCountWidget) ProtoMessage() {}
 
 func (x *BrandCountWidget) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[0]
+	mi := &file_brand_v2_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +137,7 @@ func (x *BrandCountWidget) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BrandCountWidget.ProtoReflect.Descriptor instead.
 func (*BrandCountWidget) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{0}
+	return file_brand_v2_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *BrandCountWidget) GetCode() string {
@@ -86,7 +165,7 @@ type BrandCountWidgets struct {
 func (x *BrandCountWidgets) Reset() {
 	*x = BrandCountWidgets{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[1]
+		mi := &file_brand_v2_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -99,7 +178,7 @@ func (x *BrandCountWidgets) String() string {
 func (*BrandCountWidgets) ProtoMessage() {}
 
 func (x *BrandCountWidgets) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[1]
+	mi := &file_brand_v2_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -112,7 +191,7 @@ func (x *BrandCountWidgets) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BrandCountWidgets.ProtoReflect.Descriptor instead.
 func (*BrandCountWidgets) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{1}
+	return file_brand_v2_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *BrandCountWidgets) GetData() []*BrandCountWidget {
@@ -136,7 +215,7 @@ type SellerOutProductUrlRequest struct {
 func (x *SellerOutProductUrlRequest) Reset() {
 	*x = SellerOutProductUrlRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[2]
+		mi := &file_brand_v2_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -149,7 +228,7 @@ func (x *SellerOutProductUrlRequest) String() string {
 func (*SellerOutProductUrlRequest) ProtoMessage() {}
 
 func (x *SellerOutProductUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[2]
+	mi := &file_brand_v2_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +241,7 @@ func (x *SellerOutProductUrlRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerOutProductUrlRequest.ProtoReflect.Descriptor instead.
 func (*SellerOutProductUrlRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{2}
+	return file_brand_v2_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SellerOutProductUrlRequest) GetAuth() *Auth {
@@ -206,7 +285,7 @@ type SellerOutProductRequest struct {
 func (x *SellerOutProductRequest) Reset() {
 	*x = SellerOutProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[3]
+		mi := &file_brand_v2_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -219,7 +298,7 @@ func (x *SellerOutProductRequest) String() string {
 func (*SellerOutProductRequest) ProtoMessage() {}
 
 func (x *SellerOutProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[3]
+	mi := &file_brand_v2_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -232,7 +311,7 @@ func (x *SellerOutProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerOutProductRequest.ProtoReflect.Descriptor instead.
 func (*SellerOutProductRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{3}
+	return file_brand_v2_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *SellerOutProductRequest) GetAuth() *Auth {
@@ -268,7 +347,7 @@ type OutProductUrl struct {
 func (x *OutProductUrl) Reset() {
 	*x = OutProductUrl{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[4]
+		mi := &file_brand_v2_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -281,7 +360,7 @@ func (x *OutProductUrl) String() string {
 func (*OutProductUrl) ProtoMessage() {}
 
 func (x *OutProductUrl) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[4]
+	mi := &file_brand_v2_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -294,7 +373,7 @@ func (x *OutProductUrl) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutProductUrl.ProtoReflect.Descriptor instead.
 func (*OutProductUrl) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{4}
+	return file_brand_v2_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *OutProductUrl) GetID() int64 {
@@ -323,7 +402,7 @@ type OutProductUrlData struct {
 func (x *OutProductUrlData) Reset() {
 	*x = OutProductUrlData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[5]
+		mi := &file_brand_v2_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -336,7 +415,7 @@ func (x *OutProductUrlData) String() string {
 func (*OutProductUrlData) ProtoMessage() {}
 
 func (x *OutProductUrlData) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[5]
+	mi := &file_brand_v2_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -349,7 +428,7 @@ func (x *OutProductUrlData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutProductUrlData.ProtoReflect.Descriptor instead.
 func (*OutProductUrlData) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{5}
+	return file_brand_v2_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *OutProductUrlData) GetShop() string {
@@ -379,7 +458,7 @@ type OutProduct struct {
 func (x *OutProduct) Reset() {
 	*x = OutProduct{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[6]
+		mi := &file_brand_v2_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -392,7 +471,7 @@ func (x *OutProduct) String() string {
 func (*OutProduct) ProtoMessage() {}
 
 func (x *OutProduct) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[6]
+	mi := &file_brand_v2_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -405,7 +484,7 @@ func (x *OutProduct) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutProduct.ProtoReflect.Descriptor instead.
 func (*OutProduct) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{6}
+	return file_brand_v2_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *OutProduct) GetID() int64 {
@@ -441,7 +520,7 @@ type OutProducts struct {
 func (x *OutProducts) Reset() {
 	*x = OutProducts{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[7]
+		mi := &file_brand_v2_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -454,7 +533,7 @@ func (x *OutProducts) String() string {
 func (*OutProducts) ProtoMessage() {}
 
 func (x *OutProducts) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[7]
+	mi := &file_brand_v2_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -467,7 +546,7 @@ func (x *OutProducts) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutProducts.ProtoReflect.Descriptor instead.
 func (*OutProducts) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{7}
+	return file_brand_v2_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *OutProducts) GetProducts() []*OutProduct {
@@ -497,7 +576,7 @@ type OutProductsRequest struct {
 func (x *OutProductsRequest) Reset() {
 	*x = OutProductsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[8]
+		mi := &file_brand_v2_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -510,7 +589,7 @@ func (x *OutProductsRequest) String() string {
 func (*OutProductsRequest) ProtoMessage() {}
 
 func (x *OutProductsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[8]
+	mi := &file_brand_v2_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -523,7 +602,7 @@ func (x *OutProductsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OutProductsRequest.ProtoReflect.Descriptor instead.
 func (*OutProductsRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{8}
+	return file_brand_v2_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *OutProductsRequest) GetAuth() *Auth {
@@ -562,7 +641,7 @@ type SellerProductLinkRequest struct {
 func (x *SellerProductLinkRequest) Reset() {
 	*x = SellerProductLinkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[9]
+		mi := &file_brand_v2_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -575,7 +654,7 @@ func (x *SellerProductLinkRequest) String() string {
 func (*SellerProductLinkRequest) ProtoMessage() {}
 
 func (x *SellerProductLinkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[9]
+	mi := &file_brand_v2_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -588,7 +667,7 @@ func (x *SellerProductLinkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerProductLinkRequest.ProtoReflect.Descriptor instead.
 func (*SellerProductLinkRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{9}
+	return file_brand_v2_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SellerProductLinkRequest) GetAuth() *Auth {
@@ -642,7 +721,7 @@ type SellerProductsRequest struct {
 func (x *SellerProductsRequest) Reset() {
 	*x = SellerProductsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[10]
+		mi := &file_brand_v2_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -655,7 +734,7 @@ func (x *SellerProductsRequest) String() string {
 func (*SellerProductsRequest) ProtoMessage() {}
 
 func (x *SellerProductsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[10]
+	mi := &file_brand_v2_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -668,7 +747,7 @@ func (x *SellerProductsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerProductsRequest.ProtoReflect.Descriptor instead.
 func (*SellerProductsRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{10}
+	return file_brand_v2_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SellerProductsRequest) GetAuth() *Auth {
@@ -725,7 +804,7 @@ type SellerProducts struct {
 func (x *SellerProducts) Reset() {
 	*x = SellerProducts{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[11]
+		mi := &file_brand_v2_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -738,7 +817,7 @@ func (x *SellerProducts) String() string {
 func (*SellerProducts) ProtoMessage() {}
 
 func (x *SellerProducts) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[11]
+	mi := &file_brand_v2_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -751,7 +830,7 @@ func (x *SellerProducts) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerProducts.ProtoReflect.Descriptor instead.
 func (*SellerProducts) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{11}
+	return file_brand_v2_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SellerProducts) GetProducts() []*SellerProduct {
@@ -780,7 +859,7 @@ type SellerProduct struct {
 func (x *SellerProduct) Reset() {
 	*x = SellerProduct{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[12]
+		mi := &file_brand_v2_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -793,7 +872,7 @@ func (x *SellerProduct) String() string {
 func (*SellerProduct) ProtoMessage() {}
 
 func (x *SellerProduct) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[12]
+	mi := &file_brand_v2_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -806,7 +885,7 @@ func (x *SellerProduct) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerProduct.ProtoReflect.Descriptor instead.
 func (*SellerProduct) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{12}
+	return file_brand_v2_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SellerProduct) GetProduct() *Product {
@@ -837,7 +916,7 @@ type ProductPriceRequest struct {
 func (x *ProductPriceRequest) Reset() {
 	*x = ProductPriceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[13]
+		mi := &file_brand_v2_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -850,7 +929,7 @@ func (x *ProductPriceRequest) String() string {
 func (*ProductPriceRequest) ProtoMessage() {}
 
 func (x *ProductPriceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[13]
+	mi := &file_brand_v2_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -863,7 +942,7 @@ func (x *ProductPriceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductPriceRequest.ProtoReflect.Descriptor instead.
 func (*ProductPriceRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{13}
+	return file_brand_v2_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ProductPriceRequest) GetAuth() *Auth {
@@ -906,7 +985,7 @@ type ProductPrice struct {
 func (x *ProductPrice) Reset() {
 	*x = ProductPrice{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[14]
+		mi := &file_brand_v2_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -919,7 +998,7 @@ func (x *ProductPrice) String() string {
 func (*ProductPrice) ProtoMessage() {}
 
 func (x *ProductPrice) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[14]
+	mi := &file_brand_v2_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -932,7 +1011,7 @@ func (x *ProductPrice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductPrice.ProtoReflect.Descriptor instead.
 func (*ProductPrice) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{14}
+	return file_brand_v2_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ProductPrice) GetPrice() int32 {
@@ -960,7 +1039,7 @@ type ProductPrices struct {
 func (x *ProductPrices) Reset() {
 	*x = ProductPrices{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[15]
+		mi := &file_brand_v2_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -973,7 +1052,7 @@ func (x *ProductPrices) String() string {
 func (*ProductPrices) ProtoMessage() {}
 
 func (x *ProductPrices) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[15]
+	mi := &file_brand_v2_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -986,7 +1065,7 @@ func (x *ProductPrices) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductPrices.ProtoReflect.Descriptor instead.
 func (*ProductPrices) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{15}
+	return file_brand_v2_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ProductPrices) GetPrices() []*ProductPrice {
@@ -1008,7 +1087,7 @@ type ProductRequest struct {
 func (x *ProductRequest) Reset() {
 	*x = ProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[16]
+		mi := &file_brand_v2_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1021,7 +1100,7 @@ func (x *ProductRequest) String() string {
 func (*ProductRequest) ProtoMessage() {}
 
 func (x *ProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[16]
+	mi := &file_brand_v2_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1034,7 +1113,7 @@ func (x *ProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductRequest.ProtoReflect.Descriptor instead.
 func (*ProductRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{16}
+	return file_brand_v2_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ProductRequest) GetAuth() *Auth {
@@ -1063,7 +1142,7 @@ type BrandProducts struct {
 func (x *BrandProducts) Reset() {
 	*x = BrandProducts{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[17]
+		mi := &file_brand_v2_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1076,7 +1155,7 @@ func (x *BrandProducts) String() string {
 func (*BrandProducts) ProtoMessage() {}
 
 func (x *BrandProducts) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[17]
+	mi := &file_brand_v2_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1089,7 +1168,7 @@ func (x *BrandProducts) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BrandProducts.ProtoReflect.Descriptor instead.
 func (*BrandProducts) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{17}
+	return file_brand_v2_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *BrandProducts) GetProducts() []*BrandProduct {
@@ -1123,7 +1202,7 @@ type BrandProduct struct {
 func (x *BrandProduct) Reset() {
 	*x = BrandProduct{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[18]
+		mi := &file_brand_v2_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1136,7 +1215,7 @@ func (x *BrandProduct) String() string {
 func (*BrandProduct) ProtoMessage() {}
 
 func (x *BrandProduct) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[18]
+	mi := &file_brand_v2_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1149,7 +1228,7 @@ func (x *BrandProduct) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BrandProduct.ProtoReflect.Descriptor instead.
 func (*BrandProduct) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{18}
+	return file_brand_v2_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *BrandProduct) GetID() int64 {
@@ -1220,7 +1299,7 @@ type Seller struct {
 func (x *Seller) Reset() {
 	*x = Seller{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[19]
+		mi := &file_brand_v2_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1233,7 +1312,7 @@ func (x *Seller) String() string {
 func (*Seller) ProtoMessage() {}
 
 func (x *Seller) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[19]
+	mi := &file_brand_v2_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1246,7 +1325,7 @@ func (x *Seller) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Seller.ProtoReflect.Descriptor instead.
 func (*Seller) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{19}
+	return file_brand_v2_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *Seller) GetID() int64 {
@@ -1324,7 +1403,7 @@ type Sellers struct {
 func (x *Sellers) Reset() {
 	*x = Sellers{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[20]
+		mi := &file_brand_v2_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1337,7 +1416,7 @@ func (x *Sellers) String() string {
 func (*Sellers) ProtoMessage() {}
 
 func (x *Sellers) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[20]
+	mi := &file_brand_v2_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1350,7 +1429,7 @@ func (x *Sellers) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Sellers.ProtoReflect.Descriptor instead.
 func (*Sellers) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{20}
+	return file_brand_v2_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *Sellers) GetSellers() []*Seller {
@@ -1379,7 +1458,7 @@ type SellerRequest struct {
 func (x *SellerRequest) Reset() {
 	*x = SellerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_brand_v2_proto_msgTypes[21]
+		mi := &file_brand_v2_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1392,7 +1471,7 @@ func (x *SellerRequest) String() string {
 func (*SellerRequest) ProtoMessage() {}
 
 func (x *SellerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_brand_v2_proto_msgTypes[21]
+	mi := &file_brand_v2_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1405,7 +1484,7 @@ func (x *SellerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SellerRequest.ProtoReflect.Descriptor instead.
 func (*SellerRequest) Descriptor() ([]byte, []int) {
-	return file_brand_v2_proto_rawDescGZIP(), []int{21}
+	return file_brand_v2_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SellerRequest) GetAuth() *Auth {
@@ -1427,7 +1506,17 @@ var File_brand_v2_proto protoreflect.FileDescriptor
 var file_brand_v2_proto_rawDesc = []byte{
 	0x0a, 0x0e, 0x62, 0x72, 0x61, 0x6e, 0x64, 0x5f, 0x76, 0x32, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x12, 0x09, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x1a, 0x10, 0x63, 0x65, 0x72,
-	0x61, 0x73, 0x75, 0x73, 0x5f, 0x76, 0x32, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x3c, 0x0a,
+	0x61, 0x73, 0x75, 0x73, 0x5f, 0x76, 0x32, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x9d, 0x01,
+	0x0a, 0x12, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41,
+	0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x70, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x63, 0x68, 0x75, 0x6e, 0x6b, 0x12, 0x1a, 0x0a,
+	0x08, 0x66, 0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x66, 0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70,
+	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3c, 0x0a,
 	0x10, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x57, 0x69, 0x64, 0x67, 0x65,
 	0x74, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02,
@@ -1592,7 +1681,7 @@ var file_brand_v2_proto_rawDesc = []byte{
 	0x32, 0x2e, 0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x29, 0x0a, 0x06,
 	0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x52,
-	0x06, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x32, 0xbc, 0x11, 0x0a, 0x07, 0x42, 0x72, 0x61, 0x6e,
+	0x06, 0x73, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x32, 0x83, 0x12, 0x0a, 0x07, 0x42, 0x72, 0x61, 0x6e,
 	0x64, 0x65, 0x72, 0x12, 0x36, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e, 0x63, 0x65,
 	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
@@ -1682,60 +1771,64 @@ var file_brand_v2_proto_rawDesc = []byte{
 	0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56,
 	0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x79, 0x49, 0x44, 0x1a, 0x16, 0x2e,
 	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
-	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x52, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x53, 0x65,
-	0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x20, 0x2e, 0x63,
-	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50,
-	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19,
-	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65,
-	0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x22, 0x00, 0x12, 0x50, 0x0a, 0x10, 0x47,
-	0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12,
-	0x20, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c,
-	0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65,
-	0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x00, 0x12, 0x52, 0x0a,
-	0x11, 0x4c, 0x69, 0x6e, 0x6b, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x12, 0x23, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53,
-	0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
-	0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22,
-	0x00, 0x12, 0x4f, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75,
-	0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61,
-	0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x56, 0x32, 0x2e, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73,
-	0x22, 0x00, 0x12, 0x46, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f,
-	0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61,
-	0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x79, 0x49,
-	0x44, 0x1a, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4f, 0x75,
-	0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x00, 0x12, 0x56, 0x0a, 0x16, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f,
-	0x64, 0x75, 0x63, 0x74, 0x12, 0x22, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
-	0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
-	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79,
-	0x22, 0x00, 0x12, 0x4a, 0x0a, 0x16, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x65, 0x6c, 0x6c,
-	0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x16, 0x2e, 0x63,
-	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x42, 0x79, 0x49, 0x44, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
-	0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x59,
-	0x0a, 0x16, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x53, 0x65, 0x74, 0x55, 0x72, 0x6c, 0x12, 0x25, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72,
-	0x6f, 0x64, 0x75, 0x63, 0x74, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x4d, 0x0a, 0x19, 0x53, 0x65, 0x6c,
-	0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x44, 0x65, 0x6c,
-	0x65, 0x74, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
-	0x56, 0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x79, 0x49, 0x44, 0x1a, 0x16,
-	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75,
-	0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x49,
-	0x6d, 0x61, 0x67, 0x65, 0x12, 0x17, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
-	0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e,
-	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x49, 0x6d,
+	0x61, 0x67, 0x65, 0x12, 0x17, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
+	0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65,
+	0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x45, 0x0a, 0x0a, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x46,
+	0x69, 0x6c, 0x65, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
+	0x42, 0x72, 0x61, 0x6e, 0x64, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x52, 0x0a, 0x11,
+	0x47, 0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x73, 0x12, 0x20, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65,
+	0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
+	0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x22, 0x00,
+	0x12, 0x50, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x12, 0x20, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
+	0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x22, 0x00, 0x12, 0x52, 0x0a, 0x11, 0x4c, 0x69, 0x6e, 0x6b, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x23, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
+	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x4f, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x53, 0x65, 0x6c,
+	0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x1d,
+	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4f, 0x75, 0x74, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x73, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x53, 0x65,
+	0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x16,
+	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x42, 0x79, 0x49, 0x44, 0x1a, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x56, 0x32, 0x2e, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x00, 0x12,
+	0x56, 0x0a, 0x16, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f,
+	0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x22, 0x2e, 0x63, 0x65, 0x72, 0x61,
+	0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x4a, 0x0a, 0x16, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x79, 0x49, 0x44, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61,
+	0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c,
+	0x79, 0x22, 0x00, 0x12, 0x59, 0x0a, 0x16, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x65, 0x74, 0x55, 0x72, 0x6c, 0x12, 0x25, 0x2e,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72,
+	0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
+	0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x4d,
+	0x0a, 0x19, 0x53, 0x65, 0x6c, 0x6c, 0x65, 0x72, 0x4f, 0x75, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75,
+	0x63, 0x74, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x16, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42,
+	0x79, 0x49, 0x44, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a,
+	0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61,
+	0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1750,137 +1843,141 @@ func file_brand_v2_proto_rawDescGZIP() []byte {
 	return file_brand_v2_proto_rawDescData
 }
 
-var file_brand_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_brand_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_brand_v2_proto_goTypes = []interface{}{
-	(*BrandCountWidget)(nil),           // 0: cerasusV2.BrandCountWidget
-	(*BrandCountWidgets)(nil),          // 1: cerasusV2.BrandCountWidgets
-	(*SellerOutProductUrlRequest)(nil), // 2: cerasusV2.SellerOutProductUrlRequest
-	(*SellerOutProductRequest)(nil),    // 3: cerasusV2.SellerOutProductRequest
-	(*OutProductUrl)(nil),              // 4: cerasusV2.OutProductUrl
-	(*OutProductUrlData)(nil),          // 5: cerasusV2.OutProductUrlData
-	(*OutProduct)(nil),                 // 6: cerasusV2.OutProduct
-	(*OutProducts)(nil),                // 7: cerasusV2.OutProducts
-	(*OutProductsRequest)(nil),         // 8: cerasusV2.OutProductsRequest
-	(*SellerProductLinkRequest)(nil),   // 9: cerasusV2.SellerProductLinkRequest
-	(*SellerProductsRequest)(nil),      // 10: cerasusV2.SellerProductsRequest
-	(*SellerProducts)(nil),             // 11: cerasusV2.SellerProducts
-	(*SellerProduct)(nil),              // 12: cerasusV2.SellerProduct
-	(*ProductPriceRequest)(nil),        // 13: cerasusV2.ProductPriceRequest
-	(*ProductPrice)(nil),               // 14: cerasusV2.ProductPrice
-	(*ProductPrices)(nil),              // 15: cerasusV2.ProductPrices
-	(*ProductRequest)(nil),             // 16: cerasusV2.ProductRequest
-	(*BrandProducts)(nil),              // 17: cerasusV2.BrandProducts
-	(*BrandProduct)(nil),               // 18: cerasusV2.BrandProduct
-	(*Seller)(nil),                     // 19: cerasusV2.Seller
-	(*Sellers)(nil),                    // 20: cerasusV2.Sellers
-	(*SellerRequest)(nil),              // 21: cerasusV2.SellerRequest
-	(*Auth)(nil),                       // 22: cerasusV2.Auth
-	(*Pagination)(nil),                 // 23: cerasusV2.Pagination
-	(*Product)(nil),                    // 24: cerasusV2.Product
-	(*PingRequest)(nil),                // 25: cerasusV2.PingRequest
-	(*UpdateBrandRequest)(nil),         // 26: cerasusV2.UpdateBrandRequest
-	(*RequestByPage)(nil),              // 27: cerasusV2.RequestByPage
-	(*RequestByID)(nil),                // 28: cerasusV2.RequestByID
-	(*SearchRequest)(nil),              // 29: cerasusV2.SearchRequest
-	(*ImageRequest)(nil),               // 30: cerasusV2.ImageRequest
-	(*PingReply)(nil),                  // 31: cerasusV2.PingReply
-	(*Brand)(nil),                      // 32: cerasusV2.Brand
-	(*StatusReply)(nil),                // 33: cerasusV2.StatusReply
-	(*CompanyList)(nil),                // 34: cerasusV2.CompanyList
-	(*ImageReply)(nil),                 // 35: cerasusV2.ImageReply
+	(*BrandUploadRequest)(nil),         // 0: cerasusV2.BrandUploadRequest
+	(*BrandCountWidget)(nil),           // 1: cerasusV2.BrandCountWidget
+	(*BrandCountWidgets)(nil),          // 2: cerasusV2.BrandCountWidgets
+	(*SellerOutProductUrlRequest)(nil), // 3: cerasusV2.SellerOutProductUrlRequest
+	(*SellerOutProductRequest)(nil),    // 4: cerasusV2.SellerOutProductRequest
+	(*OutProductUrl)(nil),              // 5: cerasusV2.OutProductUrl
+	(*OutProductUrlData)(nil),          // 6: cerasusV2.OutProductUrlData
+	(*OutProduct)(nil),                 // 7: cerasusV2.OutProduct
+	(*OutProducts)(nil),                // 8: cerasusV2.OutProducts
+	(*OutProductsRequest)(nil),         // 9: cerasusV2.OutProductsRequest
+	(*SellerProductLinkRequest)(nil),   // 10: cerasusV2.SellerProductLinkRequest
+	(*SellerProductsRequest)(nil),      // 11: cerasusV2.SellerProductsRequest
+	(*SellerProducts)(nil),             // 12: cerasusV2.SellerProducts
+	(*SellerProduct)(nil),              // 13: cerasusV2.SellerProduct
+	(*ProductPriceRequest)(nil),        // 14: cerasusV2.ProductPriceRequest
+	(*ProductPrice)(nil),               // 15: cerasusV2.ProductPrice
+	(*ProductPrices)(nil),              // 16: cerasusV2.ProductPrices
+	(*ProductRequest)(nil),             // 17: cerasusV2.ProductRequest
+	(*BrandProducts)(nil),              // 18: cerasusV2.BrandProducts
+	(*BrandProduct)(nil),               // 19: cerasusV2.BrandProduct
+	(*Seller)(nil),                     // 20: cerasusV2.Seller
+	(*Sellers)(nil),                    // 21: cerasusV2.Sellers
+	(*SellerRequest)(nil),              // 22: cerasusV2.SellerRequest
+	(*Auth)(nil),                       // 23: cerasusV2.Auth
+	(*Pagination)(nil),                 // 24: cerasusV2.Pagination
+	(*Product)(nil),                    // 25: cerasusV2.Product
+	(*PingRequest)(nil),                // 26: cerasusV2.PingRequest
+	(*UpdateBrandRequest)(nil),         // 27: cerasusV2.UpdateBrandRequest
+	(*RequestByPage)(nil),              // 28: cerasusV2.RequestByPage
+	(*RequestByID)(nil),                // 29: cerasusV2.RequestByID
+	(*SearchRequest)(nil),              // 30: cerasusV2.SearchRequest
+	(*ImageRequest)(nil),               // 31: cerasusV2.ImageRequest
+	(*PingReply)(nil),                  // 32: cerasusV2.PingReply
+	(*Brand)(nil),                      // 33: cerasusV2.Brand
+	(*StatusReply)(nil),                // 34: cerasusV2.StatusReply
+	(*CompanyList)(nil),                // 35: cerasusV2.CompanyList
+	(*ImageReply)(nil),                 // 36: cerasusV2.ImageReply
 }
 var file_brand_v2_proto_depIdxs = []int32{
-	0,  // 0: cerasusV2.BrandCountWidgets.data:type_name -> cerasusV2.BrandCountWidget
-	22, // 1: cerasusV2.SellerOutProductUrlRequest.auth:type_name -> cerasusV2.Auth
-	22, // 2: cerasusV2.SellerOutProductRequest.auth:type_name -> cerasusV2.Auth
-	4,  // 3: cerasusV2.OutProductUrlData.urls:type_name -> cerasusV2.OutProductUrl
-	18, // 4: cerasusV2.OutProduct.product:type_name -> cerasusV2.BrandProduct
-	5,  // 5: cerasusV2.OutProduct.urlData:type_name -> cerasusV2.OutProductUrlData
-	6,  // 6: cerasusV2.OutProducts.products:type_name -> cerasusV2.OutProduct
-	23, // 7: cerasusV2.OutProducts.pagination:type_name -> cerasusV2.Pagination
-	22, // 8: cerasusV2.OutProductsRequest.auth:type_name -> cerasusV2.Auth
-	22, // 9: cerasusV2.SellerProductLinkRequest.auth:type_name -> cerasusV2.Auth
-	22, // 10: cerasusV2.SellerProductsRequest.auth:type_name -> cerasusV2.Auth
-	12, // 11: cerasusV2.SellerProducts.products:type_name -> cerasusV2.SellerProduct
-	23, // 12: cerasusV2.SellerProducts.pagination:type_name -> cerasusV2.Pagination
-	24, // 13: cerasusV2.SellerProduct.product:type_name -> cerasusV2.Product
-	22, // 14: cerasusV2.ProductPriceRequest.auth:type_name -> cerasusV2.Auth
-	14, // 15: cerasusV2.ProductPrices.prices:type_name -> cerasusV2.ProductPrice
-	22, // 16: cerasusV2.ProductRequest.auth:type_name -> cerasusV2.Auth
-	18, // 17: cerasusV2.ProductRequest.product:type_name -> cerasusV2.BrandProduct
-	18, // 18: cerasusV2.BrandProducts.products:type_name -> cerasusV2.BrandProduct
-	23, // 19: cerasusV2.BrandProducts.pagination:type_name -> cerasusV2.Pagination
-	19, // 20: cerasusV2.Sellers.sellers:type_name -> cerasusV2.Seller
-	23, // 21: cerasusV2.Sellers.pagination:type_name -> cerasusV2.Pagination
-	22, // 22: cerasusV2.SellerRequest.auth:type_name -> cerasusV2.Auth
-	19, // 23: cerasusV2.SellerRequest.seller:type_name -> cerasusV2.Seller
-	25, // 24: cerasusV2.Brander.Ping:input_type -> cerasusV2.PingRequest
-	22, // 25: cerasusV2.Brander.GetCountWidgets:input_type -> cerasusV2.Auth
-	22, // 26: cerasusV2.Brander.GetBrand:input_type -> cerasusV2.Auth
-	26, // 27: cerasusV2.Brander.UpdateBrand:input_type -> cerasusV2.UpdateBrandRequest
-	27, // 28: cerasusV2.Brander.GetSellers:input_type -> cerasusV2.RequestByPage
-	28, // 29: cerasusV2.Brander.GetSeller:input_type -> cerasusV2.RequestByID
-	21, // 30: cerasusV2.Brander.CreateSeller:input_type -> cerasusV2.SellerRequest
-	21, // 31: cerasusV2.Brander.UpdateSeller:input_type -> cerasusV2.SellerRequest
-	27, // 32: cerasusV2.Brander.GetCompaniesWithBrandProducts:input_type -> cerasusV2.RequestByPage
-	28, // 33: cerasusV2.Brander.GetSellerCompanies:input_type -> cerasusV2.RequestByID
-	29, // 34: cerasusV2.Brander.SearchSeller:input_type -> cerasusV2.SearchRequest
-	27, // 35: cerasusV2.Brander.GetProducts:input_type -> cerasusV2.RequestByPage
-	28, // 36: cerasusV2.Brander.GetProduct:input_type -> cerasusV2.RequestByID
-	16, // 37: cerasusV2.Brander.CreateProduct:input_type -> cerasusV2.ProductRequest
-	16, // 38: cerasusV2.Brander.UpdateProduct:input_type -> cerasusV2.ProductRequest
-	16, // 39: cerasusV2.Brander.DeleteProduct:input_type -> cerasusV2.ProductRequest
-	29, // 40: cerasusV2.Brander.SearchProduct:input_type -> cerasusV2.SearchRequest
-	28, // 41: cerasusV2.Brander.GetProductPrice:input_type -> cerasusV2.RequestByID
-	28, // 42: cerasusV2.Brander.GetProductPrices:input_type -> cerasusV2.RequestByID
-	13, // 43: cerasusV2.Brander.SetProductPrice:input_type -> cerasusV2.ProductPriceRequest
-	28, // 44: cerasusV2.Brander.DeleteProductPrice:input_type -> cerasusV2.RequestByID
-	10, // 45: cerasusV2.Brander.GetSellerProducts:input_type -> cerasusV2.SellerProductsRequest
-	10, // 46: cerasusV2.Brander.GetSellerProduct:input_type -> cerasusV2.SellerProductsRequest
-	9,  // 47: cerasusV2.Brander.LinkSellerProduct:input_type -> cerasusV2.SellerProductLinkRequest
-	8,  // 48: cerasusV2.Brander.GetSellerOutProducts:input_type -> cerasusV2.OutProductsRequest
-	28, // 49: cerasusV2.Brander.GetSellerOutProduct:input_type -> cerasusV2.RequestByID
-	3,  // 50: cerasusV2.Brander.CreateSellerOutProduct:input_type -> cerasusV2.SellerOutProductRequest
-	28, // 51: cerasusV2.Brander.DeleteSellerOutProduct:input_type -> cerasusV2.RequestByID
-	2,  // 52: cerasusV2.Brander.SellerOutProductSetUrl:input_type -> cerasusV2.SellerOutProductUrlRequest
-	28, // 53: cerasusV2.Brander.SellerOutProductDeleteUrl:input_type -> cerasusV2.RequestByID
-	30, // 54: cerasusV2.Brander.GetImage:input_type -> cerasusV2.ImageRequest
-	31, // 55: cerasusV2.Brander.Ping:output_type -> cerasusV2.PingReply
-	1,  // 56: cerasusV2.Brander.GetCountWidgets:output_type -> cerasusV2.BrandCountWidgets
-	32, // 57: cerasusV2.Brander.GetBrand:output_type -> cerasusV2.Brand
-	33, // 58: cerasusV2.Brander.UpdateBrand:output_type -> cerasusV2.StatusReply
-	20, // 59: cerasusV2.Brander.GetSellers:output_type -> cerasusV2.Sellers
-	19, // 60: cerasusV2.Brander.GetSeller:output_type -> cerasusV2.Seller
-	33, // 61: cerasusV2.Brander.CreateSeller:output_type -> cerasusV2.StatusReply
-	33, // 62: cerasusV2.Brander.UpdateSeller:output_type -> cerasusV2.StatusReply
-	34, // 63: cerasusV2.Brander.GetCompaniesWithBrandProducts:output_type -> cerasusV2.CompanyList
-	34, // 64: cerasusV2.Brander.GetSellerCompanies:output_type -> cerasusV2.CompanyList
-	20, // 65: cerasusV2.Brander.SearchSeller:output_type -> cerasusV2.Sellers
-	17, // 66: cerasusV2.Brander.GetProducts:output_type -> cerasusV2.BrandProducts
-	18, // 67: cerasusV2.Brander.GetProduct:output_type -> cerasusV2.BrandProduct
-	33, // 68: cerasusV2.Brander.CreateProduct:output_type -> cerasusV2.StatusReply
-	33, // 69: cerasusV2.Brander.UpdateProduct:output_type -> cerasusV2.StatusReply
-	33, // 70: cerasusV2.Brander.DeleteProduct:output_type -> cerasusV2.StatusReply
-	17, // 71: cerasusV2.Brander.SearchProduct:output_type -> cerasusV2.BrandProducts
-	14, // 72: cerasusV2.Brander.GetProductPrice:output_type -> cerasusV2.ProductPrice
-	15, // 73: cerasusV2.Brander.GetProductPrices:output_type -> cerasusV2.ProductPrices
-	33, // 74: cerasusV2.Brander.SetProductPrice:output_type -> cerasusV2.StatusReply
-	33, // 75: cerasusV2.Brander.DeleteProductPrice:output_type -> cerasusV2.StatusReply
-	11, // 76: cerasusV2.Brander.GetSellerProducts:output_type -> cerasusV2.SellerProducts
-	12, // 77: cerasusV2.Brander.GetSellerProduct:output_type -> cerasusV2.SellerProduct
-	33, // 78: cerasusV2.Brander.LinkSellerProduct:output_type -> cerasusV2.StatusReply
-	7,  // 79: cerasusV2.Brander.GetSellerOutProducts:output_type -> cerasusV2.OutProducts
-	6,  // 80: cerasusV2.Brander.GetSellerOutProduct:output_type -> cerasusV2.OutProduct
-	33, // 81: cerasusV2.Brander.CreateSellerOutProduct:output_type -> cerasusV2.StatusReply
-	33, // 82: cerasusV2.Brander.DeleteSellerOutProduct:output_type -> cerasusV2.StatusReply
-	33, // 83: cerasusV2.Brander.SellerOutProductSetUrl:output_type -> cerasusV2.StatusReply
-	33, // 84: cerasusV2.Brander.SellerOutProductDeleteUrl:output_type -> cerasusV2.StatusReply
-	35, // 85: cerasusV2.Brander.GetImage:output_type -> cerasusV2.ImageReply
-	55, // [55:86] is the sub-list for method output_type
-	24, // [24:55] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	23, // 0: cerasusV2.BrandUploadRequest.auth:type_name -> cerasusV2.Auth
+	1,  // 1: cerasusV2.BrandCountWidgets.data:type_name -> cerasusV2.BrandCountWidget
+	23, // 2: cerasusV2.SellerOutProductUrlRequest.auth:type_name -> cerasusV2.Auth
+	23, // 3: cerasusV2.SellerOutProductRequest.auth:type_name -> cerasusV2.Auth
+	5,  // 4: cerasusV2.OutProductUrlData.urls:type_name -> cerasusV2.OutProductUrl
+	19, // 5: cerasusV2.OutProduct.product:type_name -> cerasusV2.BrandProduct
+	6,  // 6: cerasusV2.OutProduct.urlData:type_name -> cerasusV2.OutProductUrlData
+	7,  // 7: cerasusV2.OutProducts.products:type_name -> cerasusV2.OutProduct
+	24, // 8: cerasusV2.OutProducts.pagination:type_name -> cerasusV2.Pagination
+	23, // 9: cerasusV2.OutProductsRequest.auth:type_name -> cerasusV2.Auth
+	23, // 10: cerasusV2.SellerProductLinkRequest.auth:type_name -> cerasusV2.Auth
+	23, // 11: cerasusV2.SellerProductsRequest.auth:type_name -> cerasusV2.Auth
+	13, // 12: cerasusV2.SellerProducts.products:type_name -> cerasusV2.SellerProduct
+	24, // 13: cerasusV2.SellerProducts.pagination:type_name -> cerasusV2.Pagination
+	25, // 14: cerasusV2.SellerProduct.product:type_name -> cerasusV2.Product
+	23, // 15: cerasusV2.ProductPriceRequest.auth:type_name -> cerasusV2.Auth
+	15, // 16: cerasusV2.ProductPrices.prices:type_name -> cerasusV2.ProductPrice
+	23, // 17: cerasusV2.ProductRequest.auth:type_name -> cerasusV2.Auth
+	19, // 18: cerasusV2.ProductRequest.product:type_name -> cerasusV2.BrandProduct
+	19, // 19: cerasusV2.BrandProducts.products:type_name -> cerasusV2.BrandProduct
+	24, // 20: cerasusV2.BrandProducts.pagination:type_name -> cerasusV2.Pagination
+	20, // 21: cerasusV2.Sellers.sellers:type_name -> cerasusV2.Seller
+	24, // 22: cerasusV2.Sellers.pagination:type_name -> cerasusV2.Pagination
+	23, // 23: cerasusV2.SellerRequest.auth:type_name -> cerasusV2.Auth
+	20, // 24: cerasusV2.SellerRequest.seller:type_name -> cerasusV2.Seller
+	26, // 25: cerasusV2.Brander.Ping:input_type -> cerasusV2.PingRequest
+	23, // 26: cerasusV2.Brander.GetCountWidgets:input_type -> cerasusV2.Auth
+	23, // 27: cerasusV2.Brander.GetBrand:input_type -> cerasusV2.Auth
+	27, // 28: cerasusV2.Brander.UpdateBrand:input_type -> cerasusV2.UpdateBrandRequest
+	28, // 29: cerasusV2.Brander.GetSellers:input_type -> cerasusV2.RequestByPage
+	29, // 30: cerasusV2.Brander.GetSeller:input_type -> cerasusV2.RequestByID
+	22, // 31: cerasusV2.Brander.CreateSeller:input_type -> cerasusV2.SellerRequest
+	22, // 32: cerasusV2.Brander.UpdateSeller:input_type -> cerasusV2.SellerRequest
+	28, // 33: cerasusV2.Brander.GetCompaniesWithBrandProducts:input_type -> cerasusV2.RequestByPage
+	29, // 34: cerasusV2.Brander.GetSellerCompanies:input_type -> cerasusV2.RequestByID
+	30, // 35: cerasusV2.Brander.SearchSeller:input_type -> cerasusV2.SearchRequest
+	28, // 36: cerasusV2.Brander.GetProducts:input_type -> cerasusV2.RequestByPage
+	29, // 37: cerasusV2.Brander.GetProduct:input_type -> cerasusV2.RequestByID
+	17, // 38: cerasusV2.Brander.CreateProduct:input_type -> cerasusV2.ProductRequest
+	17, // 39: cerasusV2.Brander.UpdateProduct:input_type -> cerasusV2.ProductRequest
+	17, // 40: cerasusV2.Brander.DeleteProduct:input_type -> cerasusV2.ProductRequest
+	30, // 41: cerasusV2.Brander.SearchProduct:input_type -> cerasusV2.SearchRequest
+	29, // 42: cerasusV2.Brander.GetProductPrice:input_type -> cerasusV2.RequestByID
+	29, // 43: cerasusV2.Brander.GetProductPrices:input_type -> cerasusV2.RequestByID
+	14, // 44: cerasusV2.Brander.SetProductPrice:input_type -> cerasusV2.ProductPriceRequest
+	29, // 45: cerasusV2.Brander.DeleteProductPrice:input_type -> cerasusV2.RequestByID
+	31, // 46: cerasusV2.Brander.GetImage:input_type -> cerasusV2.ImageRequest
+	0,  // 47: cerasusV2.Brander.UploadFile:input_type -> cerasusV2.BrandUploadRequest
+	11, // 48: cerasusV2.Brander.GetSellerProducts:input_type -> cerasusV2.SellerProductsRequest
+	11, // 49: cerasusV2.Brander.GetSellerProduct:input_type -> cerasusV2.SellerProductsRequest
+	10, // 50: cerasusV2.Brander.LinkSellerProduct:input_type -> cerasusV2.SellerProductLinkRequest
+	9,  // 51: cerasusV2.Brander.GetSellerOutProducts:input_type -> cerasusV2.OutProductsRequest
+	29, // 52: cerasusV2.Brander.GetSellerOutProduct:input_type -> cerasusV2.RequestByID
+	4,  // 53: cerasusV2.Brander.CreateSellerOutProduct:input_type -> cerasusV2.SellerOutProductRequest
+	29, // 54: cerasusV2.Brander.DeleteSellerOutProduct:input_type -> cerasusV2.RequestByID
+	3,  // 55: cerasusV2.Brander.SellerOutProductSetUrl:input_type -> cerasusV2.SellerOutProductUrlRequest
+	29, // 56: cerasusV2.Brander.SellerOutProductDeleteUrl:input_type -> cerasusV2.RequestByID
+	32, // 57: cerasusV2.Brander.Ping:output_type -> cerasusV2.PingReply
+	2,  // 58: cerasusV2.Brander.GetCountWidgets:output_type -> cerasusV2.BrandCountWidgets
+	33, // 59: cerasusV2.Brander.GetBrand:output_type -> cerasusV2.Brand
+	34, // 60: cerasusV2.Brander.UpdateBrand:output_type -> cerasusV2.StatusReply
+	21, // 61: cerasusV2.Brander.GetSellers:output_type -> cerasusV2.Sellers
+	20, // 62: cerasusV2.Brander.GetSeller:output_type -> cerasusV2.Seller
+	34, // 63: cerasusV2.Brander.CreateSeller:output_type -> cerasusV2.StatusReply
+	34, // 64: cerasusV2.Brander.UpdateSeller:output_type -> cerasusV2.StatusReply
+	35, // 65: cerasusV2.Brander.GetCompaniesWithBrandProducts:output_type -> cerasusV2.CompanyList
+	35, // 66: cerasusV2.Brander.GetSellerCompanies:output_type -> cerasusV2.CompanyList
+	21, // 67: cerasusV2.Brander.SearchSeller:output_type -> cerasusV2.Sellers
+	18, // 68: cerasusV2.Brander.GetProducts:output_type -> cerasusV2.BrandProducts
+	19, // 69: cerasusV2.Brander.GetProduct:output_type -> cerasusV2.BrandProduct
+	34, // 70: cerasusV2.Brander.CreateProduct:output_type -> cerasusV2.StatusReply
+	34, // 71: cerasusV2.Brander.UpdateProduct:output_type -> cerasusV2.StatusReply
+	34, // 72: cerasusV2.Brander.DeleteProduct:output_type -> cerasusV2.StatusReply
+	18, // 73: cerasusV2.Brander.SearchProduct:output_type -> cerasusV2.BrandProducts
+	15, // 74: cerasusV2.Brander.GetProductPrice:output_type -> cerasusV2.ProductPrice
+	16, // 75: cerasusV2.Brander.GetProductPrices:output_type -> cerasusV2.ProductPrices
+	34, // 76: cerasusV2.Brander.SetProductPrice:output_type -> cerasusV2.StatusReply
+	34, // 77: cerasusV2.Brander.DeleteProductPrice:output_type -> cerasusV2.StatusReply
+	36, // 78: cerasusV2.Brander.GetImage:output_type -> cerasusV2.ImageReply
+	34, // 79: cerasusV2.Brander.UploadFile:output_type -> cerasusV2.StatusReply
+	12, // 80: cerasusV2.Brander.GetSellerProducts:output_type -> cerasusV2.SellerProducts
+	13, // 81: cerasusV2.Brander.GetSellerProduct:output_type -> cerasusV2.SellerProduct
+	34, // 82: cerasusV2.Brander.LinkSellerProduct:output_type -> cerasusV2.StatusReply
+	8,  // 83: cerasusV2.Brander.GetSellerOutProducts:output_type -> cerasusV2.OutProducts
+	7,  // 84: cerasusV2.Brander.GetSellerOutProduct:output_type -> cerasusV2.OutProduct
+	34, // 85: cerasusV2.Brander.CreateSellerOutProduct:output_type -> cerasusV2.StatusReply
+	34, // 86: cerasusV2.Brander.DeleteSellerOutProduct:output_type -> cerasusV2.StatusReply
+	34, // 87: cerasusV2.Brander.SellerOutProductSetUrl:output_type -> cerasusV2.StatusReply
+	34, // 88: cerasusV2.Brander.SellerOutProductDeleteUrl:output_type -> cerasusV2.StatusReply
+	57, // [57:89] is the sub-list for method output_type
+	25, // [25:57] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_brand_v2_proto_init() }
@@ -1891,7 +1988,7 @@ func file_brand_v2_proto_init() {
 	file_cerasus_v2_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_brand_v2_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BrandCountWidget); i {
+			switch v := v.(*BrandUploadRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1903,7 +2000,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BrandCountWidgets); i {
+			switch v := v.(*BrandCountWidget); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1915,7 +2012,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerOutProductUrlRequest); i {
+			switch v := v.(*BrandCountWidgets); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1927,7 +2024,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerOutProductRequest); i {
+			switch v := v.(*SellerOutProductUrlRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1939,7 +2036,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OutProductUrl); i {
+			switch v := v.(*SellerOutProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1951,7 +2048,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OutProductUrlData); i {
+			switch v := v.(*OutProductUrl); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1963,7 +2060,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OutProduct); i {
+			switch v := v.(*OutProductUrlData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1975,7 +2072,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OutProducts); i {
+			switch v := v.(*OutProduct); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1987,7 +2084,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OutProductsRequest); i {
+			switch v := v.(*OutProducts); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1999,7 +2096,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerProductLinkRequest); i {
+			switch v := v.(*OutProductsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2011,7 +2108,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerProductsRequest); i {
+			switch v := v.(*SellerProductLinkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2023,7 +2120,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerProducts); i {
+			switch v := v.(*SellerProductsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2035,7 +2132,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SellerProduct); i {
+			switch v := v.(*SellerProducts); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2047,7 +2144,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductPriceRequest); i {
+			switch v := v.(*SellerProduct); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2059,7 +2156,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductPrice); i {
+			switch v := v.(*ProductPriceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2071,7 +2168,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductPrices); i {
+			switch v := v.(*ProductPrice); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2083,7 +2180,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductRequest); i {
+			switch v := v.(*ProductPrices); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2095,7 +2192,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BrandProducts); i {
+			switch v := v.(*ProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2107,7 +2204,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BrandProduct); i {
+			switch v := v.(*BrandProducts); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2119,7 +2216,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Seller); i {
+			switch v := v.(*BrandProduct); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2131,7 +2228,7 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Sellers); i {
+			switch v := v.(*Seller); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2143,6 +2240,18 @@ func file_brand_v2_proto_init() {
 			}
 		}
 		file_brand_v2_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Sellers); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_brand_v2_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SellerRequest); i {
 			case 0:
 				return &v.state
@@ -2161,7 +2270,7 @@ func file_brand_v2_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_brand_v2_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
