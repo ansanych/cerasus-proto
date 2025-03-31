@@ -325,6 +325,7 @@ message ShopProduct {
     int64 ozProductID = 7;
     string ymOfferID = 8;
     int64 wbNMID = 9;
+    int64 ozSku = 10;
 }
 
 message ShopProductList {
