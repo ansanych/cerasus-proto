@@ -35,6 +35,7 @@ type AuthentyClient interface {
 	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetRoles(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Roles, error)
 	GetCompanyList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*CompanyList, error)
+	GetCompanyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Company, error)
 }
 
 type authentyClient struct {
@@ -162,6 +163,15 @@ func (c *authentyClient) GetCompanyList(ctx context.Context, in *RequestByIDs, o
 	return out, nil
 }
 
+func (c *authentyClient) GetCompanyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Company, error) {
+	out := new(Company)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Authenty/GetCompanyData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -179,6 +189,7 @@ type AuthentyServer interface {
 	UpdateCompany(context.Context, *UpdateCompanyRequest) (*StatusReply, error)
 	GetRoles(context.Context, *Auth) (*Roles, error)
 	GetCompanyList(context.Context, *RequestByIDs) (*CompanyList, error)
+	GetCompanyData(context.Context, *RequestByID) (*Company, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -224,6 +235,9 @@ func (UnimplementedAuthentyServer) GetRoles(context.Context, *Auth) (*Roles, err
 }
 func (UnimplementedAuthentyServer) GetCompanyList(context.Context, *RequestByIDs) (*CompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyList not implemented")
+}
+func (UnimplementedAuthentyServer) GetCompanyData(context.Context, *RequestByID) (*Company, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyData not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -472,6 +486,24 @@ func _Authenty_GetCompanyList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Authenty_GetCompanyData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).GetCompanyData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Authenty/GetCompanyData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).GetCompanyData(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Authenty_ServiceDesc is the grpc.ServiceDesc for Authenty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +562,10 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompanyList",
 			Handler:    _Authenty_GetCompanyList_Handler,
+		},
+		{
+			MethodName: "GetCompanyData",
+			Handler:    _Authenty_GetCompanyData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
