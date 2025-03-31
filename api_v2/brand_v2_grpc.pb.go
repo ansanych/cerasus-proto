@@ -24,34 +24,31 @@ const _ = grpc.SupportPackageIsVersion7
 type BranderClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetCountWidgets(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BrandCountWidgets, error)
-	GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
-	UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	// Sellers
 	GetSellers(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*Sellers, error)
 	GetSeller(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Seller, error)
 	CreateSeller(ctx context.Context, in *SellerRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	UpdateSeller(ctx context.Context, in *SellerRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error)
 	GetSellerCompanies(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompanyList, error)
-	SearchSeller(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Sellers, error)
-	// Products
+	GetSellerProducts(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProducts, error)
+	GetSellerProduct(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProduct, error)
 	GetProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*BrandProducts, error)
-	GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProduct, error)
 	CreateProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProduct, error)
 	UpdateProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	DeleteProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	SearchProduct(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*BrandProducts, error)
+	LinkSellerProduct(ctx context.Context, in *SellerProductLinkRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	UploadFile(ctx context.Context, in *BrandUploadRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetProductPrice(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductPrice, error)
 	GetProductPrices(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductPrices, error)
 	SetProductPrice(ctx context.Context, in *ProductPriceRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SearchDataByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*DataByCode, error)
+	GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
+	UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error)
+	SearchSeller(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Sellers, error)
+	DeleteProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SearchProduct(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*BrandProducts, error)
 	DeleteProductPrice(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
-	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
-	UploadFile(ctx context.Context, in *BrandUploadRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	// Seller Products In Cerasus
-	GetSellerProducts(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProducts, error)
-	GetSellerProduct(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProduct, error)
-	LinkSellerProduct(ctx context.Context, in *SellerProductLinkRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	// Seller Product WO Cerasus
 	GetSellerOutProducts(ctx context.Context, in *OutProductsRequest, opts ...grpc.CallOption) (*OutProducts, error)
 	GetSellerOutProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*OutProduct, error)
 	CreateSellerOutProduct(ctx context.Context, in *SellerOutProductRequest, opts ...grpc.CallOption) (*StatusReply, error)
@@ -80,24 +77,6 @@ func (c *branderClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.
 func (c *branderClient) GetCountWidgets(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*BrandCountWidgets, error) {
 	out := new(BrandCountWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetCountWidgets", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetBrand", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/UpdateBrand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -140,15 +119,6 @@ func (c *branderClient) UpdateSeller(ctx context.Context, in *SellerRequest, opt
 	return out, nil
 }
 
-func (c *branderClient) GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error) {
-	out := new(CompanyList)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetCompaniesWithBrandProducts", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *branderClient) GetSellerCompanies(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompanyList, error) {
 	out := new(CompanyList)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetSellerCompanies", in, out, opts...)
@@ -158,9 +128,18 @@ func (c *branderClient) GetSellerCompanies(ctx context.Context, in *RequestByID,
 	return out, nil
 }
 
-func (c *branderClient) SearchSeller(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Sellers, error) {
-	out := new(Sellers)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SearchSeller", in, out, opts...)
+func (c *branderClient) GetSellerProducts(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProducts, error) {
+	out := new(SellerProducts)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetSellerProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) GetSellerProduct(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProduct, error) {
+	out := new(SellerProduct)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetSellerProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -176,18 +155,18 @@ func (c *branderClient) GetProducts(ctx context.Context, in *RequestByPage, opts
 	return out, nil
 }
 
-func (c *branderClient) GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProduct, error) {
-	out := new(BrandProduct)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetProduct", in, out, opts...)
+func (c *branderClient) CreateProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/CreateProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *branderClient) CreateProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/CreateProduct", in, out, opts...)
+func (c *branderClient) GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProduct, error) {
+	out := new(BrandProduct)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -203,18 +182,27 @@ func (c *branderClient) UpdateProduct(ctx context.Context, in *ProductRequest, o
 	return out, nil
 }
 
-func (c *branderClient) DeleteProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *branderClient) LinkSellerProduct(ctx context.Context, in *SellerProductLinkRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/DeleteProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/LinkSellerProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *branderClient) SearchProduct(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*BrandProducts, error) {
-	out := new(BrandProducts)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SearchProduct", in, out, opts...)
+func (c *branderClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) UploadFile(ctx context.Context, in *BrandUploadRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/UploadFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -248,54 +236,72 @@ func (c *branderClient) SetProductPrice(ctx context.Context, in *ProductPriceReq
 	return out, nil
 }
 
+func (c *branderClient) SearchDataByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*DataByCode, error) {
+	out := new(DataByCode)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SearchDataByCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error) {
+	out := new(Brand)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/UpdateBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetCompaniesWithBrandProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) SearchSeller(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Sellers, error) {
+	out := new(Sellers)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SearchSeller", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) DeleteProduct(ctx context.Context, in *ProductRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/DeleteProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) SearchProduct(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*BrandProducts, error) {
+	out := new(BrandProducts)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SearchProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *branderClient) DeleteProductPrice(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/DeleteProductPrice", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
-	out := new(ImageReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetImage", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) UploadFile(ctx context.Context, in *BrandUploadRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/UploadFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) GetSellerProducts(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProducts, error) {
-	out := new(SellerProducts)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetSellerProducts", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) GetSellerProduct(ctx context.Context, in *SellerProductsRequest, opts ...grpc.CallOption) (*SellerProduct, error) {
-	out := new(SellerProduct)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetSellerProduct", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *branderClient) LinkSellerProduct(ctx context.Context, in *SellerProductLinkRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/LinkSellerProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -362,34 +368,31 @@ func (c *branderClient) SellerOutProductDeleteUrl(ctx context.Context, in *Reque
 type BranderServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetCountWidgets(context.Context, *Auth) (*BrandCountWidgets, error)
-	GetBrand(context.Context, *Auth) (*Brand, error)
-	UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error)
-	// Sellers
 	GetSellers(context.Context, *RequestByPage) (*Sellers, error)
 	GetSeller(context.Context, *RequestByID) (*Seller, error)
 	CreateSeller(context.Context, *SellerRequest) (*StatusReply, error)
 	UpdateSeller(context.Context, *SellerRequest) (*StatusReply, error)
-	GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error)
 	GetSellerCompanies(context.Context, *RequestByID) (*CompanyList, error)
-	SearchSeller(context.Context, *SearchRequest) (*Sellers, error)
-	// Products
+	GetSellerProducts(context.Context, *SellerProductsRequest) (*SellerProducts, error)
+	GetSellerProduct(context.Context, *SellerProductsRequest) (*SellerProduct, error)
 	GetProducts(context.Context, *RequestByPage) (*BrandProducts, error)
-	GetProduct(context.Context, *RequestByID) (*BrandProduct, error)
 	CreateProduct(context.Context, *ProductRequest) (*StatusReply, error)
+	GetProduct(context.Context, *RequestByID) (*BrandProduct, error)
 	UpdateProduct(context.Context, *ProductRequest) (*StatusReply, error)
-	DeleteProduct(context.Context, *ProductRequest) (*StatusReply, error)
-	SearchProduct(context.Context, *SearchRequest) (*BrandProducts, error)
+	LinkSellerProduct(context.Context, *SellerProductLinkRequest) (*StatusReply, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	UploadFile(context.Context, *BrandUploadRequest) (*StatusReply, error)
 	GetProductPrice(context.Context, *RequestByID) (*ProductPrice, error)
 	GetProductPrices(context.Context, *RequestByID) (*ProductPrices, error)
 	SetProductPrice(context.Context, *ProductPriceRequest) (*StatusReply, error)
+	SearchDataByCode(context.Context, *SearchRequest) (*DataByCode, error)
+	GetBrand(context.Context, *Auth) (*Brand, error)
+	UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error)
+	GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error)
+	SearchSeller(context.Context, *SearchRequest) (*Sellers, error)
+	DeleteProduct(context.Context, *ProductRequest) (*StatusReply, error)
+	SearchProduct(context.Context, *SearchRequest) (*BrandProducts, error)
 	DeleteProductPrice(context.Context, *RequestByID) (*StatusReply, error)
-	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
-	UploadFile(context.Context, *BrandUploadRequest) (*StatusReply, error)
-	// Seller Products In Cerasus
-	GetSellerProducts(context.Context, *SellerProductsRequest) (*SellerProducts, error)
-	GetSellerProduct(context.Context, *SellerProductsRequest) (*SellerProduct, error)
-	LinkSellerProduct(context.Context, *SellerProductLinkRequest) (*StatusReply, error)
-	// Seller Product WO Cerasus
 	GetSellerOutProducts(context.Context, *OutProductsRequest) (*OutProducts, error)
 	GetSellerOutProduct(context.Context, *RequestByID) (*OutProduct, error)
 	CreateSellerOutProduct(context.Context, *SellerOutProductRequest) (*StatusReply, error)
@@ -409,12 +412,6 @@ func (UnimplementedBranderServer) Ping(context.Context, *PingRequest) (*PingRepl
 func (UnimplementedBranderServer) GetCountWidgets(context.Context, *Auth) (*BrandCountWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountWidgets not implemented")
 }
-func (UnimplementedBranderServer) GetBrand(context.Context, *Auth) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
-}
-func (UnimplementedBranderServer) UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateBrand not implemented")
-}
 func (UnimplementedBranderServer) GetSellers(context.Context, *RequestByPage) (*Sellers, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellers not implemented")
 }
@@ -427,32 +424,35 @@ func (UnimplementedBranderServer) CreateSeller(context.Context, *SellerRequest) 
 func (UnimplementedBranderServer) UpdateSeller(context.Context, *SellerRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSeller not implemented")
 }
-func (UnimplementedBranderServer) GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesWithBrandProducts not implemented")
-}
 func (UnimplementedBranderServer) GetSellerCompanies(context.Context, *RequestByID) (*CompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellerCompanies not implemented")
 }
-func (UnimplementedBranderServer) SearchSeller(context.Context, *SearchRequest) (*Sellers, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchSeller not implemented")
+func (UnimplementedBranderServer) GetSellerProducts(context.Context, *SellerProductsRequest) (*SellerProducts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProducts not implemented")
+}
+func (UnimplementedBranderServer) GetSellerProduct(context.Context, *SellerProductsRequest) (*SellerProduct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProduct not implemented")
 }
 func (UnimplementedBranderServer) GetProducts(context.Context, *RequestByPage) (*BrandProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProducts not implemented")
 }
-func (UnimplementedBranderServer) GetProduct(context.Context, *RequestByID) (*BrandProduct, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
-}
 func (UnimplementedBranderServer) CreateProduct(context.Context, *ProductRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
+}
+func (UnimplementedBranderServer) GetProduct(context.Context, *RequestByID) (*BrandProduct, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
 }
 func (UnimplementedBranderServer) UpdateProduct(context.Context, *ProductRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
-func (UnimplementedBranderServer) DeleteProduct(context.Context, *ProductRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+func (UnimplementedBranderServer) LinkSellerProduct(context.Context, *SellerProductLinkRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LinkSellerProduct not implemented")
 }
-func (UnimplementedBranderServer) SearchProduct(context.Context, *SearchRequest) (*BrandProducts, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchProduct not implemented")
+func (UnimplementedBranderServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedBranderServer) UploadFile(context.Context, *BrandUploadRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
 }
 func (UnimplementedBranderServer) GetProductPrice(context.Context, *RequestByID) (*ProductPrice, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductPrice not implemented")
@@ -463,23 +463,29 @@ func (UnimplementedBranderServer) GetProductPrices(context.Context, *RequestByID
 func (UnimplementedBranderServer) SetProductPrice(context.Context, *ProductPriceRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetProductPrice not implemented")
 }
+func (UnimplementedBranderServer) SearchDataByCode(context.Context, *SearchRequest) (*DataByCode, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchDataByCode not implemented")
+}
+func (UnimplementedBranderServer) GetBrand(context.Context, *Auth) (*Brand, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
+}
+func (UnimplementedBranderServer) UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBrand not implemented")
+}
+func (UnimplementedBranderServer) GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesWithBrandProducts not implemented")
+}
+func (UnimplementedBranderServer) SearchSeller(context.Context, *SearchRequest) (*Sellers, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchSeller not implemented")
+}
+func (UnimplementedBranderServer) DeleteProduct(context.Context, *ProductRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (UnimplementedBranderServer) SearchProduct(context.Context, *SearchRequest) (*BrandProducts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchProduct not implemented")
+}
 func (UnimplementedBranderServer) DeleteProductPrice(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductPrice not implemented")
-}
-func (UnimplementedBranderServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
-}
-func (UnimplementedBranderServer) UploadFile(context.Context, *BrandUploadRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
-}
-func (UnimplementedBranderServer) GetSellerProducts(context.Context, *SellerProductsRequest) (*SellerProducts, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProducts not implemented")
-}
-func (UnimplementedBranderServer) GetSellerProduct(context.Context, *SellerProductsRequest) (*SellerProduct, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSellerProduct not implemented")
-}
-func (UnimplementedBranderServer) LinkSellerProduct(context.Context, *SellerProductLinkRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LinkSellerProduct not implemented")
 }
 func (UnimplementedBranderServer) GetSellerOutProducts(context.Context, *OutProductsRequest) (*OutProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellerOutProducts not implemented")
@@ -544,42 +550,6 @@ func _Brander_GetCountWidgets_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BranderServer).GetCountWidgets(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetBrand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetBrand(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateBrandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).UpdateBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/UpdateBrand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).UpdateBrand(ctx, req.(*UpdateBrandRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -656,24 +626,6 @@ func _Brander_UpdateSeller_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_GetCompaniesWithBrandProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByPage)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetCompaniesWithBrandProducts(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetCompaniesWithBrandProducts",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetCompaniesWithBrandProducts(ctx, req.(*RequestByPage))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Brander_GetSellerCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByID)
 	if err := dec(in); err != nil {
@@ -692,20 +644,38 @@ func _Brander_GetSellerCompanies_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_SearchSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
+func _Brander_GetSellerProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SellerProductsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BranderServer).SearchSeller(ctx, in)
+		return srv.(BranderServer).GetSellerProducts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/SearchSeller",
+		FullMethod: "/cerasusV2.Brander/GetSellerProducts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).SearchSeller(ctx, req.(*SearchRequest))
+		return srv.(BranderServer).GetSellerProducts(ctx, req.(*SellerProductsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_GetSellerProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SellerProductsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetSellerProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetSellerProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetSellerProduct(ctx, req.(*SellerProductsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -728,24 +698,6 @@ func _Brander_GetProducts_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetProduct",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetProduct(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Brander_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProductRequest)
 	if err := dec(in); err != nil {
@@ -760,6 +712,24 @@ func _Brander_CreateProduct_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BranderServer).CreateProduct(ctx, req.(*ProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetProduct(ctx, req.(*RequestByID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -782,38 +752,56 @@ func _Brander_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductRequest)
+func _Brander_LinkSellerProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SellerProductLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BranderServer).DeleteProduct(ctx, in)
+		return srv.(BranderServer).LinkSellerProduct(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/DeleteProduct",
+		FullMethod: "/cerasusV2.Brander/LinkSellerProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).DeleteProduct(ctx, req.(*ProductRequest))
+		return srv.(BranderServer).LinkSellerProduct(ctx, req.(*SellerProductLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_SearchProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
+func _Brander_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BranderServer).SearchProduct(ctx, in)
+		return srv.(BranderServer).GetImage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/SearchProduct",
+		FullMethod: "/cerasusV2.Brander/GetImage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).SearchProduct(ctx, req.(*SearchRequest))
+		return srv.(BranderServer).GetImage(ctx, req.(*ImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BrandUploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).UploadFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/UploadFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).UploadFile(ctx, req.(*BrandUploadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -872,6 +860,132 @@ func _Brander_SetProductPrice_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_SearchDataByCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).SearchDataByCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/SearchDataByCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).SearchDataByCode(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetBrand(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).UpdateBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/UpdateBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).UpdateBrand(ctx, req.(*UpdateBrandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_GetCompaniesWithBrandProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByPage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetCompaniesWithBrandProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetCompaniesWithBrandProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetCompaniesWithBrandProducts(ctx, req.(*RequestByPage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_SearchSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).SearchSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/SearchSeller",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).SearchSeller(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).DeleteProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/DeleteProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).DeleteProduct(ctx, req.(*ProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_SearchProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).SearchProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/SearchProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).SearchProduct(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Brander_DeleteProductPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByID)
 	if err := dec(in); err != nil {
@@ -886,96 +1000,6 @@ func _Brander_DeleteProductPrice_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BranderServer).DeleteProductPrice(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetImage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetImage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetImage(ctx, req.(*ImageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_UploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BrandUploadRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).UploadFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/UploadFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).UploadFile(ctx, req.(*BrandUploadRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_GetSellerProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SellerProductsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetSellerProducts(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetSellerProducts",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetSellerProducts(ctx, req.(*SellerProductsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_GetSellerProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SellerProductsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).GetSellerProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/GetSellerProduct",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).GetSellerProduct(ctx, req.(*SellerProductsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Brander_LinkSellerProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SellerProductLinkRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BranderServer).LinkSellerProduct(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/LinkSellerProduct",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).LinkSellerProduct(ctx, req.(*SellerProductLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1104,14 +1128,6 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Brander_GetCountWidgets_Handler,
 		},
 		{
-			MethodName: "GetBrand",
-			Handler:    _Brander_GetBrand_Handler,
-		},
-		{
-			MethodName: "UpdateBrand",
-			Handler:    _Brander_UpdateBrand_Handler,
-		},
-		{
 			MethodName: "GetSellers",
 			Handler:    _Brander_GetSellers_Handler,
 		},
@@ -1128,40 +1144,44 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Brander_UpdateSeller_Handler,
 		},
 		{
-			MethodName: "GetCompaniesWithBrandProducts",
-			Handler:    _Brander_GetCompaniesWithBrandProducts_Handler,
-		},
-		{
 			MethodName: "GetSellerCompanies",
 			Handler:    _Brander_GetSellerCompanies_Handler,
 		},
 		{
-			MethodName: "SearchSeller",
-			Handler:    _Brander_SearchSeller_Handler,
+			MethodName: "GetSellerProducts",
+			Handler:    _Brander_GetSellerProducts_Handler,
+		},
+		{
+			MethodName: "GetSellerProduct",
+			Handler:    _Brander_GetSellerProduct_Handler,
 		},
 		{
 			MethodName: "GetProducts",
 			Handler:    _Brander_GetProducts_Handler,
 		},
 		{
-			MethodName: "GetProduct",
-			Handler:    _Brander_GetProduct_Handler,
-		},
-		{
 			MethodName: "CreateProduct",
 			Handler:    _Brander_CreateProduct_Handler,
+		},
+		{
+			MethodName: "GetProduct",
+			Handler:    _Brander_GetProduct_Handler,
 		},
 		{
 			MethodName: "UpdateProduct",
 			Handler:    _Brander_UpdateProduct_Handler,
 		},
 		{
-			MethodName: "DeleteProduct",
-			Handler:    _Brander_DeleteProduct_Handler,
+			MethodName: "LinkSellerProduct",
+			Handler:    _Brander_LinkSellerProduct_Handler,
 		},
 		{
-			MethodName: "SearchProduct",
-			Handler:    _Brander_SearchProduct_Handler,
+			MethodName: "GetImage",
+			Handler:    _Brander_GetImage_Handler,
+		},
+		{
+			MethodName: "UploadFile",
+			Handler:    _Brander_UploadFile_Handler,
 		},
 		{
 			MethodName: "GetProductPrice",
@@ -1176,28 +1196,36 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Brander_SetProductPrice_Handler,
 		},
 		{
+			MethodName: "SearchDataByCode",
+			Handler:    _Brander_SearchDataByCode_Handler,
+		},
+		{
+			MethodName: "GetBrand",
+			Handler:    _Brander_GetBrand_Handler,
+		},
+		{
+			MethodName: "UpdateBrand",
+			Handler:    _Brander_UpdateBrand_Handler,
+		},
+		{
+			MethodName: "GetCompaniesWithBrandProducts",
+			Handler:    _Brander_GetCompaniesWithBrandProducts_Handler,
+		},
+		{
+			MethodName: "SearchSeller",
+			Handler:    _Brander_SearchSeller_Handler,
+		},
+		{
+			MethodName: "DeleteProduct",
+			Handler:    _Brander_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "SearchProduct",
+			Handler:    _Brander_SearchProduct_Handler,
+		},
+		{
 			MethodName: "DeleteProductPrice",
 			Handler:    _Brander_DeleteProductPrice_Handler,
-		},
-		{
-			MethodName: "GetImage",
-			Handler:    _Brander_GetImage_Handler,
-		},
-		{
-			MethodName: "UploadFile",
-			Handler:    _Brander_UploadFile_Handler,
-		},
-		{
-			MethodName: "GetSellerProducts",
-			Handler:    _Brander_GetSellerProducts_Handler,
-		},
-		{
-			MethodName: "GetSellerProduct",
-			Handler:    _Brander_GetSellerProduct_Handler,
-		},
-		{
-			MethodName: "LinkSellerProduct",
-			Handler:    _Brander_LinkSellerProduct_Handler,
 		},
 		{
 			MethodName: "GetSellerOutProducts",
