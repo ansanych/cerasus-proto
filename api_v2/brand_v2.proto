@@ -8,41 +8,47 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Brander {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetCountWidgets(Auth) returns (BrandCountWidgets) {}
-    rpc GetBrand (Auth) returns (Brand) {}
-    rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
-    // Sellers
     rpc GetSellers (RequestByPage) returns (Sellers) {}
     rpc GetSeller (RequestByID) returns (Seller) {}
     rpc CreateSeller (SellerRequest) returns (StatusReply) {}
     rpc UpdateSeller (SellerRequest) returns (StatusReply) {}
-    rpc GetCompaniesWithBrandProducts (RequestByPage) returns (CompanyList) {}
     rpc GetSellerCompanies (RequestByID) returns (CompanyList) {}
-    rpc SearchSeller (SearchRequest) returns (Sellers) {}
-    // Products
+    rpc GetSellerProducts (SellerProductsRequest) returns (SellerProducts) {}
+    rpc GetSellerProduct (SellerProductsRequest) returns (SellerProduct) {}
     rpc GetProducts (RequestByPage) returns (BrandProducts) {}
-    rpc GetProduct (RequestByID) returns (BrandProduct) {}
     rpc CreateProduct (ProductRequest) returns (StatusReply) {}
+    rpc GetProduct (RequestByID) returns (BrandProduct) {}
     rpc UpdateProduct (ProductRequest) returns (StatusReply) {}
-    rpc DeleteProduct (ProductRequest) returns (StatusReply) {}
-    rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
+    rpc LinkSellerProduct (SellerProductLinkRequest) returns (StatusReply) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc UploadFile(BrandUploadRequest) returns (StatusReply) {}
     rpc GetProductPrice (RequestByID) returns (ProductPrice) {}
     rpc GetProductPrices (RequestByID) returns (ProductPrices) {}
     rpc SetProductPrice (ProductPriceRequest) returns (StatusReply) {}
+    rpc SearchDataByCode(SearchRequest) returns (DataByCode) {}
+    //
+    rpc GetBrand (Auth) returns (Brand) {}
+    rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
+    rpc GetCompaniesWithBrandProducts (RequestByPage) returns (CompanyList) {}
+    rpc SearchSeller (SearchRequest) returns (Sellers) {}
+    rpc DeleteProduct (ProductRequest) returns (StatusReply) {}
+    rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
     rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
-    rpc GetImage(ImageRequest) returns (ImageReply) {}
-    rpc UploadFile(BrandUploadRequest) returns (StatusReply) {}
-    // Seller Products In Cerasus
-    rpc GetSellerProducts (SellerProductsRequest) returns (SellerProducts) {}
-    rpc GetSellerProduct (SellerProductsRequest) returns (SellerProduct) {}
-    rpc LinkSellerProduct (SellerProductLinkRequest) returns (StatusReply) {}
-    // Seller Product WO Cerasus
     rpc GetSellerOutProducts(OutProductsRequest) returns (OutProducts) {}
     rpc GetSellerOutProduct(RequestByID) returns (OutProduct) {}
     rpc CreateSellerOutProduct(SellerOutProductRequest) returns (StatusReply) {}
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
-    
+}
+
+message DataByCode {
+    string shop = 1;
+    ShopProduct shopProduct = 2;
+    Product product = 3;
+    BrandProduct brandProduct = 4;
+    Company company = 5;
+    Seller seller = 6;
 }
 
 message BrandUploadRequest {
