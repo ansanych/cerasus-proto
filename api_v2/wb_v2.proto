@@ -30,6 +30,7 @@ service WB {
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
     rpc GetCounterParams(RequestByIDs) returns (WBCounterParams) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
 }
 
 message WBCounterParams {

@@ -326,6 +326,7 @@ message ShopProduct {
     string ymOfferID = 8;
     int64 wbNMID = 9;
     int64 ozSku = 10;
+    int64 companyID = 11;
 }
 
 message ShopProductList {
