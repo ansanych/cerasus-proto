@@ -42,6 +42,12 @@ service Brander {
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
 }
 
+message DataStep {
+    string message = 1;
+    bool error = 2;
+    int32 sort = 3;
+}
+
 message DataByCode {
     string shop = 1;
     ShopProduct shopProduct = 2;
@@ -49,7 +55,7 @@ message DataByCode {
     BrandProduct brandProduct = 4;
     Company company = 5;
     Seller seller = 6;
-    repeated string errors = 7;
+    repeated DataStep steps = 7;
 }
 
 message BrandUploadRequest {
