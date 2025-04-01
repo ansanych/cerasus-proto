@@ -49,6 +49,7 @@ message DataByCode {
     BrandProduct brandProduct = 4;
     Company company = 5;
     Seller seller = 6;
+    repeated string errors = 7;
 }
 
 message BrandUploadRequest {
