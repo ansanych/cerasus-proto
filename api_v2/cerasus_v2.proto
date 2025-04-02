@@ -270,6 +270,7 @@ message LineGraphRequest {
     string t = 2;
     string p = 3;
     string o = 4;
+    string type = 5;
 }
 
 //round
