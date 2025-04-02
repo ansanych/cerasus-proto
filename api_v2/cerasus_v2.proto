@@ -551,3 +551,26 @@ message Log {
 message Logs {
     repeated Log logs = 1; 
 }
+
+//ORDERS
+message Order {
+    int64 ID = 1;
+    Product product = 2;
+    ShopProduct shopProduct = 3;
+    string orderType = 4;
+    float price = 5;
+    int32 count = 6;
+    bool cancelled = 7;
+    GeoPlaceData place = 8;
+    string shop = 9;
+    int64 companyID = 10;
+}
+
+message Orders {
+    repeated Order orders = 1;
+}
+
+message OrdersRequest {
+    int64 companyID = 1;
+    repeated int64 productID = 2;
+}

@@ -31,6 +31,7 @@ service WB {
     rpc GetCounterParams(RequestByIDs) returns (WBCounterParams) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
+    rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
 }
 
 message WBCounterParams {

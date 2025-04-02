@@ -31,6 +31,7 @@ service YM {
     rpc GetCounterParams(RequestByIDs) returns (YMCounterParams) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
+    rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
 }
 
 message YMCounterParams {
