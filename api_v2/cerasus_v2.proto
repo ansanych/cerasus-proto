@@ -564,6 +564,9 @@ message Order {
     GeoPlaceData place = 8;
     string shop = 9;
     int64 companyID = 10;
+    string orderDate = 11;
+    int64 productID = 12;
+    int64 shopProductID = 13;
 }
 
 message Orders {
