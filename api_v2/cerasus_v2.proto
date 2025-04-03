@@ -573,4 +573,5 @@ message Orders {
 message OrdersRequest {
     int64 companyID = 1;
     repeated int64 productID = 2;
+    string dateFrom = 3;
 }
