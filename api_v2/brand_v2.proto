@@ -27,6 +27,7 @@ service Brander {
     rpc SetProductPrice (ProductPriceRequest) returns (StatusReply) {}
     rpc SearchDataByCode(SearchRequest) returns (DataByCode) {}
     rpc GetOrdersGraph(LineGraphRequest) returns (LineGraphics) {}
+    rpc GetShopsGraph(Auth) returns (RoundGraphic) {}
     //
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
