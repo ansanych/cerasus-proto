@@ -28,6 +28,7 @@ service Brander {
     rpc SearchDataByCode(SearchRequest) returns (DataByCode) {}
     rpc GetOrdersGraph(LineGraphRequest) returns (LineGraphics) {}
     rpc GetShopsGraph(Auth) returns (RoundGraphic) {}
+    rpc GetSellersData (RequestByPage) returns (Sellers) {}
     //
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
