@@ -190,6 +190,8 @@ message Seller {
     bool active = 7;
     int32 linkedCompaniesCount = 8;
     bool pricer = 9;
+    float orderSum = 10;
+    int32 orderCount = 11;
 }
 
 message Sellers {
