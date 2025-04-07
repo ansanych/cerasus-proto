@@ -48,6 +48,7 @@ type BranderClient interface {
 	GetSellerAnalyzeOrders(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSellerAnalyzeProducts(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*AnalyzeSellersProduct, error)
 	GetProductsData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductsData, error)
+	GetProductsAnalyzeOrders(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
 	UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error)
@@ -305,6 +306,15 @@ func (c *branderClient) GetProductsData(ctx context.Context, in *RequestByDates,
 	return out, nil
 }
 
+func (c *branderClient) GetProductsAnalyzeOrders(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraphics, error) {
+	out := new(LineGraphics)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetProductsAnalyzeOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *branderClient) GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error) {
 	out := new(Brand)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetBrand", in, out, opts...)
@@ -452,6 +462,7 @@ type BranderServer interface {
 	GetSellerAnalyzeOrders(context.Context, *LineGraphRequest) (*LineGraphics, error)
 	GetSellerAnalyzeProducts(context.Context, *RequestByDates) (*AnalyzeSellersProduct, error)
 	GetProductsData(context.Context, *RequestByDates) (*ProductsData, error)
+	GetProductsAnalyzeOrders(context.Context, *LineGraphRequest) (*LineGraphics, error)
 	GetBrand(context.Context, *Auth) (*Brand, error)
 	UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error)
 	GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error)
@@ -549,6 +560,9 @@ func (UnimplementedBranderServer) GetSellerAnalyzeProducts(context.Context, *Req
 }
 func (UnimplementedBranderServer) GetProductsData(context.Context, *RequestByDates) (*ProductsData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsData not implemented")
+}
+func (UnimplementedBranderServer) GetProductsAnalyzeOrders(context.Context, *LineGraphRequest) (*LineGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsAnalyzeOrders not implemented")
 }
 func (UnimplementedBranderServer) GetBrand(context.Context, *Auth) (*Brand, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
@@ -1070,6 +1084,24 @@ func _Brander_GetProductsData_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetProductsAnalyzeOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetProductsAnalyzeOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetProductsAnalyzeOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetProductsAnalyzeOrders(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Brander_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -1414,6 +1446,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsData",
 			Handler:    _Brander_GetProductsData_Handler,
+		},
+		{
+			MethodName: "GetProductsAnalyzeOrders",
+			Handler:    _Brander_GetProductsAnalyzeOrders_Handler,
 		},
 		{
 			MethodName: "GetBrand",
