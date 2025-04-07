@@ -28,8 +28,9 @@ service Brander {
     rpc SearchDataByCode(SearchRequest) returns (DataByCode) {}
     rpc GetOrdersGraph(LineGraphRequest) returns (LineGraphics) {}
     rpc GetShopsGraph(Auth) returns (RoundGraphic) {}
-    rpc GetSellersData (RequestByPage) returns (Sellers) {}
+    rpc GetSellersData (RequestByDates) returns (Sellers) {}
     rpc GetSellerAnalyzeOrders(LineGraphRequest) returns (LineGraphics) {}
+    rpc GetSellerAnalyzeProducts(RequestByDates) returns (AnalyzeSellersProduct) {}
     //
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
@@ -44,6 +45,16 @@ service Brander {
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+}
+
+message AnalyzeSellersProductData {
+    BrandProduct product = 1;
+    float sum = 2;
+    int32 count = 3;
+}
+
+message AnalyzeSellersProduct {
+    repeated AnalyzeSellersProductData data = 1;
 }
 
 message DataStep {
