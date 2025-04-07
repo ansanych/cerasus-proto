@@ -271,6 +271,7 @@ message LineGraphRequest {
     string p = 3;
     string o = 4;
     string type = 5;
+    repeated int64 ID = 6;
 }
 
 //round
