@@ -35,6 +35,7 @@ service Brander {
     rpc GetProductsAnalyzeOrders(LineGraphRequest) returns (LineGraphics) {}
     rpc GetProductsAnalyzeSellers(RequestByDates) returns (Sellers) {}
     rpc GetSellerAssortiment (RequestByID) returns (Assortiment) {}
+    rpc GetProductSellersCount (RequestByID) returns (Assortiment) {}
     //
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}

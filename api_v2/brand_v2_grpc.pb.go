@@ -51,6 +51,7 @@ type BranderClient interface {
 	GetProductsAnalyzeOrders(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetProductsAnalyzeSellers(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sellers, error)
 	GetSellerAssortiment(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Assortiment, error)
+	GetProductSellersCount(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Assortiment, error)
 	GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error)
 	UpdateBrand(ctx context.Context, in *UpdateBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompaniesWithBrandProducts(ctx context.Context, in *RequestByPage, opts ...grpc.CallOption) (*CompanyList, error)
@@ -335,6 +336,15 @@ func (c *branderClient) GetSellerAssortiment(ctx context.Context, in *RequestByI
 	return out, nil
 }
 
+func (c *branderClient) GetProductSellersCount(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Assortiment, error) {
+	out := new(Assortiment)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetProductSellersCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *branderClient) GetBrand(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brand, error) {
 	out := new(Brand)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetBrand", in, out, opts...)
@@ -485,6 +495,7 @@ type BranderServer interface {
 	GetProductsAnalyzeOrders(context.Context, *LineGraphRequest) (*LineGraphics, error)
 	GetProductsAnalyzeSellers(context.Context, *RequestByDates) (*Sellers, error)
 	GetSellerAssortiment(context.Context, *RequestByID) (*Assortiment, error)
+	GetProductSellersCount(context.Context, *RequestByID) (*Assortiment, error)
 	GetBrand(context.Context, *Auth) (*Brand, error)
 	UpdateBrand(context.Context, *UpdateBrandRequest) (*StatusReply, error)
 	GetCompaniesWithBrandProducts(context.Context, *RequestByPage) (*CompanyList, error)
@@ -591,6 +602,9 @@ func (UnimplementedBranderServer) GetProductsAnalyzeSellers(context.Context, *Re
 }
 func (UnimplementedBranderServer) GetSellerAssortiment(context.Context, *RequestByID) (*Assortiment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSellerAssortiment not implemented")
+}
+func (UnimplementedBranderServer) GetProductSellersCount(context.Context, *RequestByID) (*Assortiment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductSellersCount not implemented")
 }
 func (UnimplementedBranderServer) GetBrand(context.Context, *Auth) (*Brand, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
@@ -1166,6 +1180,24 @@ func _Brander_GetSellerAssortiment_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetProductSellersCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetProductSellersCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetProductSellersCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetProductSellersCount(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Brander_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -1522,6 +1554,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSellerAssortiment",
 			Handler:    _Brander_GetSellerAssortiment_Handler,
+		},
+		{
+			MethodName: "GetProductSellersCount",
+			Handler:    _Brander_GetProductSellersCount_Handler,
 		},
 		{
 			MethodName: "GetBrand",
