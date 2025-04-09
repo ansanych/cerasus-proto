@@ -175,7 +175,7 @@ message SellerProducts {
 message SellerProduct {
     Product product = 1;
     int64 brandProductID = 2;
-    bool isPricer = 3;
+    repeated string pricerShops = 3;
 }
 
 message ProductPriceRequest {

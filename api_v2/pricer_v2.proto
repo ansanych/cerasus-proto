@@ -16,6 +16,7 @@ service Pricer {
     rpc GetProductPricers (RequestByID) returns (ProductPricers) {}
     rpc SetProductPricer (ProductPricer) returns (StatusReply) {}
     rpc GetProductPricerHistory(RequestByID) returns(ProductPricerHistory) {}
+    rpc GetProductsWithPricerDetails (Company) returns(ProductsWithPricer) {}
 }
 
 message ParamForCounter {
@@ -59,4 +60,13 @@ message ProductPricer {
 
 message ProductPricers {
     repeated ProductPricer data = 1;
+}
+
+message ProductWithPricer {
+    int64 productID = 1;
+    repeated string shop = 2;
+}
+
+message ProductsWithPricer {
+    repeated ProductWithPricer data = 1;
 }
