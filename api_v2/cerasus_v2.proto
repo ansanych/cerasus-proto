@@ -329,6 +329,7 @@ message ShopProduct {
     int64 wbNMID = 9;
     int64 ozSku = 10;
     int64 companyID = 11;
+    int64 ymSku = 12;
 }
 
 message ShopProductList {
