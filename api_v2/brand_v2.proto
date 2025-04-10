@@ -42,6 +42,7 @@ service Brander {
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+    rpc GetProductsNoSeller (RequestByID) returns (BrandProducts) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
