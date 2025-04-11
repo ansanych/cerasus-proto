@@ -45,6 +45,8 @@ service Brander {
     rpc GetProductsNoSeller (RequestByID) returns (BrandProducts) {}
     rpc GetParserData (ParserGetRequest) returns (ParserJob) {}
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
+    rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
+    rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}

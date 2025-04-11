@@ -61,6 +61,8 @@ type BranderClient interface {
 	GetProductsNoSeller(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProducts, error)
 	GetParserData(ctx context.Context, in *ParserGetRequest, opts ...grpc.CallOption) (*ParserJob, error)
 	SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error)
+	SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type branderClient struct {
@@ -422,6 +424,24 @@ func (c *branderClient) SetParserData(ctx context.Context, in *ParserSetRequest,
 	return out, nil
 }
 
+func (c *branderClient) GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error) {
+	out := new(DetectorGetReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetDetectorData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SetDetectorData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -465,6 +485,8 @@ type BranderServer interface {
 	GetProductsNoSeller(context.Context, *RequestByID) (*BrandProducts, error)
 	GetParserData(context.Context, *ParserGetRequest) (*ParserJob, error)
 	SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error)
+	GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error)
+	SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -588,6 +610,12 @@ func (UnimplementedBranderServer) GetParserData(context.Context, *ParserGetReque
 }
 func (UnimplementedBranderServer) SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetParserData not implemented")
+}
+func (UnimplementedBranderServer) GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDetectorData not implemented")
+}
+func (UnimplementedBranderServer) SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDetectorData not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1304,6 +1332,42 @@ func _Brander_SetParserData_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetDetectorData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetectorGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetDetectorData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetDetectorData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetDetectorData(ctx, req.(*DetectorGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_SetDetectorData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetectorSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).SetDetectorData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/SetDetectorData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).SetDetectorData(ctx, req.(*DetectorSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1466,6 +1530,14 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetParserData",
 			Handler:    _Brander_SetParserData_Handler,
+		},
+		{
+			MethodName: "GetDetectorData",
+			Handler:    _Brander_GetDetectorData_Handler,
+		},
+		{
+			MethodName: "SetDetectorData",
+			Handler:    _Brander_SetDetectorData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
