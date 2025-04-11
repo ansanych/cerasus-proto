@@ -59,6 +59,8 @@ type BranderClient interface {
 	SellerOutProductSetUrl(ctx context.Context, in *SellerOutProductUrlRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SellerOutProductDeleteUrl(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	GetProductsNoSeller(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*BrandProducts, error)
+	GetParserData(ctx context.Context, in *ParserGetRequest, opts ...grpc.CallOption) (*ParserJob, error)
+	SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type branderClient struct {
@@ -402,6 +404,24 @@ func (c *branderClient) GetProductsNoSeller(ctx context.Context, in *RequestByID
 	return out, nil
 }
 
+func (c *branderClient) GetParserData(ctx context.Context, in *ParserGetRequest, opts ...grpc.CallOption) (*ParserJob, error) {
+	out := new(ParserJob)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetParserData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/SetParserData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -443,6 +463,8 @@ type BranderServer interface {
 	SellerOutProductSetUrl(context.Context, *SellerOutProductUrlRequest) (*StatusReply, error)
 	SellerOutProductDeleteUrl(context.Context, *RequestByID) (*StatusReply, error)
 	GetProductsNoSeller(context.Context, *RequestByID) (*BrandProducts, error)
+	GetParserData(context.Context, *ParserGetRequest) (*ParserJob, error)
+	SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -560,6 +582,12 @@ func (UnimplementedBranderServer) SellerOutProductDeleteUrl(context.Context, *Re
 }
 func (UnimplementedBranderServer) GetProductsNoSeller(context.Context, *RequestByID) (*BrandProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsNoSeller not implemented")
+}
+func (UnimplementedBranderServer) GetParserData(context.Context, *ParserGetRequest) (*ParserJob, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetParserData not implemented")
+}
+func (UnimplementedBranderServer) SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetParserData not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1240,6 +1268,42 @@ func _Brander_GetProductsNoSeller_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetParserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParserGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetParserData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetParserData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetParserData(ctx, req.(*ParserGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_SetParserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParserSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).SetParserData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/SetParserData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).SetParserData(ctx, req.(*ParserSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1394,6 +1458,14 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsNoSeller",
 			Handler:    _Brander_GetProductsNoSeller_Handler,
+		},
+		{
+			MethodName: "GetParserData",
+			Handler:    _Brander_GetParserData_Handler,
+		},
+		{
+			MethodName: "SetParserData",
+			Handler:    _Brander_SetParserData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
