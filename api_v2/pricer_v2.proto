@@ -69,4 +69,5 @@ message ProductWithPricer {
 
 message ProductsWithPricer {
     repeated ProductWithPricer data = 1;
+    bool pricerActive = 2;
 }
