@@ -24,7 +24,7 @@ service Products {
     rpc SetProductBrand (SetProductBrandRequest) returns (StatusReply) {}
     rpc GetProductLinks (RequestByID) returns (ProductLinks) {}
     rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
-    rpc GetProductListLinks (ProductListRequest) returns (ProductList) {}
+    rpc GetProductListLinks (RequestByIDs) returns (ProductList) {}
 }
 
 message SetProductPurchaseRequest {
