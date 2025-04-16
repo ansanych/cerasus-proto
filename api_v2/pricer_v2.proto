@@ -17,6 +17,22 @@ service Pricer {
     rpc SetProductPricer (ProductPricer) returns (StatusReply) {}
     rpc GetProductPricerHistory(RequestByID) returns(ProductPricerHistory) {}
     rpc GetProductsWithPricerDetails (Company) returns(ProductsWithPricer) {}
+    rpc GetDumpingData(RequestByDates) returns (DumpingData) {}
+    rpc GetDumpingItem(RequestByID) returns (DumpingItem) {}
+}
+
+message DumpingItem {
+    int64 productID = 1;
+    string shop = 2;
+    float parsePrice = 3;
+    float targetMin = 4;
+    float targetMax = 5;
+    string url = 6;
+    string pricerDT = 7;
+}
+
+message DumpingData {
+    repeated DumpingItem data = 1;
 }
 
 message ParamForCounter {
