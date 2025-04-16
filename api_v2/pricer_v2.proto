@@ -29,6 +29,7 @@ message DumpingItem {
     float targetMax = 5;
     string url = 6;
     string pricerDT = 7;
+    int64 pricerDataID = 8;
 }
 
 message DumpingData {
