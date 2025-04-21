@@ -47,6 +47,7 @@ service Brander {
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
+    rpc GetDumpingGraph(LineGraphRequest) returns (LineGraph) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}

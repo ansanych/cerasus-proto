@@ -2198,7 +2198,7 @@ var file_brand_v2_proto_rawDesc = []byte{
 	0x6c, 0x6c, 0x65, 0x72, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x65,
 	0x6c, 0x6c, 0x65, 0x72, 0x49, 0x44, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63,
 	0x74, 0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x49, 0x44, 0x32, 0xd5, 0x17, 0x0a, 0x07, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x65, 0x72,
+	0x63, 0x74, 0x49, 0x44, 0x32, 0x9d, 0x18, 0x0a, 0x07, 0x42, 0x72, 0x61, 0x6e, 0x64, 0x65, 0x72,
 	0x12, 0x36, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
 	0x75, 0x73, 0x56, 0x32, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x50, 0x69, 0x6e,
@@ -2387,10 +2387,15 @@ var file_brand_v2_proto_rawDesc = []byte{
 	0x61, 0x74, 0x61, 0x12, 0x1d, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e,
 	0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x53, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x53,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e,
-	0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x46, 0x0a, 0x0f,
+	0x47, 0x65, 0x74, 0x44, 0x75, 0x6d, 0x70, 0x69, 0x6e, 0x67, 0x47, 0x72, 0x61, 0x70, 0x68, 0x12,
+	0x1b, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4c, 0x69, 0x6e, 0x65,
+	0x47, 0x72, 0x61, 0x70, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x4c, 0x69, 0x6e, 0x65, 0x47, 0x72, 0x61,
+	0x70, 0x68, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61,
+	0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -2461,6 +2466,7 @@ var file_brand_v2_proto_goTypes = []interface{}{
 	(*RoundGraphic)(nil),               // 51: cerasusV2.RoundGraphic
 	(*ParserJob)(nil),                  // 52: cerasusV2.ParserJob
 	(*DetectorGetReply)(nil),           // 53: cerasusV2.DetectorGetReply
+	(*LineGraph)(nil),                  // 54: cerasusV2.LineGraph
 }
 var file_brand_v2_proto_depIdxs = []int32{
 	0,  // 0: cerasusV2.BrandCountWidgets.data:type_name -> cerasusV2.BrandCountWidget
@@ -2539,49 +2545,51 @@ var file_brand_v2_proto_depIdxs = []int32{
 	43, // 73: cerasusV2.Brander.SetParserData:input_type -> cerasusV2.ParserSetRequest
 	44, // 74: cerasusV2.Brander.GetDetectorData:input_type -> cerasusV2.DetectorGetRequest
 	45, // 75: cerasusV2.Brander.SetDetectorData:input_type -> cerasusV2.DetectorSetRequest
-	46, // 76: cerasusV2.Brander.Ping:output_type -> cerasusV2.PingReply
-	1,  // 77: cerasusV2.Brander.GetCountWidgets:output_type -> cerasusV2.BrandCountWidgets
-	3,  // 78: cerasusV2.Brander.GetSellers:output_type -> cerasusV2.Sellers
-	2,  // 79: cerasusV2.Brander.GetSeller:output_type -> cerasusV2.Seller
-	47, // 80: cerasusV2.Brander.CreateSeller:output_type -> cerasusV2.StatusReply
-	47, // 81: cerasusV2.Brander.UpdateSeller:output_type -> cerasusV2.StatusReply
-	48, // 82: cerasusV2.Brander.GetSellerCompanies:output_type -> cerasusV2.CompanyList
-	6,  // 83: cerasusV2.Brander.GetSellerProducts:output_type -> cerasusV2.SellerProducts
-	7,  // 84: cerasusV2.Brander.GetSellerProduct:output_type -> cerasusV2.SellerProduct
-	8,  // 85: cerasusV2.Brander.GetProducts:output_type -> cerasusV2.BrandProducts
-	47, // 86: cerasusV2.Brander.CreateProduct:output_type -> cerasusV2.StatusReply
-	9,  // 87: cerasusV2.Brander.GetProduct:output_type -> cerasusV2.BrandProduct
-	47, // 88: cerasusV2.Brander.UpdateProduct:output_type -> cerasusV2.StatusReply
-	47, // 89: cerasusV2.Brander.LinkSellerProduct:output_type -> cerasusV2.StatusReply
-	49, // 90: cerasusV2.Brander.GetImage:output_type -> cerasusV2.ImageReply
-	47, // 91: cerasusV2.Brander.UploadFile:output_type -> cerasusV2.StatusReply
-	14, // 92: cerasusV2.Brander.GetProductPrice:output_type -> cerasusV2.ProductPrice
-	15, // 93: cerasusV2.Brander.GetProductPrices:output_type -> cerasusV2.ProductPrices
-	47, // 94: cerasusV2.Brander.SetProductPrice:output_type -> cerasusV2.StatusReply
-	17, // 95: cerasusV2.Brander.SearchDataByCode:output_type -> cerasusV2.DataByCode
-	50, // 96: cerasusV2.Brander.GetOrdersGraph:output_type -> cerasusV2.LineGraphics
-	51, // 97: cerasusV2.Brander.GetShopsGraph:output_type -> cerasusV2.RoundGraphic
-	3,  // 98: cerasusV2.Brander.GetSellersData:output_type -> cerasusV2.Sellers
-	50, // 99: cerasusV2.Brander.GetSellerAnalyzeOrders:output_type -> cerasusV2.LineGraphics
-	19, // 100: cerasusV2.Brander.GetSellerAnalyzeProducts:output_type -> cerasusV2.AnalyzeSellersProduct
-	21, // 101: cerasusV2.Brander.GetProductsData:output_type -> cerasusV2.ProductsData
-	50, // 102: cerasusV2.Brander.GetProductsAnalyzeOrders:output_type -> cerasusV2.LineGraphics
-	3,  // 103: cerasusV2.Brander.GetProductsAnalyzeSellers:output_type -> cerasusV2.Sellers
-	22, // 104: cerasusV2.Brander.GetSellerAssortiment:output_type -> cerasusV2.Assortiment
-	22, // 105: cerasusV2.Brander.GetProductSellersCount:output_type -> cerasusV2.Assortiment
-	26, // 106: cerasusV2.Brander.GetSellerOutProducts:output_type -> cerasusV2.OutProducts
-	25, // 107: cerasusV2.Brander.GetSellerOutProduct:output_type -> cerasusV2.OutProduct
-	47, // 108: cerasusV2.Brander.CreateSellerOutProduct:output_type -> cerasusV2.StatusReply
-	47, // 109: cerasusV2.Brander.DeleteSellerOutProduct:output_type -> cerasusV2.StatusReply
-	47, // 110: cerasusV2.Brander.SellerOutProductSetUrl:output_type -> cerasusV2.StatusReply
-	47, // 111: cerasusV2.Brander.SellerOutProductDeleteUrl:output_type -> cerasusV2.StatusReply
-	8,  // 112: cerasusV2.Brander.GetProductsNoSeller:output_type -> cerasusV2.BrandProducts
-	52, // 113: cerasusV2.Brander.GetParserData:output_type -> cerasusV2.ParserJob
-	47, // 114: cerasusV2.Brander.SetParserData:output_type -> cerasusV2.StatusReply
-	53, // 115: cerasusV2.Brander.GetDetectorData:output_type -> cerasusV2.DetectorGetReply
-	47, // 116: cerasusV2.Brander.SetDetectorData:output_type -> cerasusV2.StatusReply
-	76, // [76:117] is the sub-list for method output_type
-	35, // [35:76] is the sub-list for method input_type
+	40, // 76: cerasusV2.Brander.GetDumpingGraph:input_type -> cerasusV2.LineGraphRequest
+	46, // 77: cerasusV2.Brander.Ping:output_type -> cerasusV2.PingReply
+	1,  // 78: cerasusV2.Brander.GetCountWidgets:output_type -> cerasusV2.BrandCountWidgets
+	3,  // 79: cerasusV2.Brander.GetSellers:output_type -> cerasusV2.Sellers
+	2,  // 80: cerasusV2.Brander.GetSeller:output_type -> cerasusV2.Seller
+	47, // 81: cerasusV2.Brander.CreateSeller:output_type -> cerasusV2.StatusReply
+	47, // 82: cerasusV2.Brander.UpdateSeller:output_type -> cerasusV2.StatusReply
+	48, // 83: cerasusV2.Brander.GetSellerCompanies:output_type -> cerasusV2.CompanyList
+	6,  // 84: cerasusV2.Brander.GetSellerProducts:output_type -> cerasusV2.SellerProducts
+	7,  // 85: cerasusV2.Brander.GetSellerProduct:output_type -> cerasusV2.SellerProduct
+	8,  // 86: cerasusV2.Brander.GetProducts:output_type -> cerasusV2.BrandProducts
+	47, // 87: cerasusV2.Brander.CreateProduct:output_type -> cerasusV2.StatusReply
+	9,  // 88: cerasusV2.Brander.GetProduct:output_type -> cerasusV2.BrandProduct
+	47, // 89: cerasusV2.Brander.UpdateProduct:output_type -> cerasusV2.StatusReply
+	47, // 90: cerasusV2.Brander.LinkSellerProduct:output_type -> cerasusV2.StatusReply
+	49, // 91: cerasusV2.Brander.GetImage:output_type -> cerasusV2.ImageReply
+	47, // 92: cerasusV2.Brander.UploadFile:output_type -> cerasusV2.StatusReply
+	14, // 93: cerasusV2.Brander.GetProductPrice:output_type -> cerasusV2.ProductPrice
+	15, // 94: cerasusV2.Brander.GetProductPrices:output_type -> cerasusV2.ProductPrices
+	47, // 95: cerasusV2.Brander.SetProductPrice:output_type -> cerasusV2.StatusReply
+	17, // 96: cerasusV2.Brander.SearchDataByCode:output_type -> cerasusV2.DataByCode
+	50, // 97: cerasusV2.Brander.GetOrdersGraph:output_type -> cerasusV2.LineGraphics
+	51, // 98: cerasusV2.Brander.GetShopsGraph:output_type -> cerasusV2.RoundGraphic
+	3,  // 99: cerasusV2.Brander.GetSellersData:output_type -> cerasusV2.Sellers
+	50, // 100: cerasusV2.Brander.GetSellerAnalyzeOrders:output_type -> cerasusV2.LineGraphics
+	19, // 101: cerasusV2.Brander.GetSellerAnalyzeProducts:output_type -> cerasusV2.AnalyzeSellersProduct
+	21, // 102: cerasusV2.Brander.GetProductsData:output_type -> cerasusV2.ProductsData
+	50, // 103: cerasusV2.Brander.GetProductsAnalyzeOrders:output_type -> cerasusV2.LineGraphics
+	3,  // 104: cerasusV2.Brander.GetProductsAnalyzeSellers:output_type -> cerasusV2.Sellers
+	22, // 105: cerasusV2.Brander.GetSellerAssortiment:output_type -> cerasusV2.Assortiment
+	22, // 106: cerasusV2.Brander.GetProductSellersCount:output_type -> cerasusV2.Assortiment
+	26, // 107: cerasusV2.Brander.GetSellerOutProducts:output_type -> cerasusV2.OutProducts
+	25, // 108: cerasusV2.Brander.GetSellerOutProduct:output_type -> cerasusV2.OutProduct
+	47, // 109: cerasusV2.Brander.CreateSellerOutProduct:output_type -> cerasusV2.StatusReply
+	47, // 110: cerasusV2.Brander.DeleteSellerOutProduct:output_type -> cerasusV2.StatusReply
+	47, // 111: cerasusV2.Brander.SellerOutProductSetUrl:output_type -> cerasusV2.StatusReply
+	47, // 112: cerasusV2.Brander.SellerOutProductDeleteUrl:output_type -> cerasusV2.StatusReply
+	8,  // 113: cerasusV2.Brander.GetProductsNoSeller:output_type -> cerasusV2.BrandProducts
+	52, // 114: cerasusV2.Brander.GetParserData:output_type -> cerasusV2.ParserJob
+	47, // 115: cerasusV2.Brander.SetParserData:output_type -> cerasusV2.StatusReply
+	53, // 116: cerasusV2.Brander.GetDetectorData:output_type -> cerasusV2.DetectorGetReply
+	47, // 117: cerasusV2.Brander.SetDetectorData:output_type -> cerasusV2.StatusReply
+	54, // 118: cerasusV2.Brander.GetDumpingGraph:output_type -> cerasusV2.LineGraph
+	77, // [77:119] is the sub-list for method output_type
+	35, // [35:77] is the sub-list for method input_type
 	35, // [35:35] is the sub-list for extension type_name
 	35, // [35:35] is the sub-list for extension extendee
 	0,  // [0:35] is the sub-list for field type_name

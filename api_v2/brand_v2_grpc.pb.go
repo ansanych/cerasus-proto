@@ -63,6 +63,7 @@ type BranderClient interface {
 	SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error)
 	SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetDumpingGraph(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 }
 
 type branderClient struct {
@@ -442,6 +443,15 @@ func (c *branderClient) SetDetectorData(ctx context.Context, in *DetectorSetRequ
 	return out, nil
 }
 
+func (c *branderClient) GetDumpingGraph(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
+	out := new(LineGraph)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetDumpingGraph", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -487,6 +497,7 @@ type BranderServer interface {
 	SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error)
 	GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error)
 	SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error)
+	GetDumpingGraph(context.Context, *LineGraphRequest) (*LineGraph, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -616,6 +627,9 @@ func (UnimplementedBranderServer) GetDetectorData(context.Context, *DetectorGetR
 }
 func (UnimplementedBranderServer) SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDetectorData not implemented")
+}
+func (UnimplementedBranderServer) GetDumpingGraph(context.Context, *LineGraphRequest) (*LineGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingGraph not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1368,6 +1382,24 @@ func _Brander_SetDetectorData_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetDumpingGraph_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetDumpingGraph(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetDumpingGraph",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetDumpingGraph(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1538,6 +1570,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetDetectorData",
 			Handler:    _Brander_SetDetectorData_Handler,
+		},
+		{
+			MethodName: "GetDumpingGraph",
+			Handler:    _Brander_GetDumpingGraph_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
