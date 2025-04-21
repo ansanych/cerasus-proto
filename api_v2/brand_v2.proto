@@ -48,6 +48,7 @@ service Brander {
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
     rpc GetDumpingGraph(LineGraphRequest) returns (LineGraph) {}
+    rpc GetDumpingDays(RequestByDates) returns (DumpingDays) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
@@ -58,6 +59,17 @@ service Brander {
     rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
     rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
  */
+}
+
+message DumpingDay {
+    string date = 1;
+    int32 dumping = 2;
+    int32 empty = 3;
+    int32 allcount = 4;
+}
+
+message DumpingDays {
+    repeated DumpingDay data = 1;
 }
 
 message BrandCountWidget {
