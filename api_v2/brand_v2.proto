@@ -52,7 +52,6 @@ service Brander {
     rpc GetDumpingList (DumpingListRequest) returns (DumpingList) {}
     rpc GetDumpingListDetail (DumpingItemRequest) returns (DumpingDetail) {}
     rpc UpdateDumpingListDetail (DumpingUpdateRequest) returns (StatusReply) {}
-    //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
