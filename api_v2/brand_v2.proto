@@ -95,7 +95,8 @@ message DumpingListRequest {
     string dumpingType = 2;
     string datetime = 3;
     bool viewed = 4;
-    bool notFinded = 15;
+    bool notViewed = 5;
+    bool notFinded = 6;
 }
 
 message DumpingDay {
