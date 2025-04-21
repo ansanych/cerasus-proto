@@ -62,7 +62,7 @@ service Brander {
  */
 }
 
-message DumpingItem {
+message DumpingDetail {
     string dumpingType = 1;
     int64 ID = 2;
     BrandProduct product = 3;
@@ -87,7 +87,7 @@ message DumpingItemRequest {
 }
 
 message DumpingList {
-    repeated DumpingItem data = 1;
+    repeated DumpingDetail data = 1;
 }
 
 message DumpingListRequest {
