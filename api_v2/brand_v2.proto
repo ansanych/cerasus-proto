@@ -50,6 +50,8 @@ service Brander {
     rpc GetDumpingGraph (LineGraphRequest) returns (LineGraph) {}
     rpc GetDumpingDays (RequestByDates) returns (DumpingDays) {}
     rpc GetDumpingList (DumpingListRequest) returns (DumpingList) {}
+    rpc GetDumpingListDetail (DumpingItemRequest) returns (DumpingDetail) {}
+    rpc UpdateDumpingListDetail (DumpingUpdateRequest) returns (StatusReply) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
@@ -60,6 +62,14 @@ service Brander {
     rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
     rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
  */
+}
+
+message DumpingUpdateRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    int64 ID = 3;
+    bool viewed = 4;
+    bool checkedMatch = 5;
 }
 
 message DumpingDetail {
