@@ -65,6 +65,7 @@ type BranderClient interface {
 	SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetDumpingGraph(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetDumpingDays(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*DumpingDays, error)
+	GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error)
 }
 
 type branderClient struct {
@@ -462,6 +463,15 @@ func (c *branderClient) GetDumpingDays(ctx context.Context, in *RequestByDates, 
 	return out, nil
 }
 
+func (c *branderClient) GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error) {
+	out := new(DumpingList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetDumpingList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -509,6 +519,7 @@ type BranderServer interface {
 	SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error)
 	GetDumpingGraph(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetDumpingDays(context.Context, *RequestByDates) (*DumpingDays, error)
+	GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -644,6 +655,9 @@ func (UnimplementedBranderServer) GetDumpingGraph(context.Context, *LineGraphReq
 }
 func (UnimplementedBranderServer) GetDumpingDays(context.Context, *RequestByDates) (*DumpingDays, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingDays not implemented")
+}
+func (UnimplementedBranderServer) GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingList not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1432,6 +1446,24 @@ func _Brander_GetDumpingDays_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_GetDumpingList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DumpingListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).GetDumpingList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/GetDumpingList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).GetDumpingList(ctx, req.(*DumpingListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1610,6 +1642,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetDumpingDays",
 			Handler:    _Brander_GetDumpingDays_Handler,
+		},
+		{
+			MethodName: "GetDumpingList",
+			Handler:    _Brander_GetDumpingList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

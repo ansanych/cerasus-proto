@@ -47,8 +47,9 @@ service Brander {
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
-    rpc GetDumpingGraph(LineGraphRequest) returns (LineGraph) {}
-    rpc GetDumpingDays(RequestByDates) returns (DumpingDays) {}
+    rpc GetDumpingGraph (LineGraphRequest) returns (LineGraph) {}
+    rpc GetDumpingDays (RequestByDates) returns (DumpingDays) {}
+    rpc GetDumpingList (DumpingListRequest) returns (DumpingList) {}
     //
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
@@ -59,6 +60,42 @@ service Brander {
     rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
     rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
  */
+}
+
+message DumpingItem {
+    string dumpingType = 1;
+    int64 ID = 2;
+    BrandProduct product = 3;
+    Seller seller = 4;
+    float brandPrice = 5;
+    float parsePrice = 6;
+    string shop = 7;
+    string url = 8;
+    float pricerMin = 9;
+    float pricerMax = 10;
+    bytes screenshot = 11;
+    bool viewed = 12;
+    bool checkedMatch = 13;
+    string datetime = 14;
+    bool notFinded = 15;
+}
+
+message DumpingItemRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    int64 ID = 3;
+}
+
+message DumpingList {
+    repeated DumpingItem data = 1;
+}
+
+message DumpingListRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    string datetime = 3;
+    bool viewed = 4;
+    bool notFinded = 15;
 }
 
 message DumpingDay {
