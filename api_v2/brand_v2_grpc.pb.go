@@ -68,6 +68,13 @@ type BranderClient interface {
 	GetDumpingList(ctx context.Context, in *DumpingListRequest, opts ...grpc.CallOption) (*DumpingList, error)
 	GetDumpingListDetail(ctx context.Context, in *DumpingItemRequest, opts ...grpc.CallOption) (*DumpingDetail, error)
 	UpdateDumpingListDetail(ctx context.Context, in *DumpingUpdateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	MonitorAlert(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	MonitorRadar(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*LineGraphics, error)
+	MonitorGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*LineGraphics, error)
+	MonitorMonth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MonitorMonthData, error)
+	MonitorProductLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
+	MonitorDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error)
+	MonitorRunString(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RunString, error)
 }
 
 type branderClient struct {
@@ -492,6 +499,69 @@ func (c *branderClient) UpdateDumpingListDetail(ctx context.Context, in *Dumping
 	return out, nil
 }
 
+func (c *branderClient) MonitorAlert(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorAlert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorRadar(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*LineGraphics, error) {
+	out := new(LineGraphics)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorRadar", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*LineGraphics, error) {
+	out := new(LineGraphics)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorMonth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MonitorMonthData, error) {
+	out := new(MonitorMonthData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorMonth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorProductLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error) {
+	out := new(OrderLeaders)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorProductLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error) {
+	out := new(DumpingSellersLeaders)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorDumpingLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *branderClient) MonitorRunString(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RunString, error) {
+	out := new(RunString)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorRunString", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -542,6 +612,13 @@ type BranderServer interface {
 	GetDumpingList(context.Context, *DumpingListRequest) (*DumpingList, error)
 	GetDumpingListDetail(context.Context, *DumpingItemRequest) (*DumpingDetail, error)
 	UpdateDumpingListDetail(context.Context, *DumpingUpdateRequest) (*StatusReply, error)
+	MonitorAlert(context.Context, *Auth) (*Count, error)
+	MonitorRadar(context.Context, *Auth) (*LineGraphics, error)
+	MonitorGraphic(context.Context, *Auth) (*LineGraphics, error)
+	MonitorMonth(context.Context, *Auth) (*MonitorMonthData, error)
+	MonitorProductLeaders(context.Context, *Auth) (*OrderLeaders, error)
+	MonitorDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error)
+	MonitorRunString(context.Context, *Auth) (*RunString, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -686,6 +763,27 @@ func (UnimplementedBranderServer) GetDumpingListDetail(context.Context, *Dumping
 }
 func (UnimplementedBranderServer) UpdateDumpingListDetail(context.Context, *DumpingUpdateRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDumpingListDetail not implemented")
+}
+func (UnimplementedBranderServer) MonitorAlert(context.Context, *Auth) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorAlert not implemented")
+}
+func (UnimplementedBranderServer) MonitorRadar(context.Context, *Auth) (*LineGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorRadar not implemented")
+}
+func (UnimplementedBranderServer) MonitorGraphic(context.Context, *Auth) (*LineGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorGraphic not implemented")
+}
+func (UnimplementedBranderServer) MonitorMonth(context.Context, *Auth) (*MonitorMonthData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorMonth not implemented")
+}
+func (UnimplementedBranderServer) MonitorProductLeaders(context.Context, *Auth) (*OrderLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorProductLeaders not implemented")
+}
+func (UnimplementedBranderServer) MonitorDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorDumpingLeaders not implemented")
+}
+func (UnimplementedBranderServer) MonitorRunString(context.Context, *Auth) (*RunString, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MonitorRunString not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1528,6 +1626,132 @@ func _Brander_UpdateDumpingListDetail_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_MonitorAlert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorAlert(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorAlert",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorAlert(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorRadar_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorRadar(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorRadar",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorRadar(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorGraphic(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorMonth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorMonth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorMonth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorMonth(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorProductLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorProductLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorProductLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorProductLeaders(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorDumpingLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorDumpingLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorDumpingLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorDumpingLeaders(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Brander_MonitorRunString_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).MonitorRunString(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/MonitorRunString",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).MonitorRunString(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1718,6 +1942,34 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDumpingListDetail",
 			Handler:    _Brander_UpdateDumpingListDetail_Handler,
+		},
+		{
+			MethodName: "MonitorAlert",
+			Handler:    _Brander_MonitorAlert_Handler,
+		},
+		{
+			MethodName: "MonitorRadar",
+			Handler:    _Brander_MonitorRadar_Handler,
+		},
+		{
+			MethodName: "MonitorGraphic",
+			Handler:    _Brander_MonitorGraphic_Handler,
+		},
+		{
+			MethodName: "MonitorMonth",
+			Handler:    _Brander_MonitorMonth_Handler,
+		},
+		{
+			MethodName: "MonitorProductLeaders",
+			Handler:    _Brander_MonitorProductLeaders_Handler,
+		},
+		{
+			MethodName: "MonitorDumpingLeaders",
+			Handler:    _Brander_MonitorDumpingLeaders_Handler,
+		},
+		{
+			MethodName: "MonitorRunString",
+			Handler:    _Brander_MonitorRunString_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

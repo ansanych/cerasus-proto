@@ -52,6 +52,14 @@ service Brander {
     rpc GetDumpingList (DumpingListRequest) returns (DumpingList) {}
     rpc GetDumpingListDetail (DumpingItemRequest) returns (DumpingDetail) {}
     rpc UpdateDumpingListDetail (DumpingUpdateRequest) returns (StatusReply) {}
+    rpc MonitorAlert (Auth) returns (Count) {}
+    rpc MonitorRadar (Auth) returns (LineGraphics) {}
+    rpc MonitorGraphic (Auth) returns (LineGraphics) {}
+    rpc MonitorMonth (Auth) returns (MonitorMonthData) {}
+    rpc MonitorProductLeaders (Auth) returns (OrderLeaders) {}
+    rpc MonitorDumpingLeaders (Auth) returns (DumpingSellersLeaders) {}
+    rpc MonitorRunString (Auth) returns (RunString) {}
+
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
     rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
@@ -61,6 +69,32 @@ service Brander {
     rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
     rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
  */
+}
+
+message RunStringItem {
+    string datetime = 1;
+    string seller = 2;
+    string product = 3;
+    float price = 4;
+}
+
+message RunString {
+    repeated RunStringItem data = 1;
+}
+
+message DumpingSeller {
+    Seller seller = 1;
+    float raiting = 2;
+}
+
+message DumpingSellersLeaders {
+    repeated DumpingSeller data = 1;
+}
+
+message MonitorMonthData {
+    string date = 1;
+    int32 old = 2;
+    int32 new = 3;
 }
 
 message DumpingUpdateRequest {
