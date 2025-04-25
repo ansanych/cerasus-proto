@@ -57,7 +57,7 @@ service Brander {
     rpc MonitorGraphic (Auth) returns (LineGraphics) {}
     rpc MonitorMonth (Auth) returns (MonitorMonthData) {}
     rpc MonitorProductLeaders (Auth) returns (OrderLeaders) {}
-    rpc MonitorDumpingLeaders (Auth) returns (DumpingSellersLeaders) {}
+    rpc GetDumpingLeaders (Auth) returns (DumpingSellersLeaders) {}
     rpc MonitorRunString (Auth) returns (RunString) {}
 
  /*    
@@ -84,7 +84,12 @@ message RunString {
 
 message DumpingSeller {
     Seller seller = 1;
-    float raiting = 2;
+    float koef = 2;
+    int32 allProducts = 3;
+    int32 inSale = 4;
+    int32 inDumping = 5;
+    int32 ordersCount = 6;
+    float ordersSum = 7;
 }
 
 message DumpingSellersLeaders {

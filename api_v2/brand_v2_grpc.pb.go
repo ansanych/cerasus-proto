@@ -73,7 +73,7 @@ type BranderClient interface {
 	MonitorGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*LineGraphics, error)
 	MonitorMonth(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MonitorMonthData, error)
 	MonitorProductLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
-	MonitorDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error)
+	GetDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error)
 	MonitorRunString(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RunString, error)
 }
 
@@ -544,9 +544,9 @@ func (c *branderClient) MonitorProductLeaders(ctx context.Context, in *Auth, opt
 	return out, nil
 }
 
-func (c *branderClient) MonitorDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error) {
+func (c *branderClient) GetDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error) {
 	out := new(DumpingSellersLeaders)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/MonitorDumpingLeaders", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/GetDumpingLeaders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -617,7 +617,7 @@ type BranderServer interface {
 	MonitorGraphic(context.Context, *Auth) (*LineGraphics, error)
 	MonitorMonth(context.Context, *Auth) (*MonitorMonthData, error)
 	MonitorProductLeaders(context.Context, *Auth) (*OrderLeaders, error)
-	MonitorDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error)
+	GetDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error)
 	MonitorRunString(context.Context, *Auth) (*RunString, error)
 	mustEmbedUnimplementedBranderServer()
 }
@@ -779,8 +779,8 @@ func (UnimplementedBranderServer) MonitorMonth(context.Context, *Auth) (*Monitor
 func (UnimplementedBranderServer) MonitorProductLeaders(context.Context, *Auth) (*OrderLeaders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MonitorProductLeaders not implemented")
 }
-func (UnimplementedBranderServer) MonitorDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MonitorDumpingLeaders not implemented")
+func (UnimplementedBranderServer) GetDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDumpingLeaders not implemented")
 }
 func (UnimplementedBranderServer) MonitorRunString(context.Context, *Auth) (*RunString, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MonitorRunString not implemented")
@@ -1716,20 +1716,20 @@ func _Brander_MonitorProductLeaders_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Brander_MonitorDumpingLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Brander_GetDumpingLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BranderServer).MonitorDumpingLeaders(ctx, in)
+		return srv.(BranderServer).GetDumpingLeaders(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.Brander/MonitorDumpingLeaders",
+		FullMethod: "/cerasusV2.Brander/GetDumpingLeaders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BranderServer).MonitorDumpingLeaders(ctx, req.(*Auth))
+		return srv.(BranderServer).GetDumpingLeaders(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1964,8 +1964,8 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Brander_MonitorProductLeaders_Handler,
 		},
 		{
-			MethodName: "MonitorDumpingLeaders",
-			Handler:    _Brander_MonitorDumpingLeaders_Handler,
+			MethodName: "GetDumpingLeaders",
+			Handler:    _Brander_GetDumpingLeaders_Handler,
 		},
 		{
 			MethodName: "MonitorRunString",
