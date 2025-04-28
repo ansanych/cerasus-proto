@@ -493,6 +493,7 @@ message ParserSetRequest {
 message DetectorGetRequest {
     string detector = 1;
     bool getGob = 2;
+    bool testMode = 3;
 }
 
 message DetectorCount {
@@ -513,6 +514,7 @@ message DetectorGetReply {
     string client = 2;
     DetectorWork work = 3;
     DetectorCount count = 4;
+    bool testMode = 5;
 }
 
 message DetectorSetRequest {
