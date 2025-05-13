@@ -11,6 +11,7 @@ service Counter {
     rpc SetProductCount (ProductCount) returns (StatusReply) {}
     rpc GetParamsForPricer (PricerRequest) returns (ParamsForPricer) {}
     rpc GetProductsWithCounter (Company) returns(ReplyID) {}
+    rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
 }
 
 message PricerRequest {

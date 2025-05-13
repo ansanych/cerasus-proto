@@ -19,6 +19,7 @@ service Pricer {
     rpc GetProductsWithPricerDetails (Company) returns(ProductsWithPricer) {}
     rpc GetDumpingData(RequestByDates) returns (DumpingData) {}
     rpc GetDumpingItem(RequestByID) returns (DumpingItem) {}
+    rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
 }
 
 message DumpingItem {

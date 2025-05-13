@@ -27,6 +27,7 @@ type CounterClient interface {
 	SetProductCount(ctx context.Context, in *ProductCount, opts ...grpc.CallOption) (*StatusReply, error)
 	GetParamsForPricer(ctx context.Context, in *PricerRequest, opts ...grpc.CallOption) (*ParamsForPricer, error)
 	GetProductsWithCounter(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ReplyID, error)
+	DeleteCerasusProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type counterClient struct {
@@ -82,6 +83,15 @@ func (c *counterClient) GetProductsWithCounter(ctx context.Context, in *Company,
 	return out, nil
 }
 
+func (c *counterClient) DeleteCerasusProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Counter/DeleteCerasusProductData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CounterServer is the server API for Counter service.
 // All implementations must embed UnimplementedCounterServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type CounterServer interface {
 	SetProductCount(context.Context, *ProductCount) (*StatusReply, error)
 	GetParamsForPricer(context.Context, *PricerRequest) (*ParamsForPricer, error)
 	GetProductsWithCounter(context.Context, *Company) (*ReplyID, error)
+	DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error)
 	mustEmbedUnimplementedCounterServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedCounterServer) GetParamsForPricer(context.Context, *PricerReq
 }
 func (UnimplementedCounterServer) GetProductsWithCounter(context.Context, *Company) (*ReplyID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsWithCounter not implemented")
+}
+func (UnimplementedCounterServer) DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCerasusProductData not implemented")
 }
 func (UnimplementedCounterServer) mustEmbedUnimplementedCounterServer() {}
 
@@ -216,6 +230,24 @@ func _Counter_GetProductsWithCounter_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Counter_DeleteCerasusProductData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CounterServer).DeleteCerasusProductData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Counter/DeleteCerasusProductData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CounterServer).DeleteCerasusProductData(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Counter_ServiceDesc is the grpc.ServiceDesc for Counter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Counter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsWithCounter",
 			Handler:    _Counter_GetProductsWithCounter_Handler,
+		},
+		{
+			MethodName: "DeleteCerasusProductData",
+			Handler:    _Counter_DeleteCerasusProductData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
