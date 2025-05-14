@@ -20,6 +20,7 @@ service Pricer {
     rpc GetDumpingData(RequestByDates) returns (DumpingData) {}
     rpc GetDumpingItem(RequestByID) returns (DumpingItem) {}
     rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
+    rpc DeleteCerasusProductDataByShop (RequestByID) returns (StatusReply) {}
 }
 
 message DumpingItem {

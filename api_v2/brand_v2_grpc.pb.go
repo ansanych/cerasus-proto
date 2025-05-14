@@ -76,6 +76,7 @@ type BranderClient interface {
 	GetDumpingLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*DumpingSellersLeaders, error)
 	MonitorRunString(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RunString, error)
 	DeleteCerasusProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteCerasusProductDataByShop(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type branderClient struct {
@@ -572,6 +573,15 @@ func (c *branderClient) DeleteCerasusProductData(ctx context.Context, in *Reques
 	return out, nil
 }
 
+func (c *branderClient) DeleteCerasusProductDataByShop(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Brander/DeleteCerasusProductDataByShop", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BranderServer is the server API for Brander service.
 // All implementations must embed UnimplementedBranderServer
 // for forward compatibility
@@ -630,6 +640,7 @@ type BranderServer interface {
 	GetDumpingLeaders(context.Context, *Auth) (*DumpingSellersLeaders, error)
 	MonitorRunString(context.Context, *Auth) (*RunString, error)
 	DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error)
+	DeleteCerasusProductDataByShop(context.Context, *RequestByID) (*StatusReply, error)
 	mustEmbedUnimplementedBranderServer()
 }
 
@@ -798,6 +809,9 @@ func (UnimplementedBranderServer) MonitorRunString(context.Context, *Auth) (*Run
 }
 func (UnimplementedBranderServer) DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCerasusProductData not implemented")
+}
+func (UnimplementedBranderServer) DeleteCerasusProductDataByShop(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCerasusProductDataByShop not implemented")
 }
 func (UnimplementedBranderServer) mustEmbedUnimplementedBranderServer() {}
 
@@ -1784,6 +1798,24 @@ func _Brander_DeleteCerasusProductData_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Brander_DeleteCerasusProductDataByShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BranderServer).DeleteCerasusProductDataByShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Brander/DeleteCerasusProductDataByShop",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BranderServer).DeleteCerasusProductDataByShop(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Brander_ServiceDesc is the grpc.ServiceDesc for Brander service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2006,6 +2038,10 @@ var Brander_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCerasusProductData",
 			Handler:    _Brander_DeleteCerasusProductData_Handler,
+		},
+		{
+			MethodName: "DeleteCerasusProductDataByShop",
+			Handler:    _Brander_DeleteCerasusProductDataByShop_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

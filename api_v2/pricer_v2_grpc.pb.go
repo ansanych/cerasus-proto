@@ -36,6 +36,7 @@ type PricerClient interface {
 	GetDumpingData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*DumpingData, error)
 	GetDumpingItem(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*DumpingItem, error)
 	DeleteCerasusProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteCerasusProductDataByShop(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -172,6 +173,15 @@ func (c *pricerClient) DeleteCerasusProductData(ctx context.Context, in *Request
 	return out, nil
 }
 
+func (c *pricerClient) DeleteCerasusProductDataByShop(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Pricer/DeleteCerasusProductDataByShop", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -190,6 +200,7 @@ type PricerServer interface {
 	GetDumpingData(context.Context, *RequestByDates) (*DumpingData, error)
 	GetDumpingItem(context.Context, *RequestByID) (*DumpingItem, error)
 	DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error)
+	DeleteCerasusProductDataByShop(context.Context, *RequestByID) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -238,6 +249,9 @@ func (UnimplementedPricerServer) GetDumpingItem(context.Context, *RequestByID) (
 }
 func (UnimplementedPricerServer) DeleteCerasusProductData(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCerasusProductData not implemented")
+}
+func (UnimplementedPricerServer) DeleteCerasusProductDataByShop(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCerasusProductDataByShop not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -504,6 +518,24 @@ func _Pricer_DeleteCerasusProductData_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_DeleteCerasusProductDataByShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).DeleteCerasusProductDataByShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Pricer/DeleteCerasusProductDataByShop",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).DeleteCerasusProductDataByShop(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +598,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCerasusProductData",
 			Handler:    _Pricer_DeleteCerasusProductData_Handler,
+		},
+		{
+			MethodName: "DeleteCerasusProductDataByShop",
+			Handler:    _Pricer_DeleteCerasusProductDataByShop_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

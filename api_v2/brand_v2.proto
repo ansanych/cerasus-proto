@@ -60,6 +60,7 @@ service Brander {
     rpc GetDumpingLeaders (Auth) returns (DumpingSellersLeaders) {}
     rpc MonitorRunString (Auth) returns (RunString) {}
     rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
+    rpc DeleteCerasusProductDataByShop (RequestByID) returns (StatusReply) {}
 
  /*    
     rpc GetBrand (Auth) returns (Brand) {}
