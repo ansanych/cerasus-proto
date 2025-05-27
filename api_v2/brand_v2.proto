@@ -61,16 +61,30 @@ service Brander {
     rpc MonitorRunString (Auth) returns (RunString) {}
     rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
     rpc DeleteCerasusProductDataByShop (RequestByID) returns (StatusReply) {}
+    rpc GetSellersDumpingList (Auth) returns (SellersDumpingList) {}
+}
 
- /*    
-    rpc GetBrand (Auth) returns (Brand) {}
-    rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
-    rpc GetCompaniesWithBrandProducts (RequestByPage) returns (CompanyList) {}
-    rpc SearchSeller (SearchRequest) returns (Sellers) {}
-    rpc DeleteProduct (ProductRequest) returns (StatusReply) {}
-    rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
-    rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
- */
+message SellerDumpingItemShopURL {
+    string url = 1;
+}
+
+message SellerDumpingItemShop {
+    string shop = 1;
+    repeated SellerDumpingItemShopURL urls = 2;
+}
+
+message SellerDumpingItem {
+    BrandProduct product = 1;
+    repeated SellerDumpingItemShop shops = 2;
+}
+
+message SellersDumpingItem {
+    Seller seller = 1;
+    repeated SellerDumpingItem items = 2;
+}
+
+message SellersDumpingList {
+    repeated SellersDumpingItem data = 1;
 }
 
 message RunStringItem {
