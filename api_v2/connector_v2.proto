@@ -1,0 +1,26 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Connector {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetClientAddress (Client) returns (Client) {}
+    rpc GetClientsList (Auth) returns (ClientsList) {}
+}
+
+message Client {
+    string service = 1;
+    ClientAddress address = 2;
+}
+
+message ClientAddress {
+    string host = 1;
+    uint32 port = 2;
+}
+
+message ClientsList {
+    repeated Client data = 1;
+}
