@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConnectorClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	SetClientAddress(ctx context.Context, in *Client, opts ...grpc.CallOption) (*StatusReply, error)
 	GetClientAddress(ctx context.Context, in *Client, opts ...grpc.CallOption) (*Client, error)
 	GetClientsList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ClientsList, error)
 }
@@ -38,6 +39,15 @@ func NewConnectorClient(cc grpc.ClientConnInterface) ConnectorClient {
 func (c *connectorClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Connector/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *connectorClient) SetClientAddress(ctx context.Context, in *Client, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Connector/SetClientAddress", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,6 +77,7 @@ func (c *connectorClient) GetClientsList(ctx context.Context, in *Auth, opts ...
 // for forward compatibility
 type ConnectorServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	SetClientAddress(context.Context, *Client) (*StatusReply, error)
 	GetClientAddress(context.Context, *Client) (*Client, error)
 	GetClientsList(context.Context, *Auth) (*ClientsList, error)
 	mustEmbedUnimplementedConnectorServer()
@@ -78,6 +89,9 @@ type UnimplementedConnectorServer struct {
 
 func (UnimplementedConnectorServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedConnectorServer) SetClientAddress(context.Context, *Client) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetClientAddress not implemented")
 }
 func (UnimplementedConnectorServer) GetClientAddress(context.Context, *Client) (*Client, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetClientAddress not implemented")
@@ -112,6 +126,24 @@ func _Connector_Ping_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ConnectorServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Connector_SetClientAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Client)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConnectorServer).SetClientAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Connector/SetClientAddress",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConnectorServer).SetClientAddress(ctx, req.(*Client))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -162,6 +194,10 @@ var Connector_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Connector_Ping_Handler,
+		},
+		{
+			MethodName: "SetClientAddress",
+			Handler:    _Connector_SetClientAddress_Handler,
 		},
 		{
 			MethodName: "GetClientAddress",
