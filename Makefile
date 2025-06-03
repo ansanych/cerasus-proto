@@ -249,3 +249,11 @@ genConnector:
 			--go-grpc_out ./api_v2 \
 			--go-grpc_opt paths=source_relative \
 			./api_v2/connector_v2.proto
+
+genLogger2:
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/logger_v2.proto
