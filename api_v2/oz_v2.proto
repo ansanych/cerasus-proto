@@ -32,6 +32,7 @@ service OZ {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
+    rpc SetShopAuth(OZAuthParams) returns (StatusReply) {}
 }
 
 message OZCounterParams {
@@ -39,4 +40,10 @@ message OZCounterParams {
     string apiKey = 2;
     repeated int64 warehouses = 3;
     repeated ShopProduct shopProducts = 4;
+}
+
+message OZAuthParams {
+    int64 clientID = 1;
+    string apiKey = 2;
+    Auth auth = 3;
 }

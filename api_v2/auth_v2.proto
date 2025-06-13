@@ -6,11 +6,11 @@ package cerasusV2;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service Authenty {
+    rpc Ping (PingRequest) returns (PingReply) {}
     rpc Register (RegisterRequest) returns (StatusReply) {}
     rpc Login (LoginRequest) returns (LoginReply) {}
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
     rpc CheckAccess (AccessRequest) returns (Auth) {}
-    rpc Ping (PingRequest) returns (PingReply) {}
     rpc CreateUser(UpdateUserRequest) returns (StatusReply) {}
     rpc UpdateUser(UpdateUserRequest) returns (StatusReply) {}
     rpc DeleteUser(UpdateUserRequest) returns (StatusReply) {}
