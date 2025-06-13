@@ -48,7 +48,7 @@ type OZClient interface {
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetShopProductByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
-	SetShopAuth(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
+	SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type oZClient struct {
@@ -293,9 +293,9 @@ func (c *oZClient) GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opt
 	return out, nil
 }
 
-func (c *oZClient) SetShopAuth(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *oZClient) SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/SetShopAuth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/SetAuthData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +332,7 @@ type OZServer interface {
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetShopProductByCode(context.Context, *SearchRequest) (*ShopProduct, error)
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
-	SetShopAuth(context.Context, *OZAuthParams) (*StatusReply, error)
+	SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -418,8 +418,8 @@ func (UnimplementedOZServer) GetShopProductByCode(context.Context, *SearchReques
 func (UnimplementedOZServer) GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrdersForBrand not implemented")
 }
-func (UnimplementedOZServer) SetShopAuth(context.Context, *OZAuthParams) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetShopAuth not implemented")
+func (UnimplementedOZServer) SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAuthData not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -902,20 +902,20 @@ func _OZ_GetOrdersForBrand_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OZ_SetShopAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OZ_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OZAuthParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OZServer).SetShopAuth(ctx, in)
+		return srv.(OZServer).SetAuthData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.OZ/SetShopAuth",
+		FullMethod: "/cerasusV2.OZ/SetAuthData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZServer).SetShopAuth(ctx, req.(*OZAuthParams))
+		return srv.(OZServer).SetAuthData(ctx, req.(*OZAuthParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1032,8 +1032,8 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OZ_GetOrdersForBrand_Handler,
 		},
 		{
-			MethodName: "SetShopAuth",
-			Handler:    _OZ_SetShopAuth_Handler,
+			MethodName: "SetAuthData",
+			Handler:    _OZ_SetAuthData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

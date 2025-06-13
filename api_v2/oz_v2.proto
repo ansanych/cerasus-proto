@@ -32,7 +32,7 @@ service OZ {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
-    rpc SetShopAuth(OZAuthParams) returns (StatusReply) {}
+    rpc SetAuthData(OZAuthParams) returns (StatusReply) {}
 }
 
 message OZCounterParams {

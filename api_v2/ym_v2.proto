@@ -32,6 +32,7 @@ service YM {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
+    rpc SetAuthData(YMAuthData) returns (StatusReply) {}
 }
 
 message YMCounterParams {
@@ -39,4 +40,10 @@ message YMCounterParams {
     int64 businessID = 2;
     repeated YMCampaign campaigns = 3;
     repeated ShopProduct shopProducts = 4;
+}
+
+message YMAuthData {
+    string token = 1;
+    int64 businessID = 2;
+    Auth auth = 3;
 }
