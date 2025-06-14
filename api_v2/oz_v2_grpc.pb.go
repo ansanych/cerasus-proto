@@ -24,6 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 type OZClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
+	SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
+	GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OZAuthParams, error)
+	ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
@@ -48,7 +51,6 @@ type OZClient interface {
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetShopProductByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
-	SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type oZClient struct {
@@ -71,6 +73,33 @@ func (c *oZClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallO
 func (c *oZClient) GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error) {
 	out := new(AppShopData)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetAppData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/SetAuthData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OZAuthParams, error) {
+	out := new(OZAuthParams)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/GetAuthData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/ResetAuthData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -293,21 +322,15 @@ func (c *oZClient) GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opt
 	return out, nil
 }
 
-func (c *oZClient) SetAuthData(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/SetAuthData", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
 type OZServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
+	SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error)
+	GetAuthData(context.Context, *Auth) (*OZAuthParams, error)
+	ResetAuthData(context.Context, *Auth) (*StatusReply, error)
 	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
@@ -332,7 +355,6 @@ type OZServer interface {
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetShopProductByCode(context.Context, *SearchRequest) (*ShopProduct, error)
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
-	SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -345,6 +367,15 @@ func (UnimplementedOZServer) Ping(context.Context, *PingRequest) (*PingReply, er
 }
 func (UnimplementedOZServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
+}
+func (UnimplementedOZServer) SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAuthData not implemented")
+}
+func (UnimplementedOZServer) GetAuthData(context.Context, *Auth) (*OZAuthParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthData not implemented")
+}
+func (UnimplementedOZServer) ResetAuthData(context.Context, *Auth) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetAuthData not implemented")
 }
 func (UnimplementedOZServer) GetShopData(context.Context, *Auth) (*ShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopData not implemented")
@@ -418,9 +449,6 @@ func (UnimplementedOZServer) GetShopProductByCode(context.Context, *SearchReques
 func (UnimplementedOZServer) GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrdersForBrand not implemented")
 }
-func (UnimplementedOZServer) SetAuthData(context.Context, *OZAuthParams) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetAuthData not implemented")
-}
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
 // UnsafeOZServer may be embedded to opt out of forward compatibility for this service.
@@ -466,6 +494,60 @@ func _OZ_GetAppData_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OZServer).GetAppData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).SetAuthData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/SetAuthData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).SetAuthData(ctx, req.(*OZAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetAuthData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/GetAuthData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetAuthData(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_ResetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).ResetAuthData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.OZ/ResetAuthData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).ResetAuthData(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -902,24 +984,6 @@ func _OZ_GetOrdersForBrand_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OZ_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OZAuthParams)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OZServer).SetAuthData(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.OZ/SetAuthData",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZServer).SetAuthData(ctx, req.(*OZAuthParams))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // OZ_ServiceDesc is the grpc.ServiceDesc for OZ service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -934,6 +998,18 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAppData",
 			Handler:    _OZ_GetAppData_Handler,
+		},
+		{
+			MethodName: "SetAuthData",
+			Handler:    _OZ_SetAuthData_Handler,
+		},
+		{
+			MethodName: "GetAuthData",
+			Handler:    _OZ_GetAuthData_Handler,
+		},
+		{
+			MethodName: "ResetAuthData",
+			Handler:    _OZ_ResetAuthData_Handler,
 		},
 		{
 			MethodName: "GetShopData",
@@ -1030,10 +1106,6 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrdersForBrand",
 			Handler:    _OZ_GetOrdersForBrand_Handler,
-		},
-		{
-			MethodName: "SetAuthData",
-			Handler:    _OZ_SetAuthData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

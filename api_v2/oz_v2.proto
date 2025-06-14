@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "cerasus_v2.proto";
+import "oz-data_v2.proto";
 
 package cerasusV2;
 
@@ -8,6 +9,10 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service OZ {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
+    rpc SetAuthData(OZAuthParams) returns (StatusReply) {}    
+    rpc GetAuthData(Auth) returns (OZAuthParams) {}
+    rpc ResetAuthData(Auth) returns (StatusReply) {}
+
     rpc GetShopData (Auth) returns (ShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
@@ -32,7 +37,8 @@ service OZ {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
-    rpc SetAuthData(OZAuthParams) returns (StatusReply) {}
+
+
 }
 
 message OZCounterParams {
@@ -42,8 +48,3 @@ message OZCounterParams {
     repeated ShopProduct shopProducts = 4;
 }
 
-message OZAuthParams {
-    int64 clientID = 1;
-    string apiKey = 2;
-    Auth auth = 3;
-}

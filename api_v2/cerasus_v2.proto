@@ -220,6 +220,11 @@ message Warehouse {
     bool active = 6;
     string updated = 7;
 }
+
+message Warehouses {
+    repeated Warehouse warehouses = 1;
+}
+
 message WBParams {
     repeated Warehouse warehouses = 1;
 }

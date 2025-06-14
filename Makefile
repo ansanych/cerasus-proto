@@ -170,13 +170,49 @@ genWB2:
 			--go-grpc_opt paths=source_relative \
 			./api_v2/wb_v2.proto
 
+#genOZData2:
+#	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz-data_v2.proto
+
 genOZ2:
 	protoc -I ./api_v2 \
 			--go_out ./api_v2 \
 			--go_opt paths=source_relative \
 			--go-grpc_out ./api_v2 \
 			--go-grpc_opt paths=source_relative \
-			./api_v2/oz_v2.proto
+			./api_v2/oz-data_v2.proto
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz_v2.proto 
+	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz-api_v2.proto
+
+#genOZAPI2:
+#	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz-api_v2.proto
+
+#genOZData2:
+#	protoc -I ./api_v2 \
+			--go_out ./api_v2 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v2 \
+			--go-grpc_opt paths=source_relative \
+			./api_v2/oz-data_v2.proto
 
 genYM2:
 	protoc -I ./api_v2 \
