@@ -24,8 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type WBClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
-	SetAuthData(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*StatusReply, error)
-	GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WBAuthData, error)
+	SetAuthData(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
+	GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WBAuthParams, error)
 	ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
@@ -79,7 +79,7 @@ func (c *wBClient) GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOp
 	return out, nil
 }
 
-func (c *wBClient) SetAuthData(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *wBClient) SetAuthData(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/SetAuthData", in, out, opts...)
 	if err != nil {
@@ -88,8 +88,8 @@ func (c *wBClient) SetAuthData(ctx context.Context, in *WBAuthData, opts ...grpc
 	return out, nil
 }
 
-func (c *wBClient) GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WBAuthData, error) {
-	out := new(WBAuthData)
+func (c *wBClient) GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WBAuthParams, error) {
+	out := new(WBAuthParams)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetAuthData", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -328,8 +328,8 @@ func (c *wBClient) GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opt
 type WBServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
-	SetAuthData(context.Context, *WBAuthData) (*StatusReply, error)
-	GetAuthData(context.Context, *Auth) (*WBAuthData, error)
+	SetAuthData(context.Context, *WBAuthParams) (*StatusReply, error)
+	GetAuthData(context.Context, *Auth) (*WBAuthParams, error)
 	ResetAuthData(context.Context, *Auth) (*StatusReply, error)
 	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
@@ -368,10 +368,10 @@ func (UnimplementedWBServer) Ping(context.Context, *PingRequest) (*PingReply, er
 func (UnimplementedWBServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
 }
-func (UnimplementedWBServer) SetAuthData(context.Context, *WBAuthData) (*StatusReply, error) {
+func (UnimplementedWBServer) SetAuthData(context.Context, *WBAuthParams) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetAuthData not implemented")
 }
-func (UnimplementedWBServer) GetAuthData(context.Context, *Auth) (*WBAuthData, error) {
+func (UnimplementedWBServer) GetAuthData(context.Context, *Auth) (*WBAuthParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuthData not implemented")
 }
 func (UnimplementedWBServer) ResetAuthData(context.Context, *Auth) (*StatusReply, error) {
@@ -499,7 +499,7 @@ func _WB_GetAppData_Handler(srv interface{}, ctx context.Context, dec func(inter
 }
 
 func _WB_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBAuthData)
+	in := new(WBAuthParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -511,7 +511,7 @@ func _WB_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/cerasusV2.WB/SetAuthData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WBServer).SetAuthData(ctx, req.(*WBAuthData))
+		return srv.(WBServer).SetAuthData(ctx, req.(*WBAuthParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }

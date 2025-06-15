@@ -9,8 +9,8 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service WB {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
-    rpc SetAuthData(WBAuthData) returns (StatusReply) {}
-    rpc GetAuthData(Auth) returns (WBAuthData) {}
+    rpc SetAuthData(WBAuthParams) returns (StatusReply) {}
+    rpc GetAuthData(Auth) returns (WBAuthParams) {}
     rpc ResetAuthData(Auth) returns (StatusReply) {}
 
     rpc GetShopData (Auth) returns (ShopData) {}
