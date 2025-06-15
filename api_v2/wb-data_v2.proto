@@ -1,0 +1,22 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+message WBAuthData {
+    Auth auth = 1;
+    string token = 2;
+}
+
+message WBAuthParams {
+    Auth auth = 1;
+    string token = 2;
+}
+
+message WBCounterParams {
+    string token = 1;
+    repeated int64 warehouses = 2;
+    repeated ShopProduct shopProducts = 3;
+}

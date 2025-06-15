@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "cerasus_v2.proto";
+import "wb-data_v2.proto";
 
 package cerasusV2;
 
@@ -8,6 +9,10 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service WB {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
+    rpc SetAuthData(WBAuthData) returns (StatusReply) {}
+    rpc GetAuthData(Auth) returns (WBAuthData) {}
+    rpc ResetAuthData(Auth) returns (StatusReply) {}
+
     rpc GetShopData (Auth) returns (ShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
@@ -32,16 +37,4 @@ service WB {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
-    rpc SetAuthData(WBAuthData) returns (StatusReply) {}
-}
-
-message WBAuthData {
-    Auth auth = 1;
-    string token = 2;
-}
-
-message WBCounterParams {
-    string token = 1;
-    repeated int64 warehouses = 2;
-    repeated ShopProduct shopProducts = 3;
 }
