@@ -215,8 +215,8 @@ message Warehouse {
     string name = 1;
     int64 officeID = 2;
     int64 warehouseID = 3;
-    bool cargoType = 4;
-    bool deliveryType = 5;
+    int32 cargoType = 4;
+    int32 deliveryType = 5;
     bool active = 6;
     string updated = 7;
 }
