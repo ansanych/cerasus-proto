@@ -15,6 +15,8 @@ service Settings {
     rpc GetCompanyBrands (Auth) returns (Brands) {}
     rpc GetBrand (RequestByID) returns (Brand) {}
     rpc SearchBrands(SearchRequest) returns (Brands) {}
+    rpc ConnectCompanyBrand (RequestByID) returns (StatusReply) {}
+    rpc CreateCompanyBrand (CreateCompanyBrandRequest) returns (StatusReply) {}
 
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
     rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
@@ -30,6 +32,11 @@ service Settings {
     rpc GetCompanyShops(Auth) returns (CompanyShops) {}
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
     rpc SetTax(SetTaxRequest) returns (StatusReply) {}
+}
+
+message CreateCompanyBrandRequest {
+    Auth auth = 1;
+    Brand brand = 2;
 }
 
 message AppServiceData {

@@ -31,6 +31,8 @@ type SettingsClient interface {
 	GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error)
 	GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
 	SearchBrands(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Brands, error)
+	ConnectCompanyBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	CreateCompanyBrand(ctx context.Context, in *CreateCompanyBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
@@ -130,6 +132,24 @@ func (c *settingsClient) GetBrand(ctx context.Context, in *RequestByID, opts ...
 func (c *settingsClient) SearchBrands(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Brands, error) {
 	out := new(Brands)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SearchBrands", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) ConnectCompanyBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/ConnectCompanyBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) CreateCompanyBrand(ctx context.Context, in *CreateCompanyBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/CreateCompanyBrand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -275,6 +295,8 @@ type SettingsServer interface {
 	GetCompanyBrands(context.Context, *Auth) (*Brands, error)
 	GetBrand(context.Context, *RequestByID) (*Brand, error)
 	SearchBrands(context.Context, *SearchRequest) (*Brands, error)
+	ConnectCompanyBrand(context.Context, *RequestByID) (*StatusReply, error)
+	CreateCompanyBrand(context.Context, *CreateCompanyBrandRequest) (*StatusReply, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
@@ -322,6 +344,12 @@ func (UnimplementedSettingsServer) GetBrand(context.Context, *RequestByID) (*Bra
 }
 func (UnimplementedSettingsServer) SearchBrands(context.Context, *SearchRequest) (*Brands, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchBrands not implemented")
+}
+func (UnimplementedSettingsServer) ConnectCompanyBrand(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectCompanyBrand not implemented")
+}
+func (UnimplementedSettingsServer) CreateCompanyBrand(context.Context, *CreateCompanyBrandRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCompanyBrand not implemented")
 }
 func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
@@ -536,6 +564,42 @@ func _Settings_SearchBrands_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingsServer).SearchBrands(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_ConnectCompanyBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).ConnectCompanyBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/ConnectCompanyBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).ConnectCompanyBrand(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_CreateCompanyBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCompanyBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).CreateCompanyBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/CreateCompanyBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).CreateCompanyBrand(ctx, req.(*CreateCompanyBrandRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -834,6 +898,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchBrands",
 			Handler:    _Settings_SearchBrands_Handler,
+		},
+		{
+			MethodName: "ConnectCompanyBrand",
+			Handler:    _Settings_ConnectCompanyBrand_Handler,
+		},
+		{
+			MethodName: "CreateCompanyBrand",
+			Handler:    _Settings_CreateCompanyBrand_Handler,
 		},
 		{
 			MethodName: "GetMainGraphic",
