@@ -12,11 +12,10 @@ service WB {
     rpc SetAuthData(WBAuthParams) returns (StatusReply) {}
     rpc GetAuthData(Auth) returns (WBAuthParams) {}
     rpc ResetAuthData(Auth) returns (StatusReply) {}
-
+    rpc GetProductsCount(Auth) returns (Count) {}
     rpc GetShopData (Auth) returns (ShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
-    rpc GetProductsCount (Auth) returns (Count) {}
     rpc GetProductsCountUnsorted (Auth) returns (Count) {}
     rpc GetFlowGraphicData (Auth) returns (Count) {}
     rpc GetMarginGraphicData (Auth) returns (Count) {}

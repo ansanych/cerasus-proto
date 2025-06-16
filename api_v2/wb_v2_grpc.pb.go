@@ -27,10 +27,10 @@ type WBClient interface {
 	SetAuthData(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 	GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*WBAuthParams, error)
 	ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
+	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
-	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetProductsCountUnsorted(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetFlowGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
 	GetMarginGraphicData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
@@ -106,6 +106,15 @@ func (c *wBClient) ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.Cal
 	return out, nil
 }
 
+func (c *wBClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetProductsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wBClient) GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error) {
 	out := new(ShopData)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetShopData", in, out, opts...)
@@ -127,15 +136,6 @@ func (c *wBClient) GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.Cal
 func (c *wBClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
 	out := new(LineGraph)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetMainGraphic", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *wBClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
-	out := new(Count)
-	err := c.cc.Invoke(ctx, "/cerasusV2.WB/GetProductsCount", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -331,10 +331,10 @@ type WBServer interface {
 	SetAuthData(context.Context, *WBAuthParams) (*StatusReply, error)
 	GetAuthData(context.Context, *Auth) (*WBAuthParams, error)
 	ResetAuthData(context.Context, *Auth) (*StatusReply, error)
+	GetProductsCount(context.Context, *Auth) (*Count, error)
 	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
-	GetProductsCount(context.Context, *Auth) (*Count, error)
 	GetProductsCountUnsorted(context.Context, *Auth) (*Count, error)
 	GetFlowGraphicData(context.Context, *Auth) (*Count, error)
 	GetMarginGraphicData(context.Context, *Auth) (*Count, error)
@@ -377,6 +377,9 @@ func (UnimplementedWBServer) GetAuthData(context.Context, *Auth) (*WBAuthParams,
 func (UnimplementedWBServer) ResetAuthData(context.Context, *Auth) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetAuthData not implemented")
 }
+func (UnimplementedWBServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
 func (UnimplementedWBServer) GetShopData(context.Context, *Auth) (*ShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopData not implemented")
 }
@@ -385,9 +388,6 @@ func (UnimplementedWBServer) GetShopWidget(context.Context, *Auth) (*ShopWidget,
 }
 func (UnimplementedWBServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
-}
-func (UnimplementedWBServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
 }
 func (UnimplementedWBServer) GetProductsCountUnsorted(context.Context, *Auth) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCountUnsorted not implemented")
@@ -552,6 +552,24 @@ func _WB_ResetAuthData_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetProductsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/GetProductsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetProductsCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WB_GetShopData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -602,24 +620,6 @@ func _WB_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WBServer).GetMainGraphic(ctx, req.(*LineGraphRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WB_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WBServer).GetProductsCount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.WB/GetProductsCount",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WBServer).GetProductsCount(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1012,6 +1012,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WB_ResetAuthData_Handler,
 		},
 		{
+			MethodName: "GetProductsCount",
+			Handler:    _WB_GetProductsCount_Handler,
+		},
+		{
 			MethodName: "GetShopData",
 			Handler:    _WB_GetShopData_Handler,
 		},
@@ -1022,10 +1026,6 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMainGraphic",
 			Handler:    _WB_GetMainGraphic_Handler,
-		},
-		{
-			MethodName: "GetProductsCount",
-			Handler:    _WB_GetProductsCount_Handler,
 		},
 		{
 			MethodName: "GetProductsCountUnsorted",
