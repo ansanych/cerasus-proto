@@ -36,4 +36,5 @@ service WB {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
+    rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
 }

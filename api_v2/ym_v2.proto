@@ -34,4 +34,5 @@ service YM {
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc SetAuthData(YMAuthData) returns (StatusReply) {}
+    rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
 }

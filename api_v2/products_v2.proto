@@ -25,6 +25,7 @@ service Products {
     rpc GetProductLinks (RequestByID) returns (ProductLinks) {}
     rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
     rpc GetProductListLinks (RequestByIDs) returns (ProductList) {}
+    rpc GetProductsUnsortedList (SearchRequest) returns (ShopProductList) {}
 }
 
 message SetProductPurchaseRequest {
