@@ -372,6 +372,7 @@ message OrderLeader {
     string shop = 4;
     int32 count = 5;
     int32 index = 6;
+    int64 shopProductID = 7;
 }
 
 message OrderLeaders {
