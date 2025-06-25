@@ -1,0 +1,14 @@
+syntax = "proto3";
+import "cerasus_v2.proto";
+
+package cerasusV2;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Datum {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
+    rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+}
