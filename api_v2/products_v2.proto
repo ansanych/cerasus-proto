@@ -27,6 +27,7 @@ service Products {
     rpc GetProductListLinks (RequestByIDs) returns (ProductList) {}
     rpc GetProductsUnsortedList (SearchRequest) returns (ShopProductList) {}
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetProductsUnsortedCountShop (SearchRequest) returns (Count) {}
 }
 
 message SetProductPurchaseRequest {
