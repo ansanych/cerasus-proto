@@ -42,7 +42,7 @@ type ProductsClient interface {
 	DeleteProductLink(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	GetProductListLinks(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductsUnsortedList(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProductList, error)
-	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
+	GetOrderLeaders(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*OrderLeaders, error)
 	GetProductsUnsortedCountShop(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Count, error)
 }
 
@@ -234,7 +234,7 @@ func (c *productsClient) GetProductsUnsortedList(ctx context.Context, in *Search
 	return out, nil
 }
 
-func (c *productsClient) GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error) {
+func (c *productsClient) GetOrderLeaders(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*OrderLeaders, error) {
 	out := new(OrderLeaders)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetOrderLeaders", in, out, opts...)
 	if err != nil {
@@ -276,7 +276,7 @@ type ProductsServer interface {
 	DeleteProductLink(context.Context, *RequestByID) (*StatusReply, error)
 	GetProductListLinks(context.Context, *RequestByIDs) (*ProductList, error)
 	GetProductsUnsortedList(context.Context, *SearchRequest) (*ShopProductList, error)
-	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
+	GetOrderLeaders(context.Context, *SearchRequest) (*OrderLeaders, error)
 	GetProductsUnsortedCountShop(context.Context, *SearchRequest) (*Count, error)
 	mustEmbedUnimplementedProductsServer()
 }
@@ -345,7 +345,7 @@ func (UnimplementedProductsServer) GetProductListLinks(context.Context, *Request
 func (UnimplementedProductsServer) GetProductsUnsortedList(context.Context, *SearchRequest) (*ShopProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsUnsortedList not implemented")
 }
-func (UnimplementedProductsServer) GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error) {
+func (UnimplementedProductsServer) GetOrderLeaders(context.Context, *SearchRequest) (*OrderLeaders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
 }
 func (UnimplementedProductsServer) GetProductsUnsortedCountShop(context.Context, *SearchRequest) (*Count, error) {
@@ -725,7 +725,7 @@ func _Products_GetProductsUnsortedList_Handler(srv interface{}, ctx context.Cont
 }
 
 func _Products_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(SearchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func _Products_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/cerasusV2.Products/GetOrderLeaders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsServer).GetOrderLeaders(ctx, req.(*Auth))
+		return srv.(ProductsServer).GetOrderLeaders(ctx, req.(*SearchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

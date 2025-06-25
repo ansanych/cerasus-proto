@@ -26,7 +26,7 @@ service Products {
     rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
     rpc GetProductListLinks (RequestByIDs) returns (ProductList) {}
     rpc GetProductsUnsortedList (SearchRequest) returns (ShopProductList) {}
-    rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetOrderLeaders (SearchRequest) returns (OrderLeaders) {}
     rpc GetProductsUnsortedCountShop (SearchRequest) returns (Count) {}
 }
 
