@@ -11,4 +11,5 @@ service Datum {
     rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
     rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+    rpc GetPayRoundGraphic (RequestByShop) returns (RoundGraphic) {}
 }

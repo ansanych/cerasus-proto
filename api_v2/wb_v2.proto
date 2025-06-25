@@ -37,4 +37,5 @@ service WB {
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
+    rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
 }
