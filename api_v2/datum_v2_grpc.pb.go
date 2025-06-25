@@ -28,6 +28,7 @@ type DatumClient interface {
 	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 	GetPayRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetCountRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type datumClient struct {
@@ -92,6 +93,15 @@ func (c *datumClient) GetPayRoundGraphic(ctx context.Context, in *RequestByShop,
 	return out, nil
 }
 
+func (c *datumClient) GetCountRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error) {
+	out := new(RoundGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Datum/GetCountRoundGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -102,6 +112,7 @@ type DatumServer interface {
 	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	GetPayRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error)
+	GetCountRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -126,6 +137,9 @@ func (UnimplementedDatumServer) GetWeekGraphic(context.Context, *LineGraphReques
 }
 func (UnimplementedDatumServer) GetPayRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPayRoundGraphic not implemented")
+}
+func (UnimplementedDatumServer) GetCountRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -248,6 +262,24 @@ func _Datum_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByShop)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetCountRoundGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Datum/GetCountRoundGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetCountRoundGraphic(ctx, req.(*RequestByShop))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -278,6 +310,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPayRoundGraphic",
 			Handler:    _Datum_GetPayRoundGraphic_Handler,
+		},
+		{
+			MethodName: "GetCountRoundGraphic",
+			Handler:    _Datum_GetCountRoundGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
