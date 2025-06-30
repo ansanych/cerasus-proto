@@ -31,6 +31,7 @@ type DatumClient interface {
 	GetCountRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
+	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 }
 
 type datumClient struct {
@@ -122,6 +123,15 @@ func (c *datumClient) GetProductWidgetOrders(ctx context.Context, in *RequestByD
 	return out, nil
 }
 
+func (c *datumClient) GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error) {
+	out := new(LineGraphics)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Datum/GetProductGraphics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type DatumServer interface {
 	GetCountRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
+	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedDatumServer) GetProductWidget(context.Context, *RequestByDate
 }
 func (UnimplementedDatumServer) GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidgetOrders not implemented")
+}
+func (UnimplementedDatumServer) GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductGraphics not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -344,6 +358,24 @@ func _Datum_GetProductWidgetOrders_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetProductGraphics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetProductGraphics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Datum/GetProductGraphics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetProductGraphics(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductWidgetOrders",
 			Handler:    _Datum_GetProductWidgetOrders_Handler,
+		},
+		{
+			MethodName: "GetProductGraphics",
+			Handler:    _Datum_GetProductGraphics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
