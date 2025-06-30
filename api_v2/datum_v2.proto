@@ -13,4 +13,6 @@ service Datum {
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
     rpc GetPayRoundGraphic (RequestByShop) returns (RoundGraphic) {}
     rpc GetCountRoundGraphic (RequestByShop) returns (RoundGraphic) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
 }
