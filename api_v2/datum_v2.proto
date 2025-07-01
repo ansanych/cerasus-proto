@@ -16,4 +16,5 @@ service Datum {
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }
