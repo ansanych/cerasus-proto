@@ -32,6 +32,8 @@ service Settings {
     rpc GetCompanyShops(Auth) returns (CompanyShops) {}
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
     rpc SetTax(SetTaxRequest) returns (StatusReply) {}
+    
+    rpc GetCompanyIDSByShop(RequestByShop) returns(CompanyList) {}
 }
 
 message CreateCompanyBrandRequest {

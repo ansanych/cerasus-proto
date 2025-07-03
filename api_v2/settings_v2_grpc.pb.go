@@ -47,6 +47,7 @@ type SettingsClient interface {
 	GetCompanyShops(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShops, error)
 	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 	SetTax(ctx context.Context, in *SetTaxRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompanyIDSByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error)
 }
 
 type settingsClient struct {
@@ -282,6 +283,15 @@ func (c *settingsClient) SetTax(ctx context.Context, in *SetTaxRequest, opts ...
 	return out, nil
 }
 
+func (c *settingsClient) GetCompanyIDSByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetCompanyIDSByShop", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -311,6 +321,7 @@ type SettingsServer interface {
 	GetCompanyShops(context.Context, *Auth) (*CompanyShops, error)
 	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	SetTax(context.Context, *SetTaxRequest) (*StatusReply, error)
+	GetCompanyIDSByShop(context.Context, *RequestByShop) (*CompanyList, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -392,6 +403,9 @@ func (UnimplementedSettingsServer) GetAppTaxes(context.Context, *Auth) (*AppTaxe
 }
 func (UnimplementedSettingsServer) SetTax(context.Context, *SetTaxRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTax not implemented")
+}
+func (UnimplementedSettingsServer) GetCompanyIDSByShop(context.Context, *RequestByShop) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyIDSByShop not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -856,6 +870,24 @@ func _Settings_SetTax_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetCompanyIDSByShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByShop)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetCompanyIDSByShop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetCompanyIDSByShop",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetCompanyIDSByShop(ctx, req.(*RequestByShop))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -962,6 +994,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetTax",
 			Handler:    _Settings_SetTax_Handler,
+		},
+		{
+			MethodName: "GetCompanyIDSByShop",
+			Handler:    _Settings_GetCompanyIDSByShop_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
