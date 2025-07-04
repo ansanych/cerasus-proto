@@ -53,7 +53,7 @@ type WBClient interface {
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
-	SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type wBClient struct {
@@ -343,7 +343,7 @@ func (c *wBClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
-func (c *wBClient) SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *wBClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB/SetQueueJob", in, out, opts...)
 	if err != nil {
@@ -387,7 +387,7 @@ type WBServer interface {
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
-	SetQueueJob(context.Context, *QueueJob) (*StatusReply, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -488,7 +488,7 @@ func (UnimplementedWBServer) GetUnsortedList(context.Context, *RequestByIDs) (*S
 func (UnimplementedWBServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
 }
-func (UnimplementedWBServer) SetQueueJob(context.Context, *QueueJob) (*StatusReply, error) {
+func (UnimplementedWBServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
@@ -1063,7 +1063,7 @@ func _WB_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _WB_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueueJob)
+	in := new(QueuerJob)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1075,7 +1075,7 @@ func _WB_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/cerasusV2.WB/SetQueueJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WBServer).SetQueueJob(ctx, req.(*QueueJob))
+		return srv.(WBServer).SetQueueJob(ctx, req.(*QueuerJob))
 	}
 	return interceptor(ctx, in, info, handler)
 }

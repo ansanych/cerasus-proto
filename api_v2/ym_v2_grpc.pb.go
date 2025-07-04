@@ -51,7 +51,7 @@ type YMClient interface {
 	SetAuthData(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*StatusReply, error)
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
-	SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type yMClient struct {
@@ -323,7 +323,7 @@ func (c *yMClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
-func (c *yMClient) SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *yMClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.YM/SetQueueJob", in, out, opts...)
 	if err != nil {
@@ -365,7 +365,7 @@ type YMServer interface {
 	SetAuthData(context.Context, *YMAuthData) (*StatusReply, error)
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
-	SetQueueJob(context.Context, *QueueJob) (*StatusReply, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -460,7 +460,7 @@ func (UnimplementedYMServer) GetUnsortedList(context.Context, *RequestByIDs) (*S
 func (UnimplementedYMServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
 }
-func (UnimplementedYMServer) SetQueueJob(context.Context, *QueueJob) (*StatusReply, error) {
+func (UnimplementedYMServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
@@ -999,7 +999,7 @@ func _YM_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueueJob)
+	in := new(QueuerJob)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1011,7 +1011,7 @@ func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/cerasusV2.YM/SetQueueJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).SetQueueJob(ctx, req.(*QueueJob))
+		return srv.(YMServer).SetQueueJob(ctx, req.(*QueuerJob))
 	}
 	return interceptor(ctx, in, info, handler)
 }

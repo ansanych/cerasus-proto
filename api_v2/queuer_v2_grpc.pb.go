@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueuerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
-	ReportQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error)
+	ReportQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type queuerClient struct {
@@ -43,7 +43,7 @@ func (c *queuerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *queuerClient) ReportQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *queuerClient) ReportQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Queuer/ReportQueueJob", in, out, opts...)
 	if err != nil {
@@ -57,7 +57,7 @@ func (c *queuerClient) ReportQueueJob(ctx context.Context, in *QueueJob, opts ..
 // for forward compatibility
 type QueuerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
-	ReportQueueJob(context.Context, *QueueJob) (*StatusReply, error)
+	ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedQueuerServer()
 }
 
@@ -68,7 +68,7 @@ type UnimplementedQueuerServer struct {
 func (UnimplementedQueuerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedQueuerServer) ReportQueueJob(context.Context, *QueueJob) (*StatusReply, error) {
+func (UnimplementedQueuerServer) ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportQueueJob not implemented")
 }
 func (UnimplementedQueuerServer) mustEmbedUnimplementedQueuerServer() {}
@@ -103,7 +103,7 @@ func _Queuer_Ping_Handler(srv interface{}, ctx context.Context, dec func(interfa
 }
 
 func _Queuer_ReportQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueueJob)
+	in := new(QueuerJob)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func _Queuer_ReportQueueJob_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/cerasusV2.Queuer/ReportQueueJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueuerServer).ReportQueueJob(ctx, req.(*QueueJob))
+		return srv.(QueuerServer).ReportQueueJob(ctx, req.(*QueuerJob))
 	}
 	return interceptor(ctx, in, info, handler)
 }

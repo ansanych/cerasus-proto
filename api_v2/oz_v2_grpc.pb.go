@@ -53,7 +53,7 @@ type OZClient interface {
 	GetShopProductByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
-	SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type oZClient struct {
@@ -343,7 +343,7 @@ func (c *oZClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
-func (c *oZClient) SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *oZClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.OZ/SetQueueJob", in, out, opts...)
 	if err != nil {
@@ -387,7 +387,7 @@ type OZServer interface {
 	GetShopProductByCode(context.Context, *SearchRequest) (*ShopProduct, error)
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
-	SetQueueJob(context.Context, *QueueJob) (*StatusReply, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -488,7 +488,7 @@ func (UnimplementedOZServer) GetOrdersForBrand(context.Context, *OrdersRequest) 
 func (UnimplementedOZServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
 }
-func (UnimplementedOZServer) SetQueueJob(context.Context, *QueueJob) (*StatusReply, error) {
+func (UnimplementedOZServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
@@ -1063,7 +1063,7 @@ func _OZ_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _OZ_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueueJob)
+	in := new(QueuerJob)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1075,7 +1075,7 @@ func _OZ_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/cerasusV2.OZ/SetQueueJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZServer).SetQueueJob(ctx, req.(*QueueJob))
+		return srv.(OZServer).SetQueueJob(ctx, req.(*QueuerJob))
 	}
 	return interceptor(ctx, in, info, handler)
 }

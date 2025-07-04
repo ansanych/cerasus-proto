@@ -40,7 +40,7 @@ service OZ {
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
 
-    rpc SetQueueJob(QueueJob) returns (StatusReply) {}
+    rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
 }
 
 message OZCounterParams {

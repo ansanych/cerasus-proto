@@ -37,5 +37,5 @@ service YM {
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
 
-    rpc SetQueueJob(QueueJob) returns (StatusReply) {}
+    rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
 }
