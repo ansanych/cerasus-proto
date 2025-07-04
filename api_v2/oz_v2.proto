@@ -39,6 +39,8 @@ service OZ {
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
+
+    rpc SetQueueJob(QueueJob) returns (StatusReply) {}
 }
 
 message OZCounterParams {

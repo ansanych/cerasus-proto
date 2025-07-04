@@ -53,6 +53,7 @@ type WBClient interface {
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
+	SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type wBClient struct {
@@ -342,6 +343,15 @@ func (c *wBClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
+func (c *wBClient) SetQueueJob(ctx context.Context, in *QueueJob, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB/SetQueueJob", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -377,6 +387,7 @@ type WBServer interface {
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
+	SetQueueJob(context.Context, *QueueJob) (*StatusReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -476,6 +487,9 @@ func (UnimplementedWBServer) GetUnsortedList(context.Context, *RequestByIDs) (*S
 }
 func (UnimplementedWBServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
+}
+func (UnimplementedWBServer) SetQueueJob(context.Context, *QueueJob) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -1048,6 +1062,24 @@ func _WB_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueJob)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).SetQueueJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB/SetQueueJob",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).SetQueueJob(ctx, req.(*QueueJob))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1178,6 +1210,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopProductSales",
 			Handler:    _WB_GetShopProductSales_Handler,
+		},
+		{
+			MethodName: "SetQueueJob",
+			Handler:    _WB_SetQueueJob_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

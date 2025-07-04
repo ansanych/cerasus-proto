@@ -603,3 +603,11 @@ message ShopProductSale {
 message ShopProductSales {
     repeated ShopProductSale data = 1;
 }
+
+message QueueJob {
+    int64 ID = 1;
+    string name = 2;
+    int32 status = 3;
+    bool done = 4;
+    string error = 5;
+}

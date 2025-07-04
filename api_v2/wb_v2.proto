@@ -38,4 +38,6 @@ service WB {
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
+
+    rpc SetQueueJob(QueueJob) returns (StatusReply) {}
 }
