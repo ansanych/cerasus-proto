@@ -20,3 +20,25 @@ message WBCounterParams {
     repeated int64 warehouses = 2;
     repeated ShopProduct shopProducts = 3;
 }
+
+message ApiOrdersRequest {
+    WBAuthParams auth = 1;
+    string dateFrom = 2;
+    int64 companyID = 3;
+    repeated string mongoID = 4;
+}
+
+message ApiOrder {
+    string mongoID = 1;
+    string dt = 2;
+    string srid = 3;
+    int64 nmID = 4;
+    float finishedPrice = 5;
+    bool isCancel = 6;
+    string cancelDate = 7;
+    int64 companyID = 8;
+}
+
+message ApiOrders {
+    repeated ApiOrder data = 1;
+}
