@@ -24,7 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type WB_APIClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetWarehouses(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*Warehouses, error)
-	GetOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiOrders, error)
+	LoadApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiOrders, error)
 }
 
 type wB_APIClient struct {
@@ -53,9 +54,18 @@ func (c *wB_APIClient) GetWarehouses(ctx context.Context, in *WBAuthParams, opts
 	return out, nil
 }
 
-func (c *wB_APIClient) GetOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiOrders, error) {
+func (c *wB_APIClient) LoadApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/LoadApiOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wB_APIClient) GetApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiOrders, error) {
 	out := new(ApiOrders)
-	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/GetOrders", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/GetApiOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +78,8 @@ func (c *wB_APIClient) GetOrders(ctx context.Context, in *ApiOrdersRequest, opts
 type WB_APIServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetWarehouses(context.Context, *WBAuthParams) (*Warehouses, error)
-	GetOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error)
+	LoadApiOrders(context.Context, *ApiOrdersRequest) (*StatusReply, error)
+	GetApiOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error)
 	mustEmbedUnimplementedWB_APIServer()
 }
 
@@ -82,8 +93,11 @@ func (UnimplementedWB_APIServer) Ping(context.Context, *PingRequest) (*PingReply
 func (UnimplementedWB_APIServer) GetWarehouses(context.Context, *WBAuthParams) (*Warehouses, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWarehouses not implemented")
 }
-func (UnimplementedWB_APIServer) GetOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
+func (UnimplementedWB_APIServer) LoadApiOrders(context.Context, *ApiOrdersRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiOrders not implemented")
+}
+func (UnimplementedWB_APIServer) GetApiOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiOrders not implemented")
 }
 func (UnimplementedWB_APIServer) mustEmbedUnimplementedWB_APIServer() {}
 
@@ -134,20 +148,38 @@ func _WB_API_GetWarehouses_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WB_API_GetOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WB_API_LoadApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ApiOrdersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WB_APIServer).GetOrders(ctx, in)
+		return srv.(WB_APIServer).LoadApiOrders(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.WB_API/GetOrders",
+		FullMethod: "/cerasusV2.WB_API/LoadApiOrders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).GetOrders(ctx, req.(*ApiOrdersRequest))
+		return srv.(WB_APIServer).LoadApiOrders(ctx, req.(*ApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).GetApiOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB_API/GetApiOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).GetApiOrders(ctx, req.(*ApiOrdersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -168,8 +200,12 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WB_API_GetWarehouses_Handler,
 		},
 		{
-			MethodName: "GetOrders",
-			Handler:    _WB_API_GetOrders_Handler,
+			MethodName: "LoadApiOrders",
+			Handler:    _WB_API_LoadApiOrders_Handler,
+		},
+		{
+			MethodName: "GetApiOrders",
+			Handler:    _WB_API_GetApiOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
