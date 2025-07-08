@@ -26,6 +26,8 @@ type WB_APIClient interface {
 	GetWarehouses(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*Warehouses, error)
 	LoadApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiOrders(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiOrders, error)
+	LoadApiSales(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiSales(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiSales, error)
 }
 
 type wB_APIClient struct {
@@ -72,6 +74,24 @@ func (c *wB_APIClient) GetApiOrders(ctx context.Context, in *ApiOrdersRequest, o
 	return out, nil
 }
 
+func (c *wB_APIClient) LoadApiSales(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/LoadApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wB_APIClient) GetApiSales(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiSales, error) {
+	out := new(ApiSales)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/GetApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WB_APIServer is the server API for WB_API service.
 // All implementations must embed UnimplementedWB_APIServer
 // for forward compatibility
@@ -80,6 +100,8 @@ type WB_APIServer interface {
 	GetWarehouses(context.Context, *WBAuthParams) (*Warehouses, error)
 	LoadApiOrders(context.Context, *ApiOrdersRequest) (*StatusReply, error)
 	GetApiOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error)
+	LoadApiSales(context.Context, *ApiOrdersRequest) (*StatusReply, error)
+	GetApiSales(context.Context, *ApiOrdersRequest) (*ApiSales, error)
 	mustEmbedUnimplementedWB_APIServer()
 }
 
@@ -98,6 +120,12 @@ func (UnimplementedWB_APIServer) LoadApiOrders(context.Context, *ApiOrdersReques
 }
 func (UnimplementedWB_APIServer) GetApiOrders(context.Context, *ApiOrdersRequest) (*ApiOrders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiOrders not implemented")
+}
+func (UnimplementedWB_APIServer) LoadApiSales(context.Context, *ApiOrdersRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiSales not implemented")
+}
+func (UnimplementedWB_APIServer) GetApiSales(context.Context, *ApiOrdersRequest) (*ApiSales, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiSales not implemented")
 }
 func (UnimplementedWB_APIServer) mustEmbedUnimplementedWB_APIServer() {}
 
@@ -184,6 +212,42 @@ func _WB_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_API_LoadApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).LoadApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB_API/LoadApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).LoadApiSales(ctx, req.(*ApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).GetApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB_API/GetApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).GetApiSales(ctx, req.(*ApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_API_ServiceDesc is the grpc.ServiceDesc for WB_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +270,14 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApiOrders",
 			Handler:    _WB_API_GetApiOrders_Handler,
+		},
+		{
+			MethodName: "LoadApiSales",
+			Handler:    _WB_API_LoadApiSales_Handler,
+		},
+		{
+			MethodName: "GetApiSales",
+			Handler:    _WB_API_GetApiSales_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

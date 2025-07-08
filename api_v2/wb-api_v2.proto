@@ -11,5 +11,7 @@ service WB_API {
     rpc GetWarehouses (WBAuthParams) returns (Warehouses) {}
     rpc LoadApiOrders(ApiOrdersRequest) returns (StatusReply) {}
     rpc GetApiOrders(ApiOrdersRequest) returns (ApiOrders) {}
+    rpc LoadApiSales(ApiOrdersRequest) returns (StatusReply) {}
+    rpc GetApiSales(ApiOrdersRequest) returns (ApiSales) {}
 }
 

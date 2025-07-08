@@ -42,3 +42,18 @@ message ApiOrder {
 message ApiOrders {
     repeated ApiOrder data = 1;
 }
+
+message ApiSale {
+    string mongoID = 1;
+    string dt = 2;
+    string srid = 3;
+    int64 nmID = 4;
+    float finishedPrice = 5;
+    float forPay = 6;
+    string saleID = 7;
+    int64 companyID = 8;
+}
+
+message ApiSales {
+    repeated ApiSale data = 1;
+}
