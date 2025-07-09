@@ -30,7 +30,8 @@ type WB_APIClient interface {
 	GetApiSales(ctx context.Context, in *ApiOrdersRequest, opts ...grpc.CallOption) (*ApiSales, error)
 	LoadApiProducts(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiProducts(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*ApiProducts, error)
-	LoadApiStocks(ctx context.Context, in *ApiStockRequest, opts ...grpc.CallOption) (*ApiStockData, error)
+	LoadApiStocks(ctx context.Context, in *ApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiStocks(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*ApiStockData, error)
 }
 
 type wB_APIClient struct {
@@ -113,9 +114,18 @@ func (c *wB_APIClient) GetApiProducts(ctx context.Context, in *WBAuthParams, opt
 	return out, nil
 }
 
-func (c *wB_APIClient) LoadApiStocks(ctx context.Context, in *ApiStockRequest, opts ...grpc.CallOption) (*ApiStockData, error) {
-	out := new(ApiStockData)
+func (c *wB_APIClient) LoadApiStocks(ctx context.Context, in *ApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/LoadApiStocks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wB_APIClient) GetApiStocks(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*ApiStockData, error) {
+	out := new(ApiStockData)
+	err := c.cc.Invoke(ctx, "/cerasusV2.WB_API/GetApiStocks", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +144,8 @@ type WB_APIServer interface {
 	GetApiSales(context.Context, *ApiOrdersRequest) (*ApiSales, error)
 	LoadApiProducts(context.Context, *WBAuthParams) (*StatusReply, error)
 	GetApiProducts(context.Context, *WBAuthParams) (*ApiProducts, error)
-	LoadApiStocks(context.Context, *ApiStockRequest) (*ApiStockData, error)
+	LoadApiStocks(context.Context, *ApiStockRequest) (*StatusReply, error)
+	GetApiStocks(context.Context, *WBAuthParams) (*ApiStockData, error)
 	mustEmbedUnimplementedWB_APIServer()
 }
 
@@ -166,8 +177,11 @@ func (UnimplementedWB_APIServer) LoadApiProducts(context.Context, *WBAuthParams)
 func (UnimplementedWB_APIServer) GetApiProducts(context.Context, *WBAuthParams) (*ApiProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
 }
-func (UnimplementedWB_APIServer) LoadApiStocks(context.Context, *ApiStockRequest) (*ApiStockData, error) {
+func (UnimplementedWB_APIServer) LoadApiStocks(context.Context, *ApiStockRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadApiStocks not implemented")
+}
+func (UnimplementedWB_APIServer) GetApiStocks(context.Context, *WBAuthParams) (*ApiStockData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiStocks not implemented")
 }
 func (UnimplementedWB_APIServer) mustEmbedUnimplementedWB_APIServer() {}
 
@@ -344,6 +358,24 @@ func _WB_API_LoadApiStocks_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WBAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).GetApiStocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.WB_API/GetApiStocks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).GetApiStocks(ctx, req.(*WBAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_API_ServiceDesc is the grpc.ServiceDesc for WB_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoadApiStocks",
 			Handler:    _WB_API_LoadApiStocks_Handler,
+		},
+		{
+			MethodName: "GetApiStocks",
+			Handler:    _WB_API_GetApiStocks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
