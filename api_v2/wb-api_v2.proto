@@ -13,5 +13,7 @@ service WB_API {
     rpc GetApiOrders(ApiOrdersRequest) returns (ApiOrders) {}
     rpc LoadApiSales(ApiOrdersRequest) returns (StatusReply) {}
     rpc GetApiSales(ApiOrdersRequest) returns (ApiSales) {}
+    rpc LoadApiProducts(WBAuthParams) returns (StatusReply) {}
+    rpc GetApiProducts(WBAuthParams) returns (ApiProducts) {}
+    rpc LoadApiStocks(ApiStockRequest) returns (ApiStockData) {}
 }
-

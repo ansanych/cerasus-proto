@@ -564,6 +564,423 @@ func (x *ApiSales) GetData() []*ApiSale {
 	return nil
 }
 
+type ApiProductPhoto struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Big string `protobuf:"bytes,1,opt,name=big,proto3" json:"big,omitempty"`
+}
+
+func (x *ApiProductPhoto) Reset() {
+	*x = ApiProductPhoto{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiProductPhoto) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiProductPhoto) ProtoMessage() {}
+
+func (x *ApiProductPhoto) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiProductPhoto.ProtoReflect.Descriptor instead.
+func (*ApiProductPhoto) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ApiProductPhoto) GetBig() string {
+	if x != nil {
+		return x.Big
+	}
+	return ""
+}
+
+type ApiProductSize struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ChrtID   int64    `protobuf:"varint,1,opt,name=chrtID,proto3" json:"chrtID,omitempty"`
+	TechSize string   `protobuf:"bytes,2,opt,name=techSize,proto3" json:"techSize,omitempty"`
+	WbSize   string   `protobuf:"bytes,3,opt,name=wbSize,proto3" json:"wbSize,omitempty"`
+	Skus     []string `protobuf:"bytes,4,rep,name=skus,proto3" json:"skus,omitempty"`
+}
+
+func (x *ApiProductSize) Reset() {
+	*x = ApiProductSize{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiProductSize) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiProductSize) ProtoMessage() {}
+
+func (x *ApiProductSize) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiProductSize.ProtoReflect.Descriptor instead.
+func (*ApiProductSize) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ApiProductSize) GetChrtID() int64 {
+	if x != nil {
+		return x.ChrtID
+	}
+	return 0
+}
+
+func (x *ApiProductSize) GetTechSize() string {
+	if x != nil {
+		return x.TechSize
+	}
+	return ""
+}
+
+func (x *ApiProductSize) GetWbSize() string {
+	if x != nil {
+		return x.WbSize
+	}
+	return ""
+}
+
+func (x *ApiProductSize) GetSkus() []string {
+	if x != nil {
+		return x.Skus
+	}
+	return nil
+}
+
+type ApiProduct struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID      int64             `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	MongoProductID string            `protobuf:"bytes,2,opt,name=mongoProductID,proto3" json:"mongoProductID,omitempty"`
+	NmID           int64             `protobuf:"varint,3,opt,name=nmID,proto3" json:"nmID,omitempty"`
+	Name           string            `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Article        string            `protobuf:"bytes,5,opt,name=article,proto3" json:"article,omitempty"`
+	Size           []*ApiProductSize `protobuf:"bytes,6,rep,name=size,proto3" json:"size,omitempty"`
+}
+
+func (x *ApiProduct) Reset() {
+	*x = ApiProduct{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiProduct) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiProduct) ProtoMessage() {}
+
+func (x *ApiProduct) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiProduct.ProtoReflect.Descriptor instead.
+func (*ApiProduct) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ApiProduct) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *ApiProduct) GetMongoProductID() string {
+	if x != nil {
+		return x.MongoProductID
+	}
+	return ""
+}
+
+func (x *ApiProduct) GetNmID() int64 {
+	if x != nil {
+		return x.NmID
+	}
+	return 0
+}
+
+func (x *ApiProduct) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ApiProduct) GetArticle() string {
+	if x != nil {
+		return x.Article
+	}
+	return ""
+}
+
+func (x *ApiProduct) GetSize() []*ApiProductSize {
+	if x != nil {
+		return x.Size
+	}
+	return nil
+}
+
+type ApiProducts struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*ApiProduct `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *ApiProducts) Reset() {
+	*x = ApiProducts{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiProducts) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiProducts) ProtoMessage() {}
+
+func (x *ApiProducts) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiProducts.ProtoReflect.Descriptor instead.
+func (*ApiProducts) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ApiProducts) GetData() []*ApiProduct {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type ApiStockRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth        *WBAuthParams `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	WarehouseID []int32       `protobuf:"varint,2,rep,packed,name=warehouseID,proto3" json:"warehouseID,omitempty"`
+	Skus        []string      `protobuf:"bytes,3,rep,name=skus,proto3" json:"skus,omitempty"`
+}
+
+func (x *ApiStockRequest) Reset() {
+	*x = ApiStockRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiStockRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiStockRequest) ProtoMessage() {}
+
+func (x *ApiStockRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiStockRequest.ProtoReflect.Descriptor instead.
+func (*ApiStockRequest) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ApiStockRequest) GetAuth() *WBAuthParams {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *ApiStockRequest) GetWarehouseID() []int32 {
+	if x != nil {
+		return x.WarehouseID
+	}
+	return nil
+}
+
+func (x *ApiStockRequest) GetSkus() []string {
+	if x != nil {
+		return x.Skus
+	}
+	return nil
+}
+
+type ApiStockItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Sku   string `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
+	Count int32  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+}
+
+func (x *ApiStockItem) Reset() {
+	*x = ApiStockItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiStockItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiStockItem) ProtoMessage() {}
+
+func (x *ApiStockItem) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiStockItem.ProtoReflect.Descriptor instead.
+func (*ApiStockItem) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ApiStockItem) GetSku() string {
+	if x != nil {
+		return x.Sku
+	}
+	return ""
+}
+
+func (x *ApiStockItem) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+type ApiStockData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*ApiStockItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *ApiStockData) Reset() {
+	*x = ApiStockData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_data_v2_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiStockData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiStockData) ProtoMessage() {}
+
+func (x *ApiStockData) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_data_v2_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiStockData.ProtoReflect.Descriptor instead.
+func (*ApiStockData) Descriptor() ([]byte, []int) {
+	return file_wb_data_v2_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ApiStockData) GetData() []*ApiStockItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_wb_data_v2_proto protoreflect.FileDescriptor
 
 var file_wb_data_v2_proto_rawDesc = []byte{
@@ -630,10 +1047,50 @@ var file_wb_data_v2_proto_rawDesc = []byte{
 	0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x22, 0x32, 0x0a, 0x08, 0x41, 0x70, 0x69, 0x53, 0x61, 0x6c,
 	0x65, 0x73, 0x12, 0x26, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
 	0x32, 0x12, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41, 0x70, 0x69,
-	0x53, 0x61, 0x6c, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63,
-	0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x53, 0x61, 0x6c, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x23, 0x0a, 0x0f, 0x41, 0x70,
+	0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x50, 0x68, 0x6f, 0x74, 0x6f, 0x12, 0x10, 0x0a,
+	0x03, 0x62, 0x69, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x62, 0x69, 0x67, 0x22,
+	0x70, 0x0a, 0x0e, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x69, 0x7a,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x63, 0x68, 0x72, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x06, 0x63, 0x68, 0x72, 0x74, 0x49, 0x44, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x65, 0x63,
+	0x68, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x65, 0x63,
+	0x68, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x77, 0x62, 0x53, 0x69, 0x7a, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x77, 0x62, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x73, 0x6b, 0x75, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x73, 0x6b, 0x75,
+	0x73, 0x22, 0xc3, 0x01, 0x0a, 0x0a, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x12, 0x26,
+	0x0a, 0x0e, 0x6d, 0x6f, 0x6e, 0x67, 0x6f, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x6d, 0x6f, 0x6e, 0x67, 0x6f, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x6d, 0x49, 0x44, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x6e, 0x6d, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x12, 0x2d, 0x0a, 0x04, 0x73, 0x69, 0x7a, 0x65,
+	0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x56, 0x32, 0x2e, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x53, 0x69, 0x7a,
+	0x65, 0x52, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x22, 0x38, 0x0a, 0x0b, 0x41, 0x70, 0x69, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x29, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32,
+	0x2e, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x22, 0x74, 0x0a, 0x0f, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x2b, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x17, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x57,
+	0x42, 0x41, 0x75, 0x74, 0x68, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x04, 0x61, 0x75, 0x74,
+	0x68, 0x12, 0x20, 0x0a, 0x0b, 0x77, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x49, 0x44,
+	0x18, 0x02, 0x20, 0x03, 0x28, 0x05, 0x52, 0x0b, 0x77, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73,
+	0x65, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x6b, 0x75, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x04, 0x73, 0x6b, 0x75, 0x73, 0x22, 0x36, 0x0a, 0x0c, 0x41, 0x70, 0x69, 0x53, 0x74,
+	0x6f, 0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x73, 0x6b, 0x75, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22,
+	0x3b, 0x0a, 0x0c, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x12,
+	0x2b, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e,
+	0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x32, 0x2e, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f,
+	0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e,
+	0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -648,7 +1105,7 @@ func file_wb_data_v2_proto_rawDescGZIP() []byte {
 	return file_wb_data_v2_proto_rawDescData
 }
 
-var file_wb_data_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_wb_data_v2_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_wb_data_v2_proto_goTypes = []interface{}{
 	(*WBAuthData)(nil),       // 0: cerasusV2.WBAuthData
 	(*WBAuthParams)(nil),     // 1: cerasusV2.WBAuthParams
@@ -658,21 +1115,32 @@ var file_wb_data_v2_proto_goTypes = []interface{}{
 	(*ApiOrders)(nil),        // 5: cerasusV2.ApiOrders
 	(*ApiSale)(nil),          // 6: cerasusV2.ApiSale
 	(*ApiSales)(nil),         // 7: cerasusV2.ApiSales
-	(*Auth)(nil),             // 8: cerasusV2.Auth
-	(*ShopProduct)(nil),      // 9: cerasusV2.ShopProduct
+	(*ApiProductPhoto)(nil),  // 8: cerasusV2.ApiProductPhoto
+	(*ApiProductSize)(nil),   // 9: cerasusV2.ApiProductSize
+	(*ApiProduct)(nil),       // 10: cerasusV2.ApiProduct
+	(*ApiProducts)(nil),      // 11: cerasusV2.ApiProducts
+	(*ApiStockRequest)(nil),  // 12: cerasusV2.ApiStockRequest
+	(*ApiStockItem)(nil),     // 13: cerasusV2.ApiStockItem
+	(*ApiStockData)(nil),     // 14: cerasusV2.ApiStockData
+	(*Auth)(nil),             // 15: cerasusV2.Auth
+	(*ShopProduct)(nil),      // 16: cerasusV2.ShopProduct
 }
 var file_wb_data_v2_proto_depIdxs = []int32{
-	8, // 0: cerasusV2.WBAuthData.auth:type_name -> cerasusV2.Auth
-	8, // 1: cerasusV2.WBAuthParams.auth:type_name -> cerasusV2.Auth
-	9, // 2: cerasusV2.WBCounterParams.shopProducts:type_name -> cerasusV2.ShopProduct
-	1, // 3: cerasusV2.ApiOrdersRequest.auth:type_name -> cerasusV2.WBAuthParams
-	4, // 4: cerasusV2.ApiOrders.data:type_name -> cerasusV2.ApiOrder
-	6, // 5: cerasusV2.ApiSales.data:type_name -> cerasusV2.ApiSale
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	15, // 0: cerasusV2.WBAuthData.auth:type_name -> cerasusV2.Auth
+	15, // 1: cerasusV2.WBAuthParams.auth:type_name -> cerasusV2.Auth
+	16, // 2: cerasusV2.WBCounterParams.shopProducts:type_name -> cerasusV2.ShopProduct
+	1,  // 3: cerasusV2.ApiOrdersRequest.auth:type_name -> cerasusV2.WBAuthParams
+	4,  // 4: cerasusV2.ApiOrders.data:type_name -> cerasusV2.ApiOrder
+	6,  // 5: cerasusV2.ApiSales.data:type_name -> cerasusV2.ApiSale
+	9,  // 6: cerasusV2.ApiProduct.size:type_name -> cerasusV2.ApiProductSize
+	10, // 7: cerasusV2.ApiProducts.data:type_name -> cerasusV2.ApiProduct
+	1,  // 8: cerasusV2.ApiStockRequest.auth:type_name -> cerasusV2.WBAuthParams
+	13, // 9: cerasusV2.ApiStockData.data:type_name -> cerasusV2.ApiStockItem
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_wb_data_v2_proto_init() }
@@ -778,6 +1246,90 @@ func file_wb_data_v2_proto_init() {
 				return nil
 			}
 		}
+		file_wb_data_v2_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiProductPhoto); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiProductSize); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiProduct); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiProducts); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiStockRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiStockItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_data_v2_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiStockData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -785,7 +1337,7 @@ func file_wb_data_v2_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wb_data_v2_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

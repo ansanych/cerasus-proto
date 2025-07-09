@@ -57,3 +57,42 @@ message ApiSale {
 message ApiSales {
     repeated ApiSale data = 1;
 }
+
+message ApiProductPhoto {
+    string big = 1;
+}
+
+message ApiProductSize {
+    int64 chrtID = 1;
+    string techSize = 2;
+    string wbSize = 3;
+    repeated string skus = 4;
+}
+
+message ApiProduct {
+    int64 companyID = 1;
+    string mongoProductID = 2;
+    int64 nmID = 3;
+    string name = 4;
+    string article = 5;
+    repeated ApiProductSize size = 6;
+}
+
+message ApiProducts {
+    repeated ApiProduct data = 1;
+}
+
+message ApiStockRequest {
+    WBAuthParams auth = 1;
+    repeated int32 warehouseID = 2;
+    repeated string skus = 3;
+}
+
+message ApiStockItem {
+    string sku = 1;
+    int32 count = 2;
+}
+
+message ApiStockData {
+    repeated ApiStockItem data = 1;
+}
