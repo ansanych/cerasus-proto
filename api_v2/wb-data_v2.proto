@@ -76,6 +76,7 @@ message ApiProduct {
     string name = 4;
     string article = 5;
     repeated ApiProductSize size = 6;
+    repeated string file = 7;
 }
 
 message ApiProducts {
