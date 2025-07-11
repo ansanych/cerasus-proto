@@ -1,0 +1,20 @@
+syntax = "proto3";
+import "cerasus.proto";
+import "wb-data.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service WB_API {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetWarehouses (WBAuthParams) returns (Warehouses) {}
+    rpc LoadApiOrders(WBApiOrdersRequest) returns (StatusReply) {}
+    rpc GetApiOrders(WBApiOrdersRequest) returns (WBApiOrders) {}
+    rpc LoadApiSales(WBApiOrdersRequest) returns (StatusReply) {}
+    rpc GetApiSales(WBApiOrdersRequest) returns (WBApiSales) {}
+    rpc LoadApiProducts(WBAuthParams) returns (StatusReply) {}
+    rpc GetApiProducts(WBAuthParams) returns (WBApiProducts) {}
+    rpc LoadApiStocks(WBApiStockRequest) returns (StatusReply) {}
+    rpc GetApiStocks(WBAuthParams) returns (WBApiStockData) {}
+}

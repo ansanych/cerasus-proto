@@ -257,3 +257,116 @@ genLogger2:
 			--go-grpc_out ./api_v2 \
 			--go-grpc_opt paths=source_relative \
 			./api_v2/logger_v2.proto
+
+buildV3:
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/cerasus.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/auth.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/connector.proto
+	
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/datum.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/logger.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/products.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/settings.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/oz-data.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/oz.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/oz-api.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/wb-data.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/wb.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/wb-api.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/ym-data.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/ym.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/ym-api.proto

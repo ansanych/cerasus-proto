@@ -1,0 +1,19 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+message YMCounterParams {
+    string token = 1;
+    int64 businessID = 2;
+    repeated YMCampaign campaigns = 3;
+    repeated ShopProduct shopProducts = 4;
+}
+
+message YMAuthData {
+    string token = 1;
+    int64 businessID = 2;
+    Auth auth = 3;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+import "cerasus.proto";
+import "oz-data.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service OZ_API {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetWarehouses (OZAuthParams) returns (Warehouses) {}
+}

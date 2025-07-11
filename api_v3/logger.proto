@@ -1,0 +1,11 @@
+syntax = "proto3";
+import "cerasus.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Logger {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc SetLog (Log) returns (StatusReply) {}
+}
