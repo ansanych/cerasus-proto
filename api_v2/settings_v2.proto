@@ -8,21 +8,13 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Settings {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetUserAppData (Auth) returns (UserAppData) {}
-    rpc GetImage(ImageRequest) returns (ImageReply) {}
-    rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
-    rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
-    rpc DeleteMargin(RequestByID) returns (StatusReply) {}
-    rpc GetCompanyBrands (Auth) returns (Brands) {}
-    rpc GetBrand (RequestByID) returns (Brand) {}
-    rpc SearchBrands(SearchRequest) returns (Brands) {}
-    rpc ConnectCompanyBrand (RequestByID) returns (StatusReply) {}
-    rpc CreateCompanyBrand (CreateCompanyBrandRequest) returns (StatusReply) {}
-
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
     rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
     rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
     rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetCompanyBrands (Auth) returns (Brands) {}
+    rpc GetBrand (RequestByID) returns (Brand) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetTaxes(Auth) returns (Taxes) {}
     rpc GetMarginLevels (Auth) returns (MarginLevels) {}
@@ -30,15 +22,12 @@ service Settings {
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
     rpc GetCompanyShops(Auth) returns (CompanyShops) {}
+    rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
+    rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
+    rpc DeleteMargin(RequestByID) returns (StatusReply) {}
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
     rpc SetTax(SetTaxRequest) returns (StatusReply) {}
-    
-    rpc GetCompanyIDSByShop(RequestByShop) returns(CompanyList) {}
-}
-
-message CreateCompanyBrandRequest {
-    Auth auth = 1;
-    Brand brand = 2;
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
 
 message AppServiceData {

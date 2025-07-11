@@ -48,10 +48,6 @@ type YMClient interface {
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetShopProductByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
-	SetAuthData(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*StatusReply, error)
-	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
-	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
-	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type yMClient struct {
@@ -296,42 +292,6 @@ func (c *yMClient) GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opt
 	return out, nil
 }
 
-func (c *yMClient) SetAuthData(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.YM/SetAuthData", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *yMClient) GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error) {
-	out := new(ShopProductList)
-	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetUnsortedList", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *yMClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error) {
-	out := new(ShopProductSales)
-	err := c.cc.Invoke(ctx, "/cerasusV2.YM/GetShopProductSales", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *yMClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.YM/SetQueueJob", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -362,10 +322,6 @@ type YMServer interface {
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetShopProductByCode(context.Context, *SearchRequest) (*ShopProduct, error)
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
-	SetAuthData(context.Context, *YMAuthData) (*StatusReply, error)
-	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
-	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
-	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -450,18 +406,6 @@ func (UnimplementedYMServer) GetShopProductByCode(context.Context, *SearchReques
 }
 func (UnimplementedYMServer) GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrdersForBrand not implemented")
-}
-func (UnimplementedYMServer) SetAuthData(context.Context, *YMAuthData) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetAuthData not implemented")
-}
-func (UnimplementedYMServer) GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedList not implemented")
-}
-func (UnimplementedYMServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
-}
-func (UnimplementedYMServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -944,78 +888,6 @@ func _YM_GetOrdersForBrand_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _YM_SetAuthData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(YMAuthData)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).SetAuthData(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.YM/SetAuthData",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).SetAuthData(ctx, req.(*YMAuthData))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _YM_GetUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByIDs)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).GetUnsortedList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.YM/GetUnsortedList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).GetUnsortedList(ctx, req.(*RequestByIDs))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _YM_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).GetShopProductSales(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.YM/GetShopProductSales",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).GetShopProductSales(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueuerJob)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).SetQueueJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.YM/SetQueueJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).SetQueueJob(ctx, req.(*QueuerJob))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1126,22 +998,6 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrdersForBrand",
 			Handler:    _YM_GetOrdersForBrand_Handler,
-		},
-		{
-			MethodName: "SetAuthData",
-			Handler:    _YM_SetAuthData_Handler,
-		},
-		{
-			MethodName: "GetUnsortedList",
-			Handler:    _YM_GetUnsortedList_Handler,
-		},
-		{
-			MethodName: "GetShopProductSales",
-			Handler:    _YM_GetShopProductSales_Handler,
-		},
-		{
-			MethodName: "SetQueueJob",
-			Handler:    _YM_SetQueueJob_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

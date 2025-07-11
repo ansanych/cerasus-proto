@@ -69,11 +69,6 @@ message RequestByIDs {
     repeated int64 ID = 2;
 }
 
-message RequestByShop {
-    Auth auth = 1;
-    string shop = 2;
-}
-
 message SearchRequest {
     Auth auth = 1;
     string search = 2;
@@ -220,16 +215,11 @@ message Warehouse {
     string name = 1;
     int64 officeID = 2;
     int64 warehouseID = 3;
-    int32 cargoType = 4;
-    int32 deliveryType = 5;
+    bool cargoType = 4;
+    bool deliveryType = 5;
     bool active = 6;
     string updated = 7;
 }
-
-message Warehouses {
-    repeated Warehouse warehouses = 1;
-}
-
 message WBParams {
     repeated Warehouse warehouses = 1;
 }
@@ -339,7 +329,6 @@ message ShopProduct {
     int64 wbNMID = 9;
     int64 ozSku = 10;
     int64 companyID = 11;
-    int64 ymSku = 12;
 }
 
 message ShopProductList {
@@ -377,7 +366,6 @@ message OrderLeader {
     string shop = 4;
     int32 count = 5;
     int32 index = 6;
-    int64 shopProductID = 7;
 }
 
 message OrderLeaders {
@@ -504,7 +492,6 @@ message ParserSetRequest {
 message DetectorGetRequest {
     string detector = 1;
     bool getGob = 2;
-    bool testMode = 3;
 }
 
 message DetectorCount {
@@ -525,7 +512,6 @@ message DetectorGetReply {
     string client = 2;
     DetectorWork work = 3;
     DetectorCount count = 4;
-    bool testMode = 5;
 }
 
 message DetectorSetRequest {
@@ -592,23 +578,4 @@ message OrdersRequest {
     int64 companyID = 1;
     repeated int64 productID = 2;
     string dateFrom = 3;
-}
-
-message ShopProductSale {
-    int64 shopProductID = 1;
-    int32 count = 2;
-    float sum = 3;
-}
-
-message ShopProductSales {
-    repeated ShopProductSale data = 1;
-}
-
-message QueuerJob {
-    int64 ID = 1;
-    int64 companyID = 2;
-    string name = 3;
-    int32 status = 4;
-    bool done = 5;
-    string error = 6;
 }

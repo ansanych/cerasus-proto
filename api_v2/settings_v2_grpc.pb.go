@@ -24,20 +24,13 @@ const _ = grpc.SupportPackageIsVersion7
 type SettingsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetUserAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UserAppData, error)
-	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
-	GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error)
-	SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
-	GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error)
-	GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
-	SearchBrands(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Brands, error)
-	ConnectCompanyBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
-	CreateCompanyBrand(ctx context.Context, in *CreateCompanyBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 	GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 	GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error)
+	GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error)
+	GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Taxes, error)
 	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
@@ -45,9 +38,12 @@ type SettingsClient interface {
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	SetGeoPlace(ctx context.Context, in *SetGeoPlaceRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompanyShops(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*CompanyShops, error)
+	GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error)
+	SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 	SetTax(ctx context.Context, in *SetTaxRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetCompanyIDSByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error)
+	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 }
 
 type settingsClient struct {
@@ -70,87 +66,6 @@ func (c *settingsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 func (c *settingsClient) GetUserAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UserAppData, error) {
 	out := new(UserAppData)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetUserAppData", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
-	out := new(ImageReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetImage", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error) {
-	out := new(MarginSettings)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetMargin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SetMargin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/DeleteMargin", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error) {
-	out := new(Brands)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetCompanyBrands", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error) {
-	out := new(Brand)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetBrand", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) SearchBrands(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Brands, error) {
-	out := new(Brands)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SearchBrands", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) ConnectCompanyBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/ConnectCompanyBrand", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingsClient) CreateCompanyBrand(ctx context.Context, in *CreateCompanyBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/CreateCompanyBrand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -196,6 +111,24 @@ func (c *settingsClient) GetWeekGraphic(ctx context.Context, in *LineGraphReques
 func (c *settingsClient) GetOrderLeaders(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OrderLeaders, error) {
 	out := new(OrderLeaders)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetOrderLeaders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error) {
+	out := new(Brands)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetCompanyBrands", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error) {
+	out := new(Brand)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetBrand", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -265,6 +198,33 @@ func (c *settingsClient) GetCompanyShops(ctx context.Context, in *Auth, opts ...
 	return out, nil
 }
 
+func (c *settingsClient) GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error) {
+	out := new(MarginSettings)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SetMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/DeleteMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *settingsClient) GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error) {
 	out := new(AppTaxes)
 	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetAppTaxes", in, out, opts...)
@@ -283,9 +243,9 @@ func (c *settingsClient) SetTax(ctx context.Context, in *SetTaxRequest, opts ...
 	return out, nil
 }
 
-func (c *settingsClient) GetCompanyIDSByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error) {
-	out := new(CompanyList)
-	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetCompanyIDSByShop", in, out, opts...)
+func (c *settingsClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error) {
+	out := new(ImageReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/GetImage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -298,20 +258,13 @@ func (c *settingsClient) GetCompanyIDSByShop(ctx context.Context, in *RequestByS
 type SettingsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetUserAppData(context.Context, *Auth) (*UserAppData, error)
-	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
-	GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error)
-	SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error)
-	DeleteMargin(context.Context, *RequestByID) (*StatusReply, error)
-	GetCompanyBrands(context.Context, *Auth) (*Brands, error)
-	GetBrand(context.Context, *RequestByID) (*Brand, error)
-	SearchBrands(context.Context, *SearchRequest) (*Brands, error)
-	ConnectCompanyBrand(context.Context, *RequestByID) (*StatusReply, error)
-	CreateCompanyBrand(context.Context, *CreateCompanyBrandRequest) (*StatusReply, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error)
+	GetCompanyBrands(context.Context, *Auth) (*Brands, error)
+	GetBrand(context.Context, *RequestByID) (*Brand, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetTaxes(context.Context, *Auth) (*Taxes, error)
 	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
@@ -319,9 +272,12 @@ type SettingsServer interface {
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	SetGeoPlace(context.Context, *SetGeoPlaceRequest) (*StatusReply, error)
 	GetCompanyShops(context.Context, *Auth) (*CompanyShops, error)
+	GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error)
+	SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error)
+	DeleteMargin(context.Context, *RequestByID) (*StatusReply, error)
 	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	SetTax(context.Context, *SetTaxRequest) (*StatusReply, error)
-	GetCompanyIDSByShop(context.Context, *RequestByShop) (*CompanyList, error)
+	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -334,33 +290,6 @@ func (UnimplementedSettingsServer) Ping(context.Context, *PingRequest) (*PingRep
 }
 func (UnimplementedSettingsServer) GetUserAppData(context.Context, *Auth) (*UserAppData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAppData not implemented")
-}
-func (UnimplementedSettingsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
-}
-func (UnimplementedSettingsServer) GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMargin not implemented")
-}
-func (UnimplementedSettingsServer) SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetMargin not implemented")
-}
-func (UnimplementedSettingsServer) DeleteMargin(context.Context, *RequestByID) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteMargin not implemented")
-}
-func (UnimplementedSettingsServer) GetCompanyBrands(context.Context, *Auth) (*Brands, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyBrands not implemented")
-}
-func (UnimplementedSettingsServer) GetBrand(context.Context, *RequestByID) (*Brand, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
-}
-func (UnimplementedSettingsServer) SearchBrands(context.Context, *SearchRequest) (*Brands, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchBrands not implemented")
-}
-func (UnimplementedSettingsServer) ConnectCompanyBrand(context.Context, *RequestByID) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConnectCompanyBrand not implemented")
-}
-func (UnimplementedSettingsServer) CreateCompanyBrand(context.Context, *CreateCompanyBrandRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCompanyBrand not implemented")
 }
 func (UnimplementedSettingsServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
@@ -376,6 +305,12 @@ func (UnimplementedSettingsServer) GetWeekGraphic(context.Context, *LineGraphReq
 }
 func (UnimplementedSettingsServer) GetOrderLeaders(context.Context, *Auth) (*OrderLeaders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
+}
+func (UnimplementedSettingsServer) GetCompanyBrands(context.Context, *Auth) (*Brands, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyBrands not implemented")
+}
+func (UnimplementedSettingsServer) GetBrand(context.Context, *RequestByID) (*Brand, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBrand not implemented")
 }
 func (UnimplementedSettingsServer) GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductGraphics not implemented")
@@ -398,14 +333,23 @@ func (UnimplementedSettingsServer) SetGeoPlace(context.Context, *SetGeoPlaceRequ
 func (UnimplementedSettingsServer) GetCompanyShops(context.Context, *Auth) (*CompanyShops, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyShops not implemented")
 }
+func (UnimplementedSettingsServer) GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMargin not implemented")
+}
+func (UnimplementedSettingsServer) SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetMargin not implemented")
+}
+func (UnimplementedSettingsServer) DeleteMargin(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMargin not implemented")
+}
 func (UnimplementedSettingsServer) GetAppTaxes(context.Context, *Auth) (*AppTaxes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppTaxes not implemented")
 }
 func (UnimplementedSettingsServer) SetTax(context.Context, *SetTaxRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetTax not implemented")
 }
-func (UnimplementedSettingsServer) GetCompanyIDSByShop(context.Context, *RequestByShop) (*CompanyList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyIDSByShop not implemented")
+func (UnimplementedSettingsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -452,168 +396,6 @@ func _Settings_GetUserAppData_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingsServer).GetUserAppData(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetImage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetImage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetImage(ctx, req.(*ImageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_GetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMarginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetMargin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetMargin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetMargin(ctx, req.(*GetMarginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_SetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetMarginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).SetMargin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/SetMargin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).SetMargin(ctx, req.(*SetMarginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_DeleteMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).DeleteMargin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/DeleteMargin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).DeleteMargin(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_GetCompanyBrands_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetCompanyBrands(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetCompanyBrands",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetCompanyBrands(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetBrand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetBrand(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_SearchBrands_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).SearchBrands(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/SearchBrands",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).SearchBrands(ctx, req.(*SearchRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_ConnectCompanyBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).ConnectCompanyBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/ConnectCompanyBrand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).ConnectCompanyBrand(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Settings_CreateCompanyBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCompanyBrandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).CreateCompanyBrand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/CreateCompanyBrand",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).CreateCompanyBrand(ctx, req.(*CreateCompanyBrandRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -704,6 +486,42 @@ func _Settings_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingsServer).GetOrderLeaders(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetCompanyBrands_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetCompanyBrands(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetCompanyBrands",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetCompanyBrands(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetBrand(ctx, req.(*RequestByID))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -834,6 +652,60 @@ func _Settings_GetCompanyShops_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_GetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMarginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/GetMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMargin(ctx, req.(*GetMarginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_SetMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetMarginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SetMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/SetMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SetMargin(ctx, req.(*SetMarginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_DeleteMargin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).DeleteMargin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/DeleteMargin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).DeleteMargin(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Settings_GetAppTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -870,20 +742,20 @@ func _Settings_SetTax_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Settings_GetCompanyIDSByShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByShop)
+func _Settings_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingsServer).GetCompanyIDSByShop(ctx, in)
+		return srv.(SettingsServer).GetImage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cerasusV2.Settings/GetCompanyIDSByShop",
+		FullMethod: "/cerasusV2.Settings/GetImage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetCompanyIDSByShop(ctx, req.(*RequestByShop))
+		return srv.(SettingsServer).GetImage(ctx, req.(*ImageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -904,42 +776,6 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Settings_GetUserAppData_Handler,
 		},
 		{
-			MethodName: "GetImage",
-			Handler:    _Settings_GetImage_Handler,
-		},
-		{
-			MethodName: "GetMargin",
-			Handler:    _Settings_GetMargin_Handler,
-		},
-		{
-			MethodName: "SetMargin",
-			Handler:    _Settings_SetMargin_Handler,
-		},
-		{
-			MethodName: "DeleteMargin",
-			Handler:    _Settings_DeleteMargin_Handler,
-		},
-		{
-			MethodName: "GetCompanyBrands",
-			Handler:    _Settings_GetCompanyBrands_Handler,
-		},
-		{
-			MethodName: "GetBrand",
-			Handler:    _Settings_GetBrand_Handler,
-		},
-		{
-			MethodName: "SearchBrands",
-			Handler:    _Settings_SearchBrands_Handler,
-		},
-		{
-			MethodName: "ConnectCompanyBrand",
-			Handler:    _Settings_ConnectCompanyBrand_Handler,
-		},
-		{
-			MethodName: "CreateCompanyBrand",
-			Handler:    _Settings_CreateCompanyBrand_Handler,
-		},
-		{
 			MethodName: "GetMainGraphic",
 			Handler:    _Settings_GetMainGraphic_Handler,
 		},
@@ -958,6 +794,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrderLeaders",
 			Handler:    _Settings_GetOrderLeaders_Handler,
+		},
+		{
+			MethodName: "GetCompanyBrands",
+			Handler:    _Settings_GetCompanyBrands_Handler,
+		},
+		{
+			MethodName: "GetBrand",
+			Handler:    _Settings_GetBrand_Handler,
 		},
 		{
 			MethodName: "GetProductGraphics",
@@ -988,6 +832,18 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Settings_GetCompanyShops_Handler,
 		},
 		{
+			MethodName: "GetMargin",
+			Handler:    _Settings_GetMargin_Handler,
+		},
+		{
+			MethodName: "SetMargin",
+			Handler:    _Settings_SetMargin_Handler,
+		},
+		{
+			MethodName: "DeleteMargin",
+			Handler:    _Settings_DeleteMargin_Handler,
+		},
+		{
 			MethodName: "GetAppTaxes",
 			Handler:    _Settings_GetAppTaxes_Handler,
 		},
@@ -996,8 +852,8 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Settings_SetTax_Handler,
 		},
 		{
-			MethodName: "GetCompanyIDSByShop",
-			Handler:    _Settings_GetCompanyIDSByShop_Handler,
+			MethodName: "GetImage",
+			Handler:    _Settings_GetImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
