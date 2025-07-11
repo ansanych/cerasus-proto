@@ -1,0 +1,123 @@
+syntax = "proto3";
+import "cerasusV3.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+service Settings {
+    rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetUserAppData (Auth) returns (UserAppData) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
+    rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
+    rpc DeleteMargin(RequestByID) returns (StatusReply) {}
+    rpc GetCompanyBrands (Auth) returns (Brands) {}
+    rpc GetBrand (RequestByID) returns (Brand) {}
+    rpc SearchBrands(SearchRequest) returns (Brands) {}
+    rpc ConnectCompanyBrand (RequestByID) returns (StatusReply) {}
+    rpc CreateCompanyBrand (CreateCompanyBrandRequest) returns (StatusReply) {}
+
+    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
+    rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+    rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
+    rpc GetTaxes(Auth) returns (Taxes) {}
+    rpc GetMarginLevels (Auth) returns (MarginLevels) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
+    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
+    rpc SetGeoPlace(SetGeoPlaceRequest) returns (StatusReply) {}
+    rpc GetCompanyShops(Auth) returns (CompanyShops) {}
+    rpc GetAppTaxes(Auth) returns (AppTaxes) {}
+    rpc SetTax(SetTaxRequest) returns (StatusReply) {}
+    
+    rpc GetCompanyIDSByShop(RequestByShop) returns(CompanyList) {}
+}
+
+message CreateCompanyBrandRequest {
+    Auth auth = 1;
+    Brand brand = 2;
+}
+
+message AppServiceData {
+    string code = 1;
+    ServiceStatus status = 2;
+    string startDate = 3;
+    string endDate = 4;
+    int32 limit = 5;
+    bool access = 6;
+}
+
+message UserAppData {
+    repeated AppShopData shops = 1;
+    repeated AppServiceData services = 2;
+}
+
+message MarginLevel {
+    Level level = 1;
+    float value = 2;
+    string date = 3;
+}
+
+message MarginLevelsBrand {
+    Brand brand = 1;
+    repeated MarginLevel levels = 2;
+}
+
+message MarginLevels {
+    repeated MarginLevel levels = 1;
+    repeated MarginLevelsBrand brandLevels = 2;
+}
+
+message SetGeoPlaceRequest {
+    repeated GeoPlaceData data = 1;
+}
+
+message CompanyShop {
+    string code = 1;
+    bool active = 2;
+}
+
+message CompanyShops {
+    repeated CompanyShop data = 1;
+}
+
+//--
+
+message MarginData {
+    int64 ID = 1;
+    float min = 2;
+    float mid = 3;
+    float max = 4;
+    string date = 5;
+}
+
+message MarginHistory {
+    repeated MarginData data = 1;
+}
+
+message MarginSettings {
+    MarginData data = 1;
+    MarginHistory history = 2;
+}
+
+message GetMarginRequest {
+    Auth auth = 1;
+    int64 brandID = 2;
+}
+
+message SetMarginRequest {
+    Auth auth = 1;
+    MarginData data = 2;
+    int64 brandID = 3;
+}
+
+///---
+message SetTaxRequest {
+    Auth auth = 1;
+    int32 year = 2;
+    int64 ID = 3;
+    float value = 4;
+}

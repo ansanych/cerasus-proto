@@ -1,0 +1,100 @@
+syntax = "proto3";
+import "cerasusV3.proto";
+
+package cerasusV3;
+
+option go_package = "github.com/ansanych/cerasus-proto";
+
+message WBAuthData {
+    Auth auth = 1;
+    string token = 2;
+}
+
+message WBAuthParams {
+    Auth auth = 1;
+    string token = 2;
+}
+
+message WBCounterParams {
+    string token = 1;
+    repeated int64 warehouses = 2;
+    repeated ShopProduct shopProducts = 3;
+}
+
+message WBApiOrdersRequest {
+    WBAuthParams auth = 1;
+    string dateFrom = 2;
+    int64 companyID = 3;
+    repeated string mongoID = 4;
+}
+
+message WBApiOrder {
+    string mongoID = 1;
+    string dt = 2;
+    string srid = 3;
+    int64 nmID = 4;
+    float finishedPrice = 5;
+    bool isCancel = 6;
+    string cancelDate = 7;
+    int64 companyID = 8;
+}
+
+message WBApiOrders {
+    repeated WBApiOrder data = 1;
+}
+
+message WBApiSale {
+    string mongoID = 1;
+    string dt = 2;
+    string srid = 3;
+    int64 nmID = 4;
+    float finishedPrice = 5;
+    float forPay = 6;
+    string saleID = 7;
+    int64 companyID = 8;
+}
+
+message WBApiSales {
+    repeated WBApiSale data = 1;
+}
+
+message WBApiProductPhoto {
+    string big = 1;
+}
+
+message WBApiProductSize {
+    int64 chrtID = 1;
+    string techSize = 2;
+    string wbSize = 3;
+    repeated string skus = 4;
+}
+
+message WBApiProduct {
+    int64 companyID = 1;
+    string mongoProductID = 2;
+    int64 nmID = 3;
+    string name = 4;
+    string article = 5;
+    repeated WBApiProductSize size = 6;
+    repeated string file = 7;
+    repeated string sku = 8;
+}
+
+message WBApiProducts {
+    repeated WBApiProduct data = 1;
+}
+
+message WBApiStockRequest {
+    WBAuthParams auth = 1;
+    repeated int32 warehouseID = 2;
+    repeated string skus = 3;
+}
+
+message WBApiStockItem {
+    string sku = 1;
+    int32 count = 2;
+}
+
+message WBApiStockData {
+    repeated WBApiStockItem data = 1;
+}
