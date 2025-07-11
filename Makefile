@@ -370,3 +370,10 @@ buildV3:
 			--go-grpc_out ./api_v3 \
 			--go-grpc_opt paths=source_relative \
 			./api_v3/ym-apiV3.proto
+
+	protoc -I ./api_v3 \
+			--go_out ./api_v3 \
+			--go_opt paths=source_relative \
+			--go-grpc_out ./api_v3 \
+			--go-grpc_opt paths=source_relative \
+			./api_v3/queuerV3.proto
