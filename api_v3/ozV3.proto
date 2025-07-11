@@ -41,6 +41,7 @@ service OZ {
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
 
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
+    rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
 }
 
 message OZCounterParams {

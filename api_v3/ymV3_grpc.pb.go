@@ -52,6 +52,7 @@ type YMClient interface {
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 }
 
 type yMClient struct {
@@ -332,6 +333,15 @@ func (c *yMClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.
 	return out, nil
 }
 
+func (c *yMClient) GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetConnectedCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -366,6 +376,7 @@ type YMServer interface {
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -462,6 +473,9 @@ func (UnimplementedYMServer) GetShopProductSales(context.Context, *Auth) (*ShopP
 }
 func (UnimplementedYMServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
+}
+func (UnimplementedYMServer) GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompanies not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -1016,6 +1030,24 @@ func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetConnectedCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM/GetConnectedCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetConnectedCompanies(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1142,6 +1174,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetQueueJob",
 			Handler:    _YM_SetQueueJob_Handler,
+		},
+		{
+			MethodName: "GetConnectedCompanies",
+			Handler:    _YM_GetConnectedCompanies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -54,6 +54,7 @@ type OZClient interface {
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 }
 
 type oZClient struct {
@@ -352,6 +353,15 @@ func (c *oZClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.
 	return out, nil
 }
 
+func (c *oZClient) GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetConnectedCompanies", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
@@ -388,6 +398,7 @@ type OZServer interface {
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -490,6 +501,9 @@ func (UnimplementedOZServer) GetShopProductSales(context.Context, *Auth) (*ShopP
 }
 func (UnimplementedOZServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
+}
+func (UnimplementedOZServer) GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompanies not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -1080,6 +1094,24 @@ func _OZ_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetConnectedCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetConnectedCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetConnectedCompanies(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_ServiceDesc is the grpc.ServiceDesc for OZ service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1214,6 +1246,10 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetQueueJob",
 			Handler:    _OZ_SetQueueJob_Handler,
+		},
+		{
+			MethodName: "GetConnectedCompanies",
+			Handler:    _OZ_GetConnectedCompanies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

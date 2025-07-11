@@ -25,7 +25,7 @@ var file_ymV3_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x79, 0x6d, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x09, 0x63, 0x65,
 	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x1a, 0x0f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
 	0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x0f, 0x79, 0x6d, 0x2d, 0x64, 0x61, 0x74,
-	0x61, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xda, 0x0f, 0x0a, 0x02, 0x59, 0x4d,
+	0x61, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xa5, 0x10, 0x0a, 0x02, 0x59, 0x4d,
 	0x12, 0x36, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
 	0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69, 0x6e,
@@ -151,10 +151,14 @@ var file_ymV3_proto_rawDesc = []byte{
 	0x65, 0x75, 0x65, 0x4a, 0x6f, 0x62, 0x12, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
 	0x56, 0x33, 0x2e, 0x51, 0x75, 0x65, 0x75, 0x65, 0x72, 0x4a, 0x6f, 0x62, 0x1a, 0x16, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x49, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x43, 0x6f, 0x6e,
+	0x6e, 0x65, 0x63, 0x74, 0x65, 0x64, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x12,
+	0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69, 0x6e, 0x67,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x56, 0x33, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x22,
+	0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_ymV3_proto_goTypes = []interface{}{
@@ -191,6 +195,7 @@ var file_ymV3_proto_goTypes = []interface{}{
 	(*ImageReply)(nil),           // 30: cerasusV3.ImageReply
 	(*Orders)(nil),               // 31: cerasusV3.Orders
 	(*ShopProductSales)(nil),     // 32: cerasusV3.ShopProductSales
+	(*CompanyList)(nil),          // 33: cerasusV3.CompanyList
 }
 var file_ymV3_proto_depIdxs = []int32{
 	0,  // 0: cerasusV3.YM.Ping:input_type -> cerasusV3.PingRequest
@@ -223,38 +228,40 @@ var file_ymV3_proto_depIdxs = []int32{
 	3,  // 27: cerasusV3.YM.GetUnsortedList:input_type -> cerasusV3.RequestByIDs
 	1,  // 28: cerasusV3.YM.GetShopProductSales:input_type -> cerasusV3.Auth
 	12, // 29: cerasusV3.YM.SetQueueJob:input_type -> cerasusV3.QueuerJob
-	13, // 30: cerasusV3.YM.Ping:output_type -> cerasusV3.PingReply
-	14, // 31: cerasusV3.YM.GetAppData:output_type -> cerasusV3.AppShopData
-	15, // 32: cerasusV3.YM.GetShopData:output_type -> cerasusV3.ShopData
-	16, // 33: cerasusV3.YM.GetShopWidget:output_type -> cerasusV3.ShopWidget
-	17, // 34: cerasusV3.YM.GetMainGraphic:output_type -> cerasusV3.LineGraph
-	18, // 35: cerasusV3.YM.GetProductsCount:output_type -> cerasusV3.Count
-	18, // 36: cerasusV3.YM.GetProductsCountUnsorted:output_type -> cerasusV3.Count
-	18, // 37: cerasusV3.YM.GetFlowGraphicData:output_type -> cerasusV3.Count
-	18, // 38: cerasusV3.YM.GetMarginGraphicData:output_type -> cerasusV3.Count
-	19, // 39: cerasusV3.YM.GetWeekGraphic:output_type -> cerasusV3.WeekGraphic
-	20, // 40: cerasusV3.YM.GetPayRoundGraphic:output_type -> cerasusV3.RoundGraphic
-	20, // 41: cerasusV3.YM.GetCountRoundGraphic:output_type -> cerasusV3.RoundGraphic
-	21, // 42: cerasusV3.YM.GetOrderLeaders:output_type -> cerasusV3.OrderLeaders
-	22, // 43: cerasusV3.YM.GetShopProducts:output_type -> cerasusV3.ShopProductList
-	23, // 44: cerasusV3.YM.GetShopProduct:output_type -> cerasusV3.ShopProduct
-	24, // 45: cerasusV3.YM.GetProductGraphics:output_type -> cerasusV3.LineGraphics
-	25, // 46: cerasusV3.YM.GetSales:output_type -> cerasusV3.Sales
-	26, // 47: cerasusV3.YM.GetProductWidget:output_type -> cerasusV3.ProductWidgets
-	26, // 48: cerasusV3.YM.GetProductWidgetOrders:output_type -> cerasusV3.ProductWidgets
-	27, // 49: cerasusV3.YM.GetSale:output_type -> cerasusV3.Sale
-	22, // 50: cerasusV3.YM.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
-	28, // 51: cerasusV3.YM.SetShopProductUrl:output_type -> cerasusV3.StatusReply
-	29, // 52: cerasusV3.YM.GetCounterParams:output_type -> cerasusV3.YMCounterParams
-	30, // 53: cerasusV3.YM.GetImage:output_type -> cerasusV3.ImageReply
-	23, // 54: cerasusV3.YM.GetShopProductByCode:output_type -> cerasusV3.ShopProduct
-	31, // 55: cerasusV3.YM.GetOrdersForBrand:output_type -> cerasusV3.Orders
-	28, // 56: cerasusV3.YM.SetAuthData:output_type -> cerasusV3.StatusReply
-	22, // 57: cerasusV3.YM.GetUnsortedList:output_type -> cerasusV3.ShopProductList
-	32, // 58: cerasusV3.YM.GetShopProductSales:output_type -> cerasusV3.ShopProductSales
-	28, // 59: cerasusV3.YM.SetQueueJob:output_type -> cerasusV3.StatusReply
-	30, // [30:60] is the sub-list for method output_type
-	0,  // [0:30] is the sub-list for method input_type
+	0,  // 30: cerasusV3.YM.GetConnectedCompanies:input_type -> cerasusV3.PingRequest
+	13, // 31: cerasusV3.YM.Ping:output_type -> cerasusV3.PingReply
+	14, // 32: cerasusV3.YM.GetAppData:output_type -> cerasusV3.AppShopData
+	15, // 33: cerasusV3.YM.GetShopData:output_type -> cerasusV3.ShopData
+	16, // 34: cerasusV3.YM.GetShopWidget:output_type -> cerasusV3.ShopWidget
+	17, // 35: cerasusV3.YM.GetMainGraphic:output_type -> cerasusV3.LineGraph
+	18, // 36: cerasusV3.YM.GetProductsCount:output_type -> cerasusV3.Count
+	18, // 37: cerasusV3.YM.GetProductsCountUnsorted:output_type -> cerasusV3.Count
+	18, // 38: cerasusV3.YM.GetFlowGraphicData:output_type -> cerasusV3.Count
+	18, // 39: cerasusV3.YM.GetMarginGraphicData:output_type -> cerasusV3.Count
+	19, // 40: cerasusV3.YM.GetWeekGraphic:output_type -> cerasusV3.WeekGraphic
+	20, // 41: cerasusV3.YM.GetPayRoundGraphic:output_type -> cerasusV3.RoundGraphic
+	20, // 42: cerasusV3.YM.GetCountRoundGraphic:output_type -> cerasusV3.RoundGraphic
+	21, // 43: cerasusV3.YM.GetOrderLeaders:output_type -> cerasusV3.OrderLeaders
+	22, // 44: cerasusV3.YM.GetShopProducts:output_type -> cerasusV3.ShopProductList
+	23, // 45: cerasusV3.YM.GetShopProduct:output_type -> cerasusV3.ShopProduct
+	24, // 46: cerasusV3.YM.GetProductGraphics:output_type -> cerasusV3.LineGraphics
+	25, // 47: cerasusV3.YM.GetSales:output_type -> cerasusV3.Sales
+	26, // 48: cerasusV3.YM.GetProductWidget:output_type -> cerasusV3.ProductWidgets
+	26, // 49: cerasusV3.YM.GetProductWidgetOrders:output_type -> cerasusV3.ProductWidgets
+	27, // 50: cerasusV3.YM.GetSale:output_type -> cerasusV3.Sale
+	22, // 51: cerasusV3.YM.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
+	28, // 52: cerasusV3.YM.SetShopProductUrl:output_type -> cerasusV3.StatusReply
+	29, // 53: cerasusV3.YM.GetCounterParams:output_type -> cerasusV3.YMCounterParams
+	30, // 54: cerasusV3.YM.GetImage:output_type -> cerasusV3.ImageReply
+	23, // 55: cerasusV3.YM.GetShopProductByCode:output_type -> cerasusV3.ShopProduct
+	31, // 56: cerasusV3.YM.GetOrdersForBrand:output_type -> cerasusV3.Orders
+	28, // 57: cerasusV3.YM.SetAuthData:output_type -> cerasusV3.StatusReply
+	22, // 58: cerasusV3.YM.GetUnsortedList:output_type -> cerasusV3.ShopProductList
+	32, // 59: cerasusV3.YM.GetShopProductSales:output_type -> cerasusV3.ShopProductSales
+	28, // 60: cerasusV3.YM.SetQueueJob:output_type -> cerasusV3.StatusReply
+	33, // 61: cerasusV3.YM.GetConnectedCompanies:output_type -> cerasusV3.CompanyList
+	31, // [31:62] is the sub-list for method output_type
+	0,  // [0:31] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

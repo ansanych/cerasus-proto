@@ -107,7 +107,7 @@ var file_ozV3_proto_rawDesc = []byte{
 	0x73, 0x12, 0x3a, 0x0a, 0x0c, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
 	0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
 	0x73, 0x56, 0x33, 0x2e, 0x53, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52,
-	0x0c, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x32, 0xd3, 0x10,
+	0x0c, 0x73, 0x68, 0x6f, 0x70, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x32, 0x9e, 0x11,
 	0x0a, 0x02, 0x4f, 0x5a, 0x12, 0x36, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x2e, 0x63,
 	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33,
@@ -241,9 +241,14 @@ var file_ozV3_proto_rawDesc = []byte{
 	0x4a, 0x6f, 0x62, 0x12, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e,
 	0x51, 0x75, 0x65, 0x75, 0x65, 0x72, 0x4a, 0x6f, 0x62, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61,
 	0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x70, 0x6c,
-	0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73,
-	0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x79, 0x22, 0x00, 0x12, 0x49, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
+	0x74, 0x65, 0x64, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x69, 0x65, 0x73, 0x12, 0x16, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33,
+	0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x00, 0x42, 0x23,
+	0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73,
+	0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -293,6 +298,7 @@ var file_ozV3_proto_goTypes = []interface{}{
 	(*ImageReply)(nil),           // 30: cerasusV3.ImageReply
 	(*Orders)(nil),               // 31: cerasusV3.Orders
 	(*ShopProductSales)(nil),     // 32: cerasusV3.ShopProductSales
+	(*CompanyList)(nil),          // 33: cerasusV3.CompanyList
 }
 var file_ozV3_proto_depIdxs = []int32{
 	1,  // 0: cerasusV3.OZCounterParams.shopProducts:type_name -> cerasusV3.ShopProduct
@@ -328,40 +334,42 @@ var file_ozV3_proto_depIdxs = []int32{
 	13, // 30: cerasusV3.OZ.GetOrdersForBrand:input_type -> cerasusV3.OrdersRequest
 	3,  // 31: cerasusV3.OZ.GetShopProductSales:input_type -> cerasusV3.Auth
 	14, // 32: cerasusV3.OZ.SetQueueJob:input_type -> cerasusV3.QueuerJob
-	15, // 33: cerasusV3.OZ.Ping:output_type -> cerasusV3.PingReply
-	16, // 34: cerasusV3.OZ.GetAppData:output_type -> cerasusV3.AppShopData
-	17, // 35: cerasusV3.OZ.SetAuthData:output_type -> cerasusV3.StatusReply
-	4,  // 36: cerasusV3.OZ.GetAuthData:output_type -> cerasusV3.OZAuthParams
-	17, // 37: cerasusV3.OZ.ResetAuthData:output_type -> cerasusV3.StatusReply
-	18, // 38: cerasusV3.OZ.GetUnsortedList:output_type -> cerasusV3.ShopProductList
-	19, // 39: cerasusV3.OZ.GetShopData:output_type -> cerasusV3.ShopData
-	20, // 40: cerasusV3.OZ.GetShopWidget:output_type -> cerasusV3.ShopWidget
-	21, // 41: cerasusV3.OZ.GetMainGraphic:output_type -> cerasusV3.LineGraph
-	22, // 42: cerasusV3.OZ.GetProductsCount:output_type -> cerasusV3.Count
-	22, // 43: cerasusV3.OZ.GetProductsCountUnsorted:output_type -> cerasusV3.Count
-	22, // 44: cerasusV3.OZ.GetFlowGraphicData:output_type -> cerasusV3.Count
-	22, // 45: cerasusV3.OZ.GetMarginGraphicData:output_type -> cerasusV3.Count
-	23, // 46: cerasusV3.OZ.GetWeekGraphic:output_type -> cerasusV3.WeekGraphic
-	24, // 47: cerasusV3.OZ.GetPayRoundGraphic:output_type -> cerasusV3.RoundGraphic
-	24, // 48: cerasusV3.OZ.GetCountRoundGraphic:output_type -> cerasusV3.RoundGraphic
-	25, // 49: cerasusV3.OZ.GetOrderLeaders:output_type -> cerasusV3.OrderLeaders
-	18, // 50: cerasusV3.OZ.GetShopProducts:output_type -> cerasusV3.ShopProductList
-	1,  // 51: cerasusV3.OZ.GetShopProduct:output_type -> cerasusV3.ShopProduct
-	26, // 52: cerasusV3.OZ.GetProductGraphics:output_type -> cerasusV3.LineGraphics
-	27, // 53: cerasusV3.OZ.GetSales:output_type -> cerasusV3.Sales
-	28, // 54: cerasusV3.OZ.GetProductWidget:output_type -> cerasusV3.ProductWidgets
-	28, // 55: cerasusV3.OZ.GetProductWidgetOrders:output_type -> cerasusV3.ProductWidgets
-	29, // 56: cerasusV3.OZ.GetSale:output_type -> cerasusV3.Sale
-	18, // 57: cerasusV3.OZ.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
-	17, // 58: cerasusV3.OZ.SetShopProductUrl:output_type -> cerasusV3.StatusReply
-	0,  // 59: cerasusV3.OZ.GetCounterParams:output_type -> cerasusV3.OZCounterParams
-	30, // 60: cerasusV3.OZ.GetImage:output_type -> cerasusV3.ImageReply
-	1,  // 61: cerasusV3.OZ.GetShopProductByCode:output_type -> cerasusV3.ShopProduct
-	31, // 62: cerasusV3.OZ.GetOrdersForBrand:output_type -> cerasusV3.Orders
-	32, // 63: cerasusV3.OZ.GetShopProductSales:output_type -> cerasusV3.ShopProductSales
-	17, // 64: cerasusV3.OZ.SetQueueJob:output_type -> cerasusV3.StatusReply
-	33, // [33:65] is the sub-list for method output_type
-	1,  // [1:33] is the sub-list for method input_type
+	2,  // 33: cerasusV3.OZ.GetConnectedCompanies:input_type -> cerasusV3.PingRequest
+	15, // 34: cerasusV3.OZ.Ping:output_type -> cerasusV3.PingReply
+	16, // 35: cerasusV3.OZ.GetAppData:output_type -> cerasusV3.AppShopData
+	17, // 36: cerasusV3.OZ.SetAuthData:output_type -> cerasusV3.StatusReply
+	4,  // 37: cerasusV3.OZ.GetAuthData:output_type -> cerasusV3.OZAuthParams
+	17, // 38: cerasusV3.OZ.ResetAuthData:output_type -> cerasusV3.StatusReply
+	18, // 39: cerasusV3.OZ.GetUnsortedList:output_type -> cerasusV3.ShopProductList
+	19, // 40: cerasusV3.OZ.GetShopData:output_type -> cerasusV3.ShopData
+	20, // 41: cerasusV3.OZ.GetShopWidget:output_type -> cerasusV3.ShopWidget
+	21, // 42: cerasusV3.OZ.GetMainGraphic:output_type -> cerasusV3.LineGraph
+	22, // 43: cerasusV3.OZ.GetProductsCount:output_type -> cerasusV3.Count
+	22, // 44: cerasusV3.OZ.GetProductsCountUnsorted:output_type -> cerasusV3.Count
+	22, // 45: cerasusV3.OZ.GetFlowGraphicData:output_type -> cerasusV3.Count
+	22, // 46: cerasusV3.OZ.GetMarginGraphicData:output_type -> cerasusV3.Count
+	23, // 47: cerasusV3.OZ.GetWeekGraphic:output_type -> cerasusV3.WeekGraphic
+	24, // 48: cerasusV3.OZ.GetPayRoundGraphic:output_type -> cerasusV3.RoundGraphic
+	24, // 49: cerasusV3.OZ.GetCountRoundGraphic:output_type -> cerasusV3.RoundGraphic
+	25, // 50: cerasusV3.OZ.GetOrderLeaders:output_type -> cerasusV3.OrderLeaders
+	18, // 51: cerasusV3.OZ.GetShopProducts:output_type -> cerasusV3.ShopProductList
+	1,  // 52: cerasusV3.OZ.GetShopProduct:output_type -> cerasusV3.ShopProduct
+	26, // 53: cerasusV3.OZ.GetProductGraphics:output_type -> cerasusV3.LineGraphics
+	27, // 54: cerasusV3.OZ.GetSales:output_type -> cerasusV3.Sales
+	28, // 55: cerasusV3.OZ.GetProductWidget:output_type -> cerasusV3.ProductWidgets
+	28, // 56: cerasusV3.OZ.GetProductWidgetOrders:output_type -> cerasusV3.ProductWidgets
+	29, // 57: cerasusV3.OZ.GetSale:output_type -> cerasusV3.Sale
+	18, // 58: cerasusV3.OZ.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
+	17, // 59: cerasusV3.OZ.SetShopProductUrl:output_type -> cerasusV3.StatusReply
+	0,  // 60: cerasusV3.OZ.GetCounterParams:output_type -> cerasusV3.OZCounterParams
+	30, // 61: cerasusV3.OZ.GetImage:output_type -> cerasusV3.ImageReply
+	1,  // 62: cerasusV3.OZ.GetShopProductByCode:output_type -> cerasusV3.ShopProduct
+	31, // 63: cerasusV3.OZ.GetOrdersForBrand:output_type -> cerasusV3.Orders
+	32, // 64: cerasusV3.OZ.GetShopProductSales:output_type -> cerasusV3.ShopProductSales
+	17, // 65: cerasusV3.OZ.SetQueueJob:output_type -> cerasusV3.StatusReply
+	33, // 66: cerasusV3.OZ.GetConnectedCompanies:output_type -> cerasusV3.CompanyList
+	34, // [34:67] is the sub-list for method output_type
+	1,  // [1:34] is the sub-list for method input_type
 	1,  // [1:1] is the sub-list for extension type_name
 	1,  // [1:1] is the sub-list for extension extendee
 	0,  // [0:1] is the sub-list for field type_name
