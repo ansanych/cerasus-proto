@@ -37,7 +37,8 @@ service OZ {
 
 message OZAuthData {
     Auth auth = 1;
-    string token = 2;
+    string apiKey = 2;
+    int64 clienID = 3;
 }
 
 message OZCounterParams {
