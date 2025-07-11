@@ -36,45 +36,248 @@ service Brander {
     rpc GetProductsAnalyzeSellers(RequestByDates) returns (Sellers) {}
     rpc GetSellerAssortiment (RequestByID) returns (Assortiment) {}
     rpc GetProductSellersCount (RequestByID) returns (Assortiment) {}
-    //
-    rpc GetBrand (Auth) returns (Brand) {}
-    rpc UpdateBrand (UpdateBrandRequest) returns (StatusReply) {}
-    rpc GetCompaniesWithBrandProducts (RequestByPage) returns (CompanyList) {}
-    rpc SearchSeller (SearchRequest) returns (Sellers) {}
-    rpc DeleteProduct (ProductRequest) returns (StatusReply) {}
-    rpc SearchProduct (SearchRequest) returns (BrandProducts) {}
-    rpc DeleteProductPrice (RequestByID) returns (StatusReply) {}
     rpc GetSellerOutProducts(OutProductsRequest) returns (OutProducts) {}
     rpc GetSellerOutProduct(RequestByID) returns (OutProduct) {}
     rpc CreateSellerOutProduct(SellerOutProductRequest) returns (StatusReply) {}
     rpc DeleteSellerOutProduct(RequestByID) returns (StatusReply) {}
     rpc SellerOutProductSetUrl(SellerOutProductUrlRequest) returns (StatusReply) {}
     rpc SellerOutProductDeleteUrl(RequestByID) returns (StatusReply) {}
+    rpc GetProductsNoSeller (RequestByID) returns (BrandProducts) {}
+    rpc GetParserData (ParserGetRequest) returns (ParserJob) {}
+    rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
+    rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
+    rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
+    rpc GetDumpingGraph (LineGraphRequest) returns (LineGraph) {}
+    rpc GetDumpingDays (RequestByDates) returns (DumpingDays) {}
+    rpc GetDumpingList (DumpingListRequest) returns (DumpingList) {}
+    rpc GetDumpingListDetail (DumpingItemRequest) returns (DumpingDetail) {}
+    rpc UpdateDumpingListDetail (DumpingUpdateRequest) returns (StatusReply) {}
+    rpc MonitorAlert (Auth) returns (Count) {}
+    rpc MonitorRadar (Auth) returns (LineGraphics) {}
+    rpc MonitorGraphic (Auth) returns (LineGraphics) {}
+    rpc MonitorMonth (Auth) returns (MonitorMonthData) {}
+    rpc MonitorProductLeaders (Auth) returns (OrderLeaders) {}
+    rpc GetDumpingLeaders (Auth) returns (DumpingSellersLeaders) {}
+    rpc MonitorRunString (Auth) returns (RunString) {}
+    rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
+    rpc DeleteCerasusProductDataByShop (RequestByID) returns (StatusReply) {}
+    rpc GetSellersDumpingList (Auth) returns (SellersDumpingList) {}
 }
 
-message Assortiment {
-    int32 brandCount = 1;
-    int32 sellerCount = 2;
+message SellerDumpingItemShopURL {
+    string url = 1;
 }
 
-message ProductData {
+message SellerDumpingItemShop {
+    string shop = 1;
+    repeated SellerDumpingItemShopURL urls = 2;
+}
+
+message SellerDumpingItem {
     BrandProduct product = 1;
+    repeated SellerDumpingItemShop shops = 2;
+}
+
+message SellersDumpingItem {
+    Seller seller = 1;
+    repeated SellerDumpingItem items = 2;
+}
+
+message SellersDumpingList {
+    repeated SellersDumpingItem data = 1;
+}
+
+message RunStringItem {
+    string datetime = 1;
+    string seller = 2;
+    string product = 3;
+    float price = 4;
+}
+
+message RunString {
+    repeated RunStringItem data = 1;
+}
+
+message DumpingSeller {
+    Seller seller = 1;
+    float koef = 2;
+    int32 allProducts = 3;
+    int32 inSale = 4;
+    int32 inDumping = 5;
+    int32 ordersCount = 6;
+    float ordersSum = 7;
+}
+
+message DumpingSellersLeaders {
+    repeated DumpingSeller data = 1;
+}
+
+message MonitorMonthData {
+    string date = 1;
+    int32 old = 2;
+    int32 new = 3;
+}
+
+message DumpingUpdateRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    int64 ID = 3;
+    bool viewed = 4;
+    bool checkedMatch = 5;
+}
+
+message DumpingDetail {
+    string dumpingType = 1;
+    int64 ID = 2;
+    BrandProduct product = 3;
+    Seller seller = 4;
+    float brandPrice = 5;
+    float parsePrice = 6;
+    string shop = 7;
+    string url = 8;
+    float pricerMin = 9;
+    float pricerMax = 10;
+    bytes screenshot = 11;
+    bool viewed = 12;
+    bool checkedMatch = 13;
+    string datetime = 14;
+    bool notFinded = 15;
+}
+
+message DumpingItemRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    int64 ID = 3;
+}
+
+message DumpingList {
+    repeated DumpingDetail data = 1;
+}
+
+message DumpingListRequest {
+    Auth auth = 1;
+    string dumpingType = 2;
+    string datetime = 3;
+    bool viewed = 4;
+    bool notViewed = 5;
+    bool notFinded = 6;
+}
+
+message DumpingDay {
+    string date = 1;
+    int32 dumping = 2;
+    int32 empty = 3;
+    int32 allcount = 4;
+    int32 notViewed = 5;
+}
+
+message DumpingDays {
+    repeated DumpingDay data = 1;
+}
+
+message BrandCountWidget {
+    string code = 1;
     int32 count = 2;
-    float sum = 3;
 }
 
-message ProductsData {
-    repeated ProductData data = 1;
+message BrandCountWidgets {
+    repeated BrandCountWidget data = 1;
 }
 
-message AnalyzeSellersProductData {
-    BrandProduct product = 1;
-    float sum = 2;
-    int32 count = 3;
+message Seller {
+    int64 ID = 1;
+    string name = 2;
+    string comment = 3;
+    string person = 4;
+    string phone = 5;
+    string email = 6;
+    bool active = 7;
+    int32 linkedCompaniesCount = 8;
+    bool pricer = 9;
+    float orderSum = 10;
+    int32 orderCount = 11;
 }
 
-message AnalyzeSellersProduct {
-    repeated AnalyzeSellersProductData data = 1;
+message Sellers {
+    repeated Seller sellers = 1;
+    Pagination pagination = 2;
+}
+
+message SellerRequest {
+    Auth auth = 1;
+    Seller seller = 2;
+}
+
+message SellerProductsRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int32 page = 3;
+    bool unsorted = 4;
+    int64 productID = 5;
+    int64 companyID = 6;
+}
+
+message SellerProducts {
+    repeated SellerProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message SellerProduct {
+    Product product = 1;
+    int64 brandProductID = 2;
+    repeated string pricerShops = 3;
+}
+
+message BrandProducts {
+    repeated BrandProduct products = 1;
+    Pagination pagination = 2;
+}
+
+message BrandProduct {
+    int64 ID = 1;
+    string title = 2;
+    string article = 3;
+    string comment = 4;
+    string preview = 5;
+    bool active = 6;
+    string updated = 7;
+}
+
+message ProductRequest {
+    Auth auth = 1;
+    BrandProduct product = 2;
+}
+
+message SellerProductLinkRequest {
+    Auth auth = 1;
+    int64 sellerID = 2;
+    int64 companyID = 3;
+    int64 sellerProductID = 4;
+    int64 brandProductID = 5;
+}
+
+message BrandUploadRequest {
+    Auth auth = 1;
+    int64 productID = 2;
+    bytes chunk = 3;
+    string fileName = 4;
+    string type = 5;
+}
+
+message ProductPriceRequest {
+    Auth auth = 1;
+    int64 productID = 2;
+    int32 price = 3;
+    string date = 4;
+}
+
+message ProductPrice {
+    int32 price = 1;
+    string date = 2;
+}
+
+message ProductPrices {
+    repeated ProductPrice prices = 1;
 }
 
 message DataStep {
@@ -93,34 +296,29 @@ message DataByCode {
     repeated DataStep steps = 7;
 }
 
-message BrandUploadRequest {
-    Auth auth = 1;
-    int64 productID = 2;
-    bytes chunk = 3;
-    string fileName = 4;
-    string type = 5;
+message AnalyzeSellersProductData {
+    BrandProduct product = 1;
+    float sum = 2;
+    int32 count = 3;
 }
 
-message BrandCountWidget {
-    string code = 1;
+message AnalyzeSellersProduct {
+    repeated AnalyzeSellersProductData data = 1;
+}
+
+message ProductData {
+    BrandProduct product = 1;
     int32 count = 2;
+    float sum = 3;
 }
 
-message BrandCountWidgets {
-    repeated BrandCountWidget data = 1;
+message ProductsData {
+    repeated ProductData data = 1;
 }
 
-message SellerOutProductUrlRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-    string shop = 3;
-    string url = 4;
-}
-
-message SellerOutProductRequest {
-    Auth auth = 1;
-    int64 sellerID = 2;
-    int64 productID = 3;
+message Assortiment {
+    int32 brandCount = 1;
+    int32 sellerCount = 2;
 }
 
 message OutProductUrl {
@@ -150,89 +348,15 @@ message OutProductsRequest {
     int32 page = 3;
 }
 
-message SellerProductLinkRequest {
+message SellerOutProductUrlRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    string shop = 3;
+    string url = 4;
+}
+
+message SellerOutProductRequest {
     Auth auth = 1;
     int64 sellerID = 2;
-    int64 companyID = 3;
-    int64 sellerProductID = 4;
-    int64 brandProductID = 5;
-}
-
-message SellerProductsRequest {
-    Auth auth = 1;
-    int64 sellerID = 2;
-    int32 page = 3;
-    bool unsorted = 4;
-    int64 productID = 5;
-    int64 companyID = 6;
-}
-
-message SellerProducts {
-    repeated SellerProduct products = 1;
-    Pagination pagination = 2;
-}
-
-message SellerProduct {
-    Product product = 1;
-    int64 brandProductID = 2;
-}
-
-message ProductPriceRequest {
-    Auth auth = 1;
-    int64 productID = 2;
-    int32 price = 3;
-    string date = 4;
-}
-
-message ProductPrice {
-    int32 price = 1;
-    string date = 2;
-}
-
-message ProductPrices {
-    repeated ProductPrice prices = 1;
-}
-
-message ProductRequest {
-    Auth auth = 1;
-    BrandProduct product = 2;
-}
-
-message BrandProducts {
-    repeated BrandProduct products = 1;
-    Pagination pagination = 2;
-}
-
-message BrandProduct {
-    int64 ID = 1;
-    string title = 2;
-    string article = 3;
-    string comment = 4;
-    string preview = 5;
-    bool active = 6;
-    string updated = 7;
-}
-
-message Seller {
-    int64 ID = 1;
-    string name = 2;
-    string comment = 3;
-    string person = 4;
-    string phone = 5;
-    string email = 6;
-    bool active = 7;
-    int32 linkedCompaniesCount = 8;
-    bool pricer = 9;
-    float orderSum = 10;
-    int32 orderCount = 11;
-}
-
-message Sellers {
-    repeated Seller sellers = 1;
-    Pagination pagination = 2;
-}
-
-message SellerRequest {
-    Auth auth = 1;
-    Seller seller = 2;
+    int64 productID = 3;
 }

@@ -32,6 +32,12 @@ service WB {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
+    rpc SetAuthData(WBAuthData) returns (StatusReply) {}
+}
+
+message WBAuthData {
+    Auth auth = 1;
+    string token = 2;
 }
 
 message WBCounterParams {

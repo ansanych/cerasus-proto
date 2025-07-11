@@ -16,6 +16,26 @@ service Pricer {
     rpc GetProductPricers (RequestByID) returns (ProductPricers) {}
     rpc SetProductPricer (ProductPricer) returns (StatusReply) {}
     rpc GetProductPricerHistory(RequestByID) returns(ProductPricerHistory) {}
+    rpc GetProductsWithPricerDetails (Company) returns(ProductsWithPricer) {}
+    rpc GetDumpingData(RequestByDates) returns (DumpingData) {}
+    rpc GetDumpingItem(RequestByID) returns (DumpingItem) {}
+    rpc DeleteCerasusProductData (RequestByID) returns (StatusReply) {}
+    rpc DeleteCerasusProductDataByShop (RequestByID) returns (StatusReply) {}
+}
+
+message DumpingItem {
+    int64 productID = 1;
+    string shop = 2;
+    float parsePrice = 3;
+    float targetMin = 4;
+    float targetMax = 5;
+    string url = 6;
+    string pricerDT = 7;
+    int64 pricerDataID = 8;
+}
+
+message DumpingData {
+    repeated DumpingItem data = 1;
 }
 
 message ParamForCounter {
@@ -59,4 +79,13 @@ message ProductPricer {
 
 message ProductPricers {
     repeated ProductPricer data = 1;
+}
+
+message ProductWithPricer {
+    int64 productID = 1;
+    repeated string shop = 2;
+}
+
+message ProductsWithPricer {
+    repeated ProductWithPricer data = 1;
 }

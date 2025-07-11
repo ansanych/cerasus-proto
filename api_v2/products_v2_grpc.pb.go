@@ -40,6 +40,7 @@ type ProductsClient interface {
 	SetProductBrand(ctx context.Context, in *SetProductBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetProductLinks(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ProductLinks, error)
 	DeleteProductLink(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	GetProductListLinks(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductList, error)
 }
 
 type productsClient struct {
@@ -212,6 +213,15 @@ func (c *productsClient) DeleteProductLink(ctx context.Context, in *RequestByID,
 	return out, nil
 }
 
+func (c *productsClient) GetProductListLinks(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Products/GetProductListLinks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -234,6 +244,7 @@ type ProductsServer interface {
 	SetProductBrand(context.Context, *SetProductBrandRequest) (*StatusReply, error)
 	GetProductLinks(context.Context, *RequestByID) (*ProductLinks, error)
 	DeleteProductLink(context.Context, *RequestByID) (*StatusReply, error)
+	GetProductListLinks(context.Context, *RequestByIDs) (*ProductList, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -294,6 +305,9 @@ func (UnimplementedProductsServer) GetProductLinks(context.Context, *RequestByID
 }
 func (UnimplementedProductsServer) DeleteProductLink(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductLink not implemented")
+}
+func (UnimplementedProductsServer) GetProductListLinks(context.Context, *RequestByIDs) (*ProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductListLinks not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -632,6 +646,24 @@ func _Products_DeleteProductLink_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_GetProductListLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductListLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Products/GetProductListLinks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductListLinks(ctx, req.(*RequestByIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Products_ServiceDesc is the grpc.ServiceDesc for Products service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -710,6 +742,10 @@ var Products_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProductLink",
 			Handler:    _Products_DeleteProductLink_Handler,
+		},
+		{
+			MethodName: "GetProductListLinks",
+			Handler:    _Products_GetProductListLinks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
