@@ -9,4 +9,12 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service OZ_API {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetWarehouses (OZAuthParams) returns (Warehouses) {}
+    rpc LoadApiOrders(OZApiOrdersRequest) returns (StatusReply) {}
+    rpc GetApiOrders(OZApiOrdersRequest) returns (OZApiOrders) {}
+    rpc LoadApiSales(OZApiOrdersRequest) returns (StatusReply) {}
+    rpc GetApiSales(OZApiOrdersRequest) returns (OZApiSales) {}
+    rpc LoadApiProducts(OZAuthParams) returns (StatusReply) {}
+    rpc GetApiProducts(OZAuthParams) returns (OZApiProducts) {}
+    rpc LoadApiStocks(OZApiStockRequest) returns (StatusReply) {}
+    rpc GetApiStocks(OZAuthParams) returns (OZApiStockData) {}
 }

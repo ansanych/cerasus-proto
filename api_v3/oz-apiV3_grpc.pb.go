@@ -24,6 +24,14 @@ const _ = grpc.SupportPackageIsVersion7
 type OZ_APIClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetWarehouses(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*Warehouses, error)
+	LoadApiOrders(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiOrders(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*OZApiOrders, error)
+	LoadApiSales(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiSales(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*OZApiSales, error)
+	LoadApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiProducts, error)
+	LoadApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiStocks(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiStockData, error)
 }
 
 type oZ_APIClient struct {
@@ -52,12 +60,92 @@ func (c *oZ_APIClient) GetWarehouses(ctx context.Context, in *OZAuthParams, opts
 	return out, nil
 }
 
+func (c *oZ_APIClient) LoadApiOrders(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/LoadApiOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) GetApiOrders(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*OZApiOrders, error) {
+	out := new(OZApiOrders)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetApiOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) LoadApiSales(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/LoadApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) GetApiSales(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*OZApiSales, error) {
+	out := new(OZApiSales)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) LoadApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/LoadApiProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) GetApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiProducts, error) {
+	out := new(OZApiProducts)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetApiProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) LoadApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/LoadApiStocks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZ_APIClient) GetApiStocks(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiStockData, error) {
+	out := new(OZApiStockData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetApiStocks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZ_APIServer is the server API for OZ_API service.
 // All implementations must embed UnimplementedOZ_APIServer
 // for forward compatibility
 type OZ_APIServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetWarehouses(context.Context, *OZAuthParams) (*Warehouses, error)
+	LoadApiOrders(context.Context, *OZApiOrdersRequest) (*StatusReply, error)
+	GetApiOrders(context.Context, *OZApiOrdersRequest) (*OZApiOrders, error)
+	LoadApiSales(context.Context, *OZApiOrdersRequest) (*StatusReply, error)
+	GetApiSales(context.Context, *OZApiOrdersRequest) (*OZApiSales, error)
+	LoadApiProducts(context.Context, *OZAuthParams) (*StatusReply, error)
+	GetApiProducts(context.Context, *OZAuthParams) (*OZApiProducts, error)
+	LoadApiStocks(context.Context, *OZApiStockRequest) (*StatusReply, error)
+	GetApiStocks(context.Context, *OZAuthParams) (*OZApiStockData, error)
 	mustEmbedUnimplementedOZ_APIServer()
 }
 
@@ -70,6 +158,30 @@ func (UnimplementedOZ_APIServer) Ping(context.Context, *PingRequest) (*PingReply
 }
 func (UnimplementedOZ_APIServer) GetWarehouses(context.Context, *OZAuthParams) (*Warehouses, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWarehouses not implemented")
+}
+func (UnimplementedOZ_APIServer) LoadApiOrders(context.Context, *OZApiOrdersRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiOrders not implemented")
+}
+func (UnimplementedOZ_APIServer) GetApiOrders(context.Context, *OZApiOrdersRequest) (*OZApiOrders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiOrders not implemented")
+}
+func (UnimplementedOZ_APIServer) LoadApiSales(context.Context, *OZApiOrdersRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiSales not implemented")
+}
+func (UnimplementedOZ_APIServer) GetApiSales(context.Context, *OZApiOrdersRequest) (*OZApiSales, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiSales not implemented")
+}
+func (UnimplementedOZ_APIServer) LoadApiProducts(context.Context, *OZAuthParams) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiProducts not implemented")
+}
+func (UnimplementedOZ_APIServer) GetApiProducts(context.Context, *OZAuthParams) (*OZApiProducts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
+}
+func (UnimplementedOZ_APIServer) LoadApiStocks(context.Context, *OZApiStockRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiStocks not implemented")
+}
+func (UnimplementedOZ_APIServer) GetApiStocks(context.Context, *OZAuthParams) (*OZApiStockData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiStocks not implemented")
 }
 func (UnimplementedOZ_APIServer) mustEmbedUnimplementedOZ_APIServer() {}
 
@@ -120,6 +232,150 @@ func _OZ_API_GetWarehouses_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_API_LoadApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).LoadApiOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/LoadApiOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).LoadApiOrders(ctx, req.(*OZApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).GetApiOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/GetApiOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).GetApiOrders(ctx, req.(*OZApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_LoadApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).LoadApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/LoadApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).LoadApiSales(ctx, req.(*OZApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).GetApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/GetApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).GetApiSales(ctx, req.(*OZApiOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_LoadApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).LoadApiProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/LoadApiProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).LoadApiProducts(ctx, req.(*OZAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).GetApiProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/GetApiProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).GetApiProducts(ctx, req.(*OZAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_LoadApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).LoadApiStocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/LoadApiStocks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).LoadApiStocks(ctx, req.(*OZApiStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).GetApiStocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/GetApiStocks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).GetApiStocks(ctx, req.(*OZAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_API_ServiceDesc is the grpc.ServiceDesc for OZ_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +390,38 @@ var OZ_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWarehouses",
 			Handler:    _OZ_API_GetWarehouses_Handler,
+		},
+		{
+			MethodName: "LoadApiOrders",
+			Handler:    _OZ_API_LoadApiOrders_Handler,
+		},
+		{
+			MethodName: "GetApiOrders",
+			Handler:    _OZ_API_GetApiOrders_Handler,
+		},
+		{
+			MethodName: "LoadApiSales",
+			Handler:    _OZ_API_LoadApiSales_Handler,
+		},
+		{
+			MethodName: "GetApiSales",
+			Handler:    _OZ_API_GetApiSales_Handler,
+		},
+		{
+			MethodName: "LoadApiProducts",
+			Handler:    _OZ_API_LoadApiProducts_Handler,
+		},
+		{
+			MethodName: "GetApiProducts",
+			Handler:    _OZ_API_GetApiProducts_Handler,
+		},
+		{
+			MethodName: "LoadApiStocks",
+			Handler:    _OZ_API_LoadApiStocks_Handler,
+		},
+		{
+			MethodName: "GetApiStocks",
+			Handler:    _OZ_API_GetApiStocks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

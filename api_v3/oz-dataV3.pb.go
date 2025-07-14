@@ -83,6 +83,644 @@ func (x *OZAuthParams) GetAuth() *Auth {
 	return nil
 }
 
+type OZApiOrdersRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth      *OZAuthParams `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	DateFrom  string        `protobuf:"bytes,2,opt,name=dateFrom,proto3" json:"dateFrom,omitempty"`
+	CompanyID int64         `protobuf:"varint,3,opt,name=companyID,proto3" json:"companyID,omitempty"`
+}
+
+func (x *OZApiOrdersRequest) Reset() {
+	*x = OZApiOrdersRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiOrdersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiOrdersRequest) ProtoMessage() {}
+
+func (x *OZApiOrdersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiOrdersRequest.ProtoReflect.Descriptor instead.
+func (*OZApiOrdersRequest) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *OZApiOrdersRequest) GetAuth() *OZAuthParams {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *OZApiOrdersRequest) GetDateFrom() string {
+	if x != nil {
+		return x.DateFrom
+	}
+	return ""
+}
+
+func (x *OZApiOrdersRequest) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+type OZApiOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID     int64   `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	OrderNumber   string  `protobuf:"bytes,2,opt,name=orderNumber,proto3" json:"orderNumber,omitempty"`
+	Dt            string  `protobuf:"bytes,3,opt,name=dt,proto3" json:"dt,omitempty"`
+	Sku           int64   `protobuf:"varint,4,opt,name=sku,proto3" json:"sku,omitempty"`
+	FinishedPrice float32 `protobuf:"fixed32,5,opt,name=finishedPrice,proto3" json:"finishedPrice,omitempty"`
+	IsCancel      bool    `protobuf:"varint,6,opt,name=isCancel,proto3" json:"isCancel,omitempty"`
+}
+
+func (x *OZApiOrder) Reset() {
+	*x = OZApiOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiOrder) ProtoMessage() {}
+
+func (x *OZApiOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiOrder.ProtoReflect.Descriptor instead.
+func (*OZApiOrder) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *OZApiOrder) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *OZApiOrder) GetOrderNumber() string {
+	if x != nil {
+		return x.OrderNumber
+	}
+	return ""
+}
+
+func (x *OZApiOrder) GetDt() string {
+	if x != nil {
+		return x.Dt
+	}
+	return ""
+}
+
+func (x *OZApiOrder) GetSku() int64 {
+	if x != nil {
+		return x.Sku
+	}
+	return 0
+}
+
+func (x *OZApiOrder) GetFinishedPrice() float32 {
+	if x != nil {
+		return x.FinishedPrice
+	}
+	return 0
+}
+
+func (x *OZApiOrder) GetIsCancel() bool {
+	if x != nil {
+		return x.IsCancel
+	}
+	return false
+}
+
+type OZApiOrders struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*OZApiOrder `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *OZApiOrders) Reset() {
+	*x = OZApiOrders{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiOrders) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiOrders) ProtoMessage() {}
+
+func (x *OZApiOrders) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiOrders.ProtoReflect.Descriptor instead.
+func (*OZApiOrders) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *OZApiOrders) GetData() []*OZApiOrder {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type OZApiProduct struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID     int64    `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	OzonProductId int64    `protobuf:"varint,2,opt,name=ozon_product_id,json=ozonProductId,proto3" json:"ozon_product_id,omitempty"`
+	Name          string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Article       string   `protobuf:"bytes,4,opt,name=article,proto3" json:"article,omitempty"`
+	Sku           int64    `protobuf:"varint,5,opt,name=sku,proto3" json:"sku,omitempty"`
+	Images        []string `protobuf:"bytes,6,rep,name=images,proto3" json:"images,omitempty"`
+}
+
+func (x *OZApiProduct) Reset() {
+	*x = OZApiProduct{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiProduct) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiProduct) ProtoMessage() {}
+
+func (x *OZApiProduct) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiProduct.ProtoReflect.Descriptor instead.
+func (*OZApiProduct) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *OZApiProduct) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *OZApiProduct) GetOzonProductId() int64 {
+	if x != nil {
+		return x.OzonProductId
+	}
+	return 0
+}
+
+func (x *OZApiProduct) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *OZApiProduct) GetArticle() string {
+	if x != nil {
+		return x.Article
+	}
+	return ""
+}
+
+func (x *OZApiProduct) GetSku() int64 {
+	if x != nil {
+		return x.Sku
+	}
+	return 0
+}
+
+func (x *OZApiProduct) GetImages() []string {
+	if x != nil {
+		return x.Images
+	}
+	return nil
+}
+
+type OZApiProducts struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*OZApiProduct `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *OZApiProducts) Reset() {
+	*x = OZApiProducts{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiProducts) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiProducts) ProtoMessage() {}
+
+func (x *OZApiProducts) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiProducts.ProtoReflect.Descriptor instead.
+func (*OZApiProducts) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *OZApiProducts) GetData() []*OZApiProduct {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type OZApiSale struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CompanyID         int64   `protobuf:"varint,1,opt,name=companyID,proto3" json:"companyID,omitempty"`
+	Dt                string  `protobuf:"bytes,2,opt,name=dt,proto3" json:"dt,omitempty"`
+	PostingNumber     string  `protobuf:"bytes,3,opt,name=posting_number,json=postingNumber,proto3" json:"posting_number,omitempty"`
+	Sku               int64   `protobuf:"varint,4,opt,name=sku,proto3" json:"sku,omitempty"`
+	FinishedPrice     float32 `protobuf:"fixed32,5,opt,name=finishedPrice,proto3" json:"finishedPrice,omitempty"`
+	ForPay            float32 `protobuf:"fixed32,6,opt,name=forPay,proto3" json:"forPay,omitempty"`
+	OperationTypeName string  `protobuf:"bytes,7,opt,name=operation_type_name,json=operationTypeName,proto3" json:"operation_type_name,omitempty"`
+}
+
+func (x *OZApiSale) Reset() {
+	*x = OZApiSale{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiSale) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiSale) ProtoMessage() {}
+
+func (x *OZApiSale) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiSale.ProtoReflect.Descriptor instead.
+func (*OZApiSale) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *OZApiSale) GetCompanyID() int64 {
+	if x != nil {
+		return x.CompanyID
+	}
+	return 0
+}
+
+func (x *OZApiSale) GetDt() string {
+	if x != nil {
+		return x.Dt
+	}
+	return ""
+}
+
+func (x *OZApiSale) GetPostingNumber() string {
+	if x != nil {
+		return x.PostingNumber
+	}
+	return ""
+}
+
+func (x *OZApiSale) GetSku() int64 {
+	if x != nil {
+		return x.Sku
+	}
+	return 0
+}
+
+func (x *OZApiSale) GetFinishedPrice() float32 {
+	if x != nil {
+		return x.FinishedPrice
+	}
+	return 0
+}
+
+func (x *OZApiSale) GetForPay() float32 {
+	if x != nil {
+		return x.ForPay
+	}
+	return 0
+}
+
+func (x *OZApiSale) GetOperationTypeName() string {
+	if x != nil {
+		return x.OperationTypeName
+	}
+	return ""
+}
+
+type OZApiSales struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*OZApiSale `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *OZApiSales) Reset() {
+	*x = OZApiSales{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiSales) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiSales) ProtoMessage() {}
+
+func (x *OZApiSales) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiSales.ProtoReflect.Descriptor instead.
+func (*OZApiSales) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *OZApiSales) GetData() []*OZApiSale {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type OZApiStockRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth *OZAuthParams `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Skus []string      `protobuf:"bytes,3,rep,name=skus,proto3" json:"skus,omitempty"`
+}
+
+func (x *OZApiStockRequest) Reset() {
+	*x = OZApiStockRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiStockRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiStockRequest) ProtoMessage() {}
+
+func (x *OZApiStockRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiStockRequest.ProtoReflect.Descriptor instead.
+func (*OZApiStockRequest) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *OZApiStockRequest) GetAuth() *OZAuthParams {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *OZApiStockRequest) GetSkus() []string {
+	if x != nil {
+		return x.Skus
+	}
+	return nil
+}
+
+type OZApiStockItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Sku       string `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
+	Count     int32  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	StockType string `protobuf:"bytes,3,opt,name=stockType,proto3" json:"stockType,omitempty"`
+}
+
+func (x *OZApiStockItem) Reset() {
+	*x = OZApiStockItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiStockItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiStockItem) ProtoMessage() {}
+
+func (x *OZApiStockItem) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiStockItem.ProtoReflect.Descriptor instead.
+func (*OZApiStockItem) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *OZApiStockItem) GetSku() string {
+	if x != nil {
+		return x.Sku
+	}
+	return ""
+}
+
+func (x *OZApiStockItem) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *OZApiStockItem) GetStockType() string {
+	if x != nil {
+		return x.StockType
+	}
+	return ""
+}
+
+type OZApiStockData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*OZApiStockItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *OZApiStockData) Reset() {
+	*x = OZApiStockData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiStockData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiStockData) ProtoMessage() {}
+
+func (x *OZApiStockData) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiStockData.ProtoReflect.Descriptor instead.
+func (*OZApiStockData) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *OZApiStockData) GetData() []*OZApiStockItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_oz_dataV3_proto protoreflect.FileDescriptor
 
 var file_oz_dataV3_proto_rawDesc = []byte{
@@ -95,10 +733,80 @@ var file_oz_dataV3_proto_rawDesc = []byte{
 	0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65,
 	0x79, 0x12, 0x23, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
 	0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x41, 0x75, 0x74, 0x68,
-	0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x22, 0x7b, 0x0a, 0x12, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2b, 0x0a, 0x04,
+	0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x63, 0x65, 0x72,
+	0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x75, 0x74, 0x68, 0x50, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x61, 0x74,
+	0x65, 0x46, 0x72, 0x6f, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x61, 0x74,
+	0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79,
+	0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
+	0x79, 0x49, 0x44, 0x22, 0xb0, 0x01, 0x0a, 0x0a, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44,
+	0x12, 0x20, 0x0a, 0x0b, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x64, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02,
+	0x64, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x03, 0x73, 0x6b, 0x75, 0x12, 0x24, 0x0a, 0x0d, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0d, 0x66, 0x69, 0x6e,
+	0x69, 0x73, 0x68, 0x65, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x73,
+	0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x69, 0x73,
+	0x43, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x22, 0x38, 0x0a, 0x0b, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x73, 0x12, 0x29, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e,
+	0x4f, 0x5a, 0x41, 0x70, 0x69, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x22, 0xac, 0x01, 0x0a, 0x0c, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x12,
+	0x26, 0x0a, 0x0f, 0x6f, 0x7a, 0x6f, 0x6e, 0x5f, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x6f, 0x7a, 0x6f, 0x6e, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61,
+	0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x72,
+	0x74, 0x69, 0x63, 0x6c, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x03, 0x73, 0x6b, 0x75, 0x12, 0x16, 0x0a, 0x06, 0x69, 0x6d, 0x61, 0x67, 0x65,
+	0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x22,
+	0x3c, 0x0a, 0x0d, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73,
+	0x12, 0x2b, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17,
+	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x70, 0x69,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe0, 0x01,
+	0x0a, 0x09, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x61, 0x6c, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
+	0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x44, 0x12, 0x0e, 0x0a, 0x02, 0x64, 0x74, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x64, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x70, 0x6f, 0x73,
+	0x74, 0x69, 0x6e, 0x67, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0d, 0x70, 0x6f, 0x73, 0x74, 0x69, 0x6e, 0x67, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72,
+	0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x73,
+	0x6b, 0x75, 0x12, 0x24, 0x0a, 0x0d, 0x66, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x65, 0x64, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x02, 0x52, 0x0d, 0x66, 0x69, 0x6e, 0x69, 0x73,
+	0x68, 0x65, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x66, 0x6f, 0x72, 0x50,
+	0x61, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x66, 0x6f, 0x72, 0x50, 0x61, 0x79,
+	0x12, 0x2e, 0x0a, 0x13, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x6f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x22, 0x36, 0x0a, 0x0a, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x61, 0x6c, 0x65, 0x73, 0x12, 0x28,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x61,
+	0x6c, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x54, 0x0a, 0x11, 0x4f, 0x5a, 0x41, 0x70,
+	0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2b, 0x0a,
+	0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x75, 0x74, 0x68, 0x50, 0x61,
+	0x72, 0x61, 0x6d, 0x73, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x6b,
+	0x75, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x73, 0x6b, 0x75, 0x73, 0x22, 0x56,
+	0x0a, 0x0e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d,
+	0x12, 0x10, 0x0a, 0x03, 0x73, 0x6b, 0x75, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x73,
+	0x6b, 0x75, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x74, 0x6f, 0x63,
+	0x6b, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x74, 0x6f,
+	0x63, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x22, 0x3f, 0x0a, 0x0e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53,
+	0x74, 0x6f, 0x63, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73,
+	0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x49, 0x74, 0x65,
+	0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75,
+	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -113,18 +821,34 @@ func file_oz_dataV3_proto_rawDescGZIP() []byte {
 	return file_oz_dataV3_proto_rawDescData
 }
 
-var file_oz_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_oz_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_oz_dataV3_proto_goTypes = []interface{}{
-	(*OZAuthParams)(nil), // 0: cerasusV3.OZAuthParams
-	(*Auth)(nil),         // 1: cerasusV3.Auth
+	(*OZAuthParams)(nil),       // 0: cerasusV3.OZAuthParams
+	(*OZApiOrdersRequest)(nil), // 1: cerasusV3.OZApiOrdersRequest
+	(*OZApiOrder)(nil),         // 2: cerasusV3.OZApiOrder
+	(*OZApiOrders)(nil),        // 3: cerasusV3.OZApiOrders
+	(*OZApiProduct)(nil),       // 4: cerasusV3.OZApiProduct
+	(*OZApiProducts)(nil),      // 5: cerasusV3.OZApiProducts
+	(*OZApiSale)(nil),          // 6: cerasusV3.OZApiSale
+	(*OZApiSales)(nil),         // 7: cerasusV3.OZApiSales
+	(*OZApiStockRequest)(nil),  // 8: cerasusV3.OZApiStockRequest
+	(*OZApiStockItem)(nil),     // 9: cerasusV3.OZApiStockItem
+	(*OZApiStockData)(nil),     // 10: cerasusV3.OZApiStockData
+	(*Auth)(nil),               // 11: cerasusV3.Auth
 }
 var file_oz_dataV3_proto_depIdxs = []int32{
-	1, // 0: cerasusV3.OZAuthParams.auth:type_name -> cerasusV3.Auth
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	11, // 0: cerasusV3.OZAuthParams.auth:type_name -> cerasusV3.Auth
+	0,  // 1: cerasusV3.OZApiOrdersRequest.auth:type_name -> cerasusV3.OZAuthParams
+	2,  // 2: cerasusV3.OZApiOrders.data:type_name -> cerasusV3.OZApiOrder
+	4,  // 3: cerasusV3.OZApiProducts.data:type_name -> cerasusV3.OZApiProduct
+	6,  // 4: cerasusV3.OZApiSales.data:type_name -> cerasusV3.OZApiSale
+	0,  // 5: cerasusV3.OZApiStockRequest.auth:type_name -> cerasusV3.OZAuthParams
+	9,  // 6: cerasusV3.OZApiStockData.data:type_name -> cerasusV3.OZApiStockItem
+	7,  // [7:7] is the sub-list for method output_type
+	7,  // [7:7] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_oz_dataV3_proto_init() }
@@ -146,6 +870,126 @@ func file_oz_dataV3_proto_init() {
 				return nil
 			}
 		}
+		file_oz_dataV3_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiOrdersRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiOrders); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiProduct); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiProducts); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiSale); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiSales); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiStockRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiStockItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiStockData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -153,7 +997,7 @@ func file_oz_dataV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_oz_dataV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

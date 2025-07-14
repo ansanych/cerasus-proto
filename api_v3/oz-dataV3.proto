@@ -10,3 +10,64 @@ message OZAuthParams {
     string apiKey = 2;
     Auth auth = 3;
 }
+
+message OZApiOrdersRequest {
+    OZAuthParams auth = 1;
+    string dateFrom = 2;
+    int64 companyID = 3;
+}
+
+message OZApiOrder {
+    int64 companyID = 1;
+    string orderNumber = 2;
+    string dt = 3;
+    int64 sku = 4;
+    float finishedPrice = 5;
+    bool isCancel = 6;
+}
+
+message OZApiOrders {
+    repeated OZApiOrder data = 1;
+}
+
+message OZApiProduct {
+    int64 companyID = 1;
+    int64 ozon_product_id = 2;
+    string name = 3;
+    string article = 4;
+    int64 sku = 5;
+    repeated string images = 6;
+}
+
+message OZApiProducts {
+    repeated OZApiProduct data = 1;
+}
+
+message OZApiSale {
+    int64 companyID = 1;
+    string dt = 2;
+    string posting_number = 3;
+    int64 sku = 4;
+    float finishedPrice = 5;
+    float forPay = 6;
+    string operation_type_name = 7;
+}
+
+message OZApiSales {
+    repeated OZApiSale data = 1;
+}
+
+message OZApiStockRequest {
+    OZAuthParams auth = 1;
+    repeated string skus = 3;
+}
+
+message OZApiStockItem {
+    string sku = 1;
+    int32 count = 2;
+    string stockType = 3;
+}
+
+message OZApiStockData {
+    repeated OZApiStockItem data = 1;
+}

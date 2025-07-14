@@ -25,18 +25,15 @@ message WBApiOrdersRequest {
     WBAuthParams auth = 1;
     string dateFrom = 2;
     int64 companyID = 3;
-    repeated string mongoID = 4;
 }
 
 message WBApiOrder {
-    string mongoID = 1;
+    int64 companyID = 1;
     string dt = 2;
     string srid = 3;
     int64 nmID = 4;
     float finishedPrice = 5;
     bool isCancel = 6;
-    string cancelDate = 7;
-    int64 companyID = 8;
 }
 
 message WBApiOrders {
@@ -44,14 +41,13 @@ message WBApiOrders {
 }
 
 message WBApiSale {
-    string mongoID = 1;
+    int64 companyID = 1;
     string dt = 2;
     string srid = 3;
     int64 nmID = 4;
     float finishedPrice = 5;
     float forPay = 6;
     string saleID = 7;
-    int64 companyID = 8;
 }
 
 message WBApiSales {
@@ -71,13 +67,12 @@ message WBApiProductSize {
 
 message WBApiProduct {
     int64 companyID = 1;
-    string mongoProductID = 2;
-    int64 nmID = 3;
-    string name = 4;
-    string article = 5;
-    repeated WBApiProductSize size = 6;
-    repeated string file = 7;
-    repeated string sku = 8;
+    int64 nmID = 2;
+    string name = 3;
+    string article = 4;
+    repeated WBApiProductSize size = 5;
+    repeated string file = 6;
+    repeated string sku = 7;
 }
 
 message WBApiProducts {
