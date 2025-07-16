@@ -22,9 +22,10 @@ message OZApiOrder {
     string orderNumber = 2;
     string dt = 3;
     int64 sku = 4;
-    float finishedPrice = 5;
-    bool isCancel = 6;
-    string deliveryType = 7;
+    float itemPrice = 5;
+    int32 itemCount = 6;
+    bool isCancel = 7;
+    string deliveryType = 8;
 }
 
 message OZApiOrders {
