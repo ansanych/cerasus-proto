@@ -104,6 +104,7 @@ message WBApiReportRow {
     string supplierOperName = 7;
     float price = 8;
     float forPay = 9;
+    int64 rowNumber = 10;
 }
 
 message WBApiReportData {
