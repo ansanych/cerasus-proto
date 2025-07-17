@@ -24,14 +24,16 @@ const _ = grpc.SupportPackageIsVersion7
 type WB_APIClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetWarehouses(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*Warehouses, error)
-	LoadApiOrders(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetApiOrders(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*WBApiOrders, error)
-	LoadApiSales(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetApiSales(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*WBApiSales, error)
+	LoadApiOrders(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiOrders(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiOrders, error)
+	LoadApiSales(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiSales(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiSales, error)
 	LoadApiProducts(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiProducts(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*WBApiProducts, error)
 	LoadApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiStocks(ctx context.Context, in *WBAuthParams, opts ...grpc.CallOption) (*WBApiStockData, error)
+	LoadApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiReportData, error)
 }
 
 type wB_APIClient struct {
@@ -60,7 +62,7 @@ func (c *wB_APIClient) GetWarehouses(ctx context.Context, in *WBAuthParams, opts
 	return out, nil
 }
 
-func (c *wB_APIClient) LoadApiOrders(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *wB_APIClient) LoadApiOrders(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/LoadApiOrders", in, out, opts...)
 	if err != nil {
@@ -69,7 +71,7 @@ func (c *wB_APIClient) LoadApiOrders(ctx context.Context, in *WBApiOrdersRequest
 	return out, nil
 }
 
-func (c *wB_APIClient) GetApiOrders(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*WBApiOrders, error) {
+func (c *wB_APIClient) GetApiOrders(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiOrders, error) {
 	out := new(WBApiOrders)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/GetApiOrders", in, out, opts...)
 	if err != nil {
@@ -78,7 +80,7 @@ func (c *wB_APIClient) GetApiOrders(ctx context.Context, in *WBApiOrdersRequest,
 	return out, nil
 }
 
-func (c *wB_APIClient) LoadApiSales(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *wB_APIClient) LoadApiSales(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/LoadApiSales", in, out, opts...)
 	if err != nil {
@@ -87,7 +89,7 @@ func (c *wB_APIClient) LoadApiSales(ctx context.Context, in *WBApiOrdersRequest,
 	return out, nil
 }
 
-func (c *wB_APIClient) GetApiSales(ctx context.Context, in *WBApiOrdersRequest, opts ...grpc.CallOption) (*WBApiSales, error) {
+func (c *wB_APIClient) GetApiSales(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiSales, error) {
 	out := new(WBApiSales)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/GetApiSales", in, out, opts...)
 	if err != nil {
@@ -132,20 +134,40 @@ func (c *wB_APIClient) GetApiStocks(ctx context.Context, in *WBAuthParams, opts 
 	return out, nil
 }
 
+func (c *wB_APIClient) LoadApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/LoadApiReports", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wB_APIClient) GetApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiReportData, error) {
+	out := new(WBApiReportData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/GetApiReports", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WB_APIServer is the server API for WB_API service.
 // All implementations must embed UnimplementedWB_APIServer
 // for forward compatibility
 type WB_APIServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetWarehouses(context.Context, *WBAuthParams) (*Warehouses, error)
-	LoadApiOrders(context.Context, *WBApiOrdersRequest) (*StatusReply, error)
-	GetApiOrders(context.Context, *WBApiOrdersRequest) (*WBApiOrders, error)
-	LoadApiSales(context.Context, *WBApiOrdersRequest) (*StatusReply, error)
-	GetApiSales(context.Context, *WBApiOrdersRequest) (*WBApiSales, error)
+	LoadApiOrders(context.Context, *WBApiDateRequest) (*StatusReply, error)
+	GetApiOrders(context.Context, *WBApiDateRequest) (*WBApiOrders, error)
+	LoadApiSales(context.Context, *WBApiDateRequest) (*StatusReply, error)
+	GetApiSales(context.Context, *WBApiDateRequest) (*WBApiSales, error)
 	LoadApiProducts(context.Context, *WBAuthParams) (*StatusReply, error)
 	GetApiProducts(context.Context, *WBAuthParams) (*WBApiProducts, error)
 	LoadApiStocks(context.Context, *WBApiStockRequest) (*StatusReply, error)
 	GetApiStocks(context.Context, *WBAuthParams) (*WBApiStockData, error)
+	LoadApiReports(context.Context, *WBApiDateRequest) (*StatusReply, error)
+	GetApiReports(context.Context, *WBApiDateRequest) (*WBApiReportData, error)
 	mustEmbedUnimplementedWB_APIServer()
 }
 
@@ -159,16 +181,16 @@ func (UnimplementedWB_APIServer) Ping(context.Context, *PingRequest) (*PingReply
 func (UnimplementedWB_APIServer) GetWarehouses(context.Context, *WBAuthParams) (*Warehouses, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWarehouses not implemented")
 }
-func (UnimplementedWB_APIServer) LoadApiOrders(context.Context, *WBApiOrdersRequest) (*StatusReply, error) {
+func (UnimplementedWB_APIServer) LoadApiOrders(context.Context, *WBApiDateRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadApiOrders not implemented")
 }
-func (UnimplementedWB_APIServer) GetApiOrders(context.Context, *WBApiOrdersRequest) (*WBApiOrders, error) {
+func (UnimplementedWB_APIServer) GetApiOrders(context.Context, *WBApiDateRequest) (*WBApiOrders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiOrders not implemented")
 }
-func (UnimplementedWB_APIServer) LoadApiSales(context.Context, *WBApiOrdersRequest) (*StatusReply, error) {
+func (UnimplementedWB_APIServer) LoadApiSales(context.Context, *WBApiDateRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadApiSales not implemented")
 }
-func (UnimplementedWB_APIServer) GetApiSales(context.Context, *WBApiOrdersRequest) (*WBApiSales, error) {
+func (UnimplementedWB_APIServer) GetApiSales(context.Context, *WBApiDateRequest) (*WBApiSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiSales not implemented")
 }
 func (UnimplementedWB_APIServer) LoadApiProducts(context.Context, *WBAuthParams) (*StatusReply, error) {
@@ -182,6 +204,12 @@ func (UnimplementedWB_APIServer) LoadApiStocks(context.Context, *WBApiStockReque
 }
 func (UnimplementedWB_APIServer) GetApiStocks(context.Context, *WBAuthParams) (*WBApiStockData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiStocks not implemented")
+}
+func (UnimplementedWB_APIServer) LoadApiReports(context.Context, *WBApiDateRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiReports not implemented")
+}
+func (UnimplementedWB_APIServer) GetApiReports(context.Context, *WBApiDateRequest) (*WBApiReportData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiReports not implemented")
 }
 func (UnimplementedWB_APIServer) mustEmbedUnimplementedWB_APIServer() {}
 
@@ -233,7 +261,7 @@ func _WB_API_GetWarehouses_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _WB_API_LoadApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBApiOrdersRequest)
+	in := new(WBApiDateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -245,13 +273,13 @@ func _WB_API_LoadApiOrders_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/cerasusV3.WB_API/LoadApiOrders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).LoadApiOrders(ctx, req.(*WBApiOrdersRequest))
+		return srv.(WB_APIServer).LoadApiOrders(ctx, req.(*WBApiDateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _WB_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBApiOrdersRequest)
+	in := new(WBApiDateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -263,13 +291,13 @@ func _WB_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/cerasusV3.WB_API/GetApiOrders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).GetApiOrders(ctx, req.(*WBApiOrdersRequest))
+		return srv.(WB_APIServer).GetApiOrders(ctx, req.(*WBApiDateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _WB_API_LoadApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBApiOrdersRequest)
+	in := new(WBApiDateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -281,13 +309,13 @@ func _WB_API_LoadApiSales_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/cerasusV3.WB_API/LoadApiSales",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).LoadApiSales(ctx, req.(*WBApiOrdersRequest))
+		return srv.(WB_APIServer).LoadApiSales(ctx, req.(*WBApiDateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _WB_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBApiOrdersRequest)
+	in := new(WBApiDateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -299,7 +327,7 @@ func _WB_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/cerasusV3.WB_API/GetApiSales",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).GetApiSales(ctx, req.(*WBApiOrdersRequest))
+		return srv.(WB_APIServer).GetApiSales(ctx, req.(*WBApiDateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -376,6 +404,42 @@ func _WB_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_API_LoadApiReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WBApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).LoadApiReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB_API/LoadApiReports",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).LoadApiReports(ctx, req.(*WBApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_API_GetApiReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WBApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).GetApiReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB_API/GetApiReports",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).GetApiReports(ctx, req.(*WBApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_API_ServiceDesc is the grpc.ServiceDesc for WB_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +486,14 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApiStocks",
 			Handler:    _WB_API_GetApiStocks_Handler,
+		},
+		{
+			MethodName: "LoadApiReports",
+			Handler:    _WB_API_LoadApiReports_Handler,
+		},
+		{
+			MethodName: "GetApiReports",
+			Handler:    _WB_API_GetApiReports_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

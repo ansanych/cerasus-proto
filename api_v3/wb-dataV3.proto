@@ -21,7 +21,7 @@ message WBCounterParams {
     repeated ShopProduct shopProducts = 3;
 }
 
-message WBApiOrdersRequest {
+message WBApiDateRequest {
     WBAuthParams auth = 1;
     string dateFrom = 2;
     int64 companyID = 3;
@@ -92,4 +92,20 @@ message WBApiStockItem {
 
 message WBApiStockData {
     repeated WBApiStockItem data = 1;
+}
+
+message WBApiReportRow {
+    int64 reportID = 1;
+    string dateFrom = 2;
+    string dateTo = 3;
+    string srid = 4;
+    string saleDT = 5;
+    int64 nmID = 6;
+    string supplierOperName = 7;
+    float price = 8;
+    float forPay = 9;
+}
+
+message WBApiReportData {
+    repeated WBApiReportRow data = 1;
 }
