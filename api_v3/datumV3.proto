@@ -17,4 +17,5 @@ service Datum {
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
+    rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
 }

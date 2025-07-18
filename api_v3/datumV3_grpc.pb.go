@@ -33,6 +33,7 @@ type DatumClient interface {
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type datumClient struct {
@@ -142,6 +143,15 @@ func (c *datumClient) GetSales(ctx context.Context, in *RequestByDates, opts ...
 	return out, nil
 }
 
+func (c *datumClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/SetQueueJob", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -157,6 +167,7 @@ type DatumServer interface {
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -196,6 +207,9 @@ func (UnimplementedDatumServer) GetProductGraphics(context.Context, *RequestByDa
 }
 func (UnimplementedDatumServer) GetSales(context.Context, *RequestByDates) (*Sales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
+}
+func (UnimplementedDatumServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -408,6 +422,24 @@ func _Datum_GetSales_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueuerJob)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).SetQueueJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/SetQueueJob",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).SetQueueJob(ctx, req.(*QueuerJob))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -458,6 +490,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSales",
 			Handler:    _Datum_GetSales_Handler,
+		},
+		{
+			MethodName: "SetQueueJob",
+			Handler:    _Datum_SetQueueJob_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
