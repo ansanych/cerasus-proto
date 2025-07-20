@@ -46,14 +46,18 @@ message OZApiProducts {
 }
 
 message OZApiSale {
-    int64 companyID = 1;
-    string dt = 2;
-    string postingNumber = 3;
-    int64 sku = 4;
-    float finishedPrice = 5;
-    float forPay = 6;
-    string operationTypeName = 7;
-    string deliveryType = 8;
+    int64 ID = 1;
+    int64 companyID = 2;
+    int64 operationID = 3;
+    string dt = 4;
+    string operationTypeName = 5;
+    string postingNumber = 6;
+    string deliverySchema = 7;
+    string operationType = 8;
+    int64 sku = 9;
+    int32 count = 10;
+    float accrualsForSale = 11;
+    float forPay = 12;
 }
 
 message OZApiSales {
