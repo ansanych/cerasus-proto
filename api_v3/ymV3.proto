@@ -8,6 +8,8 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service YM {
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
+    rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
     rpc GetShopData (Auth) returns (ShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}
@@ -29,14 +31,11 @@ service YM {
     rpc GetSale (SaleRequest) returns (Sale) {}
     rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
     rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
-    rpc GetCounterParams(RequestByIDs) returns (YMCounterParams) {}
+    rpc GetCounterParams(RequestByIDs) returns (YMAuthParams) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
     rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
     rpc SetAuthData(YMAuthData) returns (StatusReply) {}
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
-
-    rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
-    rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
 }

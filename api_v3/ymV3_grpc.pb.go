@@ -23,6 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type YMClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 	GetAppData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppShopData, error)
 	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
@@ -44,15 +46,13 @@ type YMClient interface {
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
 	GetProductsUnsortedList(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductList, error)
 	SetShopProductUrl(ctx context.Context, in *ShopProductUrlSetter, opts ...grpc.CallOption) (*StatusReply, error)
-	GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMCounterParams, error)
+	GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMAuthParams, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetShopProductByCode(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetOrdersForBrand(ctx context.Context, in *OrdersRequest, opts ...grpc.CallOption) (*Orders, error)
 	SetAuthData(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*StatusReply, error)
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
-	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
-	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 }
 
 type yMClient struct {
@@ -66,6 +66,24 @@ func NewYMClient(cc grpc.ClientConnInterface) YMClient {
 func (c *yMClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.YM/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM/SetQueueJob", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yMClient) GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+	out := new(CompanyList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetConnectedCompanies", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -261,8 +279,8 @@ func (c *yMClient) SetShopProductUrl(ctx context.Context, in *ShopProductUrlSett
 	return out, nil
 }
 
-func (c *yMClient) GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMCounterParams, error) {
-	out := new(YMCounterParams)
+func (c *yMClient) GetCounterParams(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*YMAuthParams, error) {
+	out := new(YMAuthParams)
 	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetCounterParams", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -324,29 +342,13 @@ func (c *yMClient) GetShopProductSales(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
-func (c *yMClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV3.YM/SetQueueJob", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *yMClient) GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error) {
-	out := new(CompanyList)
-	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetConnectedCompanies", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
 type YMServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	GetAppData(context.Context, *Auth) (*AppShopData, error)
 	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
@@ -368,15 +370,13 @@ type YMServer interface {
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
 	GetProductsUnsortedList(context.Context, *Auth) (*ShopProductList, error)
 	SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error)
-	GetCounterParams(context.Context, *RequestByIDs) (*YMCounterParams, error)
+	GetCounterParams(context.Context, *RequestByIDs) (*YMAuthParams, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetShopProductByCode(context.Context, *SearchRequest) (*ShopProduct, error)
 	GetOrdersForBrand(context.Context, *OrdersRequest) (*Orders, error)
 	SetAuthData(context.Context, *YMAuthData) (*StatusReply, error)
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
-	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
-	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -386,6 +386,12 @@ type UnimplementedYMServer struct {
 
 func (UnimplementedYMServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedYMServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
+}
+func (UnimplementedYMServer) GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompanies not implemented")
 }
 func (UnimplementedYMServer) GetAppData(context.Context, *Auth) (*AppShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppData not implemented")
@@ -450,7 +456,7 @@ func (UnimplementedYMServer) GetProductsUnsortedList(context.Context, *Auth) (*S
 func (UnimplementedYMServer) SetShopProductUrl(context.Context, *ShopProductUrlSetter) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetShopProductUrl not implemented")
 }
-func (UnimplementedYMServer) GetCounterParams(context.Context, *RequestByIDs) (*YMCounterParams, error) {
+func (UnimplementedYMServer) GetCounterParams(context.Context, *RequestByIDs) (*YMAuthParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCounterParams not implemented")
 }
 func (UnimplementedYMServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
@@ -470,12 +476,6 @@ func (UnimplementedYMServer) GetUnsortedList(context.Context, *RequestByIDs) (*S
 }
 func (UnimplementedYMServer) GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductSales not implemented")
-}
-func (UnimplementedYMServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
-}
-func (UnimplementedYMServer) GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompanies not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -504,6 +504,42 @@ func _YM_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(YMServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueuerJob)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).SetQueueJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM/SetQueueJob",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).SetQueueJob(ctx, req.(*QueuerJob))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetConnectedCompanies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM/GetConnectedCompanies",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetConnectedCompanies(ctx, req.(*PingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1012,42 +1048,6 @@ func _YM_GetShopProductSales_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _YM_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueuerJob)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).SetQueueJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.YM/SetQueueJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).SetQueueJob(ctx, req.(*QueuerJob))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _YM_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).GetConnectedCompanies(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.YM/GetConnectedCompanies",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).GetConnectedCompanies(ctx, req.(*PingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1058,6 +1058,14 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _YM_Ping_Handler,
+		},
+		{
+			MethodName: "SetQueueJob",
+			Handler:    _YM_SetQueueJob_Handler,
+		},
+		{
+			MethodName: "GetConnectedCompanies",
+			Handler:    _YM_GetConnectedCompanies_Handler,
 		},
 		{
 			MethodName: "GetAppData",
@@ -1170,14 +1178,6 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopProductSales",
 			Handler:    _YM_GetShopProductSales_Handler,
-		},
-		{
-			MethodName: "SetQueueJob",
-			Handler:    _YM_SetQueueJob_Handler,
-		},
-		{
-			MethodName: "GetConnectedCompanies",
-			Handler:    _YM_GetConnectedCompanies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
