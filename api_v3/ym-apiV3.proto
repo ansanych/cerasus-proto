@@ -8,4 +8,5 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service YM_API {
     rpc Ping (PingRequest) returns (PingReply) {}
+    rpc GetCampaigns (YMAuthData) returns (YMParams) {}
 }

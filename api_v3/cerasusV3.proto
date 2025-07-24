@@ -4,7 +4,6 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-// Ping
 message PingRequest {
     string message = 1;
 }
@@ -13,7 +12,6 @@ message PingReply {
     string message = 1;
 }
 
-// Status
 enum Status {
     UNKNOWN = 0;
     OK = 1;
@@ -26,89 +24,13 @@ message StatusReply {
     Status status = 1;
 }
 
-// Service status
-enum ServiceStatus {
-    DISABLED = 0;
-    ENABLED = 1;
-    BID = 2;
-}
-
-//any
-message Count {
-    int32 count = 1;
-}
-
-message Pagination {
-    int32 page = 1;
-    int32 pages = 2;
-}
-
-enum SortOrder {
-    ASC = 0;
-    DESC = 1;
-}
-
-enum Level {
-    NOLEVEL = 0;
-    INFERIOR = 1;
-    LOW = 2;
-    MIDDLE = 3;
-    HIGH = 4;
-    SUPERIOR = 5;
-}
-
-//REQUESTS
-message RequestByID {
-    Auth auth = 1;
-    int64 ID = 2;
-    string shop = 3;
-}
-
-message RequestByIDs {
-    Auth auth = 1;
-    repeated int64 ID = 2;
-}
-
-message RequestByShop {
-    Auth auth = 1;
-    string shop = 2;
-}
-
-message SearchRequest {
-    Auth auth = 1;
-    string search = 2;
-    string shop = 3;
-}
-
-message RequestByDates {
-    Auth auth = 1;
-    string from = 2;
-    string to = 3;
-    int64 ID = 4;
-    repeated int64 IDS = 5;
-    string shop = 6;
-    string step = 7;
-    int32 page = 8;
-    int32 limit = 9;
-}
-
-message RequestByPage {
-    Auth auth = 1;
-    int32 page = 2;
-}
-
-//RESPONSES
-message ReplyID {
-    repeated int64 ID = 1;
-}
-
-// Auth
 message Auth {
     bool tokenValidation = 1;
     int64 userID = 2;
     int64 companyID = 3;
     repeated Role roles = 4;
 }
+
 
 message Company {
     int64 ID = 1;
@@ -148,6 +70,242 @@ message User {
 message Users {
     repeated User users = 1;
 }
+
+message RequestByID {
+    Auth auth = 1;
+    int64 ID = 2;
+    string shop = 3;
+}
+
+message RequestByIDs {
+    Auth auth = 1;
+    repeated int64 ID = 2;
+}
+
+message LineGraphDataset {
+    string type = 1;
+    repeated float data = 2;
+    float min = 3;
+    float max = 4;
+}
+
+message LineGraphShop {
+    string shop = 1;
+    int32 index = 2;
+}
+
+message LineGraph {
+    repeated string labels = 1;
+    repeated LineGraphDataset datasets = 2;
+    repeated LineGraphShop shops = 3;
+    string graphicName = 4;
+}
+
+message LineGraphics {
+    repeated LineGraph graphics = 1;
+}
+
+message LineGraphRequest {
+    Auth auth = 1;
+    string t = 2;
+    string p = 3;
+    string o = 4;
+    string type = 5;
+    repeated int64 ID = 6;
+}
+
+message RoundGrapDataset {
+    string type = 1;
+    string label = 2;
+    repeated float data = 3;
+}
+
+message RoundGraphic {
+    repeated string labels = 1;
+    repeated RoundGrapDataset datasets = 2;
+}
+
+message RequestByShop {
+    Auth auth = 1;
+    string shop = 2;
+}
+
+message SearchRequest {
+    Auth auth = 1;
+    string search = 2;
+    string shop = 3;
+}
+
+message RequestByDates {
+    Auth auth = 1;
+    string from = 2;
+    string to = 3;
+    int64 ID = 4;
+    repeated int64 IDS = 5;
+    string shop = 6;
+    string step = 7;
+    int32 page = 8;
+    int32 limit = 9;
+}
+
+message RequestByPage {
+    Auth auth = 1;
+    int32 page = 2;
+}
+
+message QueuerJob {
+    int64 ID = 1;
+    int64 companyID = 2;
+    string name = 3;
+    int32 status = 4;
+    bool done = 5;
+    string error = 6;
+}
+
+message WeekGraphic {
+    float min = 1;
+    float mid = 2;
+    float max = 3;
+    float now = 4;
+}
+
+message ProductWidgetShops {
+    string shop = 1;
+    float value = 2;
+}
+
+message ProductWidget {
+    string type = 1;
+    float value = 2;
+    repeated ProductWidgetShops shopData = 3;
+}
+
+message ProductWidgets {
+    repeated ProductWidget data = 1;
+}
+
+message Sale {
+    int64 ID = 1;
+    string shop = 2;
+    string date = 3;
+    ShopProduct shopProduct = 4;
+    Product product = 5;
+    int32 count = 6;
+    float realisation = 7;
+    float purchase = 8;
+    float pay = 9;
+    float tax = 10;
+    float margin = 11;
+    float marginality = 12;
+    Level marginalityLevel = 13;
+    bool final = 14;
+    bool return = 15;
+    string type = 16;
+    repeated SaleDetail details = 17;
+}
+
+message Sales {
+    repeated Sale sales = 1;
+    Pagination pagination = 2;
+}
+
+message ShopProductLinks {
+    string shopCode = 1;
+    repeated int64 shopProductID = 2;
+    repeated ShopProduct shopProducts = 3;
+}
+
+message Product {
+    int64 ID = 1;
+    string title = 2;
+    string comment = 3;
+    bool active = 4;
+    string preview = 5;
+    repeated ShopProductLinks shopProductLinks = 6;
+    Brand brand = 7;
+    float purchase = 8;
+}
+
+message ProductList {
+    repeated Product products = 1;
+    Pagination pagination = 2;
+}
+
+message ShopProduct {
+    int64 ID = 1;
+    string title = 2;
+    string article = 3;
+    string preview = 4;
+    string url = 5;
+    repeated string wbSkus = 6;
+    int64 ozProductID = 7;
+    string ymOfferID = 8;
+    int64 wbNMID = 9;
+    int64 ozSku = 10;
+    int64 companyID = 11;
+    int64 ymSku = 12;
+}
+
+message ShopProductList {
+    repeated ShopProduct shopProducts = 1;
+}
+
+message Count {
+    int32 count = 1;
+}
+
+message Pagination {
+    int32 page = 1;
+    int32 pages = 2;
+}
+
+message Log {
+    string service = 1;
+    string resource = 2;
+    string uuid = 3;
+    string datetime = 4;
+    int64 duration = 5;
+    string level = 6;
+    string message = 7;
+    int64 userID = 8;
+    int64 companyID = 9;
+    int64 jobID = 10;
+    bool viewed = 11;
+    int64 time = 12;
+}
+
+message Logs {
+    repeated Log logs = 1; 
+}
+
+//unused
+
+enum SortOrder {
+    ASC = 0;
+    DESC = 1;
+}
+
+enum Level {
+    NOLEVEL = 0;
+    INFERIOR = 1;
+    LOW = 2;
+    MIDDLE = 3;
+    HIGH = 4;
+    SUPERIOR = 5;
+}
+
+//REQUESTS
+
+
+
+//RESPONSES
+message ReplyID {
+    repeated int64 ID = 1;
+}
+
+// Auth
+
+
 
 //Shops
 message Shop {
@@ -252,114 +410,18 @@ message YMParams {
 }
 
 //GRAPHS
-message LineGraphDataset {
-    string type = 1;
-    repeated float data = 2;
-    float min = 3;
-    float max = 4;
-}
 
-message LineGraphShop {
-    string shop = 1;
-    int32 index = 2;
-}
-
-message LineGraph {
-    repeated string labels = 1;
-    repeated LineGraphDataset datasets = 2;
-    repeated LineGraphShop shops = 3;
-    string graphicName = 4;
-}
-
-message LineGraphics {
-    repeated LineGraph graphics = 1;
-}
-
-message LineGraphRequest {
-    Auth auth = 1;
-    string t = 2;
-    string p = 3;
-    string o = 4;
-    string type = 5;
-    repeated int64 ID = 6;
-}
 
 //round
-message RoundGrapDataset {
-    string type = 1;
-    string label = 2;
-    repeated float data = 3;
-}
 
-message RoundGraphic {
-    repeated string labels = 1;
-    repeated RoundGrapDataset datasets = 2;
-}
 
 //week
-message WeekGraphic {
-    float min = 1;
-    float mid = 2;
-    float max = 3;
-    float now = 4;
-}
+
 
 //PRODUCT
-message ShopProductLinks {
-    string shopCode = 1;
-    repeated int64 shopProductID = 2;
-    repeated ShopProduct shopProducts = 3;
-}
 
-message Product {
-    int64 ID = 1;
-    string title = 2;
-    string comment = 3;
-    bool active = 4;
-    string preview = 5;
-    repeated ShopProductLinks shopProductLinks = 6;
-    Brand brand = 7;
-    float purchase = 8;
-}
 
-message ProductList {
-    repeated Product products = 1;
-    Pagination pagination = 2;
-}
 
-message ShopProduct {
-    int64 ID = 1;
-    string title = 2;
-    string article = 3;
-    string preview = 4;
-    string url = 5;
-    repeated string wbSkus = 6;
-    int64 ozProductID = 7;
-    string ymOfferID = 8;
-    int64 wbNMID = 9;
-    int64 ozSku = 10;
-    int64 companyID = 11;
-    int64 ymSku = 12;
-}
-
-message ShopProductList {
-    repeated ShopProduct shopProducts = 1;
-}
-
-message ProductWidgetShops {
-    string shop = 1;
-    float value = 2;
-}
-
-message ProductWidget {
-    string type = 1;
-    float value = 2;
-    repeated ProductWidgetShops shopData = 3;
-}
-
-message ProductWidgets {
-    repeated ProductWidget data = 1;
-}
 
 message ShopProductUrlSetter {
     Auth auth = 1;
@@ -405,30 +467,7 @@ message UpdateBrandRequest {
 }
 
 //SALES
-message Sale {
-    int64 ID = 1;
-    string shop = 2;
-    string date = 3;
-    ShopProduct shopProduct = 4;
-    Product product = 5;
-    int32 count = 6;
-    float realisation = 7;
-    float purchase = 8;
-    float pay = 9;
-    float tax = 10;
-    float margin = 11;
-    float marginality = 12;
-    Level marginalityLevel = 13;
-    bool final = 14;
-    bool return = 15;
-    string type = 16;
-    repeated SaleDetail details = 17;
-}
 
-message Sales {
-    repeated Sale sales = 1;
-    Pagination pagination = 2;
-}
 
 message SaleRequest {
     Auth auth = 1;
@@ -548,24 +587,7 @@ message ImageReply {
     bytes chunk = 2;
 }
 
-message Log {
-    string service = 1;
-    string resource = 2;
-    string uuid = 3;
-    string datetime = 4;
-    int64 duration = 5;
-    string level = 6;
-    string message = 7;
-    int64 userID = 8;
-    int64 companyID = 9;
-    int64 jobID = 10;
-    bool viewed = 11;
-    int64 time = 12;
-}
 
-message Logs {
-    repeated Log logs = 1; 
-}
 
 //ORDERS
 message Order {
@@ -604,11 +626,3 @@ message ShopProductSales {
     repeated ShopProductSale data = 1;
 }
 
-message QueuerJob {
-    int64 ID = 1;
-    int64 companyID = 2;
-    string name = 3;
-    int32 status = 4;
-    bool done = 5;
-    string error = 6;
-}

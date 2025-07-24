@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type YM_APIClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	GetCampaigns(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*YMParams, error)
 }
 
 type yM_APIClient struct {
@@ -42,11 +43,21 @@ func (c *yM_APIClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.C
 	return out, nil
 }
 
+func (c *yM_APIClient) GetCampaigns(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*YMParams, error) {
+	out := new(YMParams)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetCampaigns", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YM_APIServer is the server API for YM_API service.
 // All implementations must embed UnimplementedYM_APIServer
 // for forward compatibility
 type YM_APIServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	GetCampaigns(context.Context, *YMAuthData) (*YMParams, error)
 	mustEmbedUnimplementedYM_APIServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedYM_APIServer struct {
 
 func (UnimplementedYM_APIServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedYM_APIServer) GetCampaigns(context.Context, *YMAuthData) (*YMParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCampaigns not implemented")
 }
 func (UnimplementedYM_APIServer) mustEmbedUnimplementedYM_APIServer() {}
 
@@ -88,6 +102,24 @@ func _YM_API_Ping_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_API_GetCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMAuthData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).GetCampaigns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/GetCampaigns",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).GetCampaigns(ctx, req.(*YMAuthData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_API_ServiceDesc is the grpc.ServiceDesc for YM_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var YM_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _YM_API_Ping_Handler,
+		},
+		{
+			MethodName: "GetCampaigns",
+			Handler:    _YM_API_GetCampaigns_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
