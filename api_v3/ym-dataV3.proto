@@ -51,4 +51,20 @@ message YMApiOrders {
     repeated YMApiOrder data = 1;
 }
 
-message YMApiSales {}
+message YMApiSale {
+    int64 companyID = 1;
+    int64 orderID = 2;
+    string createDt = 3;
+    string updateDt = 4;
+    string placementType = 5;
+    string offerID = 6;
+    float itemPrice = 7;
+    int32 itemCount = 8;
+    float subsidies = 9;
+    float commissions = 10;
+    bool isReturned = 11;
+}
+
+message YMApiSales {
+    repeated YMApiSale data = 1;
+}
