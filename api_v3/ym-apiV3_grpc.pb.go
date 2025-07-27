@@ -24,6 +24,12 @@ const _ = grpc.SupportPackageIsVersion7
 type YM_APIClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetCampaigns(ctx context.Context, in *YMAuthData, opts ...grpc.CallOption) (*YMParams, error)
+	LoadApiOrders(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiOrders(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiOrders, error)
+	LoadApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiSales, error)
+	LoadApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*YMApiProducts, error)
 }
 
 type yM_APIClient struct {
@@ -52,12 +58,72 @@ func (c *yM_APIClient) GetCampaigns(ctx context.Context, in *YMAuthData, opts ..
 	return out, nil
 }
 
+func (c *yM_APIClient) LoadApiOrders(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/LoadApiOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yM_APIClient) GetApiOrders(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiOrders, error) {
+	out := new(YMApiOrders)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetApiOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yM_APIClient) LoadApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/LoadApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yM_APIClient) GetApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiSales, error) {
+	out := new(YMApiSales)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetApiSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yM_APIClient) LoadApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/LoadApiProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *yM_APIClient) GetApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*YMApiProducts, error) {
+	out := new(YMApiProducts)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetApiProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YM_APIServer is the server API for YM_API service.
 // All implementations must embed UnimplementedYM_APIServer
 // for forward compatibility
 type YM_APIServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetCampaigns(context.Context, *YMAuthData) (*YMParams, error)
+	LoadApiOrders(context.Context, *YMApiDateRequest) (*StatusReply, error)
+	GetApiOrders(context.Context, *YMApiDateRequest) (*YMApiOrders, error)
+	LoadApiSales(context.Context, *YMApiDateRequest) (*StatusReply, error)
+	GetApiSales(context.Context, *YMApiDateRequest) (*YMApiSales, error)
+	LoadApiProducts(context.Context, *YMAuthParams) (*StatusReply, error)
+	GetApiProducts(context.Context, *YMAuthParams) (*YMApiProducts, error)
 	mustEmbedUnimplementedYM_APIServer()
 }
 
@@ -70,6 +136,24 @@ func (UnimplementedYM_APIServer) Ping(context.Context, *PingRequest) (*PingReply
 }
 func (UnimplementedYM_APIServer) GetCampaigns(context.Context, *YMAuthData) (*YMParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCampaigns not implemented")
+}
+func (UnimplementedYM_APIServer) LoadApiOrders(context.Context, *YMApiDateRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiOrders not implemented")
+}
+func (UnimplementedYM_APIServer) GetApiOrders(context.Context, *YMApiDateRequest) (*YMApiOrders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiOrders not implemented")
+}
+func (UnimplementedYM_APIServer) LoadApiSales(context.Context, *YMApiDateRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiSales not implemented")
+}
+func (UnimplementedYM_APIServer) GetApiSales(context.Context, *YMApiDateRequest) (*YMApiSales, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiSales not implemented")
+}
+func (UnimplementedYM_APIServer) LoadApiProducts(context.Context, *YMAuthParams) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoadApiProducts not implemented")
+}
+func (UnimplementedYM_APIServer) GetApiProducts(context.Context, *YMAuthParams) (*YMApiProducts, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
 }
 func (UnimplementedYM_APIServer) mustEmbedUnimplementedYM_APIServer() {}
 
@@ -120,6 +204,114 @@ func _YM_API_GetCampaigns_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_API_LoadApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).LoadApiOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/LoadApiOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).LoadApiOrders(ctx, req.(*YMApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_API_GetApiOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).GetApiOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/GetApiOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).GetApiOrders(ctx, req.(*YMApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_API_LoadApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).LoadApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/LoadApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).LoadApiSales(ctx, req.(*YMApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMApiDateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).GetApiSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/GetApiSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).GetApiSales(ctx, req.(*YMApiDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_API_LoadApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).LoadApiProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/LoadApiProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).LoadApiProducts(ctx, req.(*YMAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _YM_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(YMAuthParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).GetApiProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/GetApiProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).GetApiProducts(ctx, req.(*YMAuthParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_API_ServiceDesc is the grpc.ServiceDesc for YM_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +326,30 @@ var YM_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCampaigns",
 			Handler:    _YM_API_GetCampaigns_Handler,
+		},
+		{
+			MethodName: "LoadApiOrders",
+			Handler:    _YM_API_LoadApiOrders_Handler,
+		},
+		{
+			MethodName: "GetApiOrders",
+			Handler:    _YM_API_GetApiOrders_Handler,
+		},
+		{
+			MethodName: "LoadApiSales",
+			Handler:    _YM_API_LoadApiSales_Handler,
+		},
+		{
+			MethodName: "GetApiSales",
+			Handler:    _YM_API_GetApiSales_Handler,
+		},
+		{
+			MethodName: "LoadApiProducts",
+			Handler:    _YM_API_LoadApiProducts_Handler,
+		},
+		{
+			MethodName: "GetApiProducts",
+			Handler:    _YM_API_GetApiProducts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,6 +9,7 @@ message YMAuthParams {
     string token = 1;
     int64 businessID = 2;
     repeated YMCampaign campaigns = 3;
+    Auth auth = 4;
 }
 
 message YMAuthData {
@@ -16,3 +17,38 @@ message YMAuthData {
     int64 businessID = 2;
     Auth auth = 3;
 }
+
+message YMApiDateRequest {
+    YMAuthParams auth = 1;
+    string dateFrom = 2;
+    int64 companyID = 3;
+}
+
+message YMApiProduct {
+    int64 companyID = 1;
+    int64 offerID = 2;
+    string name = 3;
+    repeated string images = 4;
+}
+
+message YMApiProducts {
+    repeated YMApiProduct data = 1;
+}
+
+message YMApiOrder {
+    int64 companyID = 1;
+    string orderID = 2;
+    string createDt = 3;
+    string updateDt = 4;
+    int64 campaignID = 5;
+    string offerID = 6;
+    float itemPrice = 7;
+    int32 itemCount = 8;
+    bool isCancel = 9;
+}
+
+message YMApiOrders {
+    repeated YMApiOrder data = 1;
+}
+
+message YMApiSales {}
