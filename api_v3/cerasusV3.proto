@@ -402,6 +402,7 @@ message YMCampaign {
     int64 clientID = 3;
     string placementType = 4;
     string updated = 5;
+    bool active = 6;
 }
 
 message YMParams {
