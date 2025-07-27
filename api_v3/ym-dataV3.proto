@@ -37,7 +37,7 @@ message YMApiProducts {
 
 message YMApiOrder {
     int64 companyID = 1;
-    string orderID = 2;
+    int64 orderID = 2;
     string createDt = 3;
     string updateDt = 4;
     string placementType = 5;
