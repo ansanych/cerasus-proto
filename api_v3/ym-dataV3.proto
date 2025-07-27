@@ -40,7 +40,7 @@ message YMApiOrder {
     string orderID = 2;
     string createDt = 3;
     string updateDt = 4;
-    int64 campaignID = 5;
+    string placementType = 5;
     string offerID = 6;
     float itemPrice = 7;
     int32 itemCount = 8;
