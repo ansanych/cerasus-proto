@@ -62,7 +62,7 @@ message YMApiSale {
     int32 itemCount = 8;
     float subsidies = 9;
     float commissions = 10;
-    bool isReturned = 11;
+    int32 returned = 11;
 }
 
 message YMApiSales {
