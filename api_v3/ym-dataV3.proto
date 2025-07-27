@@ -26,7 +26,7 @@ message YMApiDateRequest {
 
 message YMApiProduct {
     int64 companyID = 1;
-    int64 offerID = 2;
+    string offerID = 2;
     string name = 3;
     repeated string images = 4;
 }
