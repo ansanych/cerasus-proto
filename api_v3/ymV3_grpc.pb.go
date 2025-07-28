@@ -40,7 +40,6 @@ type YMClient interface {
 	GetShopProducts(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*ShopProduct, error)
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
-	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 	GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetProductWidgetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error)
 	GetSale(ctx context.Context, in *SaleRequest, opts ...grpc.CallOption) (*Sale, error)
@@ -54,6 +53,7 @@ type YMClient interface {
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetShopProductSales(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopProductSales, error)
 	GetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Orders, error)
+	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 }
 
 type yMClient struct {
@@ -226,15 +226,6 @@ func (c *yMClient) GetProductGraphics(ctx context.Context, in *RequestByDates, o
 	return out, nil
 }
 
-func (c *yMClient) GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error) {
-	out := new(Sales)
-	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetSales", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *yMClient) GetProductWidget(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*ProductWidgets, error) {
 	out := new(ProductWidgets)
 	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetProductWidget", in, out, opts...)
@@ -352,6 +343,15 @@ func (c *yMClient) GetOrders(ctx context.Context, in *RequestByDates, opts ...gr
 	return out, nil
 }
 
+func (c *yMClient) GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error) {
+	out := new(Sales)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetSales", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -374,7 +374,6 @@ type YMServer interface {
 	GetShopProducts(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProduct(context.Context, *RequestByID) (*ShopProduct, error)
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
-	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetProductWidgetOrders(context.Context, *RequestByDates) (*ProductWidgets, error)
 	GetSale(context.Context, *SaleRequest) (*Sale, error)
@@ -388,6 +387,7 @@ type YMServer interface {
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
 	GetShopProductSales(context.Context, *Auth) (*ShopProductSales, error)
 	GetOrders(context.Context, *RequestByDates) (*Orders, error)
+	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -449,9 +449,6 @@ func (UnimplementedYMServer) GetShopProduct(context.Context, *RequestByID) (*Sho
 func (UnimplementedYMServer) GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductGraphics not implemented")
 }
-func (UnimplementedYMServer) GetSales(context.Context, *RequestByDates) (*Sales, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
-}
 func (UnimplementedYMServer) GetProductWidget(context.Context, *RequestByDates) (*ProductWidgets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductWidget not implemented")
 }
@@ -490,6 +487,9 @@ func (UnimplementedYMServer) GetShopProductSales(context.Context, *Auth) (*ShopP
 }
 func (UnimplementedYMServer) GetOrders(context.Context, *RequestByDates) (*Orders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
+}
+func (UnimplementedYMServer) GetSales(context.Context, *RequestByDates) (*Sales, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSales not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -828,24 +828,6 @@ func _YM_GetProductGraphics_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _YM_GetSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByDates)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(YMServer).GetSales(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.YM/GetSales",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YMServer).GetSales(ctx, req.(*RequestByDates))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _YM_GetProductWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestByDates)
 	if err := dec(in); err != nil {
@@ -1080,6 +1062,24 @@ func _YM_GetOrders_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetSales_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetSales(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM/GetSales",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetSales(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // YM_ServiceDesc is the grpc.ServiceDesc for YM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1160,10 +1160,6 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _YM_GetProductGraphics_Handler,
 		},
 		{
-			MethodName: "GetSales",
-			Handler:    _YM_GetSales_Handler,
-		},
-		{
 			MethodName: "GetProductWidget",
 			Handler:    _YM_GetProductWidget_Handler,
 		},
@@ -1214,6 +1210,10 @@ var YM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrders",
 			Handler:    _YM_GetOrders_Handler,
+		},
+		{
+			MethodName: "GetSales",
+			Handler:    _YM_GetSales_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

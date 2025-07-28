@@ -25,7 +25,7 @@ service YM {
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProduct (RequestByID) returns (ShopProduct) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
-    rpc GetSales (RequestByDates) returns (Sales) {}
+    
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc GetSale (SaleRequest) returns (Sale) {}
@@ -39,4 +39,5 @@ service YM {
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
     rpc GetOrders(RequestByDates) returns (Orders) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }

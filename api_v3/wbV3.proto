@@ -26,7 +26,7 @@ service WB {
     rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
     rpc GetShopProduct (RequestByID) returns (ShopProduct) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
-    rpc GetSales (RequestByDates) returns (Sales) {}
+    
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
     rpc GetSale (SaleRequest) returns (Sale) {}
@@ -42,4 +42,5 @@ service WB {
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
     rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
     rpc GetOrders(RequestByDates) returns (Orders) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }

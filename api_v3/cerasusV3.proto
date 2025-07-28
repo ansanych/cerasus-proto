@@ -186,22 +186,28 @@ message ProductWidgets {
 
 message Sale {
     int64 ID = 1;
-    string shop = 2;
-    string date = 3;
-    ShopProduct shopProduct = 4;
-    Product product = 5;
-    int32 count = 6;
-    float realisation = 7;
-    float purchase = 8;
-    float pay = 9;
-    float tax = 10;
-    float margin = 11;
-    float marginality = 12;
-    Level marginalityLevel = 13;
-    bool final = 14;
-    bool return = 15;
-    string type = 16;
-    repeated SaleDetail details = 17;
+    int64 companyID = 2;
+    string saleDate = 3;
+    string shop = 4;
+    string deliveryScheme = 5;
+    int64 shopSaleID = 6;
+    ShopProduct shopProduct = 7;
+    Product product = 8;
+    int64 shopProductID = 9;
+    int64 productID = 10;
+    float realisation = 11;
+    float pay = 12;
+    int32 count = 13;
+    float tax = 14;
+    float purchase = 15;
+    float margin = 16;
+    float marginality = 17;
+    bool final = 18;
+    int32 returns = 19;
+    Level marginalityLevel = 20;
+    string type = 21;
+    repeated SaleDetail details = 22;
+    string date = 23;
 }
 
 message Sales {
