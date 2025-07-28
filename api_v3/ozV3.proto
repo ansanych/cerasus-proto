@@ -13,6 +13,7 @@ service OZ {
     rpc GetAuthData(Auth) returns (OZAuthParams) {}
     rpc ResetAuthData(Auth) returns (StatusReply) {}
     rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
+    rpc GetOrders(RequestByDates) returns (Orders) {}
 
     rpc GetShopData (Auth) returns (ShopData) {}
     rpc GetShopWidget (Auth) returns (ShopWidget) {}

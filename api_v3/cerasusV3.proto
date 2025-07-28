@@ -593,18 +593,22 @@ message ImageReply {
 //ORDERS
 message Order {
     int64 ID = 1;
-    Product product = 2;
-    ShopProduct shopProduct = 3;
-    string orderType = 4;
-    float price = 5;
-    int32 count = 6;
-    bool cancelled = 7;
-    GeoPlaceData place = 8;
-    string shop = 9;
-    int64 companyID = 10;
-    string orderDate = 11;
+    int64 companyID = 2;
+    string orderDatetime = 3;
+    string shop = 4;
+    string deliveryScheme = 5;
+    int64 orderShopID = 6;
+    Product product = 7;
+    ShopProduct shopProduct = 8;
+    float price = 9;
+    int32 count = 10;
+    bool cancelled = 11;
     int64 productID = 12;
     int64 shopProductID = 13;
+    string orderType = 14;
+    GeoPlaceData place = 15;
+    string orderDate = 16;
+
 }
 
 message Orders {

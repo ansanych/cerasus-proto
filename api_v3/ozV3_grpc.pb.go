@@ -28,6 +28,7 @@ type OZClient interface {
 	GetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*OZAuthParams, error)
 	ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error)
+	GetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Orders, error)
 	GetShopData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopData, error)
 	GetShopWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
@@ -113,6 +114,15 @@ func (c *oZClient) ResetAuthData(ctx context.Context, in *Auth, opts ...grpc.Cal
 func (c *oZClient) GetUnsortedList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*ShopProductList, error) {
 	out := new(ShopProductList)
 	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Orders, error) {
+	out := new(Orders)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -372,6 +382,7 @@ type OZServer interface {
 	GetAuthData(context.Context, *Auth) (*OZAuthParams, error)
 	ResetAuthData(context.Context, *Auth) (*StatusReply, error)
 	GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error)
+	GetOrders(context.Context, *RequestByDates) (*Orders, error)
 	GetShopData(context.Context, *Auth) (*ShopData, error)
 	GetShopWidget(context.Context, *Auth) (*ShopWidget, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
@@ -423,6 +434,9 @@ func (UnimplementedOZServer) ResetAuthData(context.Context, *Auth) (*StatusReply
 }
 func (UnimplementedOZServer) GetUnsortedList(context.Context, *RequestByIDs) (*ShopProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedList not implemented")
+}
+func (UnimplementedOZServer) GetOrders(context.Context, *RequestByDates) (*Orders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
 }
 func (UnimplementedOZServer) GetShopData(context.Context, *Auth) (*ShopData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopData not implemented")
@@ -622,6 +636,24 @@ func _OZ_GetUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OZServer).GetUnsortedList(ctx, req.(*RequestByIDs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetOrders(ctx, req.(*RequestByDates))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1142,6 +1174,10 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUnsortedList",
 			Handler:    _OZ_GetUnsortedList_Handler,
+		},
+		{
+			MethodName: "GetOrders",
+			Handler:    _OZ_GetOrders_Handler,
 		},
 		{
 			MethodName: "GetShopData",

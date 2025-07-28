@@ -41,4 +41,5 @@ service WB {
 
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
     rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
+    rpc GetOrders(RequestByDates) returns (Orders) {}
 }
