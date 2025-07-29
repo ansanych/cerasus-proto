@@ -138,6 +138,10 @@ message Roles {
     repeated Role roles = 1;
 }
 
+message Count {
+    int32 count = 1;
+}
+
 message User {
     int64 ID = 1;
     string name = 2;
@@ -167,6 +171,10 @@ message Brand {
 
 message Brands {
     repeated Brand brands = 1;
+}
+
+message ReplyIDS {
+    repeated int64 ID = 1;
 }
 
 message ShopProduct {

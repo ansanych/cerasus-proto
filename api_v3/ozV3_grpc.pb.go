@@ -31,6 +31,9 @@ type OZClient interface {
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	GetShopProducts(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
+	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetUnsortedList(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
 }
 
 type oZClient struct {
@@ -122,6 +125,33 @@ func (c *oZClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *oZClient) GetShopProducts(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetShopProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetProductsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oZClient) GetUnsortedList(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
@@ -135,6 +165,9 @@ type OZServer interface {
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	GetShopProducts(context.Context, *RequestByIDS) (*ShopProductList, error)
+	GetProductsCount(context.Context, *Auth) (*Count, error)
+	GetUnsortedList(context.Context, *RequestByIDS) (*ShopProductList, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -168,6 +201,15 @@ func (UnimplementedOZServer) GetConnectedCompanies(context.Context, *PingRequest
 }
 func (UnimplementedOZServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedOZServer) GetShopProducts(context.Context, *RequestByIDS) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProducts not implemented")
+}
+func (UnimplementedOZServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedOZServer) GetUnsortedList(context.Context, *RequestByIDS) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedList not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -344,6 +386,60 @@ func _OZ_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_GetShopProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetShopProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetShopProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetShopProducts(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetProductsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetProductsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetProductsCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OZ_GetUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetUnsortedList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetUnsortedList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetUnsortedList(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_ServiceDesc is the grpc.ServiceDesc for OZ service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +482,18 @@ var OZ_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _OZ_GetImage_Handler,
+		},
+		{
+			MethodName: "GetShopProducts",
+			Handler:    _OZ_GetShopProducts_Handler,
+		},
+		{
+			MethodName: "GetProductsCount",
+			Handler:    _OZ_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetUnsortedList",
+			Handler:    _OZ_GetUnsortedList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

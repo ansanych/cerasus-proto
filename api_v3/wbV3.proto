@@ -16,4 +16,7 @@ service WB {
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
     rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc GetShopProducts (RequestByIDS) returns (ShopProductList) {}
+    rpc GetProductsCount (Auth) returns (Count) {}
+    rpc GetUnsortedList (RequestByIDS) returns (ShopProductList) {}
 }

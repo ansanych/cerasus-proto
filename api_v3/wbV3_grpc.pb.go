@@ -31,6 +31,9 @@ type WBClient interface {
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	GetShopProducts(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
+	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
+	GetUnsortedList(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
 }
 
 type wBClient struct {
@@ -122,6 +125,33 @@ func (c *wBClient) GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.
 	return out, nil
 }
 
+func (c *wBClient) GetShopProducts(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/GetShopProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error) {
+	out := new(Count)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/GetProductsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) GetUnsortedList(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error) {
+	out := new(ShopProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/GetUnsortedList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -135,6 +165,9 @@ type WBServer interface {
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	GetShopProducts(context.Context, *RequestByIDS) (*ShopProductList, error)
+	GetProductsCount(context.Context, *Auth) (*Count, error)
+	GetUnsortedList(context.Context, *RequestByIDS) (*ShopProductList, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -168,6 +201,15 @@ func (UnimplementedWBServer) GetConnectedCompanies(context.Context, *PingRequest
 }
 func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedWBServer) GetShopProducts(context.Context, *RequestByIDS) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopProducts not implemented")
+}
+func (UnimplementedWBServer) GetProductsCount(context.Context, *Auth) (*Count, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsCount not implemented")
+}
+func (UnimplementedWBServer) GetUnsortedList(context.Context, *RequestByIDS) (*ShopProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUnsortedList not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -344,6 +386,60 @@ func _WB_GetImage_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetShopProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetShopProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/GetShopProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetShopProducts(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_GetProductsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetProductsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/GetProductsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetProductsCount(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_GetUnsortedList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetUnsortedList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/GetUnsortedList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetUnsortedList(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +482,18 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _WB_GetImage_Handler,
+		},
+		{
+			MethodName: "GetShopProducts",
+			Handler:    _WB_GetShopProducts_Handler,
+		},
+		{
+			MethodName: "GetProductsCount",
+			Handler:    _WB_GetProductsCount_Handler,
+		},
+		{
+			MethodName: "GetUnsortedList",
+			Handler:    _WB_GetUnsortedList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
