@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthentyClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
+	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
@@ -46,6 +47,15 @@ func NewAuthentyClient(cc grpc.ClientConnInterface) AuthentyClient {
 func (c *authentyClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error) {
+	out := new(Auth)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/CheckAccess", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,6 +157,7 @@ func (c *authentyClient) GetRoles(ctx context.Context, in *Auth, opts ...grpc.Ca
 // for forward compatibility
 type AuthentyServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
+	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
 	Register(context.Context, *RegisterRequest) (*StatusReply, error)
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
@@ -166,6 +177,9 @@ type UnimplementedAuthentyServer struct {
 
 func (UnimplementedAuthentyServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) (*Auth, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAccess not implemented")
 }
 func (UnimplementedAuthentyServer) Register(context.Context, *RegisterRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
@@ -224,6 +238,24 @@ func _Authenty_Ping_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Ping(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_CheckAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).CheckAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Authenty/CheckAccess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).CheckAccess(ctx, req.(*AccessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -418,6 +450,10 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _Authenty_Ping_Handler,
+		},
+		{
+			MethodName: "CheckAccess",
+			Handler:    _Authenty_CheckAccess_Handler,
 		},
 		{
 			MethodName: "Register",
