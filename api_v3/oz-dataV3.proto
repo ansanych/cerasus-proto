@@ -17,6 +17,11 @@ message OZApiOrdersRequest {
     int64 companyID = 3;
 }
 
+message OZApiStockRequest {
+    OZAuthParams auth = 1;
+    repeated string skus = 3;
+}
+
 message OZApiOrder {
     int64 companyID = 1;
     string orderNumber = 2;
@@ -30,19 +35,6 @@ message OZApiOrder {
 
 message OZApiOrders {
     repeated OZApiOrder data = 1;
-}
-
-message OZApiProduct {
-    int64 companyID = 1;
-    int64 ozonProductID = 2;
-    string name = 3;
-    string article = 4;
-    int64 sku = 5;
-    repeated string images = 6;
-}
-
-message OZApiProducts {
-    repeated OZApiProduct data = 1;
 }
 
 message OZApiSale {
@@ -64,9 +56,17 @@ message OZApiSales {
     repeated OZApiSale data = 1;
 }
 
-message OZApiStockRequest {
-    OZAuthParams auth = 1;
-    repeated string skus = 3;
+message OZApiProduct {
+    int64 companyID = 1;
+    int64 ozonProductID = 2;
+    string name = 3;
+    string article = 4;
+    int64 sku = 5;
+    repeated string images = 6;
+}
+
+message OZApiProducts {
+    repeated OZApiProduct data = 1;
 }
 
 message OZApiStockItem {

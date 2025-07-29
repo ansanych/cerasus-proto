@@ -26,7 +26,6 @@ type AuthentyClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
-	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
 	CreateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
@@ -34,8 +33,6 @@ type AuthentyClient interface {
 	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error)
 	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetRoles(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Roles, error)
-	GetCompanyList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*CompanyList, error)
-	GetCompanyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Company, error)
 }
 
 type authentyClient struct {
@@ -76,15 +73,6 @@ func (c *authentyClient) Login(ctx context.Context, in *LoginRequest, opts ...gr
 func (c *authentyClient) Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error) {
 	out := new(LoginReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/Refresh", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error) {
-	out := new(Auth)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/CheckAccess", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -154,24 +142,6 @@ func (c *authentyClient) GetRoles(ctx context.Context, in *Auth, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *authentyClient) GetCompanyList(ctx context.Context, in *RequestByIDs, opts ...grpc.CallOption) (*CompanyList, error) {
-	out := new(CompanyList)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/GetCompanyList", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *authentyClient) GetCompanyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Company, error) {
-	out := new(Company)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/GetCompanyData", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -180,7 +150,6 @@ type AuthentyServer interface {
 	Register(context.Context, *RegisterRequest) (*StatusReply, error)
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
-	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
 	CreateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
 	DeleteUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
@@ -188,8 +157,6 @@ type AuthentyServer interface {
 	GetCompanyUsers(context.Context, *Auth) (*Users, error)
 	UpdateCompany(context.Context, *UpdateCompanyRequest) (*StatusReply, error)
 	GetRoles(context.Context, *Auth) (*Roles, error)
-	GetCompanyList(context.Context, *RequestByIDs) (*CompanyList, error)
-	GetCompanyData(context.Context, *RequestByID) (*Company, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -208,9 +175,6 @@ func (UnimplementedAuthentyServer) Login(context.Context, *LoginRequest) (*Login
 }
 func (UnimplementedAuthentyServer) Refresh(context.Context, *RefreshRequest) (*LoginReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Refresh not implemented")
-}
-func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) (*Auth, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckAccess not implemented")
 }
 func (UnimplementedAuthentyServer) CreateUser(context.Context, *UpdateUserRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -232,12 +196,6 @@ func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateCompany
 }
 func (UnimplementedAuthentyServer) GetRoles(context.Context, *Auth) (*Roles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoles not implemented")
-}
-func (UnimplementedAuthentyServer) GetCompanyList(context.Context, *RequestByIDs) (*CompanyList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyList not implemented")
-}
-func (UnimplementedAuthentyServer) GetCompanyData(context.Context, *RequestByID) (*Company, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyData not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -320,24 +278,6 @@ func _Authenty_Refresh_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthentyServer).Refresh(ctx, req.(*RefreshRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Authenty_CheckAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AccessRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthentyServer).CheckAccess(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Authenty/CheckAccess",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthentyServer).CheckAccess(ctx, req.(*AccessRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -468,42 +408,6 @@ func _Authenty_GetRoles_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Authenty_GetCompanyList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByIDs)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthentyServer).GetCompanyList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Authenty/GetCompanyList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthentyServer).GetCompanyList(ctx, req.(*RequestByIDs))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Authenty_GetCompanyData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestByID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthentyServer).GetCompanyData(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Authenty/GetCompanyData",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthentyServer).GetCompanyData(ctx, req.(*RequestByID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Authenty_ServiceDesc is the grpc.ServiceDesc for Authenty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -526,10 +430,6 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Refresh",
 			Handler:    _Authenty_Refresh_Handler,
-		},
-		{
-			MethodName: "CheckAccess",
-			Handler:    _Authenty_CheckAccess_Handler,
 		},
 		{
 			MethodName: "CreateUser",
@@ -558,14 +458,6 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRoles",
 			Handler:    _Authenty_GetRoles_Handler,
-		},
-		{
-			MethodName: "GetCompanyList",
-			Handler:    _Authenty_GetCompanyList_Handler,
-		},
-		{
-			MethodName: "GetCompanyData",
-			Handler:    _Authenty_GetCompanyData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

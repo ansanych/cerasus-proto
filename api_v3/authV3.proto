@@ -10,7 +10,6 @@ service Authenty {
     rpc Register (RegisterRequest) returns (StatusReply) {}
     rpc Login (LoginRequest) returns (LoginReply) {}
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
-    rpc CheckAccess (AccessRequest) returns (Auth) {}
     rpc CreateUser(UpdateUserRequest) returns (StatusReply) {}
     rpc UpdateUser(UpdateUserRequest) returns (StatusReply) {}
     rpc DeleteUser(UpdateUserRequest) returns (StatusReply) {}
@@ -18,8 +17,6 @@ service Authenty {
     rpc GetCompanyUsers(Auth) returns (Users) {}
     rpc UpdateCompany(UpdateCompanyRequest) returns (StatusReply) {}
     rpc GetRoles(Auth) returns (Roles) {}
-    rpc GetCompanyList(RequestByIDs) returns (CompanyList) {}
-    rpc GetCompanyData(RequestByID) returns (Company) {}
 }
 
 message RegisterRequest {
@@ -44,11 +41,6 @@ message LoginReply {
 }
 
 message RefreshRequest {
-    string token = 1;
-    bool brand = 2;
-}
-
-message AccessRequest {
     string token = 1;
     bool brand = 2;
 }

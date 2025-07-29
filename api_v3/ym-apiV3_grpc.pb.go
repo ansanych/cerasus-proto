@@ -28,8 +28,8 @@ type YM_APIClient interface {
 	GetApiOrders(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiOrders, error)
 	LoadApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiSales(ctx context.Context, in *YMApiDateRequest, opts ...grpc.CallOption) (*YMApiSales, error)
-	LoadApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
-	GetApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*YMApiProducts, error)
+	LoadApiProducts(ctx context.Context, in *YMParams, opts ...grpc.CallOption) (*StatusReply, error)
+	GetApiProducts(ctx context.Context, in *YMParams, opts ...grpc.CallOption) (*YMApiProducts, error)
 }
 
 type yM_APIClient struct {
@@ -94,7 +94,7 @@ func (c *yM_APIClient) GetApiSales(ctx context.Context, in *YMApiDateRequest, op
 	return out, nil
 }
 
-func (c *yM_APIClient) LoadApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*StatusReply, error) {
+func (c *yM_APIClient) LoadApiProducts(ctx context.Context, in *YMParams, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/LoadApiProducts", in, out, opts...)
 	if err != nil {
@@ -103,7 +103,7 @@ func (c *yM_APIClient) LoadApiProducts(ctx context.Context, in *YMAuthParams, op
 	return out, nil
 }
 
-func (c *yM_APIClient) GetApiProducts(ctx context.Context, in *YMAuthParams, opts ...grpc.CallOption) (*YMApiProducts, error) {
+func (c *yM_APIClient) GetApiProducts(ctx context.Context, in *YMParams, opts ...grpc.CallOption) (*YMApiProducts, error) {
 	out := new(YMApiProducts)
 	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetApiProducts", in, out, opts...)
 	if err != nil {
@@ -122,8 +122,8 @@ type YM_APIServer interface {
 	GetApiOrders(context.Context, *YMApiDateRequest) (*YMApiOrders, error)
 	LoadApiSales(context.Context, *YMApiDateRequest) (*StatusReply, error)
 	GetApiSales(context.Context, *YMApiDateRequest) (*YMApiSales, error)
-	LoadApiProducts(context.Context, *YMAuthParams) (*StatusReply, error)
-	GetApiProducts(context.Context, *YMAuthParams) (*YMApiProducts, error)
+	LoadApiProducts(context.Context, *YMParams) (*StatusReply, error)
+	GetApiProducts(context.Context, *YMParams) (*YMApiProducts, error)
 	mustEmbedUnimplementedYM_APIServer()
 }
 
@@ -149,10 +149,10 @@ func (UnimplementedYM_APIServer) LoadApiSales(context.Context, *YMApiDateRequest
 func (UnimplementedYM_APIServer) GetApiSales(context.Context, *YMApiDateRequest) (*YMApiSales, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiSales not implemented")
 }
-func (UnimplementedYM_APIServer) LoadApiProducts(context.Context, *YMAuthParams) (*StatusReply, error) {
+func (UnimplementedYM_APIServer) LoadApiProducts(context.Context, *YMParams) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoadApiProducts not implemented")
 }
-func (UnimplementedYM_APIServer) GetApiProducts(context.Context, *YMAuthParams) (*YMApiProducts, error) {
+func (UnimplementedYM_APIServer) GetApiProducts(context.Context, *YMParams) (*YMApiProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
 }
 func (UnimplementedYM_APIServer) mustEmbedUnimplementedYM_APIServer() {}
@@ -277,7 +277,7 @@ func _YM_API_GetApiSales_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _YM_API_LoadApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(YMAuthParams)
+	in := new(YMParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -289,13 +289,13 @@ func _YM_API_LoadApiProducts_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/cerasusV3.YM_API/LoadApiProducts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YM_APIServer).LoadApiProducts(ctx, req.(*YMAuthParams))
+		return srv.(YM_APIServer).LoadApiProducts(ctx, req.(*YMParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _YM_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(YMAuthParams)
+	in := new(YMParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -307,7 +307,7 @@ func _YM_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/cerasusV3.YM_API/GetApiProducts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(YM_APIServer).GetApiProducts(ctx, req.(*YMAuthParams))
+		return srv.(YM_APIServer).GetApiProducts(ctx, req.(*YMParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }

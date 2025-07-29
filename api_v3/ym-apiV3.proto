@@ -13,6 +13,6 @@ service YM_API {
     rpc GetApiOrders(YMApiDateRequest) returns (YMApiOrders) {}
     rpc LoadApiSales(YMApiDateRequest) returns (StatusReply) {}
     rpc GetApiSales(YMApiDateRequest) returns (YMApiSales) {}
-    rpc LoadApiProducts(YMAuthParams) returns (StatusReply) {}
-    rpc GetApiProducts(YMAuthParams) returns (YMApiProducts) {}
+    rpc LoadApiProducts(YMParams) returns (StatusReply) {}
+    rpc GetApiProducts(YMParams) returns (YMApiProducts) {}
 }

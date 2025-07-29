@@ -34,7 +34,6 @@ type SettingsClient interface {
 	ConnectCompanyBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	CreateCompanyBrand(ctx context.Context, in *CreateCompanyBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Taxes, error)
-	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
 	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 	SetTax(ctx context.Context, in *SetTaxRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
@@ -155,15 +154,6 @@ func (c *settingsClient) GetTaxes(ctx context.Context, in *Auth, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *settingsClient) GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error) {
-	out := new(MarginLevels)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Settings/GetMarginLevels", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *settingsClient) GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error) {
 	out := new(AppTaxes)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Settings/GetAppTaxes", in, out, opts...)
@@ -198,7 +188,6 @@ type SettingsServer interface {
 	ConnectCompanyBrand(context.Context, *RequestByID) (*StatusReply, error)
 	CreateCompanyBrand(context.Context, *CreateCompanyBrandRequest) (*StatusReply, error)
 	GetTaxes(context.Context, *Auth) (*Taxes, error)
-	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
 	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	SetTax(context.Context, *SetTaxRequest) (*StatusReply, error)
 	mustEmbedUnimplementedSettingsServer()
@@ -243,9 +232,6 @@ func (UnimplementedSettingsServer) CreateCompanyBrand(context.Context, *CreateCo
 }
 func (UnimplementedSettingsServer) GetTaxes(context.Context, *Auth) (*Taxes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTaxes not implemented")
-}
-func (UnimplementedSettingsServer) GetMarginLevels(context.Context, *Auth) (*MarginLevels, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMarginLevels not implemented")
 }
 func (UnimplementedSettingsServer) GetAppTaxes(context.Context, *Auth) (*AppTaxes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAppTaxes not implemented")
@@ -482,24 +468,6 @@ func _Settings_GetTaxes_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Settings_GetMarginLevels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingsServer).GetMarginLevels(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Settings/GetMarginLevels",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingsServer).GetMarginLevels(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Settings_GetAppTaxes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -590,10 +558,6 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTaxes",
 			Handler:    _Settings_GetTaxes_Handler,
-		},
-		{
-			MethodName: "GetMarginLevels",
-			Handler:    _Settings_GetMarginLevels_Handler,
 		},
 		{
 			MethodName: "GetAppTaxes",

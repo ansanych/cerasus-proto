@@ -5,34 +5,32 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-message YMAuthParams {
-    string token = 1;
-    int64 businessID = 2;
-    repeated YMCampaign campaigns = 3;
-    Auth auth = 4;
-}
-
 message YMAuthData {
     string token = 1;
     int64 businessID = 2;
     Auth auth = 3;
 }
 
+message YMCampaign {
+    string domain = 1;
+    int64 campaignID = 2;
+    int64 clientID = 3;
+    string placementType = 4;
+    string updated = 5;
+    bool active = 6;
+}
+
+message YMParams {
+    int64 businessID = 1;
+    repeated YMCampaign campaigns = 2;
+    string token = 3;
+    Auth auth = 4;
+}
+
 message YMApiDateRequest {
-    YMAuthParams auth = 1;
+    YMParams auth = 1;
     string dateFrom = 2;
     int64 companyID = 3;
-}
-
-message YMApiProduct {
-    int64 companyID = 1;
-    string offerID = 2;
-    string name = 3;
-    repeated string images = 4;
-}
-
-message YMApiProducts {
-    repeated YMApiProduct data = 1;
 }
 
 message YMApiOrder {
@@ -67,4 +65,15 @@ message YMApiSale {
 
 message YMApiSales {
     repeated YMApiSale data = 1;
+}
+
+message YMApiProduct {
+    int64 companyID = 1;
+    string offerID = 2;
+    string name = 3;
+    repeated string images = 4;
+}
+
+message YMApiProducts {
+    repeated YMApiProduct data = 1;
 }

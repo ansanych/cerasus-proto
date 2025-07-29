@@ -9,47 +9,11 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service OZ {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetAppData (Auth) returns (AppShopData) {}
-    rpc SetAuthData(OZAuthParams) returns (StatusReply) {}    
-    rpc GetAuthData(Auth) returns (OZAuthParams) {}
-    rpc ResetAuthData(Auth) returns (StatusReply) {}
-    rpc GetUnsortedList (RequestByIDs) returns (ShopProductList) {}
+    rpc SetAuthData(OZAuthParams) returns (StatusReply) {}
+    rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
     rpc GetOrders(RequestByDates) returns (Orders) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
-
-    rpc GetShopData (Auth) returns (ShopData) {}
-    rpc GetShopWidget (Auth) returns (ShopWidget) {}
-    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
-    rpc GetProductsCount (Auth) returns (Count) {}
-    rpc GetProductsCountUnsorted (Auth) returns (Count) {}
-    rpc GetFlowGraphicData (Auth) returns (Count) {}
-    rpc GetMarginGraphicData (Auth) returns (Count) {}
-    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
-    rpc GetPayRoundGraphic (Auth) returns (RoundGraphic) {}
-    rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
-    rpc GetOrderLeaders (Auth) returns (OrderLeaders) {}
-    rpc GetShopProducts (RequestByIDs) returns (ShopProductList) {}
-    rpc GetShopProduct (RequestByID) returns (ShopProduct) {}
-    rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
-    
-    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
-    rpc GetProductWidgetOrders(RequestByDates) returns (ProductWidgets) {}
-    rpc GetSale (SaleRequest) returns (Sale) {}
-    rpc GetProductsUnsortedList (Auth) returns (ShopProductList) {}
-    rpc SetShopProductUrl (ShopProductUrlSetter) returns (StatusReply) {}
-    rpc GetCounterParams(RequestByIDs) returns (OZCounterParams) {}
-    rpc GetImage(ImageRequest) returns (ImageReply) {}
-    rpc GetShopProductByCode(SearchRequest) returns (ShopProduct) {}
-    rpc GetOrdersForBrand(OrdersRequest) returns (Orders) {}
-    rpc GetShopProductSales(Auth) returns (ShopProductSales) {}
-
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
     rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
+    rpc GetImage(ImageRequest) returns (ImageReply) {}
 }
-
-message OZCounterParams {
-    int64 clientID = 1;
-    string apiKey = 2;
-    repeated int64 warehouses = 3;
-    repeated ShopProduct shopProducts = 4;
-}
-

@@ -8,15 +8,15 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service WB_API {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc GetWarehouses (WBAuthParams) returns (Warehouses) {}
+    rpc GetWarehouses (WBAuthData) returns (Warehouses) {}
     rpc LoadApiOrders(WBApiDateRequest) returns (StatusReply) {}
     rpc GetApiOrders(WBApiDateRequest) returns (WBApiOrders) {}
     rpc LoadApiSales(WBApiDateRequest) returns (StatusReply) {}
     rpc GetApiSales(WBApiDateRequest) returns (WBApiSales) {}
-    rpc LoadApiProducts(WBAuthParams) returns (StatusReply) {}
-    rpc GetApiProducts(WBAuthParams) returns (WBApiProducts) {}
+    rpc LoadApiProducts(WBAuthData) returns (StatusReply) {}
+    rpc GetApiProducts(WBAuthData) returns (WBApiProducts) {}
     rpc LoadApiStocks(WBApiStockRequest) returns (StatusReply) {}
-    rpc GetApiStocks(WBAuthParams) returns (WBApiStockData) {}
+    rpc GetApiStocks(WBAuthData) returns (WBApiStockData) {}
     rpc LoadApiReports(WBApiDateRequest) returns (StatusReply) {}
     rpc GetApiReports(WBApiDateRequest) returns (WBApiReportData) {}
 }

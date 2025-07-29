@@ -10,21 +10,16 @@ message WBAuthData {
     string token = 2;
 }
 
-message WBAuthParams {
-    Auth auth = 1;
-    string token = 2;
-}
-
-message WBCounterParams {
-    string token = 1;
-    repeated int64 warehouses = 2;
-    repeated ShopProduct shopProducts = 3;
-}
-
 message WBApiDateRequest {
-    WBAuthParams auth = 1;
+    WBAuthData auth = 1;
     string dateFrom = 2;
     int64 companyID = 3;
+}
+
+message WBApiStockRequest {
+    WBAuthData auth = 1;
+    repeated int32 warehouseID = 2;
+    repeated string skus = 3;
 }
 
 message WBApiOrder {
@@ -54,10 +49,6 @@ message WBApiSales {
     repeated WBApiSale data = 1;
 }
 
-message WBApiProductPhoto {
-    string big = 1;
-}
-
 message WBApiProductSize {
     int64 chrtID = 1;
     string techSize = 2;
@@ -77,12 +68,6 @@ message WBApiProduct {
 
 message WBApiProducts {
     repeated WBApiProduct data = 1;
-}
-
-message WBApiStockRequest {
-    WBAuthParams auth = 1;
-    repeated int32 warehouseID = 2;
-    repeated string skus = 3;
 }
 
 message WBApiStockItem {

@@ -5,6 +5,7 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
+
 service Settings {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetUserAppData (Auth) returns (UserAppData) {}
@@ -18,34 +19,13 @@ service Settings {
     rpc ConnectCompanyBrand (RequestByID) returns (StatusReply) {}
     rpc CreateCompanyBrand (CreateCompanyBrandRequest) returns (StatusReply) {}
     rpc GetTaxes(Auth) returns (Taxes) {}
-    rpc GetMarginLevels (Auth) returns (MarginLevels) {}
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
     rpc SetTax(SetTaxRequest) returns (StatusReply) {}
 }
 
-message CreateCompanyBrandRequest {
+message GetMarginRequest {
     Auth auth = 1;
-    Brand brand = 2;
-}
-
-message UserAppData {
-    repeated AppShopData shops = 1;
-}
-
-message MarginLevel {
-    Level level = 1;
-    float value = 2;
-    string date = 3;
-}
-
-message MarginLevelsBrand {
-    Brand brand = 1;
-    repeated MarginLevel levels = 2;
-}
-
-message MarginLevels {
-    repeated MarginLevel levels = 1;
-    repeated MarginLevelsBrand brandLevels = 2;
+    int64 brandID = 2;
 }
 
 message MarginData {
@@ -65,15 +45,15 @@ message MarginSettings {
     MarginHistory history = 2;
 }
 
-message GetMarginRequest {
-    Auth auth = 1;
-    int64 brandID = 2;
-}
-
 message SetMarginRequest {
     Auth auth = 1;
     MarginData data = 2;
     int64 brandID = 3;
+}
+
+message CreateCompanyBrandRequest {
+    Auth auth = 1;
+    Brand brand = 2;
 }
 
 message SetTaxRequest {

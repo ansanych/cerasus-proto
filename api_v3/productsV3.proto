@@ -7,14 +7,11 @@ option go_package = "github.com/ansanych/cerasus-proto";
 
 service Products {
     rpc Ping (PingRequest) returns (PingReply) {}
-    rpc GetProductsCount (ProductListRequest) returns (Count) {}
     rpc GetProductList (ProductListRequest) returns (ProductList) {}
-    rpc GetProductListByID (RequestByIDs) returns (ProductList) {}
     rpc GetProductSearch (SearchRequest) returns (ProductList) {}
-    rpc GetProductsByShopIDs (RequestByShopIDs) returns (ProductList) {}
     rpc GetProduct (RequestByID) returns (Product) {}
-    rpc GetShopProductsMatch (RequestByShopIDs) returns (ShopProductsMatches) {}
-    rpc GetPurchases (RequestByIDs) returns (ProductsPurchases) {}
+    rpc GetShopProductsMatch (RequestByIDS) returns (ShopProductsMatches) {}
+    rpc GetPurchases (RequestByIDS) returns (ProductsPurchases) {}
     rpc GetProductsUnsortedCount (Auth) returns (UnsortedCount) {}
     rpc ConnectUnsorted (ConnectUnsortedRequest) returns (StatusReply) {}
     rpc UpdateProduct (UpdateProductRequest) returns (StatusReply) {}
@@ -24,37 +21,7 @@ service Products {
     rpc SetProductBrand (SetProductBrandRequest) returns (StatusReply) {}
     rpc GetProductLinks (RequestByID) returns (ProductLinks) {}
     rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
-    rpc GetProductListLinks (RequestByIDs) returns (ProductList) {}
     rpc GetProductsUnsortedList (SearchRequest) returns (ShopProductList) {}
-    rpc GetOrderLeaders (SearchRequest) returns (OrderLeaders) {}
-    rpc GetProductsUnsortedCountShop (SearchRequest) returns (Count) {}
-}
-
-message SetProductPurchaseRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-    float value = 3;
-    string date = 4;
-}
-
-message SetProductBrandRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-    int64 brandID = 3;
-}
-
-message UpdateProductRequest {
-    Auth auth = 1;
-    int64 ID = 2;
-    bool active = 3;
-    string title = 4;
-    string comment = 5;
-}
-
-message RequestByShopIDs {
-    Auth auth = 1;
-    repeated int64 ID = 2;
-    string shop = 3;
 }
 
 message ProductListRequest {
@@ -105,6 +72,27 @@ message ConnectUnsortedRequest {
     int64 product = 3;
     repeated int64 shopProducts = 4;
     string shop = 5;
+}
+
+message UpdateProductRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    bool active = 3;
+    string title = 4;
+    string comment = 5;
+}
+
+message SetProductPurchaseRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    float value = 3;
+    string date = 4;
+}
+
+message SetProductBrandRequest {
+    Auth auth = 1;
+    int64 ID = 2;
+    int64 brandID = 3;
 }
 
 message ProductLink {
