@@ -28,6 +28,19 @@ service Settings {
     rpc GetAppTaxes(Auth) returns (AppTaxes) {}
     rpc SetTax(SetTaxRequest) returns (StatusReply) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
+    rpc SearchBrand (SearchBrandRequest) returns (Brands) {}
+    rpc SetBrand (SetBrandRequest) returns (StatusReply) {}
+}
+
+message SearchBrandRequest {
+  Auth auth = 1;
+  string name = 2;
+  bool all = 3;
+}
+
+message SetBrandRequest {
+  Auth auth = 1;
+  Brand brand = 2;
 }
 
 message AppServiceData {
