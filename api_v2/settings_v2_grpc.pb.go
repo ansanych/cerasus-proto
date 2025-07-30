@@ -44,6 +44,8 @@ type SettingsClient interface {
 	GetAppTaxes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*AppTaxes, error)
 	SetTax(ctx context.Context, in *SetTaxRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
+	SearchBrand(ctx context.Context, in *SearchBrandRequest, opts ...grpc.CallOption) (*Brands, error)
+	SetBrand(ctx context.Context, in *SetBrandRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type settingsClient struct {
@@ -252,6 +254,24 @@ func (c *settingsClient) GetImage(ctx context.Context, in *ImageRequest, opts ..
 	return out, nil
 }
 
+func (c *settingsClient) SearchBrand(ctx context.Context, in *SearchBrandRequest, opts ...grpc.CallOption) (*Brands, error) {
+	out := new(Brands)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SearchBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) SetBrand(ctx context.Context, in *SetBrandRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV2.Settings/SetBrand", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingsServer is the server API for Settings service.
 // All implementations must embed UnimplementedSettingsServer
 // for forward compatibility
@@ -278,6 +298,8 @@ type SettingsServer interface {
 	GetAppTaxes(context.Context, *Auth) (*AppTaxes, error)
 	SetTax(context.Context, *SetTaxRequest) (*StatusReply, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
+	SearchBrand(context.Context, *SearchBrandRequest) (*Brands, error)
+	SetBrand(context.Context, *SetBrandRequest) (*StatusReply, error)
 	mustEmbedUnimplementedSettingsServer()
 }
 
@@ -350,6 +372,12 @@ func (UnimplementedSettingsServer) SetTax(context.Context, *SetTaxRequest) (*Sta
 }
 func (UnimplementedSettingsServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetImage not implemented")
+}
+func (UnimplementedSettingsServer) SearchBrand(context.Context, *SearchBrandRequest) (*Brands, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchBrand not implemented")
+}
+func (UnimplementedSettingsServer) SetBrand(context.Context, *SetBrandRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetBrand not implemented")
 }
 func (UnimplementedSettingsServer) mustEmbedUnimplementedSettingsServer() {}
 
@@ -760,6 +788,42 @@ func _Settings_GetImage_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Settings_SearchBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SearchBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/SearchBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SearchBrand(ctx, req.(*SearchBrandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_SetBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetBrandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).SetBrand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV2.Settings/SetBrand",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).SetBrand(ctx, req.(*SetBrandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Settings_ServiceDesc is the grpc.ServiceDesc for Settings service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +918,14 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetImage",
 			Handler:    _Settings_GetImage_Handler,
+		},
+		{
+			MethodName: "SearchBrand",
+			Handler:    _Settings_SearchBrand_Handler,
+		},
+		{
+			MethodName: "SetBrand",
+			Handler:    _Settings_SetBrand_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
