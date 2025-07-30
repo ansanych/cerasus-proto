@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type DatumClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	GetShopSalesWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
 }
 
 type datumClient struct {
@@ -52,12 +53,22 @@ func (c *datumClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...gr
 	return out, nil
 }
 
+func (c *datumClient) GetShopSalesWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error) {
+	out := new(ShopWidget)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetShopSalesWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
 type DatumServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	GetShopSalesWidget(context.Context, *Auth) (*ShopWidget, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedDatumServer) Ping(context.Context, *PingRequest) (*PingReply,
 }
 func (UnimplementedDatumServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
+}
+func (UnimplementedDatumServer) GetShopSalesWidget(context.Context, *Auth) (*ShopWidget, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopSalesWidget not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -120,6 +134,24 @@ func _Datum_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetShopSalesWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetShopSalesWidget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetShopSalesWidget",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetShopSalesWidget(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetQueueJob",
 			Handler:    _Datum_SetQueueJob_Handler,
+		},
+		{
+			MethodName: "GetShopSalesWidget",
+			Handler:    _Datum_GetShopSalesWidget_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
