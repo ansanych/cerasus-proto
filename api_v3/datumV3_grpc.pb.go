@@ -24,7 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type DatumClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
-	GetShopSalesWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error)
+	GetShopSalesWidget(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*ShopWidget, error)
+	GetOrderLeaders(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*OrderLeaders, error)
 }
 
 type datumClient struct {
@@ -53,9 +54,18 @@ func (c *datumClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...gr
 	return out, nil
 }
 
-func (c *datumClient) GetShopSalesWidget(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*ShopWidget, error) {
+func (c *datumClient) GetShopSalesWidget(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*ShopWidget, error) {
 	out := new(ShopWidget)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetShopSalesWidget", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datumClient) GetOrderLeaders(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*OrderLeaders, error) {
+	out := new(OrderLeaders)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetOrderLeaders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +78,8 @@ func (c *datumClient) GetShopSalesWidget(ctx context.Context, in *Auth, opts ...
 type DatumServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
-	GetShopSalesWidget(context.Context, *Auth) (*ShopWidget, error)
+	GetShopSalesWidget(context.Context, *RequestByShop) (*ShopWidget, error)
+	GetOrderLeaders(context.Context, *RequestByShop) (*OrderLeaders, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -82,8 +93,11 @@ func (UnimplementedDatumServer) Ping(context.Context, *PingRequest) (*PingReply,
 func (UnimplementedDatumServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
-func (UnimplementedDatumServer) GetShopSalesWidget(context.Context, *Auth) (*ShopWidget, error) {
+func (UnimplementedDatumServer) GetShopSalesWidget(context.Context, *RequestByShop) (*ShopWidget, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopSalesWidget not implemented")
+}
+func (UnimplementedDatumServer) GetOrderLeaders(context.Context, *RequestByShop) (*OrderLeaders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -135,7 +149,7 @@ func _Datum_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Datum_GetShopSalesWidget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(RequestByShop)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +161,25 @@ func _Datum_GetShopSalesWidget_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/cerasusV3.Datum/GetShopSalesWidget",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DatumServer).GetShopSalesWidget(ctx, req.(*Auth))
+		return srv.(DatumServer).GetShopSalesWidget(ctx, req.(*RequestByShop))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Datum_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByShop)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetOrderLeaders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetOrderLeaders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetOrderLeaders(ctx, req.(*RequestByShop))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -170,6 +202,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopSalesWidget",
 			Handler:    _Datum_GetShopSalesWidget_Handler,
+		},
+		{
+			MethodName: "GetOrderLeaders",
+			Handler:    _Datum_GetOrderLeaders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

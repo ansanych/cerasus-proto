@@ -18,6 +18,11 @@ message SearchRequest {
     string shop = 3;
 }
 
+message RequestByShop {
+    Auth auth = 1;
+    string shop = 2;
+}
+
 message RequestByID {
     Auth auth = 1;
     int64 ID = 2;

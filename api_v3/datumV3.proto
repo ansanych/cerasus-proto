@@ -8,7 +8,8 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Datum {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
-    rpc GetShopSalesWidget(Auth) returns (ShopWidget) {}
+    rpc GetShopSalesWidget(RequestByShop) returns (ShopWidget) {}
+    rpc GetOrderLeaders (RequestByShop) returns (OrderLeaders) {}
 }
 
 message ShopWidgetData {
@@ -21,4 +22,17 @@ message ShopWidgetData {
 
 message ShopWidget {
     repeated ShopWidgetData data = 1;
+}
+
+message OrderLeader {
+    int64 productID = 1;
+    string title = 2;
+    string preview = 3;
+    string shop = 4;
+    int32 count = 5;
+    int32 index = 6;
+}
+
+message OrderLeaders {
+    repeated OrderLeader leaders = 1;
 }
