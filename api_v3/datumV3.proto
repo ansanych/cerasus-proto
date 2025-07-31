@@ -10,6 +10,7 @@ service Datum {
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
     rpc GetShopSalesWidget(RequestByShop) returns (ShopWidget) {}
     rpc GetOrderLeaders (RequestByShop) returns (OrderLeaders) {}
+    rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
 }
 
 message ShopWidgetData {

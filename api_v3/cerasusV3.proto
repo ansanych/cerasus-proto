@@ -363,3 +363,36 @@ message Warehouse {
 message Warehouses {
     repeated Warehouse warehouses = 1;
 }
+
+message LineGraphDataset {
+    string type = 1;
+    repeated float data = 2;
+    float min = 3;
+    float max = 4;
+}
+
+message LineGraphShop {
+    string shop = 1;
+    int32 index = 2;
+}
+
+message LineGraph {
+    repeated string labels = 1;
+    repeated LineGraphDataset datasets = 2;
+    repeated LineGraphShop shops = 3;
+    string graphicName = 4;
+}
+
+message LineGraphics {
+    repeated LineGraph graphics = 1;
+}
+
+message LineGraphRequest {
+    Auth auth = 1;
+    string t = 2;
+    string p = 3;
+    string o = 4;
+    string type = 5;
+    repeated int64 ID = 6;
+    string shop = 7;
+}

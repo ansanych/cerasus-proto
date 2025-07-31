@@ -26,6 +26,7 @@ type DatumClient interface {
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 	GetShopSalesWidget(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetOrderLeaders(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*OrderLeaders, error)
+	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
 }
 
 type datumClient struct {
@@ -72,6 +73,15 @@ func (c *datumClient) GetOrderLeaders(ctx context.Context, in *RequestByShop, op
 	return out, nil
 }
 
+func (c *datumClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error) {
+	out := new(LineGraph)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetMainGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type DatumServer interface {
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	GetShopSalesWidget(context.Context, *RequestByShop) (*ShopWidget, error)
 	GetOrderLeaders(context.Context, *RequestByShop) (*OrderLeaders, error)
+	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedDatumServer) GetShopSalesWidget(context.Context, *RequestBySh
 }
 func (UnimplementedDatumServer) GetOrderLeaders(context.Context, *RequestByShop) (*OrderLeaders, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderLeaders not implemented")
+}
+func (UnimplementedDatumServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -184,6 +198,24 @@ func _Datum_GetOrderLeaders_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetMainGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetMainGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetMainGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrderLeaders",
 			Handler:    _Datum_GetOrderLeaders_Handler,
+		},
+		{
+			MethodName: "GetMainGraphic",
+			Handler:    _Datum_GetMainGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
