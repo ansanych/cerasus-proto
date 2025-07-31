@@ -12,6 +12,21 @@ service Datum {
     rpc GetOrderLeaders (RequestByShop) returns (OrderLeaders) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
     rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
+    rpc GetFlowGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetPayRoundGraphic (Auth) returns (RoundGraphic) {}
+    rpc GetCountRoundGraphic (Auth) returns (RoundGraphic) {}
+}
+
+message RoundGrapDataset {
+    string type = 1;
+    string label = 2;
+    repeated float data = 3;
+}
+
+message RoundGraphic {
+    repeated string labels = 1;
+    repeated RoundGrapDataset datasets = 2;
 }
 
 message ShopWidgetData {
