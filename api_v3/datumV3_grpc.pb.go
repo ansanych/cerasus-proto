@@ -30,8 +30,8 @@ type DatumClient interface {
 	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 	GetFlowGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
 	GetMarginGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
-	GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
-	GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetPayRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error)
+	GetCountRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error)
 }
 
 type datumClient struct {
@@ -114,7 +114,7 @@ func (c *datumClient) GetMarginGraphic(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
-func (c *datumClient) GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+func (c *datumClient) GetPayRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error) {
 	out := new(RoundGraphic)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetPayRoundGraphic", in, out, opts...)
 	if err != nil {
@@ -123,7 +123,7 @@ func (c *datumClient) GetPayRoundGraphic(ctx context.Context, in *Auth, opts ...
 	return out, nil
 }
 
-func (c *datumClient) GetCountRoundGraphic(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*RoundGraphic, error) {
+func (c *datumClient) GetCountRoundGraphic(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*RoundGraphic, error) {
 	out := new(RoundGraphic)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetCountRoundGraphic", in, out, opts...)
 	if err != nil {
@@ -144,8 +144,8 @@ type DatumServer interface {
 	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	GetFlowGraphic(context.Context, *Auth) (*RoundGraphic, error)
 	GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error)
-	GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
-	GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error)
+	GetPayRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error)
+	GetCountRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -177,10 +177,10 @@ func (UnimplementedDatumServer) GetFlowGraphic(context.Context, *Auth) (*RoundGr
 func (UnimplementedDatumServer) GetMarginGraphic(context.Context, *Auth) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarginGraphic not implemented")
 }
-func (UnimplementedDatumServer) GetPayRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+func (UnimplementedDatumServer) GetPayRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPayRoundGraphic not implemented")
 }
-func (UnimplementedDatumServer) GetCountRoundGraphic(context.Context, *Auth) (*RoundGraphic, error) {
+func (UnimplementedDatumServer) GetCountRoundGraphic(context.Context, *RequestByShop) (*RoundGraphic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCountRoundGraphic not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
@@ -341,7 +341,7 @@ func _Datum_GetMarginGraphic_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _Datum_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(RequestByShop)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -353,13 +353,13 @@ func _Datum_GetPayRoundGraphic_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/cerasusV3.Datum/GetPayRoundGraphic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DatumServer).GetPayRoundGraphic(ctx, req.(*Auth))
+		return srv.(DatumServer).GetPayRoundGraphic(ctx, req.(*RequestByShop))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Datum_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
+	in := new(RequestByShop)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -371,7 +371,7 @@ func _Datum_GetCountRoundGraphic_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/cerasusV3.Datum/GetCountRoundGraphic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DatumServer).GetCountRoundGraphic(ctx, req.(*Auth))
+		return srv.(DatumServer).GetCountRoundGraphic(ctx, req.(*RequestByShop))
 	}
 	return interceptor(ctx, in, info, handler)
 }
