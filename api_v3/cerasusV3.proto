@@ -396,3 +396,10 @@ message LineGraphRequest {
     repeated int64 ID = 6;
     string shop = 7;
 }
+
+message WeekGraphic {
+    float min = 1;
+    float mid = 2;
+    float max = 3;
+    float now = 4;
+}

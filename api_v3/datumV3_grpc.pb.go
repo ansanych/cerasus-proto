@@ -27,6 +27,7 @@ type DatumClient interface {
 	GetShopSalesWidget(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*ShopWidget, error)
 	GetOrderLeaders(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*OrderLeaders, error)
 	GetMainGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*LineGraph, error)
+	GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error)
 }
 
 type datumClient struct {
@@ -82,6 +83,15 @@ func (c *datumClient) GetMainGraphic(ctx context.Context, in *LineGraphRequest, 
 	return out, nil
 }
 
+func (c *datumClient) GetWeekGraphic(ctx context.Context, in *LineGraphRequest, opts ...grpc.CallOption) (*WeekGraphic, error) {
+	out := new(WeekGraphic)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetWeekGraphic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type DatumServer interface {
 	GetShopSalesWidget(context.Context, *RequestByShop) (*ShopWidget, error)
 	GetOrderLeaders(context.Context, *RequestByShop) (*OrderLeaders, error)
 	GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error)
+	GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedDatumServer) GetOrderLeaders(context.Context, *RequestByShop)
 }
 func (UnimplementedDatumServer) GetMainGraphic(context.Context, *LineGraphRequest) (*LineGraph, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMainGraphic not implemented")
+}
+func (UnimplementedDatumServer) GetWeekGraphic(context.Context, *LineGraphRequest) (*WeekGraphic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeekGraphic not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -216,6 +230,24 @@ func _Datum_GetMainGraphic_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetWeekGraphic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LineGraphRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetWeekGraphic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetWeekGraphic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetWeekGraphic(ctx, req.(*LineGraphRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMainGraphic",
 			Handler:    _Datum_GetMainGraphic_Handler,
+		},
+		{
+			MethodName: "GetWeekGraphic",
+			Handler:    _Datum_GetWeekGraphic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

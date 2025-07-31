@@ -11,6 +11,7 @@ service Datum {
     rpc GetShopSalesWidget(RequestByShop) returns (ShopWidget) {}
     rpc GetOrderLeaders (RequestByShop) returns (OrderLeaders) {}
     rpc GetMainGraphic (LineGraphRequest) returns (LineGraph) {}
+    rpc GetWeekGraphic (LineGraphRequest) returns (WeekGraphic) {}
 }
 
 message ShopWidgetData {
