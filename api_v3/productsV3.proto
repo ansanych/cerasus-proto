@@ -23,6 +23,9 @@ service Products {
     rpc DeleteProductLink (RequestByID) returns (StatusReply) {}
     rpc GetProductsUnsortedList (SearchRequest) returns (ShopProductList) {}
     rpc GetProductsByIDS (RequestByIDS) returns (ProductList) {}
+    rpc GetShopProductsAppCount (RequestByShop) returns (Count) {}
+    rpc GetShopProductsUnsortedCount (RequestByShop) returns (Count) {}
+    rpc GetShopProductsCount (RequestByShop) returns (Count) {}
 }
 
 message ProductListRequest {
