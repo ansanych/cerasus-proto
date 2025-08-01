@@ -16,6 +16,22 @@ service Datum {
     rpc GetMarginGraphic (Auth) returns (RoundGraphic) {}
     rpc GetPayRoundGraphic (RequestByShop) returns (RoundGraphic) {}
     rpc GetCountRoundGraphic (RequestByShop) returns (RoundGraphic) {}
+    rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
+}
+
+message ProductWidgetShops {
+    string shop = 1;
+    float value = 2;
+}
+
+message ProductWidget {
+    string type = 1;
+    float value = 2;
+    repeated ProductWidgetShops shopData = 3;
+}
+
+message ProductWidgets {
+    repeated ProductWidget data = 1;
 }
 
 message RoundGrapDataset {
