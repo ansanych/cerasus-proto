@@ -19,4 +19,5 @@ service OZ {
     rpc GetShopProducts (RequestByIDS) returns (ShopProductList) {}
     rpc GetProductsCount (Auth) returns (Count) {}
     rpc GetUnsortedList (RequestByIDS) returns (ShopProductList) {}
+    rpc GetSale (RequestByID) returns (Sale) {}
 }
