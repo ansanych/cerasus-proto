@@ -30,8 +30,7 @@ type WB_APIClient interface {
 	GetApiSales(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiSales, error)
 	LoadApiProducts(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiProducts(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*WBApiProducts, error)
-	LoadApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetApiStocks(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*WBApiStockData, error)
+	GetApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*WBApiStockData, error)
 	LoadApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiReportData, error)
 }
@@ -116,16 +115,7 @@ func (c *wB_APIClient) GetApiProducts(ctx context.Context, in *WBAuthData, opts 
 	return out, nil
 }
 
-func (c *wB_APIClient) LoadApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/LoadApiStocks", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *wB_APIClient) GetApiStocks(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*WBApiStockData, error) {
+func (c *wB_APIClient) GetApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*WBApiStockData, error) {
 	out := new(WBApiStockData)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/GetApiStocks", in, out, opts...)
 	if err != nil {
@@ -164,8 +154,7 @@ type WB_APIServer interface {
 	GetApiSales(context.Context, *WBApiDateRequest) (*WBApiSales, error)
 	LoadApiProducts(context.Context, *WBAuthData) (*StatusReply, error)
 	GetApiProducts(context.Context, *WBAuthData) (*WBApiProducts, error)
-	LoadApiStocks(context.Context, *WBApiStockRequest) (*StatusReply, error)
-	GetApiStocks(context.Context, *WBAuthData) (*WBApiStockData, error)
+	GetApiStocks(context.Context, *WBApiStockRequest) (*WBApiStockData, error)
 	LoadApiReports(context.Context, *WBApiDateRequest) (*StatusReply, error)
 	GetApiReports(context.Context, *WBApiDateRequest) (*WBApiReportData, error)
 	mustEmbedUnimplementedWB_APIServer()
@@ -199,10 +188,7 @@ func (UnimplementedWB_APIServer) LoadApiProducts(context.Context, *WBAuthData) (
 func (UnimplementedWB_APIServer) GetApiProducts(context.Context, *WBAuthData) (*WBApiProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
 }
-func (UnimplementedWB_APIServer) LoadApiStocks(context.Context, *WBApiStockRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoadApiStocks not implemented")
-}
-func (UnimplementedWB_APIServer) GetApiStocks(context.Context, *WBAuthData) (*WBApiStockData, error) {
+func (UnimplementedWB_APIServer) GetApiStocks(context.Context, *WBApiStockRequest) (*WBApiStockData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiStocks not implemented")
 }
 func (UnimplementedWB_APIServer) LoadApiReports(context.Context, *WBApiDateRequest) (*StatusReply, error) {
@@ -368,26 +354,8 @@ func _WB_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WB_API_LoadApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBApiStockRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WB_APIServer).LoadApiStocks(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.WB_API/LoadApiStocks",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).LoadApiStocks(ctx, req.(*WBApiStockRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _WB_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WBAuthData)
+	in := new(WBApiStockRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -399,7 +367,7 @@ func _WB_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/cerasusV3.WB_API/GetApiStocks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WB_APIServer).GetApiStocks(ctx, req.(*WBAuthData))
+		return srv.(WB_APIServer).GetApiStocks(ctx, req.(*WBApiStockRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -478,10 +446,6 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApiProducts",
 			Handler:    _WB_API_GetApiProducts_Handler,
-		},
-		{
-			MethodName: "LoadApiStocks",
-			Handler:    _WB_API_LoadApiStocks_Handler,
 		},
 		{
 			MethodName: "GetApiStocks",
