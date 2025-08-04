@@ -27,6 +27,7 @@ type SettingsClient interface {
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetMargin(ctx context.Context, in *GetMarginRequest, opts ...grpc.CallOption) (*MarginSettings, error)
 	SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error)
 	DeleteMargin(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompanyBrands(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Brands, error)
 	GetBrand(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Brand, error)
@@ -85,6 +86,15 @@ func (c *settingsClient) GetMargin(ctx context.Context, in *GetMarginRequest, op
 func (c *settingsClient) SetMargin(ctx context.Context, in *SetMarginRequest, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Settings/SetMargin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingsClient) GetMarginLevels(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*MarginLevels, error) {
+	out := new(MarginLevels)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Settings/GetMarginLevels", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -181,6 +191,7 @@ type SettingsServer interface {
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetMargin(context.Context, *GetMarginRequest) (*MarginSettings, error)
 	SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error)
+	GetMarginLevels(context.Context, *Auth) (*MarginLevels, error)
 	DeleteMargin(context.Context, *RequestByID) (*StatusReply, error)
 	GetCompanyBrands(context.Context, *Auth) (*Brands, error)
 	GetBrand(context.Context, *RequestByID) (*Brand, error)
@@ -211,6 +222,9 @@ func (UnimplementedSettingsServer) GetMargin(context.Context, *GetMarginRequest)
 }
 func (UnimplementedSettingsServer) SetMargin(context.Context, *SetMarginRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetMargin not implemented")
+}
+func (UnimplementedSettingsServer) GetMarginLevels(context.Context, *Auth) (*MarginLevels, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMarginLevels not implemented")
 }
 func (UnimplementedSettingsServer) DeleteMargin(context.Context, *RequestByID) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMargin not implemented")
@@ -338,6 +352,24 @@ func _Settings_SetMargin_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingsServer).SetMargin(ctx, req.(*SetMarginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Settings_GetMarginLevels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingsServer).GetMarginLevels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Settings/GetMarginLevels",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingsServer).GetMarginLevels(ctx, req.(*Auth))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -530,6 +562,10 @@ var Settings_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetMargin",
 			Handler:    _Settings_SetMargin_Handler,
+		},
+		{
+			MethodName: "GetMarginLevels",
+			Handler:    _Settings_GetMarginLevels_Handler,
 		},
 		{
 			MethodName: "DeleteMargin",

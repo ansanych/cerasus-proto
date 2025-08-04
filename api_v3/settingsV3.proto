@@ -12,6 +12,7 @@ service Settings {
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetMargin(GetMarginRequest) returns (MarginSettings) {}
     rpc SetMargin(SetMarginRequest) returns (StatusReply) {}
+    rpc GetMarginLevels (Auth) returns (MarginLevels) {}
     rpc DeleteMargin(RequestByID) returns (StatusReply) {}
     rpc GetCompanyBrands (Auth) returns (Brands) {}
     rpc GetBrand (RequestByID) returns (Brand) {}
@@ -61,4 +62,20 @@ message SetTaxRequest {
     int32 year = 2;
     int64 ID = 3;
     float value = 4;
+}
+
+message MarginLevel {
+    Level level = 1;
+    float value = 2;
+    string date = 3;
+}
+
+message MarginLevelsBrand {
+    Brand brand = 1;
+    repeated MarginLevel levels = 2;
+}
+
+message MarginLevels {
+    repeated MarginLevel levels = 1;
+    repeated MarginLevelsBrand brandLevels = 2;
 }
