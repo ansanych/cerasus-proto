@@ -18,6 +18,7 @@ service Datum {
     rpc GetCountRoundGraphic (RequestByShop) returns (RoundGraphic) {}
     rpc GetProductWidget(RequestByDates) returns (ProductWidgets) {}
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
+    rpc GetSales (RequestByDates) returns (Sales) {}
 }
 
 message ProductWidgetShops {
