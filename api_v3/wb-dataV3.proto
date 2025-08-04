@@ -18,7 +18,7 @@ message WBApiDateRequest {
 
 message WBApiStockRequest {
     WBAuthData auth = 1;
-    repeated int32 warehouseID = 2;
+    repeated int64 warehouseID = 2;
     repeated string skus = 3;
 }
 
