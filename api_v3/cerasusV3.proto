@@ -16,23 +16,27 @@ message SearchRequest {
     Auth auth = 1;
     string search = 2;
     string shop = 3;
+    repeated string params = 4;
 }
 
 message RequestByShop {
     Auth auth = 1;
     string shop = 2;
+    repeated string params = 3;
 }
 
 message RequestByID {
     Auth auth = 1;
     int64 ID = 2;
     string shop = 3;
+    repeated string params = 4;
 }
 
 message RequestByIDS {
     Auth auth = 1;
     repeated int64 ID = 2;
     string shop = 3;
+    repeated string params = 4;
 }
 
 message RequestByDates {
@@ -45,6 +49,7 @@ message RequestByDates {
     string step = 7;
     int32 page = 8;
     int32 limit = 9;
+    repeated string params = 10;
 }
 
 message ImageRequest {
