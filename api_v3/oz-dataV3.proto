@@ -17,11 +17,6 @@ message OZApiOrdersRequest {
     int64 companyID = 3;
 }
 
-message OZApiStockRequest {
-    OZAuthParams auth = 1;
-    repeated string skus = 3;
-}
-
 message OZApiOrder {
     int64 companyID = 1;
     string orderNumber = 2;
@@ -69,6 +64,13 @@ message OZApiProducts {
     repeated OZApiProduct data = 1;
 }
 
+message OZApiStockRequest {
+    OZAuthParams auth = 1;
+    repeated string skus = 2;
+    repeated int64 productIDS = 3;
+    repeated string offerIDS = 4;
+}
+
 message OZApiStockItem {
     string sku = 1;
     int32 count = 2;
@@ -78,4 +80,5 @@ message OZApiStockItem {
 
 message OZApiStockData {
     repeated OZApiStockItem data = 1;
+    string deliveryScheme = 2;
 }
