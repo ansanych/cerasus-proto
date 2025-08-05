@@ -72,7 +72,8 @@ message OZApiProducts {
 message OZApiStockItem {
     string sku = 1;
     int32 count = 2;
-    string stockType = 3;
+    int64 warehouseID = 3;
+    string warehouseType = 4;
 }
 
 message OZApiStockData {

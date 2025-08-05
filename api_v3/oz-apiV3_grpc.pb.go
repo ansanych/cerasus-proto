@@ -30,8 +30,7 @@ type OZ_APIClient interface {
 	GetApiSales(ctx context.Context, in *OZApiOrdersRequest, opts ...grpc.CallOption) (*OZApiSales, error)
 	LoadApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiProducts, error)
-	LoadApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetApiStocks(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiStockData, error)
+	GetApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiStockData, error)
 }
 
 type oZ_APIClient struct {
@@ -114,16 +113,7 @@ func (c *oZ_APIClient) GetApiProducts(ctx context.Context, in *OZAuthParams, opt
 	return out, nil
 }
 
-func (c *oZ_APIClient) LoadApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/LoadApiStocks", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *oZ_APIClient) GetApiStocks(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiStockData, error) {
+func (c *oZ_APIClient) GetApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiStockData, error) {
 	out := new(OZApiStockData)
 	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetApiStocks", in, out, opts...)
 	if err != nil {
@@ -144,8 +134,7 @@ type OZ_APIServer interface {
 	GetApiSales(context.Context, *OZApiOrdersRequest) (*OZApiSales, error)
 	LoadApiProducts(context.Context, *OZAuthParams) (*StatusReply, error)
 	GetApiProducts(context.Context, *OZAuthParams) (*OZApiProducts, error)
-	LoadApiStocks(context.Context, *OZApiStockRequest) (*StatusReply, error)
-	GetApiStocks(context.Context, *OZAuthParams) (*OZApiStockData, error)
+	GetApiStocks(context.Context, *OZApiStockRequest) (*OZApiStockData, error)
 	mustEmbedUnimplementedOZ_APIServer()
 }
 
@@ -177,10 +166,7 @@ func (UnimplementedOZ_APIServer) LoadApiProducts(context.Context, *OZAuthParams)
 func (UnimplementedOZ_APIServer) GetApiProducts(context.Context, *OZAuthParams) (*OZApiProducts, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiProducts not implemented")
 }
-func (UnimplementedOZ_APIServer) LoadApiStocks(context.Context, *OZApiStockRequest) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LoadApiStocks not implemented")
-}
-func (UnimplementedOZ_APIServer) GetApiStocks(context.Context, *OZAuthParams) (*OZApiStockData, error) {
+func (UnimplementedOZ_APIServer) GetApiStocks(context.Context, *OZApiStockRequest) (*OZApiStockData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiStocks not implemented")
 }
 func (UnimplementedOZ_APIServer) mustEmbedUnimplementedOZ_APIServer() {}
@@ -340,26 +326,8 @@ func _OZ_API_GetApiProducts_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OZ_API_LoadApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OZApiStockRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OZ_APIServer).LoadApiStocks(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.OZ_API/LoadApiStocks",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZ_APIServer).LoadApiStocks(ctx, req.(*OZApiStockRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _OZ_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OZAuthParams)
+	in := new(OZApiStockRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -371,7 +339,7 @@ func _OZ_API_GetApiStocks_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/cerasusV3.OZ_API/GetApiStocks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZ_APIServer).GetApiStocks(ctx, req.(*OZAuthParams))
+		return srv.(OZ_APIServer).GetApiStocks(ctx, req.(*OZApiStockRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -414,10 +382,6 @@ var OZ_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApiProducts",
 			Handler:    _OZ_API_GetApiProducts_Handler,
-		},
-		{
-			MethodName: "LoadApiStocks",
-			Handler:    _OZ_API_LoadApiStocks_Handler,
 		},
 		{
 			MethodName: "GetApiStocks",
