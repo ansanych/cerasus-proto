@@ -72,13 +72,15 @@ message OZApiStockRequest {
 }
 
 message OZApiStockItem {
-    string sku = 1;
-    int32 count = 2;
-    int64 warehouseID = 3;
-    string warehouseType = 4;
+    string skuString = 1;
+    int64 sku = 2;
+    int64 productID = 3;
+    string offerID = 4;
+    int32 count = 5;
+    int64 warehouseID = 6;
+    string warehouseType = 7;
 }
 
 message OZApiStockData {
     repeated OZApiStockItem data = 1;
-    string deliveryScheme = 2;
 }
