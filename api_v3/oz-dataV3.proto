@@ -58,6 +58,7 @@ message OZApiProduct {
     string article = 4;
     int64 sku = 5;
     repeated string images = 6;
+    bool active = 7;
 }
 
 message OZApiProducts {

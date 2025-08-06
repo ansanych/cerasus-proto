@@ -64,6 +64,7 @@ message WBApiProduct {
     repeated WBApiProductSize size = 5;
     repeated string file = 6;
     repeated string sku = 7;
+    bool active = 8;
 }
 
 message WBApiProducts {

@@ -72,6 +72,7 @@ message YMApiProduct {
     string offerID = 2;
     string name = 3;
     repeated string images = 4;
+    bool active = 5;
 }
 
 message YMApiProducts {
