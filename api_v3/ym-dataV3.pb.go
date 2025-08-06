@@ -754,6 +754,124 @@ func (x *YMApiProducts) GetData() []*YMApiProduct {
 	return nil
 }
 
+type YMApiStockItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OfferID       string `protobuf:"bytes,1,opt,name=offerID,proto3" json:"offerID,omitempty"`
+	Count         int32  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	WarehouseID   int64  `protobuf:"varint,3,opt,name=warehouseID,proto3" json:"warehouseID,omitempty"`
+	WarehouseType string `protobuf:"bytes,4,opt,name=warehouseType,proto3" json:"warehouseType,omitempty"`
+}
+
+func (x *YMApiStockItem) Reset() {
+	*x = YMApiStockItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ym_dataV3_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *YMApiStockItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*YMApiStockItem) ProtoMessage() {}
+
+func (x *YMApiStockItem) ProtoReflect() protoreflect.Message {
+	mi := &file_ym_dataV3_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use YMApiStockItem.ProtoReflect.Descriptor instead.
+func (*YMApiStockItem) Descriptor() ([]byte, []int) {
+	return file_ym_dataV3_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *YMApiStockItem) GetOfferID() string {
+	if x != nil {
+		return x.OfferID
+	}
+	return ""
+}
+
+func (x *YMApiStockItem) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *YMApiStockItem) GetWarehouseID() int64 {
+	if x != nil {
+		return x.WarehouseID
+	}
+	return 0
+}
+
+func (x *YMApiStockItem) GetWarehouseType() string {
+	if x != nil {
+		return x.WarehouseType
+	}
+	return ""
+}
+
+type YMApiStockData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*YMApiStockItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *YMApiStockData) Reset() {
+	*x = YMApiStockData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ym_dataV3_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *YMApiStockData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*YMApiStockData) ProtoMessage() {}
+
+func (x *YMApiStockData) ProtoReflect() protoreflect.Message {
+	mi := &file_ym_dataV3_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use YMApiStockData.ProtoReflect.Descriptor instead.
+func (*YMApiStockData) Descriptor() ([]byte, []int) {
+	return file_ym_dataV3_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *YMApiStockData) GetData() []*YMApiStockItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_ym_dataV3_proto protoreflect.FileDescriptor
 
 var file_ym_dataV3_proto_rawDesc = []byte{
@@ -852,10 +970,22 @@ var file_ym_dataV3_proto_rawDesc = []byte{
 	0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x2b, 0x0a, 0x04, 0x64, 0x61, 0x74,
 	0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
 	0x73, 0x56, 0x33, 0x2e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x88, 0x01, 0x0a, 0x0e, 0x59, 0x4d, 0x41, 0x70, 0x69,
+	0x53, 0x74, 0x6f, 0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x66, 0x66,
+	0x65, 0x72, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x66, 0x66, 0x65,
+	0x72, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x77, 0x61, 0x72,
+	0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b,
+	0x77, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x49, 0x44, 0x12, 0x24, 0x0a, 0x0d, 0x77,
+	0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0d, 0x77, 0x61, 0x72, 0x65, 0x68, 0x6f, 0x75, 0x73, 0x65, 0x54, 0x79, 0x70,
+	0x65, 0x22, 0x3f, 0x0a, 0x0e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x44,
+	0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x59, 0x4d,
+	0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75,
+	0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -870,7 +1000,7 @@ func file_ym_dataV3_proto_rawDescGZIP() []byte {
 	return file_ym_dataV3_proto_rawDescData
 }
 
-var file_ym_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_ym_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_ym_dataV3_proto_goTypes = []interface{}{
 	(*YMAuthData)(nil),       // 0: cerasusV3.YMAuthData
 	(*YMCampaign)(nil),       // 1: cerasusV3.YMCampaign
@@ -882,21 +1012,24 @@ var file_ym_dataV3_proto_goTypes = []interface{}{
 	(*YMApiSales)(nil),       // 7: cerasusV3.YMApiSales
 	(*YMApiProduct)(nil),     // 8: cerasusV3.YMApiProduct
 	(*YMApiProducts)(nil),    // 9: cerasusV3.YMApiProducts
-	(*Auth)(nil),             // 10: cerasusV3.Auth
+	(*YMApiStockItem)(nil),   // 10: cerasusV3.YMApiStockItem
+	(*YMApiStockData)(nil),   // 11: cerasusV3.YMApiStockData
+	(*Auth)(nil),             // 12: cerasusV3.Auth
 }
 var file_ym_dataV3_proto_depIdxs = []int32{
-	10, // 0: cerasusV3.YMAuthData.auth:type_name -> cerasusV3.Auth
+	12, // 0: cerasusV3.YMAuthData.auth:type_name -> cerasusV3.Auth
 	1,  // 1: cerasusV3.YMParams.campaigns:type_name -> cerasusV3.YMCampaign
-	10, // 2: cerasusV3.YMParams.auth:type_name -> cerasusV3.Auth
+	12, // 2: cerasusV3.YMParams.auth:type_name -> cerasusV3.Auth
 	2,  // 3: cerasusV3.YMApiDateRequest.auth:type_name -> cerasusV3.YMParams
 	4,  // 4: cerasusV3.YMApiOrders.data:type_name -> cerasusV3.YMApiOrder
 	6,  // 5: cerasusV3.YMApiSales.data:type_name -> cerasusV3.YMApiSale
 	8,  // 6: cerasusV3.YMApiProducts.data:type_name -> cerasusV3.YMApiProduct
-	7,  // [7:7] is the sub-list for method output_type
-	7,  // [7:7] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	10, // 7: cerasusV3.YMApiStockData.data:type_name -> cerasusV3.YMApiStockItem
+	8,  // [8:8] is the sub-list for method output_type
+	8,  // [8:8] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_ym_dataV3_proto_init() }
@@ -1026,6 +1159,30 @@ func file_ym_dataV3_proto_init() {
 				return nil
 			}
 		}
+		file_ym_dataV3_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*YMApiStockItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ym_dataV3_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*YMApiStockData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1033,7 +1190,7 @@ func file_ym_dataV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_ym_dataV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

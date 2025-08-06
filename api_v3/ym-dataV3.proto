@@ -77,3 +77,14 @@ message YMApiProduct {
 message YMApiProducts {
     repeated YMApiProduct data = 1;
 }
+
+message YMApiStockItem {
+    string offerID = 1;
+    int32 count = 2;
+    int64 warehouseID = 3;
+    string warehouseType = 4;
+}
+
+message YMApiStockData {
+    repeated YMApiStockItem data = 1;
+}

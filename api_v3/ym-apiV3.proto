@@ -15,4 +15,5 @@ service YM_API {
     rpc GetApiSales(YMApiDateRequest) returns (YMApiSales) {}
     rpc LoadApiProducts(YMParams) returns (StatusReply) {}
     rpc GetApiProducts(YMParams) returns (YMApiProducts) {}
+    rpc GetApiStocks(YMParams) returns (YMApiStockData) {}
 }
