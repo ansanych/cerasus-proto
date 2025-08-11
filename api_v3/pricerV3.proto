@@ -8,4 +8,5 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Pricer {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductsWithPricer (Company) returns(ReplyIDS) {}
+    rpc GetConnectedCompaniesByShop(RequestByShop) returns (CompanyList) {}
 }
