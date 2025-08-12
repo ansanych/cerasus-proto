@@ -982,19 +982,74 @@ func (x *WBApiReportData) GetData() []*WBApiReportRow {
 	return nil
 }
 
+type WBApiPricesRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth *WBAuthData `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	NmID []int64     `protobuf:"varint,2,rep,packed,name=nmID,proto3" json:"nmID,omitempty"`
+}
+
+func (x *WBApiPricesRequest) Reset() {
+	*x = WBApiPricesRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wb_dataV3_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WBApiPricesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WBApiPricesRequest) ProtoMessage() {}
+
+func (x *WBApiPricesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_wb_dataV3_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WBApiPricesRequest.ProtoReflect.Descriptor instead.
+func (*WBApiPricesRequest) Descriptor() ([]byte, []int) {
+	return file_wb_dataV3_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *WBApiPricesRequest) GetAuth() *WBAuthData {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *WBApiPricesRequest) GetNmID() []int64 {
+	if x != nil {
+		return x.NmID
+	}
+	return nil
+}
+
 type WBApiPriceItem struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Sku   string  `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
+	NmID  int64   `protobuf:"varint,1,opt,name=nmID,proto3" json:"nmID,omitempty"`
 	Price float32 `protobuf:"fixed32,2,opt,name=price,proto3" json:"price,omitempty"`
 }
 
 func (x *WBApiPriceItem) Reset() {
 	*x = WBApiPriceItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wb_dataV3_proto_msgTypes[14]
+		mi := &file_wb_dataV3_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1007,7 +1062,7 @@ func (x *WBApiPriceItem) String() string {
 func (*WBApiPriceItem) ProtoMessage() {}
 
 func (x *WBApiPriceItem) ProtoReflect() protoreflect.Message {
-	mi := &file_wb_dataV3_proto_msgTypes[14]
+	mi := &file_wb_dataV3_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1020,14 +1075,14 @@ func (x *WBApiPriceItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WBApiPriceItem.ProtoReflect.Descriptor instead.
 func (*WBApiPriceItem) Descriptor() ([]byte, []int) {
-	return file_wb_dataV3_proto_rawDescGZIP(), []int{14}
+	return file_wb_dataV3_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *WBApiPriceItem) GetSku() string {
+func (x *WBApiPriceItem) GetNmID() int64 {
 	if x != nil {
-		return x.Sku
+		return x.NmID
 	}
-	return ""
+	return 0
 }
 
 func (x *WBApiPriceItem) GetPrice() float32 {
@@ -1048,7 +1103,7 @@ type WBApiPriceData struct {
 func (x *WBApiPriceData) Reset() {
 	*x = WBApiPriceData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wb_dataV3_proto_msgTypes[15]
+		mi := &file_wb_dataV3_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1061,7 +1116,7 @@ func (x *WBApiPriceData) String() string {
 func (*WBApiPriceData) ProtoMessage() {}
 
 func (x *WBApiPriceData) ProtoReflect() protoreflect.Message {
-	mi := &file_wb_dataV3_proto_msgTypes[15]
+	mi := &file_wb_dataV3_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1074,7 +1129,7 @@ func (x *WBApiPriceData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WBApiPriceData.ProtoReflect.Descriptor instead.
 func (*WBApiPriceData) Descriptor() ([]byte, []int) {
-	return file_wb_dataV3_proto_rawDescGZIP(), []int{15}
+	return file_wb_dataV3_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *WBApiPriceData) GetData() []*WBApiPriceItem {
@@ -1197,18 +1252,23 @@ var file_wb_dataV3_proto_rawDesc = []byte{
 	0x70, 0x69, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04,
 	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72,
 	0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x57, 0x42, 0x41, 0x70, 0x69, 0x52, 0x65, 0x70, 0x6f,
-	0x72, 0x74, 0x52, 0x6f, 0x77, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x38, 0x0a, 0x0e, 0x57,
-	0x42, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x10, 0x0a,
-	0x03, 0x73, 0x6b, 0x75, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x73, 0x6b, 0x75, 0x12,
-	0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05,
-	0x70, 0x72, 0x69, 0x63, 0x65, 0x22, 0x3f, 0x0a, 0x0e, 0x57, 0x42, 0x41, 0x70, 0x69, 0x50, 0x72,
-	0x69, 0x63, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56,
-	0x33, 0x2e, 0x57, 0x42, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d,
-	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
-	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x72, 0x74, 0x52, 0x6f, 0x77, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x53, 0x0a, 0x12, 0x57,
+	0x42, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x29, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x15, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x57, 0x42, 0x41, 0x75,
+	0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x6d, 0x49, 0x44, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x04, 0x6e, 0x6d, 0x49, 0x44,
+	0x22, 0x3a, 0x0a, 0x0e, 0x57, 0x42, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74,
+	0x65, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x6d, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x04, 0x6e, 0x6d, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x22, 0x3f, 0x0a, 0x0e,
+	0x57, 0x42, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x57, 0x42, 0x41, 0x70, 0x69, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a,
+	0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61,
+	0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1223,28 +1283,29 @@ func file_wb_dataV3_proto_rawDescGZIP() []byte {
 	return file_wb_dataV3_proto_rawDescData
 }
 
-var file_wb_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_wb_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_wb_dataV3_proto_goTypes = []interface{}{
-	(*WBAuthData)(nil),        // 0: cerasusV3.WBAuthData
-	(*WBApiDateRequest)(nil),  // 1: cerasusV3.WBApiDateRequest
-	(*WBApiStockRequest)(nil), // 2: cerasusV3.WBApiStockRequest
-	(*WBApiOrder)(nil),        // 3: cerasusV3.WBApiOrder
-	(*WBApiOrders)(nil),       // 4: cerasusV3.WBApiOrders
-	(*WBApiSale)(nil),         // 5: cerasusV3.WBApiSale
-	(*WBApiSales)(nil),        // 6: cerasusV3.WBApiSales
-	(*WBApiProductSize)(nil),  // 7: cerasusV3.WBApiProductSize
-	(*WBApiProduct)(nil),      // 8: cerasusV3.WBApiProduct
-	(*WBApiProducts)(nil),     // 9: cerasusV3.WBApiProducts
-	(*WBApiStockItem)(nil),    // 10: cerasusV3.WBApiStockItem
-	(*WBApiStockData)(nil),    // 11: cerasusV3.WBApiStockData
-	(*WBApiReportRow)(nil),    // 12: cerasusV3.WBApiReportRow
-	(*WBApiReportData)(nil),   // 13: cerasusV3.WBApiReportData
-	(*WBApiPriceItem)(nil),    // 14: cerasusV3.WBApiPriceItem
-	(*WBApiPriceData)(nil),    // 15: cerasusV3.WBApiPriceData
-	(*Auth)(nil),              // 16: cerasusV3.Auth
+	(*WBAuthData)(nil),         // 0: cerasusV3.WBAuthData
+	(*WBApiDateRequest)(nil),   // 1: cerasusV3.WBApiDateRequest
+	(*WBApiStockRequest)(nil),  // 2: cerasusV3.WBApiStockRequest
+	(*WBApiOrder)(nil),         // 3: cerasusV3.WBApiOrder
+	(*WBApiOrders)(nil),        // 4: cerasusV3.WBApiOrders
+	(*WBApiSale)(nil),          // 5: cerasusV3.WBApiSale
+	(*WBApiSales)(nil),         // 6: cerasusV3.WBApiSales
+	(*WBApiProductSize)(nil),   // 7: cerasusV3.WBApiProductSize
+	(*WBApiProduct)(nil),       // 8: cerasusV3.WBApiProduct
+	(*WBApiProducts)(nil),      // 9: cerasusV3.WBApiProducts
+	(*WBApiStockItem)(nil),     // 10: cerasusV3.WBApiStockItem
+	(*WBApiStockData)(nil),     // 11: cerasusV3.WBApiStockData
+	(*WBApiReportRow)(nil),     // 12: cerasusV3.WBApiReportRow
+	(*WBApiReportData)(nil),    // 13: cerasusV3.WBApiReportData
+	(*WBApiPricesRequest)(nil), // 14: cerasusV3.WBApiPricesRequest
+	(*WBApiPriceItem)(nil),     // 15: cerasusV3.WBApiPriceItem
+	(*WBApiPriceData)(nil),     // 16: cerasusV3.WBApiPriceData
+	(*Auth)(nil),               // 17: cerasusV3.Auth
 }
 var file_wb_dataV3_proto_depIdxs = []int32{
-	16, // 0: cerasusV3.WBAuthData.auth:type_name -> cerasusV3.Auth
+	17, // 0: cerasusV3.WBAuthData.auth:type_name -> cerasusV3.Auth
 	0,  // 1: cerasusV3.WBApiDateRequest.auth:type_name -> cerasusV3.WBAuthData
 	0,  // 2: cerasusV3.WBApiStockRequest.auth:type_name -> cerasusV3.WBAuthData
 	3,  // 3: cerasusV3.WBApiOrders.data:type_name -> cerasusV3.WBApiOrder
@@ -1253,12 +1314,13 @@ var file_wb_dataV3_proto_depIdxs = []int32{
 	8,  // 6: cerasusV3.WBApiProducts.data:type_name -> cerasusV3.WBApiProduct
 	10, // 7: cerasusV3.WBApiStockData.data:type_name -> cerasusV3.WBApiStockItem
 	12, // 8: cerasusV3.WBApiReportData.data:type_name -> cerasusV3.WBApiReportRow
-	14, // 9: cerasusV3.WBApiPriceData.data:type_name -> cerasusV3.WBApiPriceItem
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	0,  // 9: cerasusV3.WBApiPricesRequest.auth:type_name -> cerasusV3.WBAuthData
+	15, // 10: cerasusV3.WBApiPriceData.data:type_name -> cerasusV3.WBApiPriceItem
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_wb_dataV3_proto_init() }
@@ -1437,7 +1499,7 @@ func file_wb_dataV3_proto_init() {
 			}
 		}
 		file_wb_dataV3_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WBApiPriceItem); i {
+			switch v := v.(*WBApiPricesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1449,6 +1511,18 @@ func file_wb_dataV3_proto_init() {
 			}
 		}
 		file_wb_dataV3_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WBApiPriceItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wb_dataV3_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WBApiPriceData); i {
 			case 0:
 				return &v.state
@@ -1467,7 +1541,7 @@ func file_wb_dataV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wb_dataV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

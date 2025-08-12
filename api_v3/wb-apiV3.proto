@@ -18,5 +18,5 @@ service WB_API {
     rpc GetApiStocks(WBApiStockRequest) returns (WBApiStockData) {}
     rpc LoadApiReports(WBApiDateRequest) returns (StatusReply) {}
     rpc GetApiReports(WBApiDateRequest) returns (WBApiReportData) {}
-    rpc GetProductsShopPrice(WBAuthData) returns (WBApiPriceData) {}
+    rpc GetProductsShopPrice(WBApiPricesRequest) returns (WBApiPriceData) {}
 }

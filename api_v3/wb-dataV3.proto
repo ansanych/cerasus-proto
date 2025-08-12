@@ -99,8 +99,13 @@ message WBApiReportData {
     repeated WBApiReportRow data = 1;
 }
 
+message WBApiPricesRequest {
+    WBAuthData auth = 1;
+    repeated int64 nmID = 2;
+}
+
 message WBApiPriceItem {
-    string sku = 1;
+    int64 nmID = 1;
     float price = 2;
 }
 
