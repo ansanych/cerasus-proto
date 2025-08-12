@@ -833,6 +833,132 @@ func (x *OZApiStockData) GetData() []*OZApiStockItem {
 	return nil
 }
 
+type OZApiPriceItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SkuString string  `protobuf:"bytes,1,opt,name=skuString,proto3" json:"skuString,omitempty"`
+	Sku       int64   `protobuf:"varint,2,opt,name=sku,proto3" json:"sku,omitempty"`
+	ProductID int64   `protobuf:"varint,3,opt,name=productID,proto3" json:"productID,omitempty"`
+	OfferID   string  `protobuf:"bytes,4,opt,name=offerID,proto3" json:"offerID,omitempty"`
+	Price     float32 `protobuf:"fixed32,5,opt,name=price,proto3" json:"price,omitempty"`
+}
+
+func (x *OZApiPriceItem) Reset() {
+	*x = OZApiPriceItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiPriceItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiPriceItem) ProtoMessage() {}
+
+func (x *OZApiPriceItem) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiPriceItem.ProtoReflect.Descriptor instead.
+func (*OZApiPriceItem) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *OZApiPriceItem) GetSkuString() string {
+	if x != nil {
+		return x.SkuString
+	}
+	return ""
+}
+
+func (x *OZApiPriceItem) GetSku() int64 {
+	if x != nil {
+		return x.Sku
+	}
+	return 0
+}
+
+func (x *OZApiPriceItem) GetProductID() int64 {
+	if x != nil {
+		return x.ProductID
+	}
+	return 0
+}
+
+func (x *OZApiPriceItem) GetOfferID() string {
+	if x != nil {
+		return x.OfferID
+	}
+	return ""
+}
+
+func (x *OZApiPriceItem) GetPrice() float32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+type OZApiPricesData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*OZApiPriceItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *OZApiPricesData) Reset() {
+	*x = OZApiPricesData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_oz_dataV3_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OZApiPricesData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OZApiPricesData) ProtoMessage() {}
+
+func (x *OZApiPricesData) ProtoReflect() protoreflect.Message {
+	mi := &file_oz_dataV3_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OZApiPricesData.ProtoReflect.Descriptor instead.
+func (*OZApiPricesData) Descriptor() ([]byte, []int) {
+	return file_oz_dataV3_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *OZApiPricesData) GetData() []*OZApiPriceItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_oz_dataV3_proto protoreflect.FileDescriptor
 
 var file_oz_dataV3_proto_rawDesc = []byte{
@@ -941,10 +1067,23 @@ var file_oz_dataV3_proto_rawDesc = []byte{
 	0x5a, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a,
 	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65,
 	0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f,
-	0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e,
-	0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x63, 0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x8e, 0x01, 0x0a,
+	0x0e, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x12,
+	0x1c, 0x0a, 0x09, 0x73, 0x6b, 0x75, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x73, 0x6b, 0x75, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x12, 0x10, 0x0a,
+	0x03, 0x73, 0x6b, 0x75, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x73, 0x6b, 0x75, 0x12,
+	0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x12, 0x18, 0x0a,
+	0x07, 0x6f, 0x66, 0x66, 0x65, 0x72, 0x49, 0x44, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
+	0x6f, 0x66, 0x66, 0x65, 0x72, 0x49, 0x44, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x22, 0x40, 0x0a,
+	0x0f, 0x4f, 0x5a, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x73, 0x44, 0x61, 0x74, 0x61,
+	0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19,
+	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x4f, 0x5a, 0x41, 0x70, 0x69,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42,
+	0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e,
+	0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -959,7 +1098,7 @@ func file_oz_dataV3_proto_rawDescGZIP() []byte {
 	return file_oz_dataV3_proto_rawDescData
 }
 
-var file_oz_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_oz_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_oz_dataV3_proto_goTypes = []interface{}{
 	(*OZAuthParams)(nil),       // 0: cerasusV3.OZAuthParams
 	(*OZApiOrdersRequest)(nil), // 1: cerasusV3.OZApiOrdersRequest
@@ -972,21 +1111,24 @@ var file_oz_dataV3_proto_goTypes = []interface{}{
 	(*OZApiStockRequest)(nil),  // 8: cerasusV3.OZApiStockRequest
 	(*OZApiStockItem)(nil),     // 9: cerasusV3.OZApiStockItem
 	(*OZApiStockData)(nil),     // 10: cerasusV3.OZApiStockData
-	(*Auth)(nil),               // 11: cerasusV3.Auth
+	(*OZApiPriceItem)(nil),     // 11: cerasusV3.OZApiPriceItem
+	(*OZApiPricesData)(nil),    // 12: cerasusV3.OZApiPricesData
+	(*Auth)(nil),               // 13: cerasusV3.Auth
 }
 var file_oz_dataV3_proto_depIdxs = []int32{
-	11, // 0: cerasusV3.OZAuthParams.auth:type_name -> cerasusV3.Auth
+	13, // 0: cerasusV3.OZAuthParams.auth:type_name -> cerasusV3.Auth
 	0,  // 1: cerasusV3.OZApiOrdersRequest.auth:type_name -> cerasusV3.OZAuthParams
 	2,  // 2: cerasusV3.OZApiOrders.data:type_name -> cerasusV3.OZApiOrder
 	4,  // 3: cerasusV3.OZApiSales.data:type_name -> cerasusV3.OZApiSale
 	6,  // 4: cerasusV3.OZApiProducts.data:type_name -> cerasusV3.OZApiProduct
 	0,  // 5: cerasusV3.OZApiStockRequest.auth:type_name -> cerasusV3.OZAuthParams
 	9,  // 6: cerasusV3.OZApiStockData.data:type_name -> cerasusV3.OZApiStockItem
-	7,  // [7:7] is the sub-list for method output_type
-	7,  // [7:7] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	11, // 7: cerasusV3.OZApiPricesData.data:type_name -> cerasusV3.OZApiPriceItem
+	8,  // [8:8] is the sub-list for method output_type
+	8,  // [8:8] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_oz_dataV3_proto_init() }
@@ -1128,6 +1270,30 @@ func file_oz_dataV3_proto_init() {
 				return nil
 			}
 		}
+		file_oz_dataV3_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiPriceItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_oz_dataV3_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OZApiPricesData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1135,7 +1301,7 @@ func file_oz_dataV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_oz_dataV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

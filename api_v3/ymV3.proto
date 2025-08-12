@@ -20,4 +20,5 @@ service YM {
     rpc GetProductsCount (Auth) returns (Count) {}
     rpc GetUnsortedList (RequestByIDS) returns (ShopProductList) {}
     rpc GetSale (RequestByID) returns (Sale) {}
+    rpc GetShopProductsDatas (RequestByIDS) returns (ShopProductList) {}
 }

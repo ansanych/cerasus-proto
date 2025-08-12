@@ -85,3 +85,15 @@ message OZApiStockItem {
 message OZApiStockData {
     repeated OZApiStockItem data = 1;
 }
+
+message OZApiPriceItem {
+    string skuString = 1;
+    int64 sku = 2;
+    int64 productID = 3;
+    string offerID = 4;
+    float price = 5;
+}
+
+message OZApiPricesData {
+    repeated OZApiPriceItem data = 1;
+}

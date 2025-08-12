@@ -33,6 +33,7 @@ type WB_APIClient interface {
 	GetApiStocks(ctx context.Context, in *WBApiStockRequest, opts ...grpc.CallOption) (*WBApiStockData, error)
 	LoadApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetApiReports(ctx context.Context, in *WBApiDateRequest, opts ...grpc.CallOption) (*WBApiReportData, error)
+	GetProductsShopPrice(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*WBApiPriceData, error)
 }
 
 type wB_APIClient struct {
@@ -142,6 +143,15 @@ func (c *wB_APIClient) GetApiReports(ctx context.Context, in *WBApiDateRequest, 
 	return out, nil
 }
 
+func (c *wB_APIClient) GetProductsShopPrice(ctx context.Context, in *WBAuthData, opts ...grpc.CallOption) (*WBApiPriceData, error) {
+	out := new(WBApiPriceData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB_API/GetProductsShopPrice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WB_APIServer is the server API for WB_API service.
 // All implementations must embed UnimplementedWB_APIServer
 // for forward compatibility
@@ -157,6 +167,7 @@ type WB_APIServer interface {
 	GetApiStocks(context.Context, *WBApiStockRequest) (*WBApiStockData, error)
 	LoadApiReports(context.Context, *WBApiDateRequest) (*StatusReply, error)
 	GetApiReports(context.Context, *WBApiDateRequest) (*WBApiReportData, error)
+	GetProductsShopPrice(context.Context, *WBAuthData) (*WBApiPriceData, error)
 	mustEmbedUnimplementedWB_APIServer()
 }
 
@@ -196,6 +207,9 @@ func (UnimplementedWB_APIServer) LoadApiReports(context.Context, *WBApiDateReque
 }
 func (UnimplementedWB_APIServer) GetApiReports(context.Context, *WBApiDateRequest) (*WBApiReportData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApiReports not implemented")
+}
+func (UnimplementedWB_APIServer) GetProductsShopPrice(context.Context, *WBAuthData) (*WBApiPriceData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductsShopPrice not implemented")
 }
 func (UnimplementedWB_APIServer) mustEmbedUnimplementedWB_APIServer() {}
 
@@ -408,6 +422,24 @@ func _WB_API_GetApiReports_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_API_GetProductsShopPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WBAuthData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WB_APIServer).GetProductsShopPrice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB_API/GetProductsShopPrice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WB_APIServer).GetProductsShopPrice(ctx, req.(*WBAuthData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_API_ServiceDesc is the grpc.ServiceDesc for WB_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -458,6 +490,10 @@ var WB_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetApiReports",
 			Handler:    _WB_API_GetApiReports_Handler,
+		},
+		{
+			MethodName: "GetProductsShopPrice",
+			Handler:    _WB_API_GetProductsShopPrice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

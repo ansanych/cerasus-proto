@@ -76,6 +76,7 @@ message QueuerJob {
     int32 status = 4;
     bool done = 5;
     string error = 6;
+    string shop = 7;
 }
 
 message Log {
@@ -200,6 +201,8 @@ message ShopProduct {
     int64 ozSku = 10;
     int64 companyID = 11;
     int64 ymSku = 12;
+    int32 count = 13;
+    float shopPrice = 14;
 }
 
 message ShopProductLinks {

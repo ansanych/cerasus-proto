@@ -880,6 +880,163 @@ func (x *YMApiStockData) GetData() []*YMApiStockItem {
 	return nil
 }
 
+type YMApiPriceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth    *YMParams `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	OfferID string    `protobuf:"bytes,2,opt,name=offerID,proto3" json:"offerID,omitempty"`
+}
+
+func (x *YMApiPriceRequest) Reset() {
+	*x = YMApiPriceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ym_dataV3_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *YMApiPriceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*YMApiPriceRequest) ProtoMessage() {}
+
+func (x *YMApiPriceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_ym_dataV3_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use YMApiPriceRequest.ProtoReflect.Descriptor instead.
+func (*YMApiPriceRequest) Descriptor() ([]byte, []int) {
+	return file_ym_dataV3_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *YMApiPriceRequest) GetAuth() *YMParams {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *YMApiPriceRequest) GetOfferID() string {
+	if x != nil {
+		return x.OfferID
+	}
+	return ""
+}
+
+type YMApiPriceItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OfferID string  `protobuf:"bytes,1,opt,name=offerID,proto3" json:"offerID,omitempty"`
+	Price   float32 `protobuf:"fixed32,2,opt,name=price,proto3" json:"price,omitempty"`
+}
+
+func (x *YMApiPriceItem) Reset() {
+	*x = YMApiPriceItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ym_dataV3_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *YMApiPriceItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*YMApiPriceItem) ProtoMessage() {}
+
+func (x *YMApiPriceItem) ProtoReflect() protoreflect.Message {
+	mi := &file_ym_dataV3_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use YMApiPriceItem.ProtoReflect.Descriptor instead.
+func (*YMApiPriceItem) Descriptor() ([]byte, []int) {
+	return file_ym_dataV3_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *YMApiPriceItem) GetOfferID() string {
+	if x != nil {
+		return x.OfferID
+	}
+	return ""
+}
+
+func (x *YMApiPriceItem) GetPrice() float32 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+type YMApiPriceData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data []*YMApiPriceItem `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *YMApiPriceData) Reset() {
+	*x = YMApiPriceData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_ym_dataV3_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *YMApiPriceData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*YMApiPriceData) ProtoMessage() {}
+
+func (x *YMApiPriceData) ProtoReflect() protoreflect.Message {
+	mi := &file_ym_dataV3_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use YMApiPriceData.ProtoReflect.Descriptor instead.
+func (*YMApiPriceData) Descriptor() ([]byte, []int) {
+	return file_ym_dataV3_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *YMApiPriceData) GetData() []*YMApiPriceItem {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 var File_ym_dataV3_proto protoreflect.FileDescriptor
 
 var file_ym_dataV3_proto_rawDesc = []byte{
@@ -992,10 +1149,24 @@ var file_ym_dataV3_proto_rawDesc = []byte{
 	0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04,
 	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72,
 	0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x53, 0x74, 0x6f, 0x63,
-	0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79,
-	0x63, 0x68, 0x2f, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6b, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x56, 0x0a, 0x11, 0x59,
+	0x4d, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x27, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13,
+	0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x59, 0x4d, 0x50, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x66, 0x66,
+	0x65, 0x72, 0x49, 0x44, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x66, 0x66, 0x65,
+	0x72, 0x49, 0x44, 0x22, 0x40, 0x0a, 0x0e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x66, 0x66, 0x65, 0x72, 0x49, 0x44,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x66, 0x66, 0x65, 0x72, 0x49, 0x44, 0x12,
+	0x14, 0x0a, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x05,
+	0x70, 0x72, 0x69, 0x63, 0x65, 0x22, 0x3f, 0x0a, 0x0e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x50, 0x72,
+	0x69, 0x63, 0x65, 0x44, 0x61, 0x74, 0x61, 0x12, 0x2d, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56,
+	0x33, 0x2e, 0x59, 0x4d, 0x41, 0x70, 0x69, 0x50, 0x72, 0x69, 0x63, 0x65, 0x49, 0x74, 0x65, 0x6d,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
+	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1010,36 +1181,41 @@ func file_ym_dataV3_proto_rawDescGZIP() []byte {
 	return file_ym_dataV3_proto_rawDescData
 }
 
-var file_ym_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_ym_dataV3_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_ym_dataV3_proto_goTypes = []interface{}{
-	(*YMAuthData)(nil),       // 0: cerasusV3.YMAuthData
-	(*YMCampaign)(nil),       // 1: cerasusV3.YMCampaign
-	(*YMParams)(nil),         // 2: cerasusV3.YMParams
-	(*YMApiDateRequest)(nil), // 3: cerasusV3.YMApiDateRequest
-	(*YMApiOrder)(nil),       // 4: cerasusV3.YMApiOrder
-	(*YMApiOrders)(nil),      // 5: cerasusV3.YMApiOrders
-	(*YMApiSale)(nil),        // 6: cerasusV3.YMApiSale
-	(*YMApiSales)(nil),       // 7: cerasusV3.YMApiSales
-	(*YMApiProduct)(nil),     // 8: cerasusV3.YMApiProduct
-	(*YMApiProducts)(nil),    // 9: cerasusV3.YMApiProducts
-	(*YMApiStockItem)(nil),   // 10: cerasusV3.YMApiStockItem
-	(*YMApiStockData)(nil),   // 11: cerasusV3.YMApiStockData
-	(*Auth)(nil),             // 12: cerasusV3.Auth
+	(*YMAuthData)(nil),        // 0: cerasusV3.YMAuthData
+	(*YMCampaign)(nil),        // 1: cerasusV3.YMCampaign
+	(*YMParams)(nil),          // 2: cerasusV3.YMParams
+	(*YMApiDateRequest)(nil),  // 3: cerasusV3.YMApiDateRequest
+	(*YMApiOrder)(nil),        // 4: cerasusV3.YMApiOrder
+	(*YMApiOrders)(nil),       // 5: cerasusV3.YMApiOrders
+	(*YMApiSale)(nil),         // 6: cerasusV3.YMApiSale
+	(*YMApiSales)(nil),        // 7: cerasusV3.YMApiSales
+	(*YMApiProduct)(nil),      // 8: cerasusV3.YMApiProduct
+	(*YMApiProducts)(nil),     // 9: cerasusV3.YMApiProducts
+	(*YMApiStockItem)(nil),    // 10: cerasusV3.YMApiStockItem
+	(*YMApiStockData)(nil),    // 11: cerasusV3.YMApiStockData
+	(*YMApiPriceRequest)(nil), // 12: cerasusV3.YMApiPriceRequest
+	(*YMApiPriceItem)(nil),    // 13: cerasusV3.YMApiPriceItem
+	(*YMApiPriceData)(nil),    // 14: cerasusV3.YMApiPriceData
+	(*Auth)(nil),              // 15: cerasusV3.Auth
 }
 var file_ym_dataV3_proto_depIdxs = []int32{
-	12, // 0: cerasusV3.YMAuthData.auth:type_name -> cerasusV3.Auth
+	15, // 0: cerasusV3.YMAuthData.auth:type_name -> cerasusV3.Auth
 	1,  // 1: cerasusV3.YMParams.campaigns:type_name -> cerasusV3.YMCampaign
-	12, // 2: cerasusV3.YMParams.auth:type_name -> cerasusV3.Auth
+	15, // 2: cerasusV3.YMParams.auth:type_name -> cerasusV3.Auth
 	2,  // 3: cerasusV3.YMApiDateRequest.auth:type_name -> cerasusV3.YMParams
 	4,  // 4: cerasusV3.YMApiOrders.data:type_name -> cerasusV3.YMApiOrder
 	6,  // 5: cerasusV3.YMApiSales.data:type_name -> cerasusV3.YMApiSale
 	8,  // 6: cerasusV3.YMApiProducts.data:type_name -> cerasusV3.YMApiProduct
 	10, // 7: cerasusV3.YMApiStockData.data:type_name -> cerasusV3.YMApiStockItem
-	8,  // [8:8] is the sub-list for method output_type
-	8,  // [8:8] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	2,  // 8: cerasusV3.YMApiPriceRequest.auth:type_name -> cerasusV3.YMParams
+	13, // 9: cerasusV3.YMApiPriceData.data:type_name -> cerasusV3.YMApiPriceItem
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_ym_dataV3_proto_init() }
@@ -1193,6 +1369,42 @@ func file_ym_dataV3_proto_init() {
 				return nil
 			}
 		}
+		file_ym_dataV3_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*YMApiPriceRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ym_dataV3_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*YMApiPriceItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_ym_dataV3_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*YMApiPriceData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1200,7 +1412,7 @@ func file_ym_dataV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_ym_dataV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

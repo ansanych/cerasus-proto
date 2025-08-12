@@ -98,3 +98,12 @@ message WBApiReportRow {
 message WBApiReportData {
     repeated WBApiReportRow data = 1;
 }
+
+message WBApiPriceItem {
+    string sku = 1;
+    float price = 2;
+}
+
+message WBApiPriceData {
+    repeated WBApiPriceItem data = 1;
+}
