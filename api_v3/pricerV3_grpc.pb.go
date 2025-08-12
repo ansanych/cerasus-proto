@@ -25,6 +25,7 @@ type PricerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductsWithPricer(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error)
+	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -62,6 +63,15 @@ func (c *pricerClient) GetConnectedCompaniesByShop(ctx context.Context, in *Requ
 	return out, nil
 }
 
+func (c *pricerClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetQueueJob", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type PricerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductsWithPricer(context.Context, *Company) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(context.Context, *RequestByShop) (*CompanyList, error)
+	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedPricerServer) GetProductsWithPricer(context.Context, *Company
 }
 func (UnimplementedPricerServer) GetConnectedCompaniesByShop(context.Context, *RequestByShop) (*CompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompaniesByShop not implemented")
+}
+func (UnimplementedPricerServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -152,6 +166,24 @@ func _Pricer_GetConnectedCompaniesByShop_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueuerJob)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetQueueJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetQueueJob",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetQueueJob(ctx, req.(*QueuerJob))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetConnectedCompaniesByShop",
 			Handler:    _Pricer_GetConnectedCompaniesByShop_Handler,
+		},
+		{
+			MethodName: "SetQueueJob",
+			Handler:    _Pricer_SetQueueJob_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
