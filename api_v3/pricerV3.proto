@@ -10,4 +10,60 @@ service Pricer {
     rpc GetProductsWithPricer (Company) returns(ReplyIDS) {}
     rpc GetConnectedCompaniesByShop(RequestByShop) returns (CompanyList) {}
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
+    rpc GetParserData (ParserGetRequest) returns (ParserJob) {}
+    rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
+    rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
+    rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
+}
+
+message ParserGetRequest {
+    string parser = 1;
+}
+
+message ParserJob {
+    string parser = 1;
+    int64 queueDataID = 2;
+    string url = 3;
+    string client = 4;
+}
+
+message ParserSetRequest {
+    string parser = 1;
+    int64 queueDataID = 2;
+    bytes file = 3;
+}
+
+
+message DetectorGetRequest {
+    string detector = 1;
+    bool getGob = 2;
+}
+
+message DetectorCount {
+    int32 waiting = 1;
+    int32 done = 2;
+    int32 error = 3;
+    int32 unknown = 4;
+}
+
+message DetectorWork {
+    int64 jobID = 1;
+    bytes file = 2;
+    string shop = 3;
+}
+
+message DetectorGetReply {
+    string detector = 1;
+    string client = 2;
+    DetectorWork work = 3;
+    DetectorCount count = 4;
+    bool testMode = 5;
+}
+
+message DetectorSetRequest {
+    string detector = 1;
+    string client = 2;
+    int64 jobID = 3;
+    int32 value = 4;
+    string error = 5;
 }

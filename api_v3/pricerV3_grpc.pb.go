@@ -26,6 +26,10 @@ type PricerClient interface {
 	GetProductsWithPricer(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	GetParserData(ctx context.Context, in *ParserGetRequest, opts ...grpc.CallOption) (*ParserJob, error)
+	SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error)
+	SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -72,6 +76,42 @@ func (c *pricerClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...g
 	return out, nil
 }
 
+func (c *pricerClient) GetParserData(ctx context.Context, in *ParserGetRequest, opts ...grpc.CallOption) (*ParserJob, error) {
+	out := new(ParserJob)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetParserData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetParserData(ctx context.Context, in *ParserSetRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetParserData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error) {
+	out := new(DetectorGetReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetDetectorData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetDetectorData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -80,6 +120,10 @@ type PricerServer interface {
 	GetProductsWithPricer(context.Context, *Company) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(context.Context, *RequestByShop) (*CompanyList, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	GetParserData(context.Context, *ParserGetRequest) (*ParserJob, error)
+	SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error)
+	GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error)
+	SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -98,6 +142,18 @@ func (UnimplementedPricerServer) GetConnectedCompaniesByShop(context.Context, *R
 }
 func (UnimplementedPricerServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
+}
+func (UnimplementedPricerServer) GetParserData(context.Context, *ParserGetRequest) (*ParserJob, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetParserData not implemented")
+}
+func (UnimplementedPricerServer) SetParserData(context.Context, *ParserSetRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetParserData not implemented")
+}
+func (UnimplementedPricerServer) GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDetectorData not implemented")
+}
+func (UnimplementedPricerServer) SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDetectorData not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -184,6 +240,78 @@ func _Pricer_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetParserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParserGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetParserData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetParserData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetParserData(ctx, req.(*ParserGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetParserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParserSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetParserData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetParserData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetParserData(ctx, req.(*ParserSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_GetDetectorData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetectorGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetDetectorData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetDetectorData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetDetectorData(ctx, req.(*DetectorGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetDetectorData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetectorSetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetDetectorData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetDetectorData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetDetectorData(ctx, req.(*DetectorSetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +334,22 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetQueueJob",
 			Handler:    _Pricer_SetQueueJob_Handler,
+		},
+		{
+			MethodName: "GetParserData",
+			Handler:    _Pricer_GetParserData_Handler,
+		},
+		{
+			MethodName: "SetParserData",
+			Handler:    _Pricer_SetParserData_Handler,
+		},
+		{
+			MethodName: "GetDetectorData",
+			Handler:    _Pricer_GetDetectorData_Handler,
+		},
+		{
+			MethodName: "SetDetectorData",
+			Handler:    _Pricer_SetDetectorData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
