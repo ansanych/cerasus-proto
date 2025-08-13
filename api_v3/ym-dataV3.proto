@@ -92,7 +92,7 @@ message YMApiStockData {
 
 message YMApiPriceRequest {
     YMParams auth = 1;
-    string offerID = 2;
+    repeated string offerID = 2;
 }
 
 message YMApiPriceItem {
