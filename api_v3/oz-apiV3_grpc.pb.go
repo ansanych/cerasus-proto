@@ -32,6 +32,7 @@ type OZ_APIClient interface {
 	GetApiProducts(ctx context.Context, in *OZAuthParams, opts ...grpc.CallOption) (*OZApiProducts, error)
 	GetApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiStockData, error)
 	GetProductsShopPrice(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiPricesData, error)
+	SendNewPrices(ctx context.Context, in *OZApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type oZ_APIClient struct {
@@ -132,6 +133,15 @@ func (c *oZ_APIClient) GetProductsShopPrice(ctx context.Context, in *OZApiStockR
 	return out, nil
 }
 
+func (c *oZ_APIClient) SendNewPrices(ctx context.Context, in *OZApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/SendNewPrices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZ_APIServer is the server API for OZ_API service.
 // All implementations must embed UnimplementedOZ_APIServer
 // for forward compatibility
@@ -146,6 +156,7 @@ type OZ_APIServer interface {
 	GetApiProducts(context.Context, *OZAuthParams) (*OZApiProducts, error)
 	GetApiStocks(context.Context, *OZApiStockRequest) (*OZApiStockData, error)
 	GetProductsShopPrice(context.Context, *OZApiStockRequest) (*OZApiPricesData, error)
+	SendNewPrices(context.Context, *OZApiNewPricesRequest) (*StatusReply, error)
 	mustEmbedUnimplementedOZ_APIServer()
 }
 
@@ -182,6 +193,9 @@ func (UnimplementedOZ_APIServer) GetApiStocks(context.Context, *OZApiStockReques
 }
 func (UnimplementedOZ_APIServer) GetProductsShopPrice(context.Context, *OZApiStockRequest) (*OZApiPricesData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsShopPrice not implemented")
+}
+func (UnimplementedOZ_APIServer) SendNewPrices(context.Context, *OZApiNewPricesRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendNewPrices not implemented")
 }
 func (UnimplementedOZ_APIServer) mustEmbedUnimplementedOZ_APIServer() {}
 
@@ -376,6 +390,24 @@ func _OZ_API_GetProductsShopPrice_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_API_SendNewPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OZApiNewPricesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZ_APIServer).SendNewPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ_API/SendNewPrices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZ_APIServer).SendNewPrices(ctx, req.(*OZApiNewPricesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OZ_API_ServiceDesc is the grpc.ServiceDesc for OZ_API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +454,10 @@ var OZ_API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductsShopPrice",
 			Handler:    _OZ_API_GetProductsShopPrice_Handler,
+		},
+		{
+			MethodName: "SendNewPrices",
+			Handler:    _OZ_API_SendNewPrices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

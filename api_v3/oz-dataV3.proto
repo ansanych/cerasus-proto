@@ -97,3 +97,15 @@ message OZApiPriceItem {
 message OZApiPricesData {
     repeated OZApiPriceItem data = 1;
 }
+
+message OZApiNewPrice {
+    int64 shopProductID = 1;
+    int32 price = 2;
+    int64 ozProductID = 3;
+}
+
+message OZApiNewPricesRequest {
+    OZAuthParams auth = 1;
+    int64 companyID = 2;
+    repeated OZApiNewPrice data = 3;
+}

@@ -36,6 +36,7 @@ type WBClient interface {
 	GetUnsortedList(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetSale(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Sale, error)
 	GetShopProductsDatas(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
+	SendNewPrices(ctx context.Context, in *WBApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type wBClient struct {
@@ -172,6 +173,15 @@ func (c *wBClient) GetShopProductsDatas(ctx context.Context, in *RequestByIDS, o
 	return out, nil
 }
 
+func (c *wBClient) SendNewPrices(ctx context.Context, in *WBApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/SendNewPrices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -190,6 +200,7 @@ type WBServer interface {
 	GetUnsortedList(context.Context, *RequestByIDS) (*ShopProductList, error)
 	GetSale(context.Context, *RequestByID) (*Sale, error)
 	GetShopProductsDatas(context.Context, *RequestByIDS) (*ShopProductList, error)
+	SendNewPrices(context.Context, *WBApiNewPricesRequest) (*StatusReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -238,6 +249,9 @@ func (UnimplementedWBServer) GetSale(context.Context, *RequestByID) (*Sale, erro
 }
 func (UnimplementedWBServer) GetShopProductsDatas(context.Context, *RequestByIDS) (*ShopProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductsDatas not implemented")
+}
+func (UnimplementedWBServer) SendNewPrices(context.Context, *WBApiNewPricesRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendNewPrices not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -504,6 +518,24 @@ func _WB_GetShopProductsDatas_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_SendNewPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WBApiNewPricesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).SendNewPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/SendNewPrices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).SendNewPrices(ctx, req.(*WBApiNewPricesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +598,10 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopProductsDatas",
 			Handler:    _WB_GetShopProductsDatas_Handler,
+		},
+		{
+			MethodName: "SendNewPrices",
+			Handler:    _WB_SendNewPrices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

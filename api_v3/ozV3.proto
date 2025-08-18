@@ -21,4 +21,5 @@ service OZ {
     rpc GetUnsortedList (RequestByIDS) returns (ShopProductList) {}
     rpc GetSale (RequestByID) returns (Sale) {}
     rpc GetShopProductsDatas (RequestByIDS) returns (ShopProductList) {}
+    rpc SendNewPrices(OZApiNewPricesRequest) returns (StatusReply) {}
 }

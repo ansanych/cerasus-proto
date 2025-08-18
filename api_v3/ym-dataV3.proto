@@ -103,3 +103,15 @@ message YMApiPriceItem {
 message YMApiPriceData {
     repeated YMApiPriceItem data = 1;
 }
+
+message YMApiNewPrice {
+    int64 shopProductID = 1;
+    int32 price = 2;
+    string offerID = 3;
+}
+
+message YMApiNewPricesRequest {
+    YMParams auth = 1;
+    int64 companyID = 2;
+    repeated YMApiNewPrice data = 3;
+}

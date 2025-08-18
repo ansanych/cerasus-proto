@@ -112,3 +112,15 @@ message WBApiPriceItem {
 message WBApiPriceData {
     repeated WBApiPriceItem data = 1;
 }
+
+message WBApiNewPrice {
+    int64 shopProductID = 1;
+    int32 price = 2;
+    int64 nmID = 3;
+}
+
+message WBApiNewPricesRequest {
+    WBAuthData auth = 1;
+    int64 companyID = 2;
+    repeated WBApiNewPrice data = 3;
+}
