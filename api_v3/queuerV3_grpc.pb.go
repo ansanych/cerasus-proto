@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type QueuerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	ReportQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
+	RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type queuerClient struct {
@@ -52,12 +53,22 @@ func (c *queuerClient) ReportQueueJob(ctx context.Context, in *QueuerJob, opts .
 	return out, nil
 }
 
+func (c *queuerClient) RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Queuer/RestartQueues", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueuerServer is the server API for Queuer service.
 // All implementations must embed UnimplementedQueuerServer
 // for forward compatibility
 type QueuerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
+	RestartQueues(context.Context, *RestartQueuesRequest) (*StatusReply, error)
 	mustEmbedUnimplementedQueuerServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedQueuerServer) Ping(context.Context, *PingRequest) (*PingReply
 }
 func (UnimplementedQueuerServer) ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportQueueJob not implemented")
+}
+func (UnimplementedQueuerServer) RestartQueues(context.Context, *RestartQueuesRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestartQueues not implemented")
 }
 func (UnimplementedQueuerServer) mustEmbedUnimplementedQueuerServer() {}
 
@@ -120,6 +134,24 @@ func _Queuer_ReportQueueJob_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Queuer_RestartQueues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestartQueuesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueuerServer).RestartQueues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Queuer/RestartQueues",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueuerServer).RestartQueues(ctx, req.(*RestartQueuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Queuer_ServiceDesc is the grpc.ServiceDesc for Queuer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Queuer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReportQueueJob",
 			Handler:    _Queuer_ReportQueueJob_Handler,
+		},
+		{
+			MethodName: "RestartQueues",
+			Handler:    _Queuer_RestartQueues_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
