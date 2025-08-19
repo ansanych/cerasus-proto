@@ -79,6 +79,10 @@ message QueuerJob {
     string shop = 7;
 }
 
+message QueuerJobs {
+    repeated QueuerJob jobs = 1;
+}
+
 message Log {
     string service = 1;
     string resource = 2;

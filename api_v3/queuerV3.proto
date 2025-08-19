@@ -8,7 +8,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Queuer {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc ReportQueueJob(QueuerJob) returns (StatusReply) {}
-    rpc RestartQueues(RestartQueuesRequest) returns (StatusReply) {}
+    rpc RestartQueues(RestartQueuesRequest) returns (QueuerJobs) {}
 }
 
 message RestartQueuesRequest {

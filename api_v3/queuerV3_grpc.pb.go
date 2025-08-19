@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type QueuerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	ReportQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
-	RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*QueuerJobs, error)
 }
 
 type queuerClient struct {
@@ -53,8 +53,8 @@ func (c *queuerClient) ReportQueueJob(ctx context.Context, in *QueuerJob, opts .
 	return out, nil
 }
 
-func (c *queuerClient) RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
+func (c *queuerClient) RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*QueuerJobs, error) {
+	out := new(QueuerJobs)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Queuer/RestartQueues", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (c *queuerClient) RestartQueues(ctx context.Context, in *RestartQueuesReque
 type QueuerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
-	RestartQueues(context.Context, *RestartQueuesRequest) (*StatusReply, error)
+	RestartQueues(context.Context, *RestartQueuesRequest) (*QueuerJobs, error)
 	mustEmbedUnimplementedQueuerServer()
 }
 
@@ -82,7 +82,7 @@ func (UnimplementedQueuerServer) Ping(context.Context, *PingRequest) (*PingReply
 func (UnimplementedQueuerServer) ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReportQueueJob not implemented")
 }
-func (UnimplementedQueuerServer) RestartQueues(context.Context, *RestartQueuesRequest) (*StatusReply, error) {
+func (UnimplementedQueuerServer) RestartQueues(context.Context, *RestartQueuesRequest) (*QueuerJobs, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestartQueues not implemented")
 }
 func (UnimplementedQueuerServer) mustEmbedUnimplementedQueuerServer() {}
