@@ -56,7 +56,7 @@ message DetectorGetReply {
     string detector = 1;
     string client = 2;
     DetectorWork work = 3;
-    DetectorCount count = 4;
+    repeated DetectorCount count = 4;
     bool testMode = 5;
 }
 
