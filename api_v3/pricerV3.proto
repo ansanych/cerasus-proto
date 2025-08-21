@@ -19,10 +19,12 @@ service Pricer {
 
 message UserPricerParam {
     string shop = 1;
-    int32 limit = 2;
-    int32 active = 3;
+    int32 limitItems = 2;
+    int32 activeItems = 3;
     string startDate = 4;
     string endDate = 5;
+    bool active = 6;
+    string updated = 7;
 }
 
 message UserPricerParams {
