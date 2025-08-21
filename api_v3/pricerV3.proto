@@ -15,6 +15,39 @@ service Pricer {
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
     rpc GetPricerData (Auth) returns (UserPricerParams) {}
+    rpc GetPricerList (PricerListRequest) returns (PricerList) {}
+}
+
+message PricerListRequest {
+    Auth auth = 1;
+    string shop = 2;
+    bool pricer = 3;
+    bool dumper = 4;
+    repeated int64 brands = 5;
+}
+
+message PricerListItemShop {
+    string shop = 1;
+    bool primary = 2;
+    string lastChange = 3;
+    int64 lastChangeTime = 4;
+    bool pricer = 5;
+    int32 pricerTarget = 6;
+    bool dumping = 7;
+    int32 dumpingNightTarget = 8;
+    int32 dumpingWeekendTarget = 9;
+}
+
+message PricerListItem {
+    Product product = 1;
+    repeated PricerListItemShop shops = 2;
+    string primaryShop = 3;
+    int32 sort = 4;
+    bool alert = 5;
+}
+
+message PricerList {
+    repeated PricerListItem data = 1;
 }
 
 message UserPricerParam {

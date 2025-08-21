@@ -31,6 +31,7 @@ type PricerClient interface {
 	GetDetectorData(ctx context.Context, in *DetectorGetRequest, opts ...grpc.CallOption) (*DetectorGetReply, error)
 	SetDetectorData(ctx context.Context, in *DetectorSetRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetPricerData(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*UserPricerParams, error)
+	GetPricerList(ctx context.Context, in *PricerListRequest, opts ...grpc.CallOption) (*PricerList, error)
 }
 
 type pricerClient struct {
@@ -122,6 +123,15 @@ func (c *pricerClient) GetPricerData(ctx context.Context, in *Auth, opts ...grpc
 	return out, nil
 }
 
+func (c *pricerClient) GetPricerList(ctx context.Context, in *PricerListRequest, opts ...grpc.CallOption) (*PricerList, error) {
+	out := new(PricerList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetPricerList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type PricerServer interface {
 	GetDetectorData(context.Context, *DetectorGetRequest) (*DetectorGetReply, error)
 	SetDetectorData(context.Context, *DetectorSetRequest) (*StatusReply, error)
 	GetPricerData(context.Context, *Auth) (*UserPricerParams, error)
+	GetPricerList(context.Context, *PricerListRequest) (*PricerList, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedPricerServer) SetDetectorData(context.Context, *DetectorSetRe
 }
 func (UnimplementedPricerServer) GetPricerData(context.Context, *Auth) (*UserPricerParams, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPricerData not implemented")
+}
+func (UnimplementedPricerServer) GetPricerList(context.Context, *PricerListRequest) (*PricerList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPricerList not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -344,6 +358,24 @@ func _Pricer_GetPricerData_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetPricerList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PricerListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetPricerList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetPricerList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetPricerList(ctx, req.(*PricerListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPricerData",
 			Handler:    _Pricer_GetPricerData_Handler,
+		},
+		{
+			MethodName: "GetPricerList",
+			Handler:    _Pricer_GetPricerList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
