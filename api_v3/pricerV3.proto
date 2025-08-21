@@ -14,6 +14,19 @@ service Pricer {
     rpc SetParserData (ParserSetRequest) returns (StatusReply) {}
     rpc GetDetectorData (DetectorGetRequest) returns (DetectorGetReply) {}
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
+    rpc GetPricerData (Auth) returns (UserPricerParams) {}
+}
+
+message UserPricerParam {
+    string shop = 1;
+    int32 limit = 2;
+    int32 active = 3;
+    string startDate = 4;
+    string endDate = 5;
+}
+
+message UserPricerParams {
+    repeated UserPricerParam data = 1;
 }
 
 message ParserGetRequest {
