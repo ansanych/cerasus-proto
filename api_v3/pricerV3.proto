@@ -36,7 +36,7 @@ message ParserSetRequest {
 
 message DetectorGetRequest {
     string detector = 1;
-    bool getGob = 2;
+    string detectorType = 2;
 }
 
 message DetectorCount {
@@ -62,8 +62,9 @@ message DetectorGetReply {
 
 message DetectorSetRequest {
     string detector = 1;
-    string client = 2;
-    int64 jobID = 3;
-    int32 value = 4;
-    string error = 5;
+    string detectorType = 2;
+    string result = 3;
+    string description = 4;
+    int32 parse = 5;
+    int64 jobID = 6;
 }
