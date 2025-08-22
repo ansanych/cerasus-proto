@@ -44,6 +44,8 @@ message PricerListItem {
     string primaryShop = 3;
     int32 sort = 4;
     bool alert = 5;
+    string lastChange = 6;
+    int64 lastChangeTime = 7;
 }
 
 message PricerList {
