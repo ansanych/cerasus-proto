@@ -24,6 +24,7 @@ message PricerListRequest {
     bool pricer = 3;
     bool dumper = 4;
     repeated int64 brands = 5;
+    bool showAll = 6;
 }
 
 message PricerListItemShop {
