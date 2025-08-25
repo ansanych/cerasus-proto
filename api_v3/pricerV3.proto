@@ -49,7 +49,9 @@ message PricerListItem {
 }
 
 message PricerList {
-    repeated PricerListItem data = 1;
+    repeated PricerListItem pricerOnly = 1;
+    repeated PricerListItem pricerDumper = 2;
+    repeated PricerListItem pricerNone = 3;
 }
 
 message UserPricerParam {
