@@ -16,6 +16,33 @@ service Pricer {
     rpc SetDetectorData (DetectorSetRequest) returns (StatusReply) {}
     rpc GetPricerData (Auth) returns (UserPricerParams) {}
     rpc GetPricerList (PricerListRequest) returns (PricerList) {}
+    rpc GetPricerProductData (RequestByID) returns (PricerProductParams) {}
+}
+
+message PricerProductParamDumping {
+    string dayType = 1;
+    int32 target = 2;
+    float offsetMin = 3;
+    float offsetMax = 4;
+    bool active = 5;
+    int32 hourFrom = 6;
+    int32 hourTo = 7;
+}
+
+message PricerProductParam {
+    string shop = 1;
+    int32 target = 2;
+    float offsetMin = 3;
+    float offsetMax = 4;
+    bool active = 5;
+    PricerProductParamDumping dumpingNight = 6;
+    PricerProductParamDumping dumpingWeekend = 7;
+    string updated = 8;
+}
+
+message PricerProductParams {
+    Product product = 1;
+    repeated PricerProductParam data = 2;
 }
 
 message PricerListRequest {
