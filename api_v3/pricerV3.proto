@@ -38,6 +38,7 @@ message PricerProductParam {
     PricerProductParamDumping dumpingNight = 6;
     PricerProductParamDumping dumpingWeekend = 7;
     string updated = 8;
+    int64 productID = 9;
 }
 
 message PricerProductParams {
