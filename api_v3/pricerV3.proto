@@ -17,6 +17,7 @@ service Pricer {
     rpc GetPricerData (Auth) returns (UserPricerParams) {}
     rpc GetPricerList (PricerListRequest) returns (PricerList) {}
     rpc GetPricerProductData (RequestByID) returns (PricerProductParams) {}
+    rpc SetPricerProductData (PricerProductParam) returns (StatusReply) {}
 }
 
 message PricerProductParamDumping {
@@ -39,6 +40,7 @@ message PricerProductParam {
     PricerProductParamDumping dumpingWeekend = 7;
     string updated = 8;
     int64 productID = 9;
+    Auth auth = 10;
 }
 
 message PricerProductParams {
