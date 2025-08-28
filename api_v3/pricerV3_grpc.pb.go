@@ -34,6 +34,7 @@ type PricerClient interface {
 	GetPricerList(ctx context.Context, in *PricerListRequest, opts ...grpc.CallOption) (*PricerList, error)
 	GetPricerProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*PricerProductParams, error)
 	SetPricerProductData(ctx context.Context, in *PricerProductParam, opts ...grpc.CallOption) (*StatusReply, error)
+	SetEnableShopPricer(ctx context.Context, in *EnableShopPricerRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -152,6 +153,15 @@ func (c *pricerClient) SetPricerProductData(ctx context.Context, in *PricerProdu
 	return out, nil
 }
 
+func (c *pricerClient) SetEnableShopPricer(ctx context.Context, in *EnableShopPricerRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetEnableShopPricer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -168,6 +178,7 @@ type PricerServer interface {
 	GetPricerList(context.Context, *PricerListRequest) (*PricerList, error)
 	GetPricerProductData(context.Context, *RequestByID) (*PricerProductParams, error)
 	SetPricerProductData(context.Context, *PricerProductParam) (*StatusReply, error)
+	SetEnableShopPricer(context.Context, *EnableShopPricerRequest) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -210,6 +221,9 @@ func (UnimplementedPricerServer) GetPricerProductData(context.Context, *RequestB
 }
 func (UnimplementedPricerServer) SetPricerProductData(context.Context, *PricerProductParam) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetPricerProductData not implemented")
+}
+func (UnimplementedPricerServer) SetEnableShopPricer(context.Context, *EnableShopPricerRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetEnableShopPricer not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -440,6 +454,24 @@ func _Pricer_SetPricerProductData_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_SetEnableShopPricer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableShopPricerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetEnableShopPricer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetEnableShopPricer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetEnableShopPricer(ctx, req.(*EnableShopPricerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +526,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetPricerProductData",
 			Handler:    _Pricer_SetPricerProductData_Handler,
+		},
+		{
+			MethodName: "SetEnableShopPricer",
+			Handler:    _Pricer_SetEnableShopPricer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

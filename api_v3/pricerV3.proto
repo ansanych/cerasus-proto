@@ -18,6 +18,13 @@ service Pricer {
     rpc GetPricerList (PricerListRequest) returns (PricerList) {}
     rpc GetPricerProductData (RequestByID) returns (PricerProductParams) {}
     rpc SetPricerProductData (PricerProductParam) returns (StatusReply) {}
+    rpc SetEnableShopPricer (EnableShopPricerRequest) returns (StatusReply) {}
+}
+
+message EnableShopPricerRequest {
+    Auth auth = 1;
+    string shop = 2;
+    bool enable = 3;
 }
 
 message PricerProductParamDumping {
@@ -94,6 +101,7 @@ message UserPricerParam {
     string endDate = 5;
     bool active = 6;
     string updated = 7;
+    bool enable = 8;
 }
 
 message UserPricerParams {
