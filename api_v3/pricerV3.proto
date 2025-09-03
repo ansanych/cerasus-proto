@@ -37,6 +37,15 @@ message PricerProductParamDumping {
     int32 hourTo = 7;
 }
 
+message PricerProductParamShopMin {
+    bool hasPricer = 1;
+    bool activePricer = 2;
+    int32 targetPricer = 3;
+    bool hasDumper = 4;
+    bool activeDumper = 5;
+    int32 targetDumper = 6;
+}
+
 message PricerProductParam {
     string shop = 1;
     int32 target = 2;
@@ -48,6 +57,7 @@ message PricerProductParam {
     string updated = 8;
     int64 productID = 9;
     Auth auth = 10;
+    PricerProductParamShopMin minData = 11;
 }
 
 message PricerProductParams {
