@@ -19,6 +19,50 @@ service Pricer {
     rpc GetPricerProductData (RequestByID) returns (PricerProductParams) {}
     rpc SetPricerProductData (PricerProductParam) returns (StatusReply) {}
     rpc SetEnableShopPricer (EnableShopPricerRequest) returns (StatusReply) {}
+    rpc SetSwitchersPricer (SetSwitchersRequest) returns (StatusReply) {}
+    rpc SetPricerPercent (SetPricerPercentRequest) returns (StatusReply) {}
+    rpc SetDumperData (SetDumperRequest) returns (StatusReply) {}
+}
+
+message DumperValues {
+    string shop = 1;
+    bool activeWD = 2;
+    int32 hourFromWD = 3;
+    int32 hourToWD = 4;
+    float valueWD = 5;
+    bool activeWE = 6;
+    int32 hourFromWE = 7;
+    int32 hourToWE = 8;
+    float valueWE = 9;
+}
+
+message SetDumperRequest {
+    Auth auth = 1;
+    repeated int64 products = 2;
+    repeated DumperValues data = 3;
+}
+
+message PricerPercent {
+    string shop = 1;
+    float value = 2;
+}
+
+message SetPricerPercentRequest {
+    Auth auth = 1;
+    repeated int64 products = 2;
+    repeated PricerPercent data = 3;
+}
+
+message SwitcherData {
+    string shop = 1;
+    bool pricer = 2;
+    bool dumper = 3;
+}
+
+message SetSwitchersRequest {
+    Auth auth = 1;
+    repeated int64 products = 2;
+    repeated SwitcherData switcher = 3;
 }
 
 message EnableShopPricerRequest {
@@ -35,15 +79,6 @@ message PricerProductParamDumping {
     bool active = 5;
     int32 hourFrom = 6;
     int32 hourTo = 7;
-}
-
-message PricerProductParamShopMin {
-    bool hasPricer = 1;
-    bool activePricer = 2;
-    int32 targetPricer = 3;
-    bool hasDumper = 4;
-    bool activeDumper = 5;
-    int32 targetDumper = 6;
 }
 
 message PricerProductParam {
@@ -71,6 +106,15 @@ message PricerListRequest {
     bool dumper = 4;
     repeated int64 brands = 5;
     bool showAll = 6;
+}
+
+message PricerProductParamShopMin {
+    bool hasPricer = 1;
+    bool activePricer = 2;
+    int32 targetPricer = 3;
+    bool hasDumper = 4;
+    bool activeDumper = 5;
+    int32 targetDumper = 6;
 }
 
 message PricerListItemShop {

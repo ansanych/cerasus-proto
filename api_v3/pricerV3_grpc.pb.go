@@ -35,6 +35,9 @@ type PricerClient interface {
 	GetPricerProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*PricerProductParams, error)
 	SetPricerProductData(ctx context.Context, in *PricerProductParam, opts ...grpc.CallOption) (*StatusReply, error)
 	SetEnableShopPricer(ctx context.Context, in *EnableShopPricerRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SetSwitchersPricer(ctx context.Context, in *SetSwitchersRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SetPricerPercent(ctx context.Context, in *SetPricerPercentRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	SetDumperData(ctx context.Context, in *SetDumperRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -162,6 +165,33 @@ func (c *pricerClient) SetEnableShopPricer(ctx context.Context, in *EnableShopPr
 	return out, nil
 }
 
+func (c *pricerClient) SetSwitchersPricer(ctx context.Context, in *SetSwitchersRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetSwitchersPricer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetPricerPercent(ctx context.Context, in *SetPricerPercentRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetPricerPercent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetDumperData(ctx context.Context, in *SetDumperRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetDumperData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -179,6 +209,9 @@ type PricerServer interface {
 	GetPricerProductData(context.Context, *RequestByID) (*PricerProductParams, error)
 	SetPricerProductData(context.Context, *PricerProductParam) (*StatusReply, error)
 	SetEnableShopPricer(context.Context, *EnableShopPricerRequest) (*StatusReply, error)
+	SetSwitchersPricer(context.Context, *SetSwitchersRequest) (*StatusReply, error)
+	SetPricerPercent(context.Context, *SetPricerPercentRequest) (*StatusReply, error)
+	SetDumperData(context.Context, *SetDumperRequest) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -224,6 +257,15 @@ func (UnimplementedPricerServer) SetPricerProductData(context.Context, *PricerPr
 }
 func (UnimplementedPricerServer) SetEnableShopPricer(context.Context, *EnableShopPricerRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetEnableShopPricer not implemented")
+}
+func (UnimplementedPricerServer) SetSwitchersPricer(context.Context, *SetSwitchersRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSwitchersPricer not implemented")
+}
+func (UnimplementedPricerServer) SetPricerPercent(context.Context, *SetPricerPercentRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPricerPercent not implemented")
+}
+func (UnimplementedPricerServer) SetDumperData(context.Context, *SetDumperRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDumperData not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -472,6 +514,60 @@ func _Pricer_SetEnableShopPricer_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_SetSwitchersPricer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSwitchersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetSwitchersPricer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetSwitchersPricer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetSwitchersPricer(ctx, req.(*SetSwitchersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetPricerPercent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetPricerPercentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetPricerPercent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetPricerPercent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetPricerPercent(ctx, req.(*SetPricerPercentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetDumperData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDumperRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetDumperData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetDumperData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetDumperData(ctx, req.(*SetDumperRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +626,18 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetEnableShopPricer",
 			Handler:    _Pricer_SetEnableShopPricer_Handler,
+		},
+		{
+			MethodName: "SetSwitchersPricer",
+			Handler:    _Pricer_SetSwitchersPricer_Handler,
+		},
+		{
+			MethodName: "SetPricerPercent",
+			Handler:    _Pricer_SetPricerPercent_Handler,
+		},
+		{
+			MethodName: "SetDumperData",
+			Handler:    _Pricer_SetDumperData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
