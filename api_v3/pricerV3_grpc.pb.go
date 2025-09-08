@@ -38,6 +38,7 @@ type PricerClient interface {
 	SetSwitchersPricer(ctx context.Context, in *SetSwitchersRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetPricerPercent(ctx context.Context, in *SetPricerPercentRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetDumperData(ctx context.Context, in *SetDumperRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	DeleteProductData(ctx context.Context, in *DeleteProductDataRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -192,6 +193,15 @@ func (c *pricerClient) SetDumperData(ctx context.Context, in *SetDumperRequest, 
 	return out, nil
 }
 
+func (c *pricerClient) DeleteProductData(ctx context.Context, in *DeleteProductDataRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/DeleteProductData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -212,6 +222,7 @@ type PricerServer interface {
 	SetSwitchersPricer(context.Context, *SetSwitchersRequest) (*StatusReply, error)
 	SetPricerPercent(context.Context, *SetPricerPercentRequest) (*StatusReply, error)
 	SetDumperData(context.Context, *SetDumperRequest) (*StatusReply, error)
+	DeleteProductData(context.Context, *DeleteProductDataRequest) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -266,6 +277,9 @@ func (UnimplementedPricerServer) SetPricerPercent(context.Context, *SetPricerPer
 }
 func (UnimplementedPricerServer) SetDumperData(context.Context, *SetDumperRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetDumperData not implemented")
+}
+func (UnimplementedPricerServer) DeleteProductData(context.Context, *DeleteProductDataRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductData not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -568,6 +582,24 @@ func _Pricer_SetDumperData_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_DeleteProductData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProductDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).DeleteProductData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/DeleteProductData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).DeleteProductData(ctx, req.(*DeleteProductDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -638,6 +670,10 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetDumperData",
 			Handler:    _Pricer_SetDumperData_Handler,
+		},
+		{
+			MethodName: "DeleteProductData",
+			Handler:    _Pricer_DeleteProductData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

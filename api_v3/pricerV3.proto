@@ -22,6 +22,15 @@ service Pricer {
     rpc SetSwitchersPricer (SetSwitchersRequest) returns (StatusReply) {}
     rpc SetPricerPercent (SetPricerPercentRequest) returns (StatusReply) {}
     rpc SetDumperData (SetDumperRequest) returns (StatusReply) {}
+    rpc DeleteProductData (DeleteProductDataRequest) returns (StatusReply) {}
+}
+
+message DeleteProductDataRequest {
+    string shop = 1;
+    int64 productID = 2;
+    int64 shopProductID = 3;
+    int64 companyID = 4;
+    bool fullDelete = 5;
 }
 
 message DumperValues {
