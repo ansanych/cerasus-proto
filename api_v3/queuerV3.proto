@@ -22,8 +22,8 @@ message QueueType {
     string title = 2;
     string code = 3;
     string shop = 4;
-    int32 period = 5;
-    int32 reset = 6;
+    int32 periodRestart = 5;
+    int32 periodReset = 6;
     bool active = 7;
     int32 inWork = 8;
     int32 withErrors = 9;
