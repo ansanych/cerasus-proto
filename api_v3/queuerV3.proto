@@ -9,8 +9,41 @@ service Queuer {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc ReportQueueJob(QueuerJob) returns (StatusReply) {}
     rpc RestartQueues(RestartQueuesRequest) returns (QueuerJobs) {}
+    rpc GetQueuesTypes(Auth) returns (QueueTypes) {}
+    rpc GetQueuesTypeList(RequestByID) returns (QueueTypeList) {}
 }
 
 message RestartQueuesRequest {
     string service = 1;
+}
+
+message QueueType {
+    int64 ID = 1;
+    string title = 2;
+    string code = 3;
+    string shop = 4;
+    int32 period = 5;
+    int32 reset = 6;
+    bool active = 7;
+    int32 inWork = 8;
+    int32 withErrors = 9;
+    int32 longTime = 10;
+}
+
+message QueueTypes {
+    repeated QueueType data = 1;
+}
+
+message QueueTypeItem {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int32 status = 3;
+    bool inWork = 4;
+    bool hasError = 5;
+    repeated Log logs = 6;
+}
+
+message QueueTypeList {
+    QueueType queuType = 1;
+    repeated QueueTypeItem items = 2;
 }

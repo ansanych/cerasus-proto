@@ -25,6 +25,8 @@ type QueuerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	ReportQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
 	RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*QueuerJobs, error)
+	GetQueuesTypes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*QueueTypes, error)
+	GetQueuesTypeList(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*QueueTypeList, error)
 }
 
 type queuerClient struct {
@@ -62,6 +64,24 @@ func (c *queuerClient) RestartQueues(ctx context.Context, in *RestartQueuesReque
 	return out, nil
 }
 
+func (c *queuerClient) GetQueuesTypes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*QueueTypes, error) {
+	out := new(QueueTypes)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Queuer/GetQueuesTypes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queuerClient) GetQueuesTypeList(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*QueueTypeList, error) {
+	out := new(QueueTypeList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Queuer/GetQueuesTypeList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueuerServer is the server API for Queuer service.
 // All implementations must embed UnimplementedQueuerServer
 // for forward compatibility
@@ -69,6 +89,8 @@ type QueuerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	ReportQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
 	RestartQueues(context.Context, *RestartQueuesRequest) (*QueuerJobs, error)
+	GetQueuesTypes(context.Context, *Auth) (*QueueTypes, error)
+	GetQueuesTypeList(context.Context, *RequestByID) (*QueueTypeList, error)
 	mustEmbedUnimplementedQueuerServer()
 }
 
@@ -84,6 +106,12 @@ func (UnimplementedQueuerServer) ReportQueueJob(context.Context, *QueuerJob) (*S
 }
 func (UnimplementedQueuerServer) RestartQueues(context.Context, *RestartQueuesRequest) (*QueuerJobs, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestartQueues not implemented")
+}
+func (UnimplementedQueuerServer) GetQueuesTypes(context.Context, *Auth) (*QueueTypes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQueuesTypes not implemented")
+}
+func (UnimplementedQueuerServer) GetQueuesTypeList(context.Context, *RequestByID) (*QueueTypeList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQueuesTypeList not implemented")
 }
 func (UnimplementedQueuerServer) mustEmbedUnimplementedQueuerServer() {}
 
@@ -152,6 +180,42 @@ func _Queuer_RestartQueues_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Queuer_GetQueuesTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueuerServer).GetQueuesTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Queuer/GetQueuesTypes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueuerServer).GetQueuesTypes(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Queuer_GetQueuesTypeList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueuerServer).GetQueuesTypeList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Queuer/GetQueuesTypeList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueuerServer).GetQueuesTypeList(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Queuer_ServiceDesc is the grpc.ServiceDesc for Queuer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +234,14 @@ var Queuer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RestartQueues",
 			Handler:    _Queuer_RestartQueues_Handler,
+		},
+		{
+			MethodName: "GetQueuesTypes",
+			Handler:    _Queuer_GetQueuesTypes_Handler,
+		},
+		{
+			MethodName: "GetQueuesTypeList",
+			Handler:    _Queuer_GetQueuesTypeList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
