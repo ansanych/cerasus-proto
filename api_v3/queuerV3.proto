@@ -41,6 +41,8 @@ message QueueTypeItem {
     bool inWork = 4;
     bool hasError = 5;
     repeated Log logs = 6;
+    string created = 7;
+    string updated = 8;
 }
 
 message QueueTypeList {
