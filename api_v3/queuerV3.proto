@@ -46,6 +46,6 @@ message QueueTypeItem {
 }
 
 message QueueTypeList {
-    QueueType queuType = 1;
+    QueueType queueType = 1;
     repeated QueueTypeItem items = 2;
 }

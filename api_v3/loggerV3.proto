@@ -8,4 +8,5 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Logger {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc SetLog (Log) returns (StatusReply) {}
+    rpc GetLogs (SearchRequest) returns (Logs) {}
 }

@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type LoggerClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	SetLog(ctx context.Context, in *Log, opts ...grpc.CallOption) (*StatusReply, error)
+	GetLogs(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Logs, error)
 }
 
 type loggerClient struct {
@@ -52,12 +53,22 @@ func (c *loggerClient) SetLog(ctx context.Context, in *Log, opts ...grpc.CallOpt
 	return out, nil
 }
 
+func (c *loggerClient) GetLogs(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*Logs, error) {
+	out := new(Logs)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Logger/GetLogs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LoggerServer is the server API for Logger service.
 // All implementations must embed UnimplementedLoggerServer
 // for forward compatibility
 type LoggerServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	SetLog(context.Context, *Log) (*StatusReply, error)
+	GetLogs(context.Context, *SearchRequest) (*Logs, error)
 	mustEmbedUnimplementedLoggerServer()
 }
 
@@ -70,6 +81,9 @@ func (UnimplementedLoggerServer) Ping(context.Context, *PingRequest) (*PingReply
 }
 func (UnimplementedLoggerServer) SetLog(context.Context, *Log) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLog not implemented")
+}
+func (UnimplementedLoggerServer) GetLogs(context.Context, *SearchRequest) (*Logs, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLogs not implemented")
 }
 func (UnimplementedLoggerServer) mustEmbedUnimplementedLoggerServer() {}
 
@@ -120,6 +134,24 @@ func _Logger_SetLog_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Logger_GetLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoggerServer).GetLogs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Logger/GetLogs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoggerServer).GetLogs(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Logger_ServiceDesc is the grpc.ServiceDesc for Logger service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -134,6 +166,10 @@ var Logger_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetLog",
 			Handler:    _Logger_SetLog_Handler,
+		},
+		{
+			MethodName: "GetLogs",
+			Handler:    _Logger_GetLogs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

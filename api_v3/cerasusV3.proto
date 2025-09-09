@@ -98,6 +98,10 @@ message Log {
     int64 time = 12;
 }
 
+message Logs {
+    repeated Log logs = 1;
+}
+
 enum SortOrder {
     ASC = 0;
     DESC = 1;
