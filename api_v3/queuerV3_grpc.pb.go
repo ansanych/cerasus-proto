@@ -27,6 +27,7 @@ type QueuerClient interface {
 	RestartQueues(ctx context.Context, in *RestartQueuesRequest, opts ...grpc.CallOption) (*QueuerJobs, error)
 	GetQueuesTypes(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*QueueTypes, error)
 	GetQueuesTypeList(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*QueueTypeList, error)
+	ResetQueues(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type queuerClient struct {
@@ -82,6 +83,15 @@ func (c *queuerClient) GetQueuesTypeList(ctx context.Context, in *RequestByID, o
 	return out, nil
 }
 
+func (c *queuerClient) ResetQueues(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Queuer/ResetQueues", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueuerServer is the server API for Queuer service.
 // All implementations must embed UnimplementedQueuerServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type QueuerServer interface {
 	RestartQueues(context.Context, *RestartQueuesRequest) (*QueuerJobs, error)
 	GetQueuesTypes(context.Context, *Auth) (*QueueTypes, error)
 	GetQueuesTypeList(context.Context, *RequestByID) (*QueueTypeList, error)
+	ResetQueues(context.Context, *RequestByIDS) (*StatusReply, error)
 	mustEmbedUnimplementedQueuerServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedQueuerServer) GetQueuesTypes(context.Context, *Auth) (*QueueT
 }
 func (UnimplementedQueuerServer) GetQueuesTypeList(context.Context, *RequestByID) (*QueueTypeList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueuesTypeList not implemented")
+}
+func (UnimplementedQueuerServer) ResetQueues(context.Context, *RequestByIDS) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetQueues not implemented")
 }
 func (UnimplementedQueuerServer) mustEmbedUnimplementedQueuerServer() {}
 
@@ -216,6 +230,24 @@ func _Queuer_GetQueuesTypeList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Queuer_ResetQueues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueuerServer).ResetQueues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Queuer/ResetQueues",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueuerServer).ResetQueues(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Queuer_ServiceDesc is the grpc.ServiceDesc for Queuer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var Queuer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQueuesTypeList",
 			Handler:    _Queuer_GetQueuesTypeList_Handler,
+		},
+		{
+			MethodName: "ResetQueues",
+			Handler:    _Queuer_ResetQueues_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

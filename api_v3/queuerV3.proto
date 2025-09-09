@@ -11,6 +11,7 @@ service Queuer {
     rpc RestartQueues(RestartQueuesRequest) returns (QueuerJobs) {}
     rpc GetQueuesTypes(Auth) returns (QueueTypes) {}
     rpc GetQueuesTypeList(RequestByID) returns (QueueTypeList) {}
+    rpc ResetQueues(RequestByIDS) returns (StatusReply) {}
 }
 
 message RestartQueuesRequest {
