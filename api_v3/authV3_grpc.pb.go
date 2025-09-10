@@ -34,6 +34,9 @@ type AuthentyClient interface {
 	GetCompanyUsers(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Users, error)
 	UpdateCompany(ctx context.Context, in *UpdateCompanyRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetRoles(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Roles, error)
+	GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error)
+	SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error)
+	CompanyActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type authentyClient struct {
@@ -152,6 +155,33 @@ func (c *authentyClient) GetRoles(ctx context.Context, in *Auth, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *authentyClient) GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/GetCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/SearchCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authentyClient) CompanyActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/CompanyActivate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -168,6 +198,9 @@ type AuthentyServer interface {
 	GetCompanyUsers(context.Context, *Auth) (*Users, error)
 	UpdateCompany(context.Context, *UpdateCompanyRequest) (*StatusReply, error)
 	GetRoles(context.Context, *Auth) (*Roles, error)
+	GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error)
+	SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error)
+	CompanyActivate(context.Context, *RequestActivate) (*StatusReply, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -210,6 +243,15 @@ func (UnimplementedAuthentyServer) UpdateCompany(context.Context, *UpdateCompany
 }
 func (UnimplementedAuthentyServer) GetRoles(context.Context, *Auth) (*Roles, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRoles not implemented")
+}
+func (UnimplementedAuthentyServer) GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesData not implemented")
+}
+func (UnimplementedAuthentyServer) SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchCompaniesData not implemented")
+}
+func (UnimplementedAuthentyServer) CompanyActivate(context.Context, *RequestActivate) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompanyActivate not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -440,6 +482,60 @@ func _Authenty_GetRoles_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Authenty_GetCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).GetCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Authenty/GetCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).GetCompaniesData(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_SearchCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).SearchCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Authenty/SearchCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).SearchCompaniesData(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Authenty_CompanyActivate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestActivate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).CompanyActivate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Authenty/CompanyActivate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).CompanyActivate(ctx, req.(*RequestActivate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Authenty_ServiceDesc is the grpc.ServiceDesc for Authenty service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +590,18 @@ var Authenty_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRoles",
 			Handler:    _Authenty_GetRoles_Handler,
+		},
+		{
+			MethodName: "GetCompaniesData",
+			Handler:    _Authenty_GetCompaniesData_Handler,
+		},
+		{
+			MethodName: "SearchCompaniesData",
+			Handler:    _Authenty_SearchCompaniesData_Handler,
+		},
+		{
+			MethodName: "CompanyActivate",
+			Handler:    _Authenty_CompanyActivate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

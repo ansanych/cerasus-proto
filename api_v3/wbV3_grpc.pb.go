@@ -37,6 +37,8 @@ type WBClient interface {
 	GetSale(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Sale, error)
 	GetShopProductsDatas(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
 	SendNewPrices(ctx context.Context, in *WBApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
+	CompanyAuthActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type wBClient struct {
@@ -182,6 +184,24 @@ func (c *wBClient) SendNewPrices(ctx context.Context, in *WBApiNewPricesRequest,
 	return out, nil
 }
 
+func (c *wBClient) GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/GetCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wBClient) CompanyAuthActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.WB/CompanyAuthActivate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WBServer is the server API for WB service.
 // All implementations must embed UnimplementedWBServer
 // for forward compatibility
@@ -201,6 +221,8 @@ type WBServer interface {
 	GetSale(context.Context, *RequestByID) (*Sale, error)
 	GetShopProductsDatas(context.Context, *RequestByIDS) (*ShopProductList, error)
 	SendNewPrices(context.Context, *WBApiNewPricesRequest) (*StatusReply, error)
+	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
+	CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error)
 	mustEmbedUnimplementedWBServer()
 }
 
@@ -252,6 +274,12 @@ func (UnimplementedWBServer) GetShopProductsDatas(context.Context, *RequestByIDS
 }
 func (UnimplementedWBServer) SendNewPrices(context.Context, *WBApiNewPricesRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendNewPrices not implemented")
+}
+func (UnimplementedWBServer) GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesData not implemented")
+}
+func (UnimplementedWBServer) CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompanyAuthActivate not implemented")
 }
 func (UnimplementedWBServer) mustEmbedUnimplementedWBServer() {}
 
@@ -536,6 +564,42 @@ func _WB_SendNewPrices_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WB_GetCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).GetCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/GetCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).GetCompaniesData(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WB_CompanyAuthActivate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestActivate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WBServer).CompanyAuthActivate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.WB/CompanyAuthActivate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WBServer).CompanyAuthActivate(ctx, req.(*RequestActivate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WB_ServiceDesc is the grpc.ServiceDesc for WB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -602,6 +666,14 @@ var WB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendNewPrices",
 			Handler:    _WB_SendNewPrices_Handler,
+		},
+		{
+			MethodName: "GetCompaniesData",
+			Handler:    _WB_GetCompaniesData_Handler,
+		},
+		{
+			MethodName: "CompanyAuthActivate",
+			Handler:    _WB_CompanyAuthActivate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

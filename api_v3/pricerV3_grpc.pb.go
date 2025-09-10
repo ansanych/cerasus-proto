@@ -39,6 +39,8 @@ type PricerClient interface {
 	SetPricerPercent(ctx context.Context, in *SetPricerPercentRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetDumperData(ctx context.Context, in *SetDumperRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteProductData(ctx context.Context, in *DeleteProductDataRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
+	SetCompanySettings(ctx context.Context, in *CompanySettingsRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -202,6 +204,24 @@ func (c *pricerClient) DeleteProductData(ctx context.Context, in *DeleteProductD
 	return out, nil
 }
 
+func (c *pricerClient) GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetCompanySettings(ctx context.Context, in *CompanySettingsRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetCompanySettings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -223,6 +243,8 @@ type PricerServer interface {
 	SetPricerPercent(context.Context, *SetPricerPercentRequest) (*StatusReply, error)
 	SetDumperData(context.Context, *SetDumperRequest) (*StatusReply, error)
 	DeleteProductData(context.Context, *DeleteProductDataRequest) (*StatusReply, error)
+	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
+	SetCompanySettings(context.Context, *CompanySettingsRequest) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -280,6 +302,12 @@ func (UnimplementedPricerServer) SetDumperData(context.Context, *SetDumperReques
 }
 func (UnimplementedPricerServer) DeleteProductData(context.Context, *DeleteProductDataRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProductData not implemented")
+}
+func (UnimplementedPricerServer) GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesData not implemented")
+}
+func (UnimplementedPricerServer) SetCompanySettings(context.Context, *CompanySettingsRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetCompanySettings not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -600,6 +628,42 @@ func _Pricer_DeleteProductData_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByIDS)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetCompaniesData(ctx, req.(*RequestByIDS))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetCompanySettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompanySettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetCompanySettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetCompanySettings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetCompanySettings(ctx, req.(*CompanySettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Pricer_ServiceDesc is the grpc.ServiceDesc for Pricer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -674,6 +738,14 @@ var Pricer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProductData",
 			Handler:    _Pricer_DeleteProductData_Handler,
+		},
+		{
+			MethodName: "GetCompaniesData",
+			Handler:    _Pricer_GetCompaniesData_Handler,
+		},
+		{
+			MethodName: "SetCompanySettings",
+			Handler:    _Pricer_SetCompanySettings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

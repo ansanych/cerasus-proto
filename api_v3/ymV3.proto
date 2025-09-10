@@ -22,4 +22,6 @@ service YM {
     rpc GetSale (RequestByID) returns (Sale) {}
     rpc GetShopProductsDatas (RequestByIDS) returns (ShopProductList) {}
     rpc SendNewPrices(YMApiNewPricesRequest) returns (StatusReply) {}
+    rpc GetCompaniesData(RequestByIDS) returns (CompaniesData) {}
+    rpc CompanyAuthActivate(RequestActivate) returns (StatusReply) {}
 }

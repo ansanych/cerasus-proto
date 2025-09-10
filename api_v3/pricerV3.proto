@@ -23,6 +23,19 @@ service Pricer {
     rpc SetPricerPercent (SetPricerPercentRequest) returns (StatusReply) {}
     rpc SetDumperData (SetDumperRequest) returns (StatusReply) {}
     rpc DeleteProductData (DeleteProductDataRequest) returns (StatusReply) {}
+    rpc GetCompaniesData(RequestByIDS) returns (CompaniesData) {}
+    rpc SetCompanySettings(CompanySettingsRequest) returns (StatusReply) {}
+}
+
+message CompanySettingsRequest {
+    Auth auth = 1;
+    int64 companyID = 2;
+    string shop = 3;
+    int32 limitItems = 4;
+    int32 period = 5;
+    bool active = 6;
+    string startDate = 7;
+    string endDate = 8;
 }
 
 message DeleteProductDataRequest {

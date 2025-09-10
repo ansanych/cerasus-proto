@@ -39,6 +39,12 @@ message RequestByIDS {
     repeated string params = 4;
 }
 
+message RequestActivate {
+    Auth auth = 1;
+    int64 ID = 2;
+    bool activate = 3;
+}
+
 message RequestByDates {
     Auth auth = 1;
     string from = 2;
@@ -418,4 +424,34 @@ message WeekGraphic {
     float mid = 2;
     float max = 3;
     float now = 4;
+}
+
+message CompanyDataShop {
+    string shop = 1;
+    bool authActive = 2;
+    bool authError = 3;
+    string authUpdate = 4;
+    int32 productsCount = 5;
+}
+
+message CompanyDataPricer {
+    string shop = 1;
+    int32 limitItems = 2;
+    int32 activeItems = 3;
+    string startDate = 4;
+    string endDate = 5;
+    bool active = 6;
+    string updated = 7;
+    bool enable = 8;
+}
+
+message CompanyData {
+    Company company = 1;
+    repeated CompanyDataShop shopsData = 2;
+    repeated CompanyDataPricer pricersData = 3;
+}
+
+message CompaniesData {
+    repeated CompanyData data = 1;
+    Pagination pagination = 2;
 }

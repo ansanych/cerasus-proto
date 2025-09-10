@@ -20,6 +20,9 @@ service Datum {
     rpc GetProductGraphics (RequestByDates) returns (LineGraphics) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
     rpc GetSale (RequestByID) returns (Sale) {}
+    rpc GetCompaniesData(RequestByDates) returns (CompaniesData) {}
+    rpc SearchCompaniesData(SearchRequest) returns (CompaniesData) {}
+    rpc GetCompaniyData(RequestByID) returns (CompaniesData) {}
 }
 
 message ProductWidgetShops {

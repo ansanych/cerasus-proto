@@ -36,6 +36,9 @@ type DatumClient interface {
 	GetProductGraphics(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*LineGraphics, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 	GetSale(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Sale, error)
+	GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error)
+	SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error)
+	GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompaniesData, error)
 }
 
 type datumClient struct {
@@ -172,6 +175,33 @@ func (c *datumClient) GetSale(ctx context.Context, in *RequestByID, opts ...grpc
 	return out, nil
 }
 
+func (c *datumClient) GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datumClient) SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/SearchCompaniesData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datumClient) GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompaniesData, error) {
+	out := new(CompaniesData)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetCompaniyData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DatumServer is the server API for Datum service.
 // All implementations must embed UnimplementedDatumServer
 // for forward compatibility
@@ -190,6 +220,9 @@ type DatumServer interface {
 	GetProductGraphics(context.Context, *RequestByDates) (*LineGraphics, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	GetSale(context.Context, *RequestByID) (*Sale, error)
+	GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error)
+	SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error)
+	GetCompaniyData(context.Context, *RequestByID) (*CompaniesData, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -238,6 +271,15 @@ func (UnimplementedDatumServer) GetSales(context.Context, *RequestByDates) (*Sal
 }
 func (UnimplementedDatumServer) GetSale(context.Context, *RequestByID) (*Sale, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSale not implemented")
+}
+func (UnimplementedDatumServer) GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesData not implemented")
+}
+func (UnimplementedDatumServer) SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchCompaniesData not implemented")
+}
+func (UnimplementedDatumServer) GetCompaniyData(context.Context, *RequestByID) (*CompaniesData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniyData not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -504,6 +546,60 @@ func _Datum_GetSale_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_GetCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByDates)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetCompaniesData(ctx, req.(*RequestByDates))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Datum_SearchCompaniesData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).SearchCompaniesData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/SearchCompaniesData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).SearchCompaniesData(ctx, req.(*SearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Datum_GetCompaniyData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).GetCompaniyData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/GetCompaniyData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).GetCompaniyData(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -566,6 +662,18 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSale",
 			Handler:    _Datum_GetSale_Handler,
+		},
+		{
+			MethodName: "GetCompaniesData",
+			Handler:    _Datum_GetCompaniesData_Handler,
+		},
+		{
+			MethodName: "SearchCompaniesData",
+			Handler:    _Datum_SearchCompaniesData_Handler,
+		},
+		{
+			MethodName: "GetCompaniyData",
+			Handler:    _Datum_GetCompaniyData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
