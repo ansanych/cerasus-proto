@@ -29,6 +29,7 @@ message QueueType {
     int32 inWork = 8;
     int32 withErrors = 9;
     int32 longTime = 10;
+    int32 longTimeNotStarted = 11;
 }
 
 message QueueTypes {
@@ -44,6 +45,7 @@ message QueueTypeItem {
     repeated Log logs = 6;
     string created = 7;
     string updated = 8;
+    bool longTimeNotStarted = 9;
 }
 
 message QueueTypeList {
