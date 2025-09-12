@@ -38,7 +38,8 @@ type DatumClient interface {
 	GetSale(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Sale, error)
 	GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error)
 	SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error)
-	GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompaniesData, error)
+	GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompanyData, error)
+	SetCompaniyData(ctx context.Context, in *SetCompaniyDataRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type datumClient struct {
@@ -193,9 +194,18 @@ func (c *datumClient) SearchCompaniesData(ctx context.Context, in *SearchRequest
 	return out, nil
 }
 
-func (c *datumClient) GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompaniesData, error) {
-	out := new(CompaniesData)
+func (c *datumClient) GetCompaniyData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*CompanyData, error) {
+	out := new(CompanyData)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/GetCompaniyData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *datumClient) SetCompaniyData(ctx context.Context, in *SetCompaniyDataRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Datum/SetCompaniyData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +232,8 @@ type DatumServer interface {
 	GetSale(context.Context, *RequestByID) (*Sale, error)
 	GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error)
 	SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error)
-	GetCompaniyData(context.Context, *RequestByID) (*CompaniesData, error)
+	GetCompaniyData(context.Context, *RequestByID) (*CompanyData, error)
+	SetCompaniyData(context.Context, *SetCompaniyDataRequest) (*StatusReply, error)
 	mustEmbedUnimplementedDatumServer()
 }
 
@@ -278,8 +289,11 @@ func (UnimplementedDatumServer) GetCompaniesData(context.Context, *RequestByDate
 func (UnimplementedDatumServer) SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchCompaniesData not implemented")
 }
-func (UnimplementedDatumServer) GetCompaniyData(context.Context, *RequestByID) (*CompaniesData, error) {
+func (UnimplementedDatumServer) GetCompaniyData(context.Context, *RequestByID) (*CompanyData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniyData not implemented")
+}
+func (UnimplementedDatumServer) SetCompaniyData(context.Context, *SetCompaniyDataRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetCompaniyData not implemented")
 }
 func (UnimplementedDatumServer) mustEmbedUnimplementedDatumServer() {}
 
@@ -600,6 +614,24 @@ func _Datum_GetCompaniyData_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Datum_SetCompaniyData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetCompaniyDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DatumServer).SetCompaniyData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Datum/SetCompaniyData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DatumServer).SetCompaniyData(ctx, req.(*SetCompaniyDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Datum_ServiceDesc is the grpc.ServiceDesc for Datum service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -674,6 +706,10 @@ var Datum_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCompaniyData",
 			Handler:    _Datum_GetCompaniyData_Handler,
+		},
+		{
+			MethodName: "SetCompaniyData",
+			Handler:    _Datum_SetCompaniyData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

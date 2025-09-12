@@ -22,7 +22,13 @@ service Datum {
     rpc GetSale (RequestByID) returns (Sale) {}
     rpc GetCompaniesData(RequestByDates) returns (CompaniesData) {}
     rpc SearchCompaniesData(SearchRequest) returns (CompaniesData) {}
-    rpc GetCompaniyData(RequestByID) returns (CompaniesData) {}
+    rpc GetCompaniyData(RequestByID) returns (CompanyData) {}
+    rpc SetCompaniyData(SetCompaniyDataRequest) returns (StatusReply) {}
+}
+
+message SetCompaniyDataRequest {
+    Auth auth = 1;
+    CompanyData data = 2;
 }
 
 message ProductWidgetShops {
