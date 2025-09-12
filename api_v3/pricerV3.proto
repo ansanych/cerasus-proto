@@ -27,7 +27,7 @@ service Pricer {
     rpc SetCompanySettings(CompanySettingsRequest) returns (StatusReply) {}
 }
 
-message CompanySettingsRequest {
+message CompanySettings {
     Auth auth = 1;
     int64 companyID = 2;
     string shop = 3;
@@ -36,6 +36,11 @@ message CompanySettingsRequest {
     bool active = 6;
     string startDate = 7;
     string endDate = 8;
+}
+
+message CompanySettingsRequest {
+    Auth auth = 1;
+    repeated CompanySettings data = 2;
 }
 
 message DeleteProductDataRequest {
