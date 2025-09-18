@@ -455,3 +455,7 @@ message CompaniesData {
     repeated CompanyData data = 1;
     Pagination pagination = 2;
 }
+
+message TestProto {
+    bool test = 1;
+}
