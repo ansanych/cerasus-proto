@@ -172,6 +172,7 @@ message PricerList {
     repeated PricerListItem pricerOnly = 1;
     repeated PricerListItem pricerDumper = 2;
     repeated PricerListItem pricerNone = 3;
+    repeated PricerListItem pricerFull = 4;
 }
 
 message UserPricerParam {
