@@ -37,6 +37,10 @@ type PricerClient interface {
 	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
 	SetCompanySettings(ctx context.Context, in *CompanySettingsRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	SetGroupPricerSettings(ctx context.Context, in *GroupPricerSettingsRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	CheckSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
+	CreateSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
+	GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
+	UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -200,6 +204,42 @@ func (c *pricerClient) SetGroupPricerSettings(ctx context.Context, in *GroupPric
 	return out, nil
 }
 
+func (c *pricerClient) CheckSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error) {
+	out := new(SettingsFile)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/CheckSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) CreateSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/CreateSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error) {
+	out := new(SettingsFile)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/UploadSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -224,6 +264,10 @@ type PricerServer interface {
 	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
 	SetCompanySettings(context.Context, *CompanySettingsRequest) (*StatusReply, error)
 	SetGroupPricerSettings(context.Context, *GroupPricerSettingsRequest) (*StatusReply, error)
+	CheckSettingsFile(context.Context, *Auth) (*SettingsFile, error)
+	CreateSettingsFile(context.Context, *Auth) (*StatusReply, error)
+	GetSettingsFile(context.Context, *Auth) (*SettingsFile, error)
+	UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -281,6 +325,18 @@ func (UnimplementedPricerServer) SetCompanySettings(context.Context, *CompanySet
 }
 func (UnimplementedPricerServer) SetGroupPricerSettings(context.Context, *GroupPricerSettingsRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetGroupPricerSettings not implemented")
+}
+func (UnimplementedPricerServer) CheckSettingsFile(context.Context, *Auth) (*SettingsFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) CreateSettingsFile(context.Context, *Auth) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) GetSettingsFile(context.Context, *Auth) (*SettingsFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadSettingsFile not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -601,6 +657,78 @@ func _Pricer_SetGroupPricerSettings_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_CheckSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).CheckSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/CheckSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).CheckSettingsFile(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_CreateSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).CreateSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/CreateSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).CreateSettingsFile(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_GetSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetSettingsFile(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_UploadSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingsFile)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).UploadSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/UploadSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).UploadSettingsFile(ctx, req.(*SettingsFile))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Pricer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Pricer",
 	HandlerType: (*PricerServer)(nil),
@@ -672,6 +800,22 @@ var _Pricer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetGroupPricerSettings",
 			Handler:    _Pricer_SetGroupPricerSettings_Handler,
+		},
+		{
+			MethodName: "CheckSettingsFile",
+			Handler:    _Pricer_CheckSettingsFile_Handler,
+		},
+		{
+			MethodName: "CreateSettingsFile",
+			Handler:    _Pricer_CreateSettingsFile_Handler,
+		},
+		{
+			MethodName: "GetSettingsFile",
+			Handler:    _Pricer_GetSettingsFile_Handler,
+		},
+		{
+			MethodName: "UploadSettingsFile",
+			Handler:    _Pricer_UploadSettingsFile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
