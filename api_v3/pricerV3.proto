@@ -30,12 +30,14 @@ service Pricer {
     rpc CreateSettingsFile (Auth) returns (StatusReply) {}
     rpc GetSettingsFile (Auth) returns (SettingsFile) {}
     rpc UploadSettingsFile (SettingsFile) returns (StatusReply) {}
+    rpc DeleteSettingsFile (Auth) returns (StatusReply) {}
 }
 
 message SettingsFile {
     Auth auth = 1;
     bytes chunk = 2;
     string fileName = 3;
+    string created = 4;
 }
 
 message DumperValues {
