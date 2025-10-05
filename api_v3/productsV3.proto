@@ -8,6 +8,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Products {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductList (ProductListRequest) returns (ProductList) {}
+    rpc GetProductListFullData (ProductListRequest) returns (ProductList) {}
     rpc GetProductSearch (SearchRequest) returns (ProductList) {}
     rpc GetProduct (RequestByID) returns (Product) {}
     rpc GetShopProductsMatch (RequestByIDS) returns (ShopProductsMatches) {}

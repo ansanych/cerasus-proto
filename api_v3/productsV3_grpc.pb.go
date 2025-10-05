@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductsClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error)
+	GetProductListFullData(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProductSearch(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*ProductList, error)
 	GetProduct(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*Product, error)
 	GetShopProductsMatch(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductsMatches, error)
@@ -59,6 +60,15 @@ func (c *productsClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc
 func (c *productsClient) GetProductList(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error) {
 	out := new(ProductList)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Products/GetProductList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productsClient) GetProductListFullData(ctx context.Context, in *ProductListRequest, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Products/GetProductListFullData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -233,6 +243,7 @@ func (c *productsClient) GetShopProductsCount(ctx context.Context, in *RequestBy
 type ProductsServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductList(context.Context, *ProductListRequest) (*ProductList, error)
+	GetProductListFullData(context.Context, *ProductListRequest) (*ProductList, error)
 	GetProductSearch(context.Context, *SearchRequest) (*ProductList, error)
 	GetProduct(context.Context, *RequestByID) (*Product, error)
 	GetShopProductsMatch(context.Context, *RequestByIDS) (*ShopProductsMatches, error)
@@ -263,6 +274,9 @@ func (UnimplementedProductsServer) Ping(context.Context, *PingRequest) (*PingRep
 }
 func (UnimplementedProductsServer) GetProductList(context.Context, *ProductListRequest) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
+}
+func (UnimplementedProductsServer) GetProductListFullData(context.Context, *ProductListRequest) (*ProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductListFullData not implemented")
 }
 func (UnimplementedProductsServer) GetProductSearch(context.Context, *SearchRequest) (*ProductList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductSearch not implemented")
@@ -363,6 +377,24 @@ func _Products_GetProductList_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductsServer).GetProductList(ctx, req.(*ProductListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Products_GetProductListFullData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).GetProductListFullData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Products/GetProductListFullData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).GetProductListFullData(ctx, req.(*ProductListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -702,6 +734,10 @@ var _Products_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductList",
 			Handler:    _Products_GetProductList_Handler,
+		},
+		{
+			MethodName: "GetProductListFullData",
+			Handler:    _Products_GetProductListFullData_Handler,
 		},
 		{
 			MethodName: "GetProductSearch",
