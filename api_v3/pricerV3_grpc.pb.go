@@ -30,9 +30,6 @@ type PricerClient interface {
 	GetPricerProductData(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*PricerProductParams, error)
 	SetPricerProductData(ctx context.Context, in *PricerProductParam, opts ...grpc.CallOption) (*StatusReply, error)
 	SetEnableShopPricer(ctx context.Context, in *EnableShopPricerRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	// rpc SetSwitchersPricer (SetSwitchersRequest) returns (StatusReply) {}
-	// rpc SetPricerPercent (SetPricerPercentRequest) returns (StatusReply) {}
-	// rpc SetDumperData (SetDumperRequest) returns (StatusReply) {}
 	DeleteProductData(ctx context.Context, in *DeleteProductDataRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
 	SetCompanySettings(ctx context.Context, in *CompanySettingsRequest, opts ...grpc.CallOption) (*StatusReply, error)
@@ -267,9 +264,6 @@ type PricerServer interface {
 	GetPricerProductData(context.Context, *RequestByID) (*PricerProductParams, error)
 	SetPricerProductData(context.Context, *PricerProductParam) (*StatusReply, error)
 	SetEnableShopPricer(context.Context, *EnableShopPricerRequest) (*StatusReply, error)
-	// rpc SetSwitchersPricer (SetSwitchersRequest) returns (StatusReply) {}
-	// rpc SetPricerPercent (SetPricerPercentRequest) returns (StatusReply) {}
-	// rpc SetDumperData (SetDumperRequest) returns (StatusReply) {}
 	DeleteProductData(context.Context, *DeleteProductDataRequest) (*StatusReply, error)
 	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
 	SetCompanySettings(context.Context, *CompanySettingsRequest) (*StatusReply, error)

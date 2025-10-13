@@ -38,6 +38,7 @@ type ProductsClient interface {
 	GetShopProductsAppCount(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*Count, error)
 	GetShopProductsUnsortedCount(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*Count, error)
 	GetShopProductsCount(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*Count, error)
+	UpdatePurchases(ctx context.Context, in *UpdatePurchasesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type productsClient struct {
@@ -237,6 +238,15 @@ func (c *productsClient) GetShopProductsCount(ctx context.Context, in *RequestBy
 	return out, nil
 }
 
+func (c *productsClient) UpdatePurchases(ctx context.Context, in *UpdatePurchasesRequest, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Products/UpdatePurchases", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductsServer is the server API for Products service.
 // All implementations must embed UnimplementedProductsServer
 // for forward compatibility
@@ -262,6 +272,7 @@ type ProductsServer interface {
 	GetShopProductsAppCount(context.Context, *RequestByShop) (*Count, error)
 	GetShopProductsUnsortedCount(context.Context, *RequestByShop) (*Count, error)
 	GetShopProductsCount(context.Context, *RequestByShop) (*Count, error)
+	UpdatePurchases(context.Context, *UpdatePurchasesRequest) (*StatusReply, error)
 	mustEmbedUnimplementedProductsServer()
 }
 
@@ -331,6 +342,9 @@ func (UnimplementedProductsServer) GetShopProductsUnsortedCount(context.Context,
 }
 func (UnimplementedProductsServer) GetShopProductsCount(context.Context, *RequestByShop) (*Count, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopProductsCount not implemented")
+}
+func (UnimplementedProductsServer) UpdatePurchases(context.Context, *UpdatePurchasesRequest) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePurchases not implemented")
 }
 func (UnimplementedProductsServer) mustEmbedUnimplementedProductsServer() {}
 
@@ -723,6 +737,24 @@ func _Products_GetShopProductsCount_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Products_UpdatePurchases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePurchasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServer).UpdatePurchases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Products/UpdatePurchases",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServer).UpdatePurchases(ctx, req.(*UpdatePurchasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Products_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Products",
 	HandlerType: (*ProductsServer)(nil),
@@ -810,6 +842,10 @@ var _Products_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetShopProductsCount",
 			Handler:    _Products_GetShopProductsCount_Handler,
+		},
+		{
+			MethodName: "UpdatePurchases",
+			Handler:    _Products_UpdatePurchases_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

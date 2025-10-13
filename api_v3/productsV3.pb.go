@@ -20,6 +20,124 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type UpdatePurchaseValue struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProductID int64   `protobuf:"varint,1,opt,name=productID,proto3" json:"productID,omitempty"`
+	Purchase  float32 `protobuf:"fixed32,2,opt,name=purchase,proto3" json:"purchase,omitempty"`
+	DateFrom  string  `protobuf:"bytes,3,opt,name=dateFrom,proto3" json:"dateFrom,omitempty"`
+}
+
+func (x *UpdatePurchaseValue) Reset() {
+	*x = UpdatePurchaseValue{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_productsV3_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdatePurchaseValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePurchaseValue) ProtoMessage() {}
+
+func (x *UpdatePurchaseValue) ProtoReflect() protoreflect.Message {
+	mi := &file_productsV3_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePurchaseValue.ProtoReflect.Descriptor instead.
+func (*UpdatePurchaseValue) Descriptor() ([]byte, []int) {
+	return file_productsV3_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *UpdatePurchaseValue) GetProductID() int64 {
+	if x != nil {
+		return x.ProductID
+	}
+	return 0
+}
+
+func (x *UpdatePurchaseValue) GetPurchase() float32 {
+	if x != nil {
+		return x.Purchase
+	}
+	return 0
+}
+
+func (x *UpdatePurchaseValue) GetDateFrom() string {
+	if x != nil {
+		return x.DateFrom
+	}
+	return ""
+}
+
+type UpdatePurchasesRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Auth *Auth                  `protobuf:"bytes,1,opt,name=auth,proto3" json:"auth,omitempty"`
+	Data []*UpdatePurchaseValue `protobuf:"bytes,2,rep,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *UpdatePurchasesRequest) Reset() {
+	*x = UpdatePurchasesRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_productsV3_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdatePurchasesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePurchasesRequest) ProtoMessage() {}
+
+func (x *UpdatePurchasesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_productsV3_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePurchasesRequest.ProtoReflect.Descriptor instead.
+func (*UpdatePurchasesRequest) Descriptor() ([]byte, []int) {
+	return file_productsV3_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *UpdatePurchasesRequest) GetAuth() *Auth {
+	if x != nil {
+		return x.Auth
+	}
+	return nil
+}
+
+func (x *UpdatePurchasesRequest) GetData() []*UpdatePurchaseValue {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 type ProductListRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -40,7 +158,7 @@ type ProductListRequest struct {
 func (x *ProductListRequest) Reset() {
 	*x = ProductListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[0]
+		mi := &file_productsV3_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -53,7 +171,7 @@ func (x *ProductListRequest) String() string {
 func (*ProductListRequest) ProtoMessage() {}
 
 func (x *ProductListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[0]
+	mi := &file_productsV3_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -66,7 +184,7 @@ func (x *ProductListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductListRequest.ProtoReflect.Descriptor instead.
 func (*ProductListRequest) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{0}
+	return file_productsV3_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ProductListRequest) GetAuth() *Auth {
@@ -151,7 +269,7 @@ type ShopProductsMatch struct {
 func (x *ShopProductsMatch) Reset() {
 	*x = ShopProductsMatch{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[1]
+		mi := &file_productsV3_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -164,7 +282,7 @@ func (x *ShopProductsMatch) String() string {
 func (*ShopProductsMatch) ProtoMessage() {}
 
 func (x *ShopProductsMatch) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[1]
+	mi := &file_productsV3_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -177,7 +295,7 @@ func (x *ShopProductsMatch) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopProductsMatch.ProtoReflect.Descriptor instead.
 func (*ShopProductsMatch) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{1}
+	return file_productsV3_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ShopProductsMatch) GetProductID() int64 {
@@ -206,7 +324,7 @@ type ShopProductsMatches struct {
 func (x *ShopProductsMatches) Reset() {
 	*x = ShopProductsMatches{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[2]
+		mi := &file_productsV3_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -219,7 +337,7 @@ func (x *ShopProductsMatches) String() string {
 func (*ShopProductsMatches) ProtoMessage() {}
 
 func (x *ShopProductsMatches) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[2]
+	mi := &file_productsV3_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -232,7 +350,7 @@ func (x *ShopProductsMatches) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopProductsMatches.ProtoReflect.Descriptor instead.
 func (*ShopProductsMatches) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{2}
+	return file_productsV3_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ShopProductsMatches) GetShop() string {
@@ -262,7 +380,7 @@ type ProductPurchases struct {
 func (x *ProductPurchases) Reset() {
 	*x = ProductPurchases{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[3]
+		mi := &file_productsV3_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -275,7 +393,7 @@ func (x *ProductPurchases) String() string {
 func (*ProductPurchases) ProtoMessage() {}
 
 func (x *ProductPurchases) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[3]
+	mi := &file_productsV3_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -288,7 +406,7 @@ func (x *ProductPurchases) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductPurchases.ProtoReflect.Descriptor instead.
 func (*ProductPurchases) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{3}
+	return file_productsV3_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ProductPurchases) GetProductID() int64 {
@@ -323,7 +441,7 @@ type ProductsPurchases struct {
 func (x *ProductsPurchases) Reset() {
 	*x = ProductsPurchases{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[4]
+		mi := &file_productsV3_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -336,7 +454,7 @@ func (x *ProductsPurchases) String() string {
 func (*ProductsPurchases) ProtoMessage() {}
 
 func (x *ProductsPurchases) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[4]
+	mi := &file_productsV3_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -349,7 +467,7 @@ func (x *ProductsPurchases) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductsPurchases.ProtoReflect.Descriptor instead.
 func (*ProductsPurchases) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{4}
+	return file_productsV3_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ProductsPurchases) GetData() []*ProductPurchases {
@@ -371,7 +489,7 @@ type ShopUnsortedCount struct {
 func (x *ShopUnsortedCount) Reset() {
 	*x = ShopUnsortedCount{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[5]
+		mi := &file_productsV3_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -384,7 +502,7 @@ func (x *ShopUnsortedCount) String() string {
 func (*ShopUnsortedCount) ProtoMessage() {}
 
 func (x *ShopUnsortedCount) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[5]
+	mi := &file_productsV3_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -397,7 +515,7 @@ func (x *ShopUnsortedCount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShopUnsortedCount.ProtoReflect.Descriptor instead.
 func (*ShopUnsortedCount) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{5}
+	return file_productsV3_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ShopUnsortedCount) GetShop() string {
@@ -425,7 +543,7 @@ type UnsortedCount struct {
 func (x *UnsortedCount) Reset() {
 	*x = UnsortedCount{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[6]
+		mi := &file_productsV3_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -438,7 +556,7 @@ func (x *UnsortedCount) String() string {
 func (*UnsortedCount) ProtoMessage() {}
 
 func (x *UnsortedCount) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[6]
+	mi := &file_productsV3_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -451,7 +569,7 @@ func (x *UnsortedCount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnsortedCount.ProtoReflect.Descriptor instead.
 func (*UnsortedCount) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{6}
+	return file_productsV3_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UnsortedCount) GetData() []*ShopUnsortedCount {
@@ -476,7 +594,7 @@ type ConnectUnsortedRequest struct {
 func (x *ConnectUnsortedRequest) Reset() {
 	*x = ConnectUnsortedRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[7]
+		mi := &file_productsV3_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -489,7 +607,7 @@ func (x *ConnectUnsortedRequest) String() string {
 func (*ConnectUnsortedRequest) ProtoMessage() {}
 
 func (x *ConnectUnsortedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[7]
+	mi := &file_productsV3_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -502,7 +620,7 @@ func (x *ConnectUnsortedRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectUnsortedRequest.ProtoReflect.Descriptor instead.
 func (*ConnectUnsortedRequest) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{7}
+	return file_productsV3_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ConnectUnsortedRequest) GetAuth() *Auth {
@@ -555,7 +673,7 @@ type UpdateProductRequest struct {
 func (x *UpdateProductRequest) Reset() {
 	*x = UpdateProductRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[8]
+		mi := &file_productsV3_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -568,7 +686,7 @@ func (x *UpdateProductRequest) String() string {
 func (*UpdateProductRequest) ProtoMessage() {}
 
 func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[8]
+	mi := &file_productsV3_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -581,7 +699,7 @@ func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateProductRequest.ProtoReflect.Descriptor instead.
 func (*UpdateProductRequest) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{8}
+	return file_productsV3_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateProductRequest) GetAuth() *Auth {
@@ -633,7 +751,7 @@ type SetProductPurchaseRequest struct {
 func (x *SetProductPurchaseRequest) Reset() {
 	*x = SetProductPurchaseRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[9]
+		mi := &file_productsV3_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -646,7 +764,7 @@ func (x *SetProductPurchaseRequest) String() string {
 func (*SetProductPurchaseRequest) ProtoMessage() {}
 
 func (x *SetProductPurchaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[9]
+	mi := &file_productsV3_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +777,7 @@ func (x *SetProductPurchaseRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetProductPurchaseRequest.ProtoReflect.Descriptor instead.
 func (*SetProductPurchaseRequest) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{9}
+	return file_productsV3_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SetProductPurchaseRequest) GetAuth() *Auth {
@@ -703,7 +821,7 @@ type SetProductBrandRequest struct {
 func (x *SetProductBrandRequest) Reset() {
 	*x = SetProductBrandRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[10]
+		mi := &file_productsV3_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -716,7 +834,7 @@ func (x *SetProductBrandRequest) String() string {
 func (*SetProductBrandRequest) ProtoMessage() {}
 
 func (x *SetProductBrandRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[10]
+	mi := &file_productsV3_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,7 +847,7 @@ func (x *SetProductBrandRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetProductBrandRequest.ProtoReflect.Descriptor instead.
 func (*SetProductBrandRequest) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{10}
+	return file_productsV3_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SetProductBrandRequest) GetAuth() *Auth {
@@ -765,7 +883,7 @@ type ProductLink struct {
 func (x *ProductLink) Reset() {
 	*x = ProductLink{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[11]
+		mi := &file_productsV3_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -778,7 +896,7 @@ func (x *ProductLink) String() string {
 func (*ProductLink) ProtoMessage() {}
 
 func (x *ProductLink) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[11]
+	mi := &file_productsV3_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +909,7 @@ func (x *ProductLink) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductLink.ProtoReflect.Descriptor instead.
 func (*ProductLink) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{11}
+	return file_productsV3_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ProductLink) GetID() int64 {
@@ -820,7 +938,7 @@ type ProductLinkShop struct {
 func (x *ProductLinkShop) Reset() {
 	*x = ProductLinkShop{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[12]
+		mi := &file_productsV3_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -833,7 +951,7 @@ func (x *ProductLinkShop) String() string {
 func (*ProductLinkShop) ProtoMessage() {}
 
 func (x *ProductLinkShop) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[12]
+	mi := &file_productsV3_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -846,7 +964,7 @@ func (x *ProductLinkShop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductLinkShop.ProtoReflect.Descriptor instead.
 func (*ProductLinkShop) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{12}
+	return file_productsV3_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ProductLinkShop) GetShop() string {
@@ -874,7 +992,7 @@ type ProductLinks struct {
 func (x *ProductLinks) Reset() {
 	*x = ProductLinks{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_productsV3_proto_msgTypes[13]
+		mi := &file_productsV3_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -887,7 +1005,7 @@ func (x *ProductLinks) String() string {
 func (*ProductLinks) ProtoMessage() {}
 
 func (x *ProductLinks) ProtoReflect() protoreflect.Message {
-	mi := &file_productsV3_proto_msgTypes[13]
+	mi := &file_productsV3_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -900,7 +1018,7 @@ func (x *ProductLinks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductLinks.ProtoReflect.Descriptor instead.
 func (*ProductLinks) Descriptor() ([]byte, []int) {
-	return file_productsV3_proto_rawDescGZIP(), []int{13}
+	return file_productsV3_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ProductLinks) GetData() []*ProductLinkShop {
@@ -915,7 +1033,21 @@ var File_productsV3_proto protoreflect.FileDescriptor
 var file_productsV3_proto_rawDesc = []byte{
 	0x0a, 0x10, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x12, 0x09, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x1a, 0x0f, 0x63,
-	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x9d,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x6b,
+	0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x72, 0x63, 0x68, 0x61, 0x73, 0x65,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x49, 0x44, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x75, 0x72, 0x63, 0x68, 0x61, 0x73, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x02, 0x52, 0x08, 0x70, 0x75, 0x72, 0x63, 0x68, 0x61, 0x73, 0x65, 0x12,
+	0x1a, 0x0a, 0x08, 0x64, 0x61, 0x74, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x64, 0x61, 0x74, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x22, 0x71, 0x0a, 0x16, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x72, 0x63, 0x68, 0x61, 0x73, 0x65, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e,
+	0x41, 0x75, 0x74, 0x68, 0x52, 0x04, 0x61, 0x75, 0x74, 0x68, 0x12, 0x32, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
+	0x75, 0x73, 0x56, 0x33, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x72, 0x63, 0x68,
+	0x61, 0x73, 0x65, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x9d,
 	0x02, 0x0a, 0x12, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x04, 0x61, 0x75, 0x74, 0x68, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e,
@@ -1015,7 +1147,7 @@ var file_productsV3_proto_rawDesc = []byte{
 	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x73, 0x12, 0x2e, 0x0a, 0x04,
 	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x63, 0x65, 0x72,
 	0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69,
-	0x6e, 0x6b, 0x53, 0x68, 0x6f, 0x70, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0xa7, 0x0c, 0x0a,
+	0x6e, 0x6b, 0x53, 0x68, 0x6f, 0x70, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0xf7, 0x0c, 0x0a,
 	0x08, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x12, 0x36, 0x0a, 0x04, 0x50, 0x69, 0x6e,
 	0x67, 0x12, 0x16, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x50, 0x69,
 	0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x63, 0x65, 0x72, 0x61,
@@ -1114,7 +1246,12 @@ var file_productsV3_proto_rawDesc = []byte{
 	0x63, 0x74, 0x73, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x18, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73,
 	0x75, 0x73, 0x56, 0x33, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x79, 0x53, 0x68,
 	0x6f, 0x70, 0x1a, 0x10, 0x2e, 0x63, 0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x43,
-	0x6f, 0x75, 0x6e, 0x74, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x6f, 0x75, 0x6e, 0x74, 0x22, 0x00, 0x12, 0x4e, 0x0a, 0x0f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x50, 0x75, 0x72, 0x63, 0x68, 0x61, 0x73, 0x65, 0x73, 0x12, 0x21, 0x2e, 0x63, 0x65, 0x72, 0x61,
+	0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x72, 0x63,
+	0x68, 0x61, 0x73, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x63,
+	0x65, 0x72, 0x61, 0x73, 0x75, 0x73, 0x56, 0x33, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
+	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
 	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x6e, 0x73, 0x61, 0x6e, 0x79, 0x63, 0x68, 0x2f, 0x63, 0x65,
 	0x72, 0x61, 0x73, 0x75, 0x73, 0x2d, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x33,
@@ -1132,100 +1269,106 @@ func file_productsV3_proto_rawDescGZIP() []byte {
 	return file_productsV3_proto_rawDescData
 }
 
-var file_productsV3_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_productsV3_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_productsV3_proto_goTypes = []interface{}{
-	(*ProductListRequest)(nil),        // 0: cerasusV3.ProductListRequest
-	(*ShopProductsMatch)(nil),         // 1: cerasusV3.ShopProductsMatch
-	(*ShopProductsMatches)(nil),       // 2: cerasusV3.ShopProductsMatches
-	(*ProductPurchases)(nil),          // 3: cerasusV3.ProductPurchases
-	(*ProductsPurchases)(nil),         // 4: cerasusV3.ProductsPurchases
-	(*ShopUnsortedCount)(nil),         // 5: cerasusV3.ShopUnsortedCount
-	(*UnsortedCount)(nil),             // 6: cerasusV3.UnsortedCount
-	(*ConnectUnsortedRequest)(nil),    // 7: cerasusV3.ConnectUnsortedRequest
-	(*UpdateProductRequest)(nil),      // 8: cerasusV3.UpdateProductRequest
-	(*SetProductPurchaseRequest)(nil), // 9: cerasusV3.SetProductPurchaseRequest
-	(*SetProductBrandRequest)(nil),    // 10: cerasusV3.SetProductBrandRequest
-	(*ProductLink)(nil),               // 11: cerasusV3.ProductLink
-	(*ProductLinkShop)(nil),           // 12: cerasusV3.ProductLinkShop
-	(*ProductLinks)(nil),              // 13: cerasusV3.ProductLinks
-	(*Auth)(nil),                      // 14: cerasusV3.Auth
-	(SortOrder)(0),                    // 15: cerasusV3.SortOrder
-	(*Purchase)(nil),                  // 16: cerasusV3.Purchase
-	(*ShopProduct)(nil),               // 17: cerasusV3.ShopProduct
-	(*PingRequest)(nil),               // 18: cerasusV3.PingRequest
-	(*SearchRequest)(nil),             // 19: cerasusV3.SearchRequest
-	(*RequestByID)(nil),               // 20: cerasusV3.RequestByID
-	(*RequestByIDS)(nil),              // 21: cerasusV3.RequestByIDS
-	(*RequestByShop)(nil),             // 22: cerasusV3.RequestByShop
-	(*PingReply)(nil),                 // 23: cerasusV3.PingReply
-	(*ProductList)(nil),               // 24: cerasusV3.ProductList
-	(*Product)(nil),                   // 25: cerasusV3.Product
-	(*StatusReply)(nil),               // 26: cerasusV3.StatusReply
-	(*ShopProductList)(nil),           // 27: cerasusV3.ShopProductList
-	(*Count)(nil),                     // 28: cerasusV3.Count
+	(*UpdatePurchaseValue)(nil),       // 0: cerasusV3.UpdatePurchaseValue
+	(*UpdatePurchasesRequest)(nil),    // 1: cerasusV3.UpdatePurchasesRequest
+	(*ProductListRequest)(nil),        // 2: cerasusV3.ProductListRequest
+	(*ShopProductsMatch)(nil),         // 3: cerasusV3.ShopProductsMatch
+	(*ShopProductsMatches)(nil),       // 4: cerasusV3.ShopProductsMatches
+	(*ProductPurchases)(nil),          // 5: cerasusV3.ProductPurchases
+	(*ProductsPurchases)(nil),         // 6: cerasusV3.ProductsPurchases
+	(*ShopUnsortedCount)(nil),         // 7: cerasusV3.ShopUnsortedCount
+	(*UnsortedCount)(nil),             // 8: cerasusV3.UnsortedCount
+	(*ConnectUnsortedRequest)(nil),    // 9: cerasusV3.ConnectUnsortedRequest
+	(*UpdateProductRequest)(nil),      // 10: cerasusV3.UpdateProductRequest
+	(*SetProductPurchaseRequest)(nil), // 11: cerasusV3.SetProductPurchaseRequest
+	(*SetProductBrandRequest)(nil),    // 12: cerasusV3.SetProductBrandRequest
+	(*ProductLink)(nil),               // 13: cerasusV3.ProductLink
+	(*ProductLinkShop)(nil),           // 14: cerasusV3.ProductLinkShop
+	(*ProductLinks)(nil),              // 15: cerasusV3.ProductLinks
+	(*Auth)(nil),                      // 16: cerasusV3.Auth
+	(SortOrder)(0),                    // 17: cerasusV3.SortOrder
+	(*Purchase)(nil),                  // 18: cerasusV3.Purchase
+	(*ShopProduct)(nil),               // 19: cerasusV3.ShopProduct
+	(*PingRequest)(nil),               // 20: cerasusV3.PingRequest
+	(*SearchRequest)(nil),             // 21: cerasusV3.SearchRequest
+	(*RequestByID)(nil),               // 22: cerasusV3.RequestByID
+	(*RequestByIDS)(nil),              // 23: cerasusV3.RequestByIDS
+	(*RequestByShop)(nil),             // 24: cerasusV3.RequestByShop
+	(*PingReply)(nil),                 // 25: cerasusV3.PingReply
+	(*ProductList)(nil),               // 26: cerasusV3.ProductList
+	(*Product)(nil),                   // 27: cerasusV3.Product
+	(*StatusReply)(nil),               // 28: cerasusV3.StatusReply
+	(*ShopProductList)(nil),           // 29: cerasusV3.ShopProductList
+	(*Count)(nil),                     // 30: cerasusV3.Count
 }
 var file_productsV3_proto_depIdxs = []int32{
-	14, // 0: cerasusV3.ProductListRequest.auth:type_name -> cerasusV3.Auth
-	15, // 1: cerasusV3.ProductListRequest.order:type_name -> cerasusV3.SortOrder
-	1,  // 2: cerasusV3.ShopProductsMatches.data:type_name -> cerasusV3.ShopProductsMatch
-	16, // 3: cerasusV3.ProductPurchases.purchase:type_name -> cerasusV3.Purchase
-	16, // 4: cerasusV3.ProductPurchases.actual:type_name -> cerasusV3.Purchase
-	3,  // 5: cerasusV3.ProductsPurchases.data:type_name -> cerasusV3.ProductPurchases
-	5,  // 6: cerasusV3.UnsortedCount.data:type_name -> cerasusV3.ShopUnsortedCount
-	14, // 7: cerasusV3.ConnectUnsortedRequest.auth:type_name -> cerasusV3.Auth
-	14, // 8: cerasusV3.UpdateProductRequest.auth:type_name -> cerasusV3.Auth
-	14, // 9: cerasusV3.SetProductPurchaseRequest.auth:type_name -> cerasusV3.Auth
-	14, // 10: cerasusV3.SetProductBrandRequest.auth:type_name -> cerasusV3.Auth
-	17, // 11: cerasusV3.ProductLink.shopProduct:type_name -> cerasusV3.ShopProduct
-	11, // 12: cerasusV3.ProductLinkShop.links:type_name -> cerasusV3.ProductLink
-	12, // 13: cerasusV3.ProductLinks.data:type_name -> cerasusV3.ProductLinkShop
-	18, // 14: cerasusV3.Products.Ping:input_type -> cerasusV3.PingRequest
-	0,  // 15: cerasusV3.Products.GetProductList:input_type -> cerasusV3.ProductListRequest
-	0,  // 16: cerasusV3.Products.GetProductListFullData:input_type -> cerasusV3.ProductListRequest
-	19, // 17: cerasusV3.Products.GetProductSearch:input_type -> cerasusV3.SearchRequest
-	20, // 18: cerasusV3.Products.GetProduct:input_type -> cerasusV3.RequestByID
-	21, // 19: cerasusV3.Products.GetShopProductsMatch:input_type -> cerasusV3.RequestByIDS
-	21, // 20: cerasusV3.Products.GetPurchases:input_type -> cerasusV3.RequestByIDS
-	14, // 21: cerasusV3.Products.GetProductsUnsortedCount:input_type -> cerasusV3.Auth
-	7,  // 22: cerasusV3.Products.ConnectUnsorted:input_type -> cerasusV3.ConnectUnsortedRequest
-	8,  // 23: cerasusV3.Products.UpdateProduct:input_type -> cerasusV3.UpdateProductRequest
-	20, // 24: cerasusV3.Products.GetProductPurchase:input_type -> cerasusV3.RequestByID
-	9,  // 25: cerasusV3.Products.SetProductPurchase:input_type -> cerasusV3.SetProductPurchaseRequest
-	20, // 26: cerasusV3.Products.DeleteProductPurchase:input_type -> cerasusV3.RequestByID
-	10, // 27: cerasusV3.Products.SetProductBrand:input_type -> cerasusV3.SetProductBrandRequest
-	20, // 28: cerasusV3.Products.GetProductLinks:input_type -> cerasusV3.RequestByID
-	20, // 29: cerasusV3.Products.DeleteProductLink:input_type -> cerasusV3.RequestByID
-	19, // 30: cerasusV3.Products.GetProductsUnsortedList:input_type -> cerasusV3.SearchRequest
-	21, // 31: cerasusV3.Products.GetProductsByIDS:input_type -> cerasusV3.RequestByIDS
-	22, // 32: cerasusV3.Products.GetShopProductsAppCount:input_type -> cerasusV3.RequestByShop
-	22, // 33: cerasusV3.Products.GetShopProductsUnsortedCount:input_type -> cerasusV3.RequestByShop
-	22, // 34: cerasusV3.Products.GetShopProductsCount:input_type -> cerasusV3.RequestByShop
-	23, // 35: cerasusV3.Products.Ping:output_type -> cerasusV3.PingReply
-	24, // 36: cerasusV3.Products.GetProductList:output_type -> cerasusV3.ProductList
-	24, // 37: cerasusV3.Products.GetProductListFullData:output_type -> cerasusV3.ProductList
-	24, // 38: cerasusV3.Products.GetProductSearch:output_type -> cerasusV3.ProductList
-	25, // 39: cerasusV3.Products.GetProduct:output_type -> cerasusV3.Product
-	2,  // 40: cerasusV3.Products.GetShopProductsMatch:output_type -> cerasusV3.ShopProductsMatches
-	4,  // 41: cerasusV3.Products.GetPurchases:output_type -> cerasusV3.ProductsPurchases
-	6,  // 42: cerasusV3.Products.GetProductsUnsortedCount:output_type -> cerasusV3.UnsortedCount
-	26, // 43: cerasusV3.Products.ConnectUnsorted:output_type -> cerasusV3.StatusReply
-	26, // 44: cerasusV3.Products.UpdateProduct:output_type -> cerasusV3.StatusReply
-	3,  // 45: cerasusV3.Products.GetProductPurchase:output_type -> cerasusV3.ProductPurchases
-	26, // 46: cerasusV3.Products.SetProductPurchase:output_type -> cerasusV3.StatusReply
-	26, // 47: cerasusV3.Products.DeleteProductPurchase:output_type -> cerasusV3.StatusReply
-	26, // 48: cerasusV3.Products.SetProductBrand:output_type -> cerasusV3.StatusReply
-	13, // 49: cerasusV3.Products.GetProductLinks:output_type -> cerasusV3.ProductLinks
-	26, // 50: cerasusV3.Products.DeleteProductLink:output_type -> cerasusV3.StatusReply
-	27, // 51: cerasusV3.Products.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
-	24, // 52: cerasusV3.Products.GetProductsByIDS:output_type -> cerasusV3.ProductList
-	28, // 53: cerasusV3.Products.GetShopProductsAppCount:output_type -> cerasusV3.Count
-	28, // 54: cerasusV3.Products.GetShopProductsUnsortedCount:output_type -> cerasusV3.Count
-	28, // 55: cerasusV3.Products.GetShopProductsCount:output_type -> cerasusV3.Count
-	35, // [35:56] is the sub-list for method output_type
-	14, // [14:35] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	16, // 0: cerasusV3.UpdatePurchasesRequest.auth:type_name -> cerasusV3.Auth
+	0,  // 1: cerasusV3.UpdatePurchasesRequest.data:type_name -> cerasusV3.UpdatePurchaseValue
+	16, // 2: cerasusV3.ProductListRequest.auth:type_name -> cerasusV3.Auth
+	17, // 3: cerasusV3.ProductListRequest.order:type_name -> cerasusV3.SortOrder
+	3,  // 4: cerasusV3.ShopProductsMatches.data:type_name -> cerasusV3.ShopProductsMatch
+	18, // 5: cerasusV3.ProductPurchases.purchase:type_name -> cerasusV3.Purchase
+	18, // 6: cerasusV3.ProductPurchases.actual:type_name -> cerasusV3.Purchase
+	5,  // 7: cerasusV3.ProductsPurchases.data:type_name -> cerasusV3.ProductPurchases
+	7,  // 8: cerasusV3.UnsortedCount.data:type_name -> cerasusV3.ShopUnsortedCount
+	16, // 9: cerasusV3.ConnectUnsortedRequest.auth:type_name -> cerasusV3.Auth
+	16, // 10: cerasusV3.UpdateProductRequest.auth:type_name -> cerasusV3.Auth
+	16, // 11: cerasusV3.SetProductPurchaseRequest.auth:type_name -> cerasusV3.Auth
+	16, // 12: cerasusV3.SetProductBrandRequest.auth:type_name -> cerasusV3.Auth
+	19, // 13: cerasusV3.ProductLink.shopProduct:type_name -> cerasusV3.ShopProduct
+	13, // 14: cerasusV3.ProductLinkShop.links:type_name -> cerasusV3.ProductLink
+	14, // 15: cerasusV3.ProductLinks.data:type_name -> cerasusV3.ProductLinkShop
+	20, // 16: cerasusV3.Products.Ping:input_type -> cerasusV3.PingRequest
+	2,  // 17: cerasusV3.Products.GetProductList:input_type -> cerasusV3.ProductListRequest
+	2,  // 18: cerasusV3.Products.GetProductListFullData:input_type -> cerasusV3.ProductListRequest
+	21, // 19: cerasusV3.Products.GetProductSearch:input_type -> cerasusV3.SearchRequest
+	22, // 20: cerasusV3.Products.GetProduct:input_type -> cerasusV3.RequestByID
+	23, // 21: cerasusV3.Products.GetShopProductsMatch:input_type -> cerasusV3.RequestByIDS
+	23, // 22: cerasusV3.Products.GetPurchases:input_type -> cerasusV3.RequestByIDS
+	16, // 23: cerasusV3.Products.GetProductsUnsortedCount:input_type -> cerasusV3.Auth
+	9,  // 24: cerasusV3.Products.ConnectUnsorted:input_type -> cerasusV3.ConnectUnsortedRequest
+	10, // 25: cerasusV3.Products.UpdateProduct:input_type -> cerasusV3.UpdateProductRequest
+	22, // 26: cerasusV3.Products.GetProductPurchase:input_type -> cerasusV3.RequestByID
+	11, // 27: cerasusV3.Products.SetProductPurchase:input_type -> cerasusV3.SetProductPurchaseRequest
+	22, // 28: cerasusV3.Products.DeleteProductPurchase:input_type -> cerasusV3.RequestByID
+	12, // 29: cerasusV3.Products.SetProductBrand:input_type -> cerasusV3.SetProductBrandRequest
+	22, // 30: cerasusV3.Products.GetProductLinks:input_type -> cerasusV3.RequestByID
+	22, // 31: cerasusV3.Products.DeleteProductLink:input_type -> cerasusV3.RequestByID
+	21, // 32: cerasusV3.Products.GetProductsUnsortedList:input_type -> cerasusV3.SearchRequest
+	23, // 33: cerasusV3.Products.GetProductsByIDS:input_type -> cerasusV3.RequestByIDS
+	24, // 34: cerasusV3.Products.GetShopProductsAppCount:input_type -> cerasusV3.RequestByShop
+	24, // 35: cerasusV3.Products.GetShopProductsUnsortedCount:input_type -> cerasusV3.RequestByShop
+	24, // 36: cerasusV3.Products.GetShopProductsCount:input_type -> cerasusV3.RequestByShop
+	1,  // 37: cerasusV3.Products.UpdatePurchases:input_type -> cerasusV3.UpdatePurchasesRequest
+	25, // 38: cerasusV3.Products.Ping:output_type -> cerasusV3.PingReply
+	26, // 39: cerasusV3.Products.GetProductList:output_type -> cerasusV3.ProductList
+	26, // 40: cerasusV3.Products.GetProductListFullData:output_type -> cerasusV3.ProductList
+	26, // 41: cerasusV3.Products.GetProductSearch:output_type -> cerasusV3.ProductList
+	27, // 42: cerasusV3.Products.GetProduct:output_type -> cerasusV3.Product
+	4,  // 43: cerasusV3.Products.GetShopProductsMatch:output_type -> cerasusV3.ShopProductsMatches
+	6,  // 44: cerasusV3.Products.GetPurchases:output_type -> cerasusV3.ProductsPurchases
+	8,  // 45: cerasusV3.Products.GetProductsUnsortedCount:output_type -> cerasusV3.UnsortedCount
+	28, // 46: cerasusV3.Products.ConnectUnsorted:output_type -> cerasusV3.StatusReply
+	28, // 47: cerasusV3.Products.UpdateProduct:output_type -> cerasusV3.StatusReply
+	5,  // 48: cerasusV3.Products.GetProductPurchase:output_type -> cerasusV3.ProductPurchases
+	28, // 49: cerasusV3.Products.SetProductPurchase:output_type -> cerasusV3.StatusReply
+	28, // 50: cerasusV3.Products.DeleteProductPurchase:output_type -> cerasusV3.StatusReply
+	28, // 51: cerasusV3.Products.SetProductBrand:output_type -> cerasusV3.StatusReply
+	15, // 52: cerasusV3.Products.GetProductLinks:output_type -> cerasusV3.ProductLinks
+	28, // 53: cerasusV3.Products.DeleteProductLink:output_type -> cerasusV3.StatusReply
+	29, // 54: cerasusV3.Products.GetProductsUnsortedList:output_type -> cerasusV3.ShopProductList
+	26, // 55: cerasusV3.Products.GetProductsByIDS:output_type -> cerasusV3.ProductList
+	30, // 56: cerasusV3.Products.GetShopProductsAppCount:output_type -> cerasusV3.Count
+	30, // 57: cerasusV3.Products.GetShopProductsUnsortedCount:output_type -> cerasusV3.Count
+	30, // 58: cerasusV3.Products.GetShopProductsCount:output_type -> cerasusV3.Count
+	28, // 59: cerasusV3.Products.UpdatePurchases:output_type -> cerasusV3.StatusReply
+	38, // [38:60] is the sub-list for method output_type
+	16, // [16:38] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_productsV3_proto_init() }
@@ -1236,7 +1379,7 @@ func file_productsV3_proto_init() {
 	file_cerasusV3_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_productsV3_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductListRequest); i {
+			switch v := v.(*UpdatePurchaseValue); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1248,7 +1391,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopProductsMatch); i {
+			switch v := v.(*UpdatePurchasesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1260,7 +1403,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopProductsMatches); i {
+			switch v := v.(*ProductListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1272,7 +1415,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductPurchases); i {
+			switch v := v.(*ShopProductsMatch); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1284,7 +1427,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductsPurchases); i {
+			switch v := v.(*ShopProductsMatches); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1296,7 +1439,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ShopUnsortedCount); i {
+			switch v := v.(*ProductPurchases); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1308,7 +1451,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnsortedCount); i {
+			switch v := v.(*ProductsPurchases); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1320,7 +1463,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConnectUnsortedRequest); i {
+			switch v := v.(*ShopUnsortedCount); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1332,7 +1475,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateProductRequest); i {
+			switch v := v.(*UnsortedCount); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1344,7 +1487,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetProductPurchaseRequest); i {
+			switch v := v.(*ConnectUnsortedRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1356,7 +1499,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetProductBrandRequest); i {
+			switch v := v.(*UpdateProductRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1368,7 +1511,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductLink); i {
+			switch v := v.(*SetProductPurchaseRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1380,7 +1523,7 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProductLinkShop); i {
+			switch v := v.(*SetProductBrandRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1392,6 +1535,30 @@ func file_productsV3_proto_init() {
 			}
 		}
 		file_productsV3_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProductLink); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_productsV3_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProductLinkShop); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_productsV3_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ProductLinks); i {
 			case 0:
 				return &v.state
@@ -1410,7 +1577,7 @@ func file_productsV3_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_productsV3_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

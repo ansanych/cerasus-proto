@@ -27,6 +27,18 @@ service Products {
     rpc GetShopProductsAppCount (RequestByShop) returns (Count) {}
     rpc GetShopProductsUnsortedCount (RequestByShop) returns (Count) {}
     rpc GetShopProductsCount (RequestByShop) returns (Count) {}
+    rpc UpdatePurchases (UpdatePurchasesRequest) returns (StatusReply) {}
+}
+
+message UpdatePurchaseValue {
+    int64 productID = 1;
+    float purchase = 2;
+    string dateFrom = 3;
+}
+
+message UpdatePurchasesRequest {
+    Auth auth = 1;
+    repeated UpdatePurchaseValue data = 2;
 }
 
 message ProductListRequest {
