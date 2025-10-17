@@ -28,8 +28,24 @@ service Pricer {
     rpc GetSettingsFile (Auth) returns (SettingsFile) {}
     rpc UploadSettingsFile (SettingsFile) returns (StatusReply) {}
     rpc DeleteSettingsFile (Auth) returns (StatusReply) {}
+    //
+    rpc CreateBaseSettings(Auth) returns (StatusReply) {}
+    rpc GetBaseSettings(Auth) returns (PricerBaseSettings) {}
 }
 
+message PricerBaseSettings {
+    int64 ID = 1;
+    int64 companyID = 2;
+    int32 limit = 3;
+    int32 period = 4;
+    bool active = 5;
+    string start = 6;
+    string finish = 7;
+    string updated = 8;
+    int32 days = 9;
+}
+
+//
 message SettingsFile {
     Auth auth = 1;
     bytes chunk = 2;

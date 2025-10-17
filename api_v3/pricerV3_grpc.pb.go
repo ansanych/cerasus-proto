@@ -39,6 +39,8 @@ type PricerClient interface {
 	GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
 	UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
+	CreateBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
+	GetBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerBaseSettings, error)
 }
 
 type pricerClient struct {
@@ -247,6 +249,24 @@ func (c *pricerClient) DeleteSettingsFile(ctx context.Context, in *Auth, opts ..
 	return out, nil
 }
 
+func (c *pricerClient) CreateBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/CreateBaseSettings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) GetBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerBaseSettings, error) {
+	out := new(PricerBaseSettings)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetBaseSettings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -273,6 +293,8 @@ type PricerServer interface {
 	GetSettingsFile(context.Context, *Auth) (*SettingsFile, error)
 	UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error)
 	DeleteSettingsFile(context.Context, *Auth) (*StatusReply, error)
+	CreateBaseSettings(context.Context, *Auth) (*StatusReply, error)
+	GetBaseSettings(context.Context, *Auth) (*PricerBaseSettings, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -345,6 +367,12 @@ func (UnimplementedPricerServer) UploadSettingsFile(context.Context, *SettingsFi
 }
 func (UnimplementedPricerServer) DeleteSettingsFile(context.Context, *Auth) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) CreateBaseSettings(context.Context, *Auth) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBaseSettings not implemented")
+}
+func (UnimplementedPricerServer) GetBaseSettings(context.Context, *Auth) (*PricerBaseSettings, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBaseSettings not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -755,6 +783,42 @@ func _Pricer_DeleteSettingsFile_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_CreateBaseSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).CreateBaseSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/CreateBaseSettings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).CreateBaseSettings(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_GetBaseSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetBaseSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetBaseSettings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetBaseSettings(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Pricer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Pricer",
 	HandlerType: (*PricerServer)(nil),
@@ -846,6 +910,14 @@ var _Pricer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSettingsFile",
 			Handler:    _Pricer_DeleteSettingsFile_Handler,
+		},
+		{
+			MethodName: "CreateBaseSettings",
+			Handler:    _Pricer_CreateBaseSettings_Handler,
+		},
+		{
+			MethodName: "GetBaseSettings",
+			Handler:    _Pricer_GetBaseSettings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
