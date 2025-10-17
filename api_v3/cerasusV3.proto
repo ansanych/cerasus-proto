@@ -146,6 +146,7 @@ message Company {
     string name = 2;
     bool brand = 3;
     bool active = 4;
+    bool statistic = 5;
 }
 
 message CompanyList {
@@ -273,6 +274,8 @@ message AppShopData {
 
 message UserAppData {
     repeated AppShopData shops = 1;
+    bool pricer = 2;
+    bool statistic = 3;
 }
 
 message Tax {
