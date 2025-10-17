@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AuthentyClient interface {
 	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	CheckAccess(ctx context.Context, in *AccessRequest, opts ...grpc.CallOption) (*Auth, error)
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Company, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CreateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*StatusReply, error)
@@ -60,8 +60,8 @@ func (c *authentyClient) CheckAccess(ctx context.Context, in *AccessRequest, opt
 	return out, nil
 }
 
-func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
+func (c *authentyClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Company, error) {
+	out := new(Company)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -183,7 +183,7 @@ func (c *authentyClient) CompanyActivate(ctx context.Context, in *RequestActivat
 type AuthentyServer interface {
 	Ping(context.Context, *PingRequest) (*PingReply, error)
 	CheckAccess(context.Context, *AccessRequest) (*Auth, error)
-	Register(context.Context, *RegisterRequest) (*StatusReply, error)
+	Register(context.Context, *RegisterRequest) (*Company, error)
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	Refresh(context.Context, *RefreshRequest) (*LoginReply, error)
 	CreateUser(context.Context, *UpdateUserRequest) (*StatusReply, error)
@@ -209,7 +209,7 @@ func (UnimplementedAuthentyServer) Ping(context.Context, *PingRequest) (*PingRep
 func (UnimplementedAuthentyServer) CheckAccess(context.Context, *AccessRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAccess not implemented")
 }
-func (UnimplementedAuthentyServer) Register(context.Context, *RegisterRequest) (*StatusReply, error) {
+func (UnimplementedAuthentyServer) Register(context.Context, *RegisterRequest) (*Company, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthentyServer) Login(context.Context, *LoginRequest) (*LoginReply, error) {

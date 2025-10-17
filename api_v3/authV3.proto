@@ -8,7 +8,7 @@ option go_package = "github.com/ansanych/cerasus-proto";
 service Authenty {
     rpc Ping (PingRequest) returns (PingReply) {}
     rpc CheckAccess (AccessRequest) returns (Auth) {}
-    rpc Register (RegisterRequest) returns (StatusReply) {}
+    rpc Register (RegisterRequest) returns (Company) {}
     rpc Login (LoginRequest) returns (LoginReply) {}
     rpc Refresh (RefreshRequest) returns (LoginReply) {}
     rpc CreateUser(UpdateUserRequest) returns (StatusReply) {}
