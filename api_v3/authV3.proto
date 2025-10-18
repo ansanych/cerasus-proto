@@ -21,6 +21,7 @@ service Authenty {
     rpc GetCompaniesData(RequestByDates) returns (CompaniesData) {}
     rpc SearchCompaniesData(SearchRequest) returns (CompaniesData) {}
     rpc CompanyActivate(RequestActivate) returns (StatusReply) {}
+    rpc GetCompaniesWithStatistic(PingRequest) returns (ReplyIDS) {}
 }
 
 message AccessRequest {

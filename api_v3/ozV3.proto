@@ -14,7 +14,7 @@ service OZ {
     rpc GetOrders(RequestByDates) returns (Orders) {}
     rpc GetSales (RequestByDates) returns (Sales) {}
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
-    rpc GetConnectedCompanies(PingRequest) returns (CompanyList) {}
+    rpc GetConnectedCompanies(RequestByIDS) returns (CompanyList) {}
     rpc GetImage(ImageRequest) returns (ImageReply) {}
     rpc GetShopProducts (RequestByIDS) returns (ShopProductList) {}
     rpc GetProductsCount (Auth) returns (Count) {}

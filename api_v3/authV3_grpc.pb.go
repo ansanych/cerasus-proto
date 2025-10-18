@@ -32,6 +32,7 @@ type AuthentyClient interface {
 	GetCompaniesData(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*CompaniesData, error)
 	SearchCompaniesData(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*CompaniesData, error)
 	CompanyActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error)
+	GetCompaniesWithStatistic(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*ReplyIDS, error)
 }
 
 type authentyClient struct {
@@ -177,6 +178,15 @@ func (c *authentyClient) CompanyActivate(ctx context.Context, in *RequestActivat
 	return out, nil
 }
 
+func (c *authentyClient) GetCompaniesWithStatistic(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*ReplyIDS, error) {
+	out := new(ReplyIDS)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Authenty/GetCompaniesWithStatistic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthentyServer is the server API for Authenty service.
 // All implementations must embed UnimplementedAuthentyServer
 // for forward compatibility
@@ -196,6 +206,7 @@ type AuthentyServer interface {
 	GetCompaniesData(context.Context, *RequestByDates) (*CompaniesData, error)
 	SearchCompaniesData(context.Context, *SearchRequest) (*CompaniesData, error)
 	CompanyActivate(context.Context, *RequestActivate) (*StatusReply, error)
+	GetCompaniesWithStatistic(context.Context, *PingRequest) (*ReplyIDS, error)
 	mustEmbedUnimplementedAuthentyServer()
 }
 
@@ -247,6 +258,9 @@ func (UnimplementedAuthentyServer) SearchCompaniesData(context.Context, *SearchR
 }
 func (UnimplementedAuthentyServer) CompanyActivate(context.Context, *RequestActivate) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompanyActivate not implemented")
+}
+func (UnimplementedAuthentyServer) GetCompaniesWithStatistic(context.Context, *PingRequest) (*ReplyIDS, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompaniesWithStatistic not implemented")
 }
 func (UnimplementedAuthentyServer) mustEmbedUnimplementedAuthentyServer() {}
 
@@ -531,6 +545,24 @@ func _Authenty_CompanyActivate_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Authenty_GetCompaniesWithStatistic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthentyServer).GetCompaniesWithStatistic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Authenty/GetCompaniesWithStatistic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthentyServer).GetCompaniesWithStatistic(ctx, req.(*PingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Authenty_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Authenty",
 	HandlerType: (*AuthentyServer)(nil),
@@ -594,6 +626,10 @@ var _Authenty_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompanyActivate",
 			Handler:    _Authenty_CompanyActivate_Handler,
+		},
+		{
+			MethodName: "GetCompaniesWithStatistic",
+			Handler:    _Authenty_GetCompaniesWithStatistic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

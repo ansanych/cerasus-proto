@@ -24,7 +24,7 @@ type WBClient interface {
 	GetOrders(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Orders, error)
 	GetSales(ctx context.Context, in *RequestByDates, opts ...grpc.CallOption) (*Sales, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
-	GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error)
+	GetConnectedCompanies(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompanyList, error)
 	GetImage(ctx context.Context, in *ImageRequest, opts ...grpc.CallOption) (*ImageReply, error)
 	GetShopProducts(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*ShopProductList, error)
 	GetProductsCount(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*Count, error)
@@ -107,7 +107,7 @@ func (c *wBClient) SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.
 	return out, nil
 }
 
-func (c *wBClient) GetConnectedCompanies(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*CompanyList, error) {
+func (c *wBClient) GetConnectedCompanies(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompanyList, error) {
 	out := new(CompanyList)
 	err := c.cc.Invoke(ctx, "/cerasusV3.WB/GetConnectedCompanies", in, out, opts...)
 	if err != nil {
@@ -208,7 +208,7 @@ type WBServer interface {
 	GetOrders(context.Context, *RequestByDates) (*Orders, error)
 	GetSales(context.Context, *RequestByDates) (*Sales, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
-	GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error)
+	GetConnectedCompanies(context.Context, *RequestByIDS) (*CompanyList, error)
 	GetImage(context.Context, *ImageRequest) (*ImageReply, error)
 	GetShopProducts(context.Context, *RequestByIDS) (*ShopProductList, error)
 	GetProductsCount(context.Context, *Auth) (*Count, error)
@@ -246,7 +246,7 @@ func (UnimplementedWBServer) GetSales(context.Context, *RequestByDates) (*Sales,
 func (UnimplementedWBServer) SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetQueueJob not implemented")
 }
-func (UnimplementedWBServer) GetConnectedCompanies(context.Context, *PingRequest) (*CompanyList, error) {
+func (UnimplementedWBServer) GetConnectedCompanies(context.Context, *RequestByIDS) (*CompanyList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedCompanies not implemented")
 }
 func (UnimplementedWBServer) GetImage(context.Context, *ImageRequest) (*ImageReply, error) {
@@ -416,7 +416,7 @@ func _WB_SetQueueJob_Handler(srv interface{}, ctx context.Context, dec func(inte
 }
 
 func _WB_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
+	in := new(RequestByIDS)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -428,7 +428,7 @@ func _WB_GetConnectedCompanies_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/cerasusV3.WB/GetConnectedCompanies",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WBServer).GetConnectedCompanies(ctx, req.(*PingRequest))
+		return srv.(WBServer).GetConnectedCompanies(ctx, req.(*RequestByIDS))
 	}
 	return interceptor(ctx, in, info, handler)
 }
