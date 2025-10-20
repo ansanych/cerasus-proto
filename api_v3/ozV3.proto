@@ -24,4 +24,5 @@ service OZ {
     rpc SendNewPrices(OZApiNewPricesRequest) returns (StatusReply) {}
     rpc GetCompaniesData(RequestByIDS) returns (CompaniesData) {}
     rpc CompanyAuthActivate(RequestActivate) returns (StatusReply) {}
+    rpc GetShopPrices (ShopPriceRequest) returns (ShopPriceReply) {}
 }

@@ -20,4 +20,5 @@ service WB_API {
     rpc GetApiReports(WBApiDateRequest) returns (WBApiReportData) {}
     rpc GetProductsShopPrice(WBApiPricesRequest) returns (WBApiPriceData) {}
     rpc SendNewPrices(WBApiNewPricesRequest) returns (StatusReply) {}
+    rpc GetShopPrices (ApiShopPriceRequest) returns (ShopPriceReply) {}
 }

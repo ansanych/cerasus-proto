@@ -5,6 +5,11 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
+message ApiShopPriceRequest {
+    YMParams auth = 1;
+    repeated string article = 2;
+}
+
 message YMAuthData {
     string token = 1;
     int64 businessID = 2;

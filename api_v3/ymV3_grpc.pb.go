@@ -34,6 +34,7 @@ type YMClient interface {
 	SendNewPrices(ctx context.Context, in *YMApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
 	CompanyAuthActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error)
+	GetShopPrices(ctx context.Context, in *ShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error)
 }
 
 type yMClient struct {
@@ -197,6 +198,15 @@ func (c *yMClient) CompanyAuthActivate(ctx context.Context, in *RequestActivate,
 	return out, nil
 }
 
+func (c *yMClient) GetShopPrices(ctx context.Context, in *ShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error) {
+	out := new(ShopPriceReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM/GetShopPrices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YMServer is the server API for YM service.
 // All implementations must embed UnimplementedYMServer
 // for forward compatibility
@@ -218,6 +228,7 @@ type YMServer interface {
 	SendNewPrices(context.Context, *YMApiNewPricesRequest) (*StatusReply, error)
 	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
 	CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error)
+	GetShopPrices(context.Context, *ShopPriceRequest) (*ShopPriceReply, error)
 	mustEmbedUnimplementedYMServer()
 }
 
@@ -275,6 +286,9 @@ func (UnimplementedYMServer) GetCompaniesData(context.Context, *RequestByIDS) (*
 }
 func (UnimplementedYMServer) CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompanyAuthActivate not implemented")
+}
+func (UnimplementedYMServer) GetShopPrices(context.Context, *ShopPriceRequest) (*ShopPriceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopPrices not implemented")
 }
 func (UnimplementedYMServer) mustEmbedUnimplementedYMServer() {}
 
@@ -595,6 +609,24 @@ func _YM_CompanyAuthActivate_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_GetShopPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YMServer).GetShopPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM/GetShopPrices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YMServer).GetShopPrices(ctx, req.(*ShopPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _YM_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.YM",
 	HandlerType: (*YMServer)(nil),
@@ -666,6 +698,10 @@ var _YM_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompanyAuthActivate",
 			Handler:    _YM_CompanyAuthActivate_Handler,
+		},
+		{
+			MethodName: "GetShopPrices",
+			Handler:    _YM_GetShopPrices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

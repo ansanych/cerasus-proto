@@ -28,6 +28,7 @@ type YM_APIClient interface {
 	GetApiStocks(ctx context.Context, in *YMParams, opts ...grpc.CallOption) (*YMApiStockData, error)
 	GetProductsShopPrice(ctx context.Context, in *YMApiPriceRequest, opts ...grpc.CallOption) (*YMApiPriceData, error)
 	SendNewPrices(ctx context.Context, in *YMApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
+	GetShopPrices(ctx context.Context, in *ApiShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error)
 }
 
 type yM_APIClient struct {
@@ -137,6 +138,15 @@ func (c *yM_APIClient) SendNewPrices(ctx context.Context, in *YMApiNewPricesRequ
 	return out, nil
 }
 
+func (c *yM_APIClient) GetShopPrices(ctx context.Context, in *ApiShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error) {
+	out := new(ShopPriceReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.YM_API/GetShopPrices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // YM_APIServer is the server API for YM_API service.
 // All implementations must embed UnimplementedYM_APIServer
 // for forward compatibility
@@ -152,6 +162,7 @@ type YM_APIServer interface {
 	GetApiStocks(context.Context, *YMParams) (*YMApiStockData, error)
 	GetProductsShopPrice(context.Context, *YMApiPriceRequest) (*YMApiPriceData, error)
 	SendNewPrices(context.Context, *YMApiNewPricesRequest) (*StatusReply, error)
+	GetShopPrices(context.Context, *ApiShopPriceRequest) (*ShopPriceReply, error)
 	mustEmbedUnimplementedYM_APIServer()
 }
 
@@ -191,6 +202,9 @@ func (UnimplementedYM_APIServer) GetProductsShopPrice(context.Context, *YMApiPri
 }
 func (UnimplementedYM_APIServer) SendNewPrices(context.Context, *YMApiNewPricesRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendNewPrices not implemented")
+}
+func (UnimplementedYM_APIServer) GetShopPrices(context.Context, *ApiShopPriceRequest) (*ShopPriceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopPrices not implemented")
 }
 func (UnimplementedYM_APIServer) mustEmbedUnimplementedYM_APIServer() {}
 
@@ -403,6 +417,24 @@ func _YM_API_SendNewPrices_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _YM_API_GetShopPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiShopPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(YM_APIServer).GetShopPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.YM_API/GetShopPrices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(YM_APIServer).GetShopPrices(ctx, req.(*ApiShopPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _YM_API_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.YM_API",
 	HandlerType: (*YM_APIServer)(nil),
@@ -450,6 +482,10 @@ var _YM_API_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendNewPrices",
 			Handler:    _YM_API_SendNewPrices_Handler,
+		},
+		{
+			MethodName: "GetShopPrices",
+			Handler:    _YM_API_GetShopPrices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

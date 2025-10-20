@@ -462,3 +462,17 @@ message CompaniesData {
 message TestProto {
     bool test = 1;
 }
+
+message ShopPriceRequest {
+    Auth auth = 1;
+    repeated string article = 2;
+}
+
+message ShopPrice {
+    string article = 1;
+    int32 price = 2;
+}
+
+message ShopPriceReply {
+    repeated ShopPrice data = 1;
+}

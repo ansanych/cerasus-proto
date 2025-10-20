@@ -18,4 +18,5 @@ service YM_API {
     rpc GetApiStocks(YMParams) returns (YMApiStockData) {}
     rpc GetProductsShopPrice(YMApiPriceRequest) returns (YMApiPriceData) {}
     rpc SendNewPrices(YMApiNewPricesRequest) returns (StatusReply) {}
+    rpc GetShopPrices (ApiShopPriceRequest) returns (ShopPriceReply) {}
 }

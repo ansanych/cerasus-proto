@@ -34,6 +34,7 @@ type OZClient interface {
 	SendNewPrices(ctx context.Context, in *OZApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	GetCompaniesData(ctx context.Context, in *RequestByIDS, opts ...grpc.CallOption) (*CompaniesData, error)
 	CompanyAuthActivate(ctx context.Context, in *RequestActivate, opts ...grpc.CallOption) (*StatusReply, error)
+	GetShopPrices(ctx context.Context, in *ShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error)
 }
 
 type oZClient struct {
@@ -197,6 +198,15 @@ func (c *oZClient) CompanyAuthActivate(ctx context.Context, in *RequestActivate,
 	return out, nil
 }
 
+func (c *oZClient) GetShopPrices(ctx context.Context, in *ShopPriceRequest, opts ...grpc.CallOption) (*ShopPriceReply, error) {
+	out := new(ShopPriceReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.OZ/GetShopPrices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OZServer is the server API for OZ service.
 // All implementations must embed UnimplementedOZServer
 // for forward compatibility
@@ -218,6 +228,7 @@ type OZServer interface {
 	SendNewPrices(context.Context, *OZApiNewPricesRequest) (*StatusReply, error)
 	GetCompaniesData(context.Context, *RequestByIDS) (*CompaniesData, error)
 	CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error)
+	GetShopPrices(context.Context, *ShopPriceRequest) (*ShopPriceReply, error)
 	mustEmbedUnimplementedOZServer()
 }
 
@@ -275,6 +286,9 @@ func (UnimplementedOZServer) GetCompaniesData(context.Context, *RequestByIDS) (*
 }
 func (UnimplementedOZServer) CompanyAuthActivate(context.Context, *RequestActivate) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompanyAuthActivate not implemented")
+}
+func (UnimplementedOZServer) GetShopPrices(context.Context, *ShopPriceRequest) (*ShopPriceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShopPrices not implemented")
 }
 func (UnimplementedOZServer) mustEmbedUnimplementedOZServer() {}
 
@@ -595,6 +609,24 @@ func _OZ_CompanyAuthActivate_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OZ_GetShopPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShopPriceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OZServer).GetShopPrices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.OZ/GetShopPrices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OZServer).GetShopPrices(ctx, req.(*ShopPriceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _OZ_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.OZ",
 	HandlerType: (*OZServer)(nil),
@@ -666,6 +698,10 @@ var _OZ_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompanyAuthActivate",
 			Handler:    _OZ_CompanyAuthActivate_Handler,
+		},
+		{
+			MethodName: "GetShopPrices",
+			Handler:    _OZ_GetShopPrices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
