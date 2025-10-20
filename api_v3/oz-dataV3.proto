@@ -5,7 +5,7 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-message ApiShopPricesRequest {
+message OZApiShopPricesRequest {
     OZAuthParams auth = 1;
     repeated string article = 2;
 }

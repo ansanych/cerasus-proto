@@ -18,5 +18,5 @@ service OZ_API {
     rpc GetApiStocks(OZApiStockRequest) returns (OZApiStockData) {}
     rpc GetProductsShopPrice(OZApiStockRequest) returns (OZApiPricesData) {}
     rpc SendNewPrices(OZApiNewPricesRequest) returns (StatusReply) {}
-    rpc GetShopPrices (ApiShopPricesRequest) returns (ShopPriceReply) {}
+    rpc GetShopPrices (OZApiShopPricesRequest) returns (ShopPriceReply) {}
 }

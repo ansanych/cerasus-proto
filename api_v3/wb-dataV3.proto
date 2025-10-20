@@ -5,7 +5,7 @@ package cerasusV3;
 
 option go_package = "github.com/ansanych/cerasus-proto";
 
-message ApiShopPriceRequest {
+message WBApiShopPriceRequest {
     WBAuthData auth = 1;
     repeated string article = 2;
 }

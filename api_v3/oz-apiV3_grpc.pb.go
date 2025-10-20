@@ -28,7 +28,7 @@ type OZ_APIClient interface {
 	GetApiStocks(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiStockData, error)
 	GetProductsShopPrice(ctx context.Context, in *OZApiStockRequest, opts ...grpc.CallOption) (*OZApiPricesData, error)
 	SendNewPrices(ctx context.Context, in *OZApiNewPricesRequest, opts ...grpc.CallOption) (*StatusReply, error)
-	GetShopPrices(ctx context.Context, in *ApiShopPricesRequest, opts ...grpc.CallOption) (*ShopPriceReply, error)
+	GetShopPrices(ctx context.Context, in *OZApiShopPricesRequest, opts ...grpc.CallOption) (*ShopPriceReply, error)
 }
 
 type oZ_APIClient struct {
@@ -138,7 +138,7 @@ func (c *oZ_APIClient) SendNewPrices(ctx context.Context, in *OZApiNewPricesRequ
 	return out, nil
 }
 
-func (c *oZ_APIClient) GetShopPrices(ctx context.Context, in *ApiShopPricesRequest, opts ...grpc.CallOption) (*ShopPriceReply, error) {
+func (c *oZ_APIClient) GetShopPrices(ctx context.Context, in *OZApiShopPricesRequest, opts ...grpc.CallOption) (*ShopPriceReply, error) {
 	out := new(ShopPriceReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.OZ_API/GetShopPrices", in, out, opts...)
 	if err != nil {
@@ -162,7 +162,7 @@ type OZ_APIServer interface {
 	GetApiStocks(context.Context, *OZApiStockRequest) (*OZApiStockData, error)
 	GetProductsShopPrice(context.Context, *OZApiStockRequest) (*OZApiPricesData, error)
 	SendNewPrices(context.Context, *OZApiNewPricesRequest) (*StatusReply, error)
-	GetShopPrices(context.Context, *ApiShopPricesRequest) (*ShopPriceReply, error)
+	GetShopPrices(context.Context, *OZApiShopPricesRequest) (*ShopPriceReply, error)
 	mustEmbedUnimplementedOZ_APIServer()
 }
 
@@ -203,7 +203,7 @@ func (UnimplementedOZ_APIServer) GetProductsShopPrice(context.Context, *OZApiSto
 func (UnimplementedOZ_APIServer) SendNewPrices(context.Context, *OZApiNewPricesRequest) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendNewPrices not implemented")
 }
-func (UnimplementedOZ_APIServer) GetShopPrices(context.Context, *ApiShopPricesRequest) (*ShopPriceReply, error) {
+func (UnimplementedOZ_APIServer) GetShopPrices(context.Context, *OZApiShopPricesRequest) (*ShopPriceReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShopPrices not implemented")
 }
 func (UnimplementedOZ_APIServer) mustEmbedUnimplementedOZ_APIServer() {}
@@ -418,7 +418,7 @@ func _OZ_API_SendNewPrices_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _OZ_API_GetShopPrices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ApiShopPricesRequest)
+	in := new(OZApiShopPricesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -430,7 +430,7 @@ func _OZ_API_GetShopPrices_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/cerasusV3.OZ_API/GetShopPrices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OZ_APIServer).GetShopPrices(ctx, req.(*ApiShopPricesRequest))
+		return srv.(OZ_APIServer).GetShopPrices(ctx, req.(*OZApiShopPricesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
