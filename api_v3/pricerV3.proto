@@ -31,6 +31,8 @@ service Pricer {
     //
     rpc CreateBaseSettings(Auth) returns (StatusReply) {}
     rpc GetBaseSettings(Auth) returns (PricerBaseSettings) {}
+    rpc GetPricerParams(Auth) returns (PricerParams) {}
+    rpc SetPricerParam(PricerParam) returns (StatusReply) {}
 }
 
 message PricerBaseSettings {
@@ -43,6 +45,31 @@ message PricerBaseSettings {
     string finish = 7;
     string updated = 8;
     int32 days = 9;
+}
+
+message PricerParam {
+    int64 ID = 1;
+    string shop = 2;
+    string productTitle = 3;
+    string productArticle = 4;
+    string productURL = 5;
+    float targetOffsetMin = 6;
+    float targetOffsetMax = 7;
+    bool baseActive = 8;
+    int32 baseTarget = 9;
+    bool wdActive = 10;
+    int32 wdHourFrom = 11;
+    int32 wdHourTo = 12;
+    float wdTarget = 13;
+    bool weActive = 14;
+    int32 weHourFrom = 15;
+    int32 weHourTo = 16;
+    float weTarget = 17;
+    Auth auth = 18;
+}
+
+message PricerParams {
+    repeated PricerParam data = 1;
 }
 
 //

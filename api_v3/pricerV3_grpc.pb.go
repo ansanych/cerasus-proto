@@ -41,6 +41,8 @@ type PricerClient interface {
 	DeleteSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	CreateBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	GetBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerBaseSettings, error)
+	GetPricerParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerParams, error)
+	SetPricerParam(ctx context.Context, in *PricerParam, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -267,6 +269,24 @@ func (c *pricerClient) GetBaseSettings(ctx context.Context, in *Auth, opts ...gr
 	return out, nil
 }
 
+func (c *pricerClient) GetPricerParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerParams, error) {
+	out := new(PricerParams)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetPricerParams", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) SetPricerParam(ctx context.Context, in *PricerParam, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/SetPricerParam", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
@@ -295,6 +315,8 @@ type PricerServer interface {
 	DeleteSettingsFile(context.Context, *Auth) (*StatusReply, error)
 	CreateBaseSettings(context.Context, *Auth) (*StatusReply, error)
 	GetBaseSettings(context.Context, *Auth) (*PricerBaseSettings, error)
+	GetPricerParams(context.Context, *Auth) (*PricerParams, error)
+	SetPricerParam(context.Context, *PricerParam) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -373,6 +395,12 @@ func (UnimplementedPricerServer) CreateBaseSettings(context.Context, *Auth) (*St
 }
 func (UnimplementedPricerServer) GetBaseSettings(context.Context, *Auth) (*PricerBaseSettings, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBaseSettings not implemented")
+}
+func (UnimplementedPricerServer) GetPricerParams(context.Context, *Auth) (*PricerParams, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPricerParams not implemented")
+}
+func (UnimplementedPricerServer) SetPricerParam(context.Context, *PricerParam) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetPricerParam not implemented")
 }
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
@@ -819,6 +847,42 @@ func _Pricer_GetBaseSettings_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_GetPricerParams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetPricerParams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetPricerParams",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetPricerParams(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_SetPricerParam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PricerParam)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).SetPricerParam(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/SetPricerParam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).SetPricerParam(ctx, req.(*PricerParam))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Pricer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Pricer",
 	HandlerType: (*PricerServer)(nil),
@@ -918,6 +982,14 @@ var _Pricer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBaseSettings",
 			Handler:    _Pricer_GetBaseSettings_Handler,
+		},
+		{
+			MethodName: "GetPricerParams",
+			Handler:    _Pricer_GetPricerParams_Handler,
+		},
+		{
+			MethodName: "SetPricerParam",
+			Handler:    _Pricer_SetPricerParam_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
