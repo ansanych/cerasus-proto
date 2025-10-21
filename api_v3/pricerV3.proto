@@ -6,7 +6,6 @@ package cerasusV3;
 option go_package = "github.com/ansanych/cerasus-proto";
 
 service Pricer {
-    rpc Ping (PingRequest) returns (PingReply) {}
     rpc GetProductsWithPricer (Company) returns(ReplyIDS) {}
     rpc GetConnectedCompaniesByShop(RequestByShop) returns (CompanyList) {}
     rpc SetQueueJob(QueuerJob) returns (StatusReply) {}
@@ -25,14 +24,16 @@ service Pricer {
     rpc SetGroupPricerSettings (GroupPricerSettingsRequest) returns (StatusReply) {}
     rpc CheckSettingsFile (Auth) returns (SettingsFile) {}
     rpc CreateSettingsFile (Auth) returns (StatusReply) {}
-    rpc GetSettingsFile (Auth) returns (SettingsFile) {}
-    rpc UploadSettingsFile (SettingsFile) returns (StatusReply) {}
     rpc DeleteSettingsFile (Auth) returns (StatusReply) {}
     //
+    rpc Ping (PingRequest) returns (PingReply) {}
     rpc CreateBaseSettings(Auth) returns (StatusReply) {}
     rpc GetBaseSettings(Auth) returns (PricerBaseSettings) {}
     rpc GetPricerParams(Auth) returns (PricerParams) {}
     rpc SetPricerParam(PricerParam) returns (StatusReply) {}
+    rpc DeletePricerParam(RequestByID) returns (StatusReply) {}
+    rpc GetSettingsFile (Auth) returns (SettingsFile) {}
+    rpc UploadSettingsFile (SettingsFile) returns (StatusReply) {}
 }
 
 message PricerBaseSettings {

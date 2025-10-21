@@ -17,7 +17,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PricerClient interface {
-	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	GetProductsWithPricer(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(ctx context.Context, in *RequestByShop, opts ...grpc.CallOption) (*CompanyList, error)
 	SetQueueJob(ctx context.Context, in *QueuerJob, opts ...grpc.CallOption) (*StatusReply, error)
@@ -36,13 +35,15 @@ type PricerClient interface {
 	SetGroupPricerSettings(ctx context.Context, in *GroupPricerSettingsRequest, opts ...grpc.CallOption) (*StatusReply, error)
 	CheckSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
 	CreateSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
-	GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
-	UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error)
 	DeleteSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
+	Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error)
 	CreateBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error)
 	GetBaseSettings(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerBaseSettings, error)
 	GetPricerParams(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*PricerParams, error)
 	SetPricerParam(ctx context.Context, in *PricerParam, opts ...grpc.CallOption) (*StatusReply, error)
+	DeletePricerParam(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error)
+	GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error)
+	UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error)
 }
 
 type pricerClient struct {
@@ -51,15 +52,6 @@ type pricerClient struct {
 
 func NewPricerClient(cc grpc.ClientConnInterface) PricerClient {
 	return &pricerClient{cc}
-}
-
-func (c *pricerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
-	out := new(PingReply)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/Ping", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *pricerClient) GetProductsWithPricer(ctx context.Context, in *Company, opts ...grpc.CallOption) (*ReplyIDS, error) {
@@ -224,27 +216,18 @@ func (c *pricerClient) CreateSettingsFile(ctx context.Context, in *Auth, opts ..
 	return out, nil
 }
 
-func (c *pricerClient) GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error) {
-	out := new(SettingsFile)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetSettingsFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *pricerClient) UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error) {
-	out := new(StatusReply)
-	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/UploadSettingsFile", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *pricerClient) DeleteSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*StatusReply, error) {
 	out := new(StatusReply)
 	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/DeleteSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) Ping(ctx context.Context, in *PingRequest, opts ...grpc.CallOption) (*PingReply, error) {
+	out := new(PingReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/Ping", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -287,11 +270,37 @@ func (c *pricerClient) SetPricerParam(ctx context.Context, in *PricerParam, opts
 	return out, nil
 }
 
+func (c *pricerClient) DeletePricerParam(ctx context.Context, in *RequestByID, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/DeletePricerParam", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) GetSettingsFile(ctx context.Context, in *Auth, opts ...grpc.CallOption) (*SettingsFile, error) {
+	out := new(SettingsFile)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/GetSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pricerClient) UploadSettingsFile(ctx context.Context, in *SettingsFile, opts ...grpc.CallOption) (*StatusReply, error) {
+	out := new(StatusReply)
+	err := c.cc.Invoke(ctx, "/cerasusV3.Pricer/UploadSettingsFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricerServer is the server API for Pricer service.
 // All implementations must embed UnimplementedPricerServer
 // for forward compatibility
 type PricerServer interface {
-	Ping(context.Context, *PingRequest) (*PingReply, error)
 	GetProductsWithPricer(context.Context, *Company) (*ReplyIDS, error)
 	GetConnectedCompaniesByShop(context.Context, *RequestByShop) (*CompanyList, error)
 	SetQueueJob(context.Context, *QueuerJob) (*StatusReply, error)
@@ -310,13 +319,15 @@ type PricerServer interface {
 	SetGroupPricerSettings(context.Context, *GroupPricerSettingsRequest) (*StatusReply, error)
 	CheckSettingsFile(context.Context, *Auth) (*SettingsFile, error)
 	CreateSettingsFile(context.Context, *Auth) (*StatusReply, error)
-	GetSettingsFile(context.Context, *Auth) (*SettingsFile, error)
-	UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error)
 	DeleteSettingsFile(context.Context, *Auth) (*StatusReply, error)
+	Ping(context.Context, *PingRequest) (*PingReply, error)
 	CreateBaseSettings(context.Context, *Auth) (*StatusReply, error)
 	GetBaseSettings(context.Context, *Auth) (*PricerBaseSettings, error)
 	GetPricerParams(context.Context, *Auth) (*PricerParams, error)
 	SetPricerParam(context.Context, *PricerParam) (*StatusReply, error)
+	DeletePricerParam(context.Context, *RequestByID) (*StatusReply, error)
+	GetSettingsFile(context.Context, *Auth) (*SettingsFile, error)
+	UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error)
 	mustEmbedUnimplementedPricerServer()
 }
 
@@ -324,9 +335,6 @@ type PricerServer interface {
 type UnimplementedPricerServer struct {
 }
 
-func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
-}
 func (UnimplementedPricerServer) GetProductsWithPricer(context.Context, *Company) (*ReplyIDS, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductsWithPricer not implemented")
 }
@@ -381,14 +389,11 @@ func (UnimplementedPricerServer) CheckSettingsFile(context.Context, *Auth) (*Set
 func (UnimplementedPricerServer) CreateSettingsFile(context.Context, *Auth) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSettingsFile not implemented")
 }
-func (UnimplementedPricerServer) GetSettingsFile(context.Context, *Auth) (*SettingsFile, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSettingsFile not implemented")
-}
-func (UnimplementedPricerServer) UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadSettingsFile not implemented")
-}
 func (UnimplementedPricerServer) DeleteSettingsFile(context.Context, *Auth) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) Ping(context.Context, *PingRequest) (*PingReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedPricerServer) CreateBaseSettings(context.Context, *Auth) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBaseSettings not implemented")
@@ -402,6 +407,15 @@ func (UnimplementedPricerServer) GetPricerParams(context.Context, *Auth) (*Price
 func (UnimplementedPricerServer) SetPricerParam(context.Context, *PricerParam) (*StatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetPricerParam not implemented")
 }
+func (UnimplementedPricerServer) DeletePricerParam(context.Context, *RequestByID) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePricerParam not implemented")
+}
+func (UnimplementedPricerServer) GetSettingsFile(context.Context, *Auth) (*SettingsFile, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSettingsFile not implemented")
+}
+func (UnimplementedPricerServer) UploadSettingsFile(context.Context, *SettingsFile) (*StatusReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadSettingsFile not implemented")
+}
 func (UnimplementedPricerServer) mustEmbedUnimplementedPricerServer() {}
 
 // UnsafePricerServer may be embedded to opt out of forward compatibility for this service.
@@ -413,24 +427,6 @@ type UnsafePricerServer interface {
 
 func RegisterPricerServer(s *grpc.Server, srv PricerServer) {
 	s.RegisterService(&_Pricer_serviceDesc, srv)
-}
-
-func _Pricer_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PingRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PricerServer).Ping(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Pricer/Ping",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PricerServer).Ping(ctx, req.(*PingRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Pricer_GetProductsWithPricer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -757,42 +753,6 @@ func _Pricer_CreateSettingsFile_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Pricer_GetSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Auth)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PricerServer).GetSettingsFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Pricer/GetSettingsFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PricerServer).GetSettingsFile(ctx, req.(*Auth))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Pricer_UploadSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SettingsFile)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PricerServer).UploadSettingsFile(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cerasusV3.Pricer/UploadSettingsFile",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PricerServer).UploadSettingsFile(ctx, req.(*SettingsFile))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Pricer_DeleteSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Auth)
 	if err := dec(in); err != nil {
@@ -807,6 +767,24 @@ func _Pricer_DeleteSettingsFile_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PricerServer).DeleteSettingsFile(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).Ping(ctx, req.(*PingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -883,14 +861,64 @@ func _Pricer_SetPricerParam_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Pricer_DeletePricerParam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestByID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).DeletePricerParam(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/DeletePricerParam",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).DeletePricerParam(ctx, req.(*RequestByID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_GetSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Auth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).GetSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/GetSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).GetSettingsFile(ctx, req.(*Auth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Pricer_UploadSettingsFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SettingsFile)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricerServer).UploadSettingsFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cerasusV3.Pricer/UploadSettingsFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricerServer).UploadSettingsFile(ctx, req.(*SettingsFile))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Pricer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cerasusV3.Pricer",
 	HandlerType: (*PricerServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "Ping",
-			Handler:    _Pricer_Ping_Handler,
-		},
 		{
 			MethodName: "GetProductsWithPricer",
 			Handler:    _Pricer_GetProductsWithPricer_Handler,
@@ -964,16 +992,12 @@ var _Pricer_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Pricer_CreateSettingsFile_Handler,
 		},
 		{
-			MethodName: "GetSettingsFile",
-			Handler:    _Pricer_GetSettingsFile_Handler,
-		},
-		{
-			MethodName: "UploadSettingsFile",
-			Handler:    _Pricer_UploadSettingsFile_Handler,
-		},
-		{
 			MethodName: "DeleteSettingsFile",
 			Handler:    _Pricer_DeleteSettingsFile_Handler,
+		},
+		{
+			MethodName: "Ping",
+			Handler:    _Pricer_Ping_Handler,
 		},
 		{
 			MethodName: "CreateBaseSettings",
@@ -990,6 +1014,18 @@ var _Pricer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetPricerParam",
 			Handler:    _Pricer_SetPricerParam_Handler,
+		},
+		{
+			MethodName: "DeletePricerParam",
+			Handler:    _Pricer_DeletePricerParam_Handler,
+		},
+		{
+			MethodName: "GetSettingsFile",
+			Handler:    _Pricer_GetSettingsFile_Handler,
+		},
+		{
+			MethodName: "UploadSettingsFile",
+			Handler:    _Pricer_UploadSettingsFile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
